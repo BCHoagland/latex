@@ -1,0 +1,16 @@
+# temp files from latex compilation
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.bbl
+*.blg
+
+# don't track homework files
+class
+
+# general stuff
+.DS_Store

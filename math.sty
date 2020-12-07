@@ -1,0 +1,132 @@
+\usepackage[utf8]{inputenc}
+%\usepackage[a4paper, total={6.5in, 9in}]{geometry}
+\usepackage{fancyhdr, float}
+\usepackage[most]{tcolorbox}
+\usepackage{mdframed}
+\usepackage{amsmath, amsthm, amsfonts, amssymb}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{tikz-cd}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CUSTOM COLORS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{exmp}{HTML}{EF233C}
+\definecolor{defn}{HTML}{0066FF}
+\definecolor{thrm}{HTML}{47E000}
+\definecolor{nte}{HTML}{FFA500}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LINKS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Theorem
+\newtcbtheorem{thrm}{Theorem}{
+  enhanced,
+  sharp corners,
+  attach boxed title to top left={
+    yshifttext=-1mm
+  },
+  boxrule=0.5pt,
+  colback=white,
+  colframe=thrm,
+  fonttitle=\bfseries,
+  boxed title style={
+    sharp corners,
+    size=small,
+    colback=thrm,
+    colframe=thrm,
+  }
+}{thrm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Definition
+\newtcbtheorem{defn}{Definition}{
+  enhanced,
+  sharp corners,
+  attach boxed title to top left={
+    yshifttext=-1mm
+  },
+  boxrule=0.5pt,
+  colback=white,
+  colframe=defn,
+  fonttitle=\bfseries,
+  boxed title style={
+    sharp corners,
+    size=small,
+    colback=defn,
+    colframe=defn,
+    % 'defn!75!black' will darken the defn a bit if it's too bright
+  }
+}{defn}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Example
+\newtcbtheorem{ex}{Example}{
+  enhanced,
+  sharp corners,
+  attach boxed title to top left={
+    yshifttext=-1mm
+  },
+  boxrule=0.5pt,
+  colback=white,
+  colframe=exmp,
+  fonttitle=\bfseries,
+  boxed title style={
+    sharp corners,
+    size=small,
+    colback=exmp,
+    colframe=exmp,
+  }
+}{ex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%note
+\newtcbtheorem{note}{Note}{
+  enhanced,
+  sharp corners,
+  attach boxed title to top left={
+    yshifttext=-1mm
+  },
+  boxrule=0.5pt,
+  colback=white,
+  colframe=nte,
+  fonttitle=\bfseries,
+  boxed title style={
+    sharp corners,
+    size=small,
+    colback=nte,
+    colframe=nte,
+  }
+}{note}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newmdtheoremenv{prop}{Proposition}
+\newmdtheoremenv{cor}{Corollary}
+\newmdtheoremenv[topline=false, rightline=false, bottomline=false]{lem}{Lemma}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Page Formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand{\headrulewidth}{0pt}
+%\setlength{\headsep}{4em}
+\pagestyle{fancy}
+%\setlength{\parindent}{0cm}
+\setlength{\parskip}{0.5em}
+\setcounter{tocdepth}{1}
+
+
+\let\tocold\tableofcontents
+\renewcommand{\tableofcontents}{
+	\pagenumbering{roman}
+	\tocold
+	\newpage
+	\pagenumbering{arabic}
+}
