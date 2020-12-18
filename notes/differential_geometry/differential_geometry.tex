@@ -1,0 +1,304 @@
+\documentclass[10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/math}
+
+\lhead{Braden Hoagland}
+\chead{Differential Geometry}
+\rhead{}
+
+\begin{document}
+\tableofcontents
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Calculus on Euclidean Space
+
+\chapter{Calculus on Euclidean Space}
+
+%%%%%%%%%%%%%%%%%%%%
+% Tangent Vectors
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Tangent Vectors}
+
+\begin{defn}{Tangent Space}{}
+	Let $p \in \mathbb{R}^n$. Then the set of all tangent vectors in $\mathbb{R}^n$ originating at $p$ is the \textbf{tangent space} of $\mathbb{R}^n$ at $p$. Denote this by $T_p(\mathbb{R}^n)$.
+\end{defn}
+
+If we define addition by $v_p+w_p \doteq (v+w)_p$ and scalar multiplication by $\lambda w_p \doteq (\lambda w)_p$, then $T_p(\mathbb{R}^n)$ becomes a vector space..
+
+\begin{prop}
+	$T_p(\mathbb{R}^n)$ is isomorphic to $\mathbb{R}^n$.
+\end{prop}
+\begin{proof}
+	Consider the function $v \mapsto v_p$. This is clearly a one-to-one function from $\mathbb{R}^n$ onto $T_p(\mathbb{R}^n)$. Additionally, it is clearly a homomorphism from the way we defined addition and scalar multiplication.
+\end{proof}
+
+\begin{defn}{Vector Field}{}
+	A \textbf{vector field} $V$ on $\mathbb{R}^n$ is a function that maps $p \in \mathbb{R}^n$ to a tangent vector $V(p) \in T_p(\mathbb{R}^n)$.
+\end{defn}
+
+\begin{defn}{Natural Frame Field}{}
+	Let $U_1, \dots, U_n$ be vector fields on $\mathbb{R}^n$ such that for each $i$, $U_i(p) = e_i$ for all $p \in \mathbb{R}^n$. Then $U_1, \dots, U_n$ collectively are called the \textbf{natural frame field} on $\mathbb{R}^n$.
+\end{defn}
+
+Note that $U_i$ is a unit vector field in the positive $x_i$ direction.
+
+\begin{prop}
+	Let $V$ be a vector field on $\mathbb{R}^n$, then there are unique real-valued functions $v_1, \dots, v_n$ on $\mathbb{R}^n$ such that
+	\[
+	V = \sum_{i=1}^{n} v_i U_i.
+	\] 
+\end{prop}
+\begin{proof}
+	Let $p \in \mathbb{R}^n$ be arbitrary, then by definition, $V(p) \in T_p(\mathbb{R}^n)$, so for some functions $v_1, \dots, v_n$, we have
+	\begin{align*}
+		V(p) &= (v_1(p), \dots, v_n(p)) \\
+		     &= v_1(p)e_1 + \dots v_n(p)e_n \\
+		     &= v_1(p) U_1(p) + \dots v_n(p) U_n(p).
+	\end{align*}
+	Since $p$ was arbitrary, $V = \sum_{i=1}^{n} v_i U_i$.
+\end{proof}
+
+\begin{defn}{Euclidean Coordinate Function}{}
+	The $v_i$ in the above proposition are the \textbf{Euclidean coordinate functions} of $V$.
+\end{defn}
+
+The identity from the last proposition is important, so here it is again in a slightly different form.
+\[
+	(x_1, \dots, x_n)_p = \sum_{i=1}^{n} x_i U_i(p).
+\] 
+
+\begin{note}{}{}
+	We say that a vector field is differentiable if its Euclidean coordinate functions are themselves differentiable. From now on, assume vector fields are differentiable.
+\end{note}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Directional Derivatives
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Directional Derivatives}
+
+\begin{defn}{Directional Derivative}{}
+	Let $f:\mathbb{R}^n \to \mathbb{R}$ be differentiable, and let $v \in T_p(\mathbb{R}^3)$. Then
+	\[
+		v[f] \doteq \frac{d }{d t} f(p+tv) \Big|_{t=0}
+\] is the derivative of $f$ with respect to $v$. It is called the \textbf{directional derivative} of $f$ at $p$ in the direction of $v$.
+\end{defn}
+
+\begin{prop}
+	\label{prop:dir-der}
+	Let $v \in T_p(\mathbb{R}^n)$, then
+	\[
+		v[f] = \sum_i v_i \frac{\partial f}{\partial x_i} (p).
+	\] 
+\end{prop}
+\begin{proof}
+	Since $\frac{d }{d t} (p_i + tv_i) = v_i$, we can use the chain rule to get
+	\begin{align*}
+		\frac{d }{d t} f(p+tv) \Big|_{t=0} &= \sum_{i} v_i \frac{\partial f}{\partial x_i} (p+tv) \Big|_{t=0} \\
+						   &= \sum_i v_i \frac{\partial f}{\partial x_i} (p).
+	\end{align*}
+\end{proof}
+
+\begin{thrm}{}{props-of-dir-der}
+	Let $f,g:\mathbb{R}^n \to \mathbb{R}$, let $v,w \in T_p(\mathbb{R}^n)$, and $\alpha,\beta\in\mathbb{R}$, then
+	\begin{enumerate}
+		\item $(\alpha v + \beta w)[f] = \alpha v[f] + \beta w[f]$,
+		\item $v[\alpha f + \beta g] = \alpha v[f] + \beta v[g]$, and
+		\item $v[fg] = v[f] \cdot g(p) + f(p) \cdot v[g]$.
+	\end{enumerate}
+\end{thrm}
+\begin{proof}
+	We prove each of these by using Proposition \ref{prop:dir-der}.
+
+	\begin{enumerate}
+		\item We have
+			\begin{align*}
+				(\alpha v + \beta w)[f] &= \sum_i (\alpha v_i + \beta w_i) \frac{\partial f}{\partial x_i} (p) \\
+							&= \alpha \sum_i v_i \frac{\partial f}{\partial x_i} (p) + \beta \sum_i w_i \frac{\partial f}{\partial x_i} (p) \\
+							&= \alpha v[f] + \beta w[f].
+			\end{align*}
+
+		\item We have
+			\begin{align*}
+				v[\alpha f + \beta g] &= \sum_i v_i \left[ \alpha \frac{\partial f}{\partial x_i} (p) + \beta \frac{\partial g}{\partial x_i} (p) \right] \\
+						      &= \alpha\sum_i v_i \frac{\partial f}{\partial x_i} (p) + \beta\sum_i v_i \frac{\partial g}{\partial x_i} (p) \\
+						      &= \alpha v[f] + \beta v[g].
+			\end{align*}
+
+		\item We have
+			\begin{align*}
+				v[fg] &= \sum_i v_i \frac{\partial (fg)}{\partial x_i} (p) \\
+				      &= \sum_i v_i \frac{\partial f}{\partial x_i} (p) g(p) + \sum_i v_i f(p) \frac{\partial g}{\partial x_i} (p) \\
+				      &= v[f] \cdot g(p) + f(p) \cdot v[g].
+			\end{align*}
+\end{enumerate}
+\end{proof}
+
+Parts (1) and (2) of this theorem say that $v[f]$ is linear in both $v$ and $f$. Part (3) is just the Leibniz rule.
+
+\begin{defn}{Operator of Vector Field on a Function}{}
+	The \textbf{operator} of a vector field $V$ on a function $f$ is a function $V[f]:\mathbb{R}^n \to \mathbb{R}$ given by $p\mapsto V(p)[f]$. This is the derivative of $f$ at the point $p$ in the direction of $V(p)$.
+\end{defn}
+
+Note that if $U_i$ is part of the natural frame field on $V$, then $U_i[f] = \frac{\partial f}{\partial x_i} .$
+
+\begin{cor}
+	Let $V,W$ be vector fields on $\mathbb{R}^n$, let $f,g,h:\mathbb{R}^n \to \mathbb{R}$, and let $\alpha,\beta \in \mathbb{R}$, then
+	\begin{enumerate}
+		\item $(fV+gW)[h] = fV[h] + gW[h]$,
+		\item $V[\alpha f+\beta g] = \alpha V[f] + \beta V[g]$, and
+		\item $V[fg] = V[f] \cdot g + f \cdot V[g]$.
+	\end{enumerate}
+\end{cor}
+\begin{proof}
+	We prove each of these by using the corresponding part of Theorem \ref{thrm:props-of-dir-der}.
+
+	\begin{enumerate}
+		\item Fix $p$, then we have
+			\begin{align*}
+				(fV+gW)(p)[h] &= (f(p)V(p)+g(p)W(p))[h] \\ &= f(p)V(p)[h]+g(p)W(p)[h].
+			\end{align*}
+
+		\item Fix $p$, then we have $V(p)[\alpha f + \beta g] = \alpha V(p) [f] + \beta V(p) [g].$
+
+		\item Fix $p$, then we have $V(p)[fg] = V(p)[f] \cdot g(p) + f(p) \cdot V(p)[g].$
+	\end{enumerate}
+\end{proof}
+
+Note that a ``scalar" in part (1) of this corollary can be a function, but the scalars must be actual numbers in part (2).
+
+%%%%%%%%%%%%%%%%%%%%
+% Parameterized Curves
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Parameterized Curves}
+
+\begin{defn}{Curve}{}
+A \textbf{curve} in $\mathbb{R}^n$ is a differentiable function $\alpha:I\to \mathbb{R}^n$, where $I$ is an open interval in $\mathbb{R}$.
+\end{defn}
+
+\begin{ex}{Helix}{}
+	To draw a helix, we can parameterize a curve $\alpha:\mathbb{R}\to \mathbb{R}^3$ by 
+	\[
+		\alpha(t)=(a \cos t, a \sin t, bt),
+	\] where $a>0$ and $b\neq 0$.
+\end{ex}
+
+\begin{defn}{Velocity Vector}{}
+Let $\alpha:I\to \mathbb{R}^n$ be a curve. Then for every $t \in I$, the \textbf{velocity vector} of $\alpha$ at $t$ is the tangent vector
+\[
+	\alpha'(t) = \left( \frac{d \alpha_1}{d t} (t), \dots, \frac{d \alpha_n}{d t} (t) \right)_{\alpha(t)}
+\] at the point $\alpha(t) \in \mathbb{R}^n$.
+\end{defn}
+
+We can write the velocity vector alternatively as $\alpha'(t) = \sum_i \frac{d \alpha_i}{d t} (t) U_i(\alpha(t))$.
+
+\begin{ex}{Velocity Vector of a Helix}{}
+Using the parameterization of a helix from the previous example, its velocity vector is
+\[
+	\alpha'(t) = (-a \sin t, a \cos t, b)_{\alpha(t)}.
+\]
+\end{ex}
+
+\begin{defn}{Reparameterization}{}
+	Let $\alpha:I\to \mathbb{R}^n$ be a curve, and let $h:J\to I$ be differentiable, where $J$ is an open interval. Then the function $\beta:J\to \mathbb{R}^n$ given by the composition $\beta = \alpha \circ h$ is called a \textbf{reparameterization} of $\alpha$ by $h$.
+\end{defn}
+
+\begin{prop}
+Let $\beta$ be a reparameterization of $\alpha$ by $h$. Then its velocity vector is
+\[
+	\beta'(s) = h'(s) \alpha'(h(s)).
+\] 
+\end{prop}
+\begin{proof}
+	To clarify notation, by $\alpha'(h(s))$ we mean $\frac{d }{d t} \alpha'(t) \big|_{t=h(s)}$. With that out of the way, this proof is just a straightforward application of the chain rule.
+
+	Since $\beta(s) = \alpha(h(s)) = \big(\dots, \alpha_i(h(s)), \dots \big)$, its derivative is given by $\beta'(s) = \big(\dots, h'(s) \alpha_i'(h(s)) , \dots \big)=h'(s) \alpha'(h(s)).$
+\end{proof}
+
+\begin{prop}
+Let $\alpha$ be a curve in $\mathbb{R}^n$, and let $f:\mathbb{R}^n\to \mathbb{R}$ be differentiable. Then
+\[
+	a'(t)[f] = \frac{d (f(\alpha))}{d t} (t).
+\] 
+\end{prop}
+\begin{proof}
+	By definition,
+	\[
+		\alpha' = \left( \frac{d \alpha_1}{d t} , \dots, \frac{d \alpha_n}{d t}  \right)_{\alpha(t)},
+	\] so by Proposition \ref{prop:dir-der},
+	\[
+		\alpha'(t)[f] = \sum_i \alpha_i'(t) \frac{\partial f}{\partial x_i} (\alpha(t)).
+	\] Noticing that the above expression is just an application of the chain rule, we can ``undo" the chain rule to get
+	\[
+		\alpha'(t)[f] = \frac{d (f(\alpha))}{d t} (t).
+	\] 
+\end{proof}
+
+{\color{red}Is one-to-one-ness of a curve necessary?}
+
+\begin{defn}{Period}{}
+	A curve $\alpha:\mathbb{R}\to \mathbb{R}^n$ is \textbf{periodic} if there is some $p>0$ such that $\alpha(t+p) = \alpha(t)$ for all $t$. The smallest such $p$ is then called the \textbf{period} of $\alpha$.
+\end{defn}
+
+{\color{red}Definition of regular curve.}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% 1-Forms
+%%%%%%%%%%%%%%%%%%%%
+
+\section{1-Forms}
+
+\begin{defn}{1-Form}{}
+	A \textbf{1-form} on $\mathbb{R}^n$ is a linear function $\phi:T_p(\mathbb{R}^n)\to \mathbb{R}$, where $p$ is some point in $\mathbb{R}^n$.
+\end{defn}
+
+{\color{red}Something about $\phi$ being in dual space of $T_p(\mathbb{R}^n)$. In this sense it's dual to the notion of a vector field, whatever that means.}
+
+Addition of 1-forms is defined pointwise. We can also define a sort of scalar multiplication with functions. If $\phi:T_p(\mathbb{R}^n)\to \mathbb{R}$ is a 1-form and $f:\mathbb{R}^n\to \mathbb{R}$ is just your everyday real-valued function, define
+\[
+	(f\phi)(v) \doteq f(p) \phi(v)
+\] for all $v \in T_p(\mathbb{R}^n)$.
+
+Given a vector field $V$, we can naturally define an operation on it by a 1-form by
+\[
+	(\phi(V))(p) \doteq \phi(V(p)).
+\] Thus we can view 1-forms as operators that convert vector fields into real-valued functions.
+
+If $\phi(V)$ is differentiable whenever $V$ is differentiable, then we say that $\phi$ itself is differentiable.
+
+\begin{note}{}{}
+From now on, assume any given 1-form is differentiable, unless otherwise stated.
+\end{note}
+
+It is easy to show that 1-forms are linear over vector fields. To be explicit, given a vector field $V$, functions $f$ and $g$, and 1-forms $\phi$ and $\psi$, we have
+\[
+	 \phi(fV + gV) = f \phi(V) + g\phi(V)
+\] and
+\[
+	(f\phi+g\psi)(V) = f\phi(V) + g\psi(V).
+\] 
+
+\begin{defn}{Differential}{}
+Let $f:\mathbb{R}^n\to \mathbb{R}$ be differentiable. Then the \textbf{differential} $df$ of $f$ is the 1-form such that
+\[
+	df(v) = v[f]
+\] for all tangent vectors $v$ of some point $p \in \mathbb{R}^n$.
+\end{defn}
+
+Since $v[f]$ is real-valued, and since we proved earlier that it is linear for all $p$, $v[f]$ is in fact a 1-form.
+
+\begin{ex}{}{}
+Consider the differentials $dx_1, \dots, dx_n$ of the natural coordinate functions on $\mathbb{R}^n$. For a tangent vector $v$ of a point $p$, we have
+\[
+	dx_i(v) = v[x_i] = \sum_j v_j \frac{\partial x_i}{\partial x_j} (p) = \sum_j v_j \delta_{ij} = v_i,
+\] where $\delta_{ij}$ is the Kronecker delta. Thus the value of $dx_i$ does \textit{not} depend on the point of application $p$.
+\end{ex}
+
+\end{document}

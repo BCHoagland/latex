@@ -21,10 +21,10 @@
 % Isomorphic Binary Structures
 %%%%%%%%%%%%%%%%%%%%
 
-\section{Isomorphic Binary Structures}
+\section{Homomorphisms and Isomorphisms}
 
 \begin{defn}{Binary Algebraic Structure}{}
-	A \textbf{binary algebraic structure} $(S, *)$ is a set $S$ closed under binary operation $* : S \times S \to S$.
+        A \textbf{binary algebraic structure} $(S, *)$ is a set $S$ closed under binary operation $* : S \times S \to S$.
 \end{defn}
 
 \begin{defn}{Homomorphism}{}
@@ -33,6 +33,10 @@
 		\phi(a_1 \cdot a_2) = \phi(a_1) * \phi(a_2)
 	\] for all $a_1, a_2 \in A$.
 \end{defn}
+
+Homomorphisms are really more general than this, and the definition really depends on the context. The above definition works fine for sets with binary operations, but the concept of a homomorphism extends intuitively to other sturctures.
+
+For example, homomorphisms between vector spaces respect scalar multiplication, which is not a binary operation since it involves the base field of the vector space.
 
 \begin{defn}{Isomorphism}{}
 Let $(A, \cdot)$ and $(B,*)$ be binary algebraic structures. A map $\phi:A \leftrightarrow B$ is an \textbf{isomorphism} if it is a bijective homomorphism.
@@ -156,7 +160,6 @@ A finite group can be expressed with a table. In order to satisfy the group axio
 The \textbf{order} of a group $G$ is its number of elements $|G|$.
 \end{defn}
 
-
 %%%%%%%%%%%%%%%%%%%%
 % Subgroups
 %%%%%%%%%%%%%%%%%%%%
@@ -195,6 +198,15 @@ Subgroup diagrams can be used to visualize the subgroups of a group. Below is th
 \begin{proof}
 	The forward implication follows immediately from the definition of a subgroup, so we only show the backward implication. Conditions $(2)$ and $(3)$ show show $H$ has an identity element and inverses. Since $H \subset G$, we can view any expression in $H$ as an expression in $G$, so associativity holds. Then since $H$ is closed under the induced binary operation, it is a group. Now $H$ is a group that is also a subset of $G$, so it it is a subgroup of $G$.
 \end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Centralizers, Normalizers, Stabilizers, and Kernels
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Centralizers, Normalizers, Stabilizers, and Kernels}
+
+{\color{red}Do this.}
 
 %%%%%%%%%%%%%%%%%%%%
 % Cyclic Groups
@@ -369,6 +381,7 @@ Use context to determine which of these is meant.
 	Note that we can't necessarily simplify that last product because $G$ might not be abelian.
 \end{ex}
 
+
 %+-------------------+
 %| +---------------+ |
 %| |    Chapter    | |
@@ -376,7 +389,7 @@ Use context to determine which of these is meant.
 %+-------------------+
 % Permutations, Cosets, and Direct Products
 
-\chapter{Permutations, Cosets, and Direct Products}
+\chapter{Permutations}
 
 %%%%%%%%%%%%%%%%%%%%
 % Permutation Groups
@@ -663,6 +676,32 @@ For $n\geq 2$, $A_n$ forms a subgroup of $S_n$ of order $n!/2$.
 \end{proof}
 
 
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Quotient Groups
+
+\chapter{Quotient Groups}
+
+%%%%%%%%%%%%%%%%%%%%
+% Normal Subgroups and Quotient Groups
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Normal Subgroups and Quotient Groups}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Solvable Groups
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Solvable Groups}
+
+
+
 %%%%%%%%%%%%%%%%%%%%
 % Cosets and Lagrange's Theorem
 %%%%%%%%%%%%%%%%%%%%
@@ -738,6 +777,71 @@ If $G$ is finite, then $(G:H) = |G|/|H|$ is also finite.
 	Since $h_j K \subset H$ for all $j$, we have $g_i h_j K \subset g_i H$ for all $i$. Then since the cosets of $H$ in $G$ are disjoint, the two sets $g_i h_j K$ and $g_l h_j K$ are disjoint for all $j$ when $i \neq l$. Since the cosets of $K$ in $H$ are also disjoint, the two sets $g_i h_j K$ and $g_i h_l K$ are disjoint for all $i$ when $j \neq l$. Thus all the cosets of $K$ in $G$ in the double union above are disjoint, so $(G:K) = m n = (G:H) (H:K)$.
 \end{proof}
 
+
+%%%%%%%%%%%%%%%%%%%%
+% The Isomorphism Theorems
+%%%%%%%%%%%%%%%%%%%%
+
+\section{The Isomorphism Theorems}
+
+{\color{red}Do this.}
+
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Group Actions
+
+\chapter{Group Actions}
+
+%%%%%%%%%%%%%%%%%%%%
+% Group Actions as Permutations
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Group Actions as Permutations}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% The Class Equation
+%%%%%%%%%%%%%%%%%%%%
+
+\section{The Class Equation}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Automorphisms
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Automorphisms}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% The Sylow Theorems
+%%%%%%%%%%%%%%%%%%%%
+
+\section{The Sylow Theorems}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% The Simplicity of $\protect A_n$
+%%%%%%%%%%%%%%%%%%%%
+
+\section{The Simplicity of \texorpdfstring{$A_n$}{the Alternating Group}}
+
+
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Direct Products and Abelian Groups
+
+\chapter{Direct Products and Abelian Groups}
+
+
 %%%%%%%%%%%%%%%%%%%%
 % Direct Products
 %%%%%%%%%%%%%%%%%%%%
@@ -778,6 +882,21 @@ $\mathbb{Z}_m \times \mathbb{Z}_n$ is cyclic and is isomorphic to $\mathbb{Z}_{m
 \begin{proof}
 	{\color{red}Do this (page 106).}
 \end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Finitely Generated Abelian Groups
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Finitely Generated Abelian Groups}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Semidirect Products
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Semidirect Products}
+
 
 
 \end{document}
