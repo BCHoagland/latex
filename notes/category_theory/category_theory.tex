@@ -1,0 +1,177 @@
+\documentclass[10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/math}
+
+\lhead{Braden Hoagland}
+\chead{Category Theory}
+\rhead{}
+
+\DeclareMathOperator{\hh}{Hom}
+\DeclareMathOperator{\op}{op}
+\DeclareMathOperator{\ob}{ob}
+
+\begin{document}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%
+% Categories
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Categories}
+
+\begin{defn}{Category}{}
+	A \textbf{category} $\mathscr{C}$ is a class of \textbf{objects} $\ob(\mathscr{C})$ along with sets of \textbf{morphisms} between those objects. The set of morphisms $A$ to $B$ is denoted $\hh_{\mathscr{C}}(A,B).$ There must be a law of composition of morphisms, i.e. for all objects $A,B,$ and $C$, there is a map
+	\[
+		\hh_{\mathscr{C}}(A,B) \times \hh_{\mathscr{C}}(B,C) \to \hh_{\mathscr{C}}(A,C)
+	\] 
+	that sends the pair of morphisms $(f,g)$ to their composition $gf$. Finally, the objects and morphisms satisfy:
+	\begin{enumerate}
+		\item If $A \neq C$ or $B \neq D$, then $\hh_{\mathscr{C}}(A,B)$ and $\hh_{\mathscr{C}}(C,D)$ are disjoint sets.
+		\item Morphism composition is associative.
+		\item Each object has an identity morphism, i.e. for object $A$, there is a map $1_{A} \in \hh_{\mathscr{C}}(A,A)$ such that $1_{A}g = g$ and $f 1_{A}=f$ for all $f \in \hh_{\mathscr{C}}(A,B)$ and $g \in \hh_{\mathscr{C}}(B,A)$, where $B$ is arbitrary.
+	\end{enumerate}
+\end{defn}
+
+We will drop the subscript $\mathscr{C}$ in $\hh_{\mathscr{C}}$ if the category is clear.
+
+\begin{defn}{Subcategory}{}
+$\mathscr{C}$ is a subcategory of $\mathscr{D}$ if
+\begin{enumerate}
+	\item every object of $\mathscr{C}$ is an object of $\mathscr{D}$; and
+	\item for all objects $A,B$ in $\mathscr{C}$, $\hh_{\mathscr{C}}(A,B) \subset \hh_{\mathscr{D}}(A,B)$.
+\end{enumerate}
+\end{defn}
+
+\begin{prop}
+The identity morphism of an object is unique.
+\end{prop}
+\begin{proof}
+	Suppose $1_{A}$ and $1_{A}'$ are both identity morphisms of $A$. Then by the two equalities in condition $(3)$ above, $1_{A}=1_{A}1_{A}'=1_{A}'$.
+\end{proof}
+
+\begin{defn}{Endomorphism}{}
+An \textbf{endomorphism} of $A$ is a morphism from $A$ to itself.
+\end{defn}
+
+\begin{defn}{Isomorphism}{}
+An isomorphism $f:A\to B$ is an invertible morphism, i.e. there exists a morphism $g:B\to A$ such that $gf=1_{A}$ and $fg=1_{B}$.
+\end{defn}
+
+\begin{prop}
+Inverses of morphisms are unique.
+\end{prop}
+\begin{proof}
+Suppose $f:A \to B$ is a morphism and $g,g': B \to A$ are both inverses of it. Then by associativity of morphism composition, $g=g1_{B}=g(fg')=(gf)g'=1_{A}g'=g'.$
+\end{proof}
+
+Now for some examples to make this \textit{somewhat} less abstract.
+
+\begin{enumerate}
+	\item \textbf{Set}: the category of all sets. The category of all finite sets is a subcategory of this.
+		\begin{itemize}
+			\item $\hh(A,B)$ is the set of all functions from $A$ to $B$.
+			\item Morphism composition is the usual composition of functions.
+			\item The identity morphism sends $a \in A$ to itself.
+		\end{itemize}
+	\item \textbf{Grp}: the category of all groups. \textbf{Ab}, the category of all abelian groups, is a subcategory of this. Morphisms are group homomorphisms, and isomorphisms are, well, group isomorphisms.
+	\item \textbf{Ring}: the category of all nonzero rings with $1$. The morphisms are ring homomorphisms that send 1 to 1.
+	\item \textbf{R-mod}: the category of all left $R$-modules. The morphisms are $R$-module homomorphisms.
+	\item \textbf{Top}: the category of all topological spaces. The morphisms are continuous maps between spaces, and the isomorphisms are homeomorphisms.
+\end{enumerate}
+
+\begin{defn}{Discrete Category}{}
+A \textbf{discrete category} is a category in which all the morphisms are identities, i.e. every object is isolated.
+\end{defn}
+
+\begin{defn}{Opposite/Dual Category}{}
+	Given a category $\mathscr{C}$, its \textbf{opposite} or \textbf{dual} category $\mathscr{C}^{\text{op}}$ is the category gotten by reversing the morphisms of $\mathscr{C}$. Formally, $\ob(\mathscr{C}^{\op}) = \ob(\mathscr{C})$, but
+	\[
+		\hh_{\mathscr{C}^{\text{op}}}(A,B) = \hh_{\mathscr{C}}(B,A).
+	\] 
+\end{defn}
+
+Note that the identities in a category and its dual are the same. Compositions, on the other hand, are reversed.
+
+\begin{figure}[H]
+	\centering
+\begin{tikzcd}
+\bullet \arrow[r, "f"] \arrow[rd, "gf"'] & \bullet \arrow[d, "g"] &  & \bullet & \bullet \arrow[l, "f'"']                    \\
+                                         & \bullet                &  &         & \bullet \arrow[lu, "f'g'"] \arrow[u, "g'"']
+\end{tikzcd}
+	\caption{A category and its dual. Since every object must have an identity morphism, I usually won't include them in a diagram unless necessary.}
+\end{figure}
+
+\begin{defn}{Product Category}{}
+Given categories $\mathscr{C}$ and $\mathscr{D}$, we can define their \textbf{product category} $\mathscr{C} \times \mathscr{D}$ as having the objects
+\[
+	\ob(\mathscr{C} \times \mathscr{D}) = \ob(\mathscr{C}) \times \ob(\mathscr{D})
+\] and the morphisms
+\[
+	\hh_{\mathscr{C} \times \mathscr{D}}( (A,B), (A',B') ) = \hh_{\mathscr{C}}(A,A') \times \hh_{\mathscr{D}}(B,B').
+\] 
+\end{defn}
+It is straightforward to define the identity morphisms and the composition of morphisms in product categories in a piecewise fashion, building off the identities and composition laws of $\mathscr{C}$ and $\mathscr{D}$
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Functors
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Functors}
+
+\begin{defn}{Functor}{}
+	Let $\mathscr{C}$ and $\mathscr{D}$ be categories. A \textbf{(covariant) functor} $\mathcal{F}:\mathscr{C}\to \mathscr{D}$ associates every object $A$ in $\mathscr{C}$ to an object $\mathcal{F}A$ in $\mathscr{D}$, and it also associates every morphism in $\hh_{\mathscr{C}}(A,B)$ to a morphism in $\hh_{\mathscr{D}}(\mathcal{F}A,\mathcal{F}B)$ such that identity morphisms and morphism compositions are preserved.
+
+	\textbf{Contravariant functors} are the same, except they reverse functors (and thus also morphism composition).
+\end{defn}
+
+The formal definitions of both types of functions are given below, with the differences between them highlighted. Covariant functors satisfy:
+\begin{enumerate}
+	\item For every object $A$ in $\mathscr{C}$, $\mathcal{F}A$ is an object in $\mathscr{D}$.
+	\item For every $f \in \hh_{\mathscr{C}}(A,B)$, $\mathcal{F}(f)$ is a morphism in {\color{blue}$\hh_{\mathscr{D}}(\mathcal{F}A, \mathcal{F}B)$} such that
+		\begin{enumerate}
+			\item {\color{orange}$\mathcal{F}(gf) = \mathcal{F}(g) \mathcal{F}(f)$,} and
+			\item $\mathcal{F}(1_{A}) = 1_{\mathcal{F}A}$.
+		\end{enumerate}
+\end{enumerate}
+Contravariant functors satisfy:
+\begin{enumerate}
+	\item For every object $A$ in $\mathscr{C}$, $\mathcal{F}A$ is an object in $\mathscr{D}$.
+	\item For every $f \in \hh_{\mathscr{C}}(A,B)$, $\mathcal{F}(f)$ is a morphism in {\color{blue}$\hh_{\mathscr{D}}(\mathcal{F}B, \mathcal{F}A)$} such that
+                \begin{enumerate}
+			\item {\color{orange}$\mathcal{F}(gf) = \mathcal{F}(f) \mathcal{F}(g)$,} and
+                        \item $\mathcal{F}(1_{A}) = 1_{\mathcal{F}A}$.
+                \end{enumerate}
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}
+                                                   & B \arrow[dd, "g"] \arrow[rrr, dashed] &  &                                           & \mathcal{F}B \arrow[dd, "\mathcal{F}(g)"] \\
+A \arrow[ru, "f"] \arrow[rrr, dashed, shift right] &                                       &  & \mathcal{F}A \arrow[ru, "\mathcal{F}(f)"] &                                           \\
+                                                   & C \arrow[lu, "h"] \arrow[rrr, dashed] &  &                                           & \mathcal{F}C \arrow[lu, "\mathcal{F}(h)"]
+\end{tikzcd}
+	\caption{A functor $\mathcal{F}$ between two categories.}
+\end{figure}
+
+
+\begin{ex}{Category Inception}{}
+The category \textbf{CAT} has objects that are themselves categories, and its morphisms are functors.
+\end{ex}
+
+\begin{ex}{Forgetful Functors}{}
+A very basic type of functor might take a category and strip its objects of some kind of complexity, i.e. a functor from \textbf{Grp} to \textbf{Set}. A ``forgetful functor" doesn't have to just map objects to plain sets, though. We could also map \textbf{Ab} to \textbf{Grp}, forgetting the abelian nature of the groups in our category.
+\end{ex}
+
+\begin{defn}{Domain/Codomain}{}
+	Given a functor $f \in \hh_{\mathscr{C}}(A,B)$, $A$ is the \textbf{domain} and $B$ is the \textbf{codomain} of $f$.
+\end{defn}
+
+There are tons of examples of functors, so here are some that aren't too complicated.
+\begin{enumerate}
+	\item The \textbf{identity functor} $\mathcal{I}_{\mathscr{C}}$ maps $\mathscr{C}$ to $\mathscr{C}$ by sending objects and morphims to themselves.
+	\item If $\mathscr{C}$ is a subcategory of $\mathscr{D}$, then the \textbf{inclusion functor} maps $C$ to $D$ by sending objects and morphisms to themselves, except now as members of $\mathscr{D}$ instead of $\mathscr{C}$.
+\end{enumerate}
+
+{\color{red}More examples.}
+
+\end{document}

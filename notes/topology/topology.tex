@@ -647,13 +647,46 @@ $X$ is a normal topological space if and only if for all open covers $\left\{ U,
 A somewhat surprising result is that not all subspaces of normal spaces are normal. To see why, we can modify the earlier proof that subspaces of regular spaces are themselves regular. Let $Y$ be a subspace of a normal space $X$, and let $A$ and $B$ be closed in $Y$. Then
 \[
 	A= \text{cl}_X(A) \cap Y, B = \text{cl}_X(B) \cap Y.
-\] In order to use the regularity of $X$, we would need $\text{cl}_X(A)$ and $\text{cl}_X(B)$ to be disjoint. {\color{red}Insert picture here?} Unfortunately, this is not true in general. It \textit{is} true, though, if $Y$ is a closed subspace of $X$.
+\] In order to use the regularity of $X$, we would need $\text{cl}_X(A)$ and $\text{cl}_X(B)$ to be disjoint. Unfortunately, this is not true in general (see the figure below). It \textit{is} true, though, if $Y$ is a closed subspace of $X$.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=2]{fig/normal-counter.pdf}
+	\caption{An exaggerated example of what could happen if $Y$ is open in $X$.}
+\end{figure}
+
 
 \begin{prop}
 Closed subspaces of normal spaces are normal.
 \end{prop}
 \begin{proof}
 	Let $Y$ be a closed subspace of a normal space $X$, and let $A$ and $B$ be closed in $Y$. Then since $Y$ is closed in $X$, both $A$ and $B$ are also closed in $X$. Then the normality of $Y$ follows from the normality of $X$.
+\end{proof}
+
+\begin{defn}{Separated}{}
+$A,B \subset X$ are \textbf{separated} if $\overline{A}\cap B$ and $A \cap \overline{B}$ are both empty, i.e. they don't contain each other's limit points.
+\end{defn}
+
+\begin{defn}{Completely Normal}{}
+$X$ is \textbf{completely normal} if for any two separated sets $A$ and $B$, there exist disjoint open sets $U$ and $V$ such that $A \subset U$ and $B \subset V$. A $T_5$ space is any space that is both $T_1$ and completely normal.
+\end{defn}
+
+\begin{lem}
+	Let $Y$ be a subspace of $X$, and let $A$ and $B$ be disjoint closed sets in $Y$. Then $A$ and $B$ are separated in $X$.
+\end{lem}
+\begin{proof}
+	Denote the closure in $X$ with a bar, then $A=\overline{A} \cap Y$ and $B = \overline{B}\cap Y$. Then $\overline{A} \cap B = A \cap \overline{B}= \overline{A}\cap \overline{B}\cap Y = A \cap B = \varnothing$.
+\end{proof}
+
+\begin{prop}
+$X$ is completely normal if and only if every subspace of $X$ is normal.
+\end{prop}
+\begin{proof}
+\textbf{Forward:} Let $A$ and $B$ be closed in a subspace $Y$ of $X$, then by the previous lemma, they are separated in $X$. Since $X$ is completely normal, there are disjoint open sets $U$ and $V$ of $X$ such that $A \subset U$ and $B \subset V$. Then $U \cap Y$ and $V\cap Y$ are the desired open sets to show that the subspace $Y$ is normal.
+
+\textbf{Backward:} Let $A$ and $B$ be separated in $X$, then $A \in X- \overline{B}$ and $B \in X-\overline{A}$. Consider the subspace $Y \doteq (X-\overline{B}) \cup (X-\overline{A}) = X - (\overline{B} \cap \overline{A})$. Then since $\text{cl}_Y(A) = \overline{A}\cap Y$ and $\text{cl}_y(B) = \overline{B}\cap Y$, the definition of $Y$ gives $\text{cl}_Y(A) \cap \text{cl}_Y(B) = \overline{A} \cap \overline{B} \cap Y = \varnothing$.
+
+Then since $\text{cl}_Y(A)$ and $\text{cl}_Y(B)$ are disjoint and closed in $Y$, and since $Y$ is normal by assumption, there are disjoint open sets $U$ and $V$ of $Y$ such that $\text{cl}_Y(A) \subset U$ and $\text{cl}_Y(B) \subset V$. Then $A \subset U$ and $B \subset V$, so $X$ is completely normal.
 \end{proof}
 
 
@@ -802,7 +835,7 @@ Continuity obviously depends on $f$, but it also depends on the topologies of $X
 	Let $Y$ be given by the subbasis $\mathcal{S}$. If $f^{-1}(S)$ is open in $X$ for all $S \in \mathcal{S}$, then $f: X \to Y$ is continuous.
 \end{prop}
 \begin{proof}
-	Any basis $B$ of $Y$ can be written as the finite intersection of subbasis elements, i.e. $B = S_1 \cap \cdots \cap S_n$. Then $f^{-1}(B) = f^{-1}(S_1) \cap \cdots \cap f^{-1}(S_n)$, so if each $f^{-1}(S_i)$ is open, then $f^{-1}(B)$ is open. Then by the previous proposition, $f$ is continuous.
+	Any basis $B$ of $Y$ can be written $B = S_1 \cap \cdots \cap S_n$ for $S_i \in \mathcal{S}$. Then $f^{-1}(B) = f^{-1}(S_1) \cap \cdots \cap f^{-1}(S_n)$, so if each $f^{-1}(S_i)$ is open, then $f^{-1}(B)$ is open. Then by the previous proposition, $f$ is continuous.
 \end{proof}
 
 \begin{thrm}{}{}
@@ -855,29 +888,29 @@ Let $X$ and $Y$ be topological spaces, and let $f: X \to Y$, then the following 
 	A \textbf{topological property} is a property of topological space $X$ expressed entirely in terms of the topology on $X$ (the open sets of $X$).
 \end{defn}
 
-If $f:X \to Y$ is homeomorphic, then $Y$ has the topological properties of $X$. From this viewpoint, a homeomorphism is a bijective correspondence that preserves topological structure. This can be thought of as the topological analogue to isomorphisms in algebra.
+If $f:X \to Y$ is a homeomorphism, then $Y$ has the topological properties of $X$. From this viewpoint, a homeomorphism is a bijective correspondence that preserves topological structure. This can be thought of as the topological analogue to isomorphisms in algebra.
 
 \begin{defn}{Topological Embedding}{}
-	Suppose $f: X \hookrightarrow Y$ is injective and continuous with $X,Y$ topological spaces. Let $Z$ be $f(X)$ as a subspace of $Y$, then $f':X \leftrightarrow Z$ (obtained by restricting the range of $f$) is bijective. If $f'$ is a homeomorphism of $X$ with $Z$, we say $f: X \hookrightarrow  Y$ is a \textbf{(topological) embedding} of $X$ in $Y$.
+	Suppose $f: X \hookrightarrow Y$ is one-to-one and continuous. Then $f':X \leftrightarrow f(X)$ (obtained by restricting the range of $f$) is bijective. If $f'$ is a homeomorphism of $X$ with $f(X)$, we say $f: X \hookrightarrow  Y$ is a \textbf{(topological) embedding} of $X$ in $Y$.
 \end{defn}
 
-{\color{red}Stuff about constructing continuous functions.}
-
 \begin{thrm}{The Pasting Lemma}{}
-	Let $X = A \cup B$, where $A$ and $B$ are closed in $X$ {\color{red}(something about this working for open sets too??)}. Let $f:A \to Y$ and $g:B\to Y$ be continuous. If $f(x)=g(x)$ for all $x \in A \cap B$, then $f$ and $g$ combine to give a continuous function $h : X \to Y$ by
+	Let $X = A \cup B$, where $A$ and $B$ are either both closed or both open in $X$. Let $f:A \to Y$ and $g:B\to Y$ be continuous. If $f(x)=g(x)$ for all $x \in A \cap B$, then the function $h : X \to Y$ given by
 	\[
 		H(x)=
 		\begin{cases}
 			f(x) & x \in A \\
-			g(x) & x\in B.
+			g(x) & x\in B
 		\end{cases}
-	\] 
+	\] is continuous.
 \end{thrm}
 \begin{proof}
-	Let $C$ be closed in $Y$, then $h^{-1}(C) = f^{-1}(C) \cup g^{-1}(C)$. Since $f$ is continuous, $f^{-1}(C)$ is closed in $A$, so it is also closed in $X$. Similarly, $g^{-1}(C)$ is closed in $X$ as well. Then $h^{-1}(C)$ is the finite union of closed sets, so it is closed in $X$. Thus $h$ is continuous.
+	Suppose $A$ and $B$ are both closed. Let $C$ be closed in $Y$, then $h^{-1}(C) = f^{-1}(C) \cup g^{-1}(C)$. Since $f$ and $g$ are continuous, both $f^{-1}(C)$ and $g^{-1}(C)$ are closed in $A$ and $B$, respectively. Since both $A$ and $B$ are closed in $X$, both preimages are also closed in $X$. Thus $h^{-1}(C)$ is closed and $h$ is subsequently continuous.
+
+	To show this when $A$ and $B$ are both open, replace the word ``closed" with the word ``open" in the above paragraph.
+\end{proof}
 
 	Note that the condition $f(x) = g(x)$ for all $x \in A \cap B$ is not needed in this proof. It is only necessary to make $h$ an actual function.
-\end{proof}
 
 \begin{thrm}{Maps into Products}{}
 	Define $f:A\to X \times Y$ by $f(a)=(f_1(a), f_2(a))$, for $f_1:A\to X$ and $f_2:A\to Y$. Then $f$ is continuous if and only if $f_1$ and $f_2$ are both continuous.
@@ -896,6 +929,40 @@ If $f:X \to Y$ is homeomorphic, then $Y$ has the topological properties of $X$. 
 \begin{note}{}{}
 	If $f:A\times B\to X$ instead, there is \textit{no} useful criterion for the continuity of $f$.
 \end{note}
+
+%%%%%%%%%%%%%%%%%%%%
+% Constructing Continuous Functions
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Constructing Continuous Functions}
+
+\begin{prop}
+Constant functions are continuous.
+\end{prop}
+\begin{proof}
+	Let $f:X\to Y$ be given by $f(x)=y$ for some constant $y$. If $V$ is open in $Y$, then $f^{-1}(V)$ is either $\varnothing$ or $X$, depending on if $y \in V$. In either case, $f^{-1}(V)$ is open.
+\end{proof}
+
+\begin{prop}
+Inclusion maps are continuous.
+\end{prop}
+\begin{proof}
+	Let $X \subset Y$, and define $\iota:X\to Y$ by $\iota(x)=x$. For $V$ open in $Y$, $\iota^{-1}(V)=X \cap V$, which is open in $X$ by definition.
+\end{proof}
+
+\begin{prop}
+Restrictions of continuous maps are continuous.
+\end{prop}
+\begin{proof}
+	Let $f:X\to Y$ be continuous, and let $A \subset X$. Define $f|_{A}:A\to Y$ by $f|_{A}(a)=f(a)$. For $V$ open in $Y$, $f|_{A}^{-1}(V) = f^{-1}(V) \cap A$, which is open in $A$ since $f^{-1}(V)$ is open in $X$.
+\end{proof}
+
+\begin{prop}
+Compositions of continuous functions are continuous.
+\end{prop}
+\begin{proof}
+	Let $f:X\to Y$ and $g:Y\to Z$ be continuous. For $V$ open in $Z$, $(g \circ f)^{-1}(V) = f^{-1}(g^{-1}(V))$, which is open in $X$ since $f$ and $g$ are both continuous.
+\end{proof}
 
 
 \end{document}
