@@ -109,7 +109,7 @@ Given categories $\mathscr{C}$ and $\mathscr{D}$, we can define their \textbf{pr
 	\hh_{\mathscr{C} \times \mathscr{D}}( (A,B), (A',B') ) = \hh_{\mathscr{C}}(A,A') \times \hh_{\mathscr{D}}(B,B').
 \] 
 \end{defn}
-It is straightforward to define the identity morphisms and the composition of morphisms in product categories in a piecewise fashion, building off the identities and composition laws of $\mathscr{C}$ and $\mathscr{D}$
+It is straightforward to define the identity morphisms and the composition of morphisms in product categories in a piecewise fashion, building off the identities and composition laws of $\mathscr{C}$ and $\mathscr{D}$.
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -118,30 +118,7 @@ It is straightforward to define the identity morphisms and the composition of mo
 
 \section{Functors}
 
-\begin{defn}{Functor}{}
-	Let $\mathscr{C}$ and $\mathscr{D}$ be categories. A \textbf{(covariant) functor} $\mathcal{F}:\mathscr{C}\to \mathscr{D}$ associates every object $A$ in $\mathscr{C}$ to an object $\mathcal{F}A$ in $\mathscr{D}$, and it also associates every morphism in $\hh_{\mathscr{C}}(A,B)$ to a morphism in $\hh_{\mathscr{D}}(\mathcal{F}A,\mathcal{F}B)$ such that identity morphisms and morphism compositions are preserved.
-
-	\textbf{Contravariant functors} are the same, except they reverse functors (and thus also morphism composition).
-\end{defn}
-
-The formal definitions of both types of functions are given below, with the differences between them highlighted. Covariant functors satisfy:
-\begin{enumerate}
-	\item For every object $A$ in $\mathscr{C}$, $\mathcal{F}A$ is an object in $\mathscr{D}$.
-	\item For every $f \in \hh_{\mathscr{C}}(A,B)$, $\mathcal{F}(f)$ is a morphism in {\color{blue}$\hh_{\mathscr{D}}(\mathcal{F}A, \mathcal{F}B)$} such that
-		\begin{enumerate}
-			\item {\color{orange}$\mathcal{F}(gf) = \mathcal{F}(g) \mathcal{F}(f)$,} and
-			\item $\mathcal{F}(1_{A}) = 1_{\mathcal{F}A}$.
-		\end{enumerate}
-\end{enumerate}
-Contravariant functors satisfy:
-\begin{enumerate}
-	\item For every object $A$ in $\mathscr{C}$, $\mathcal{F}A$ is an object in $\mathscr{D}$.
-	\item For every $f \in \hh_{\mathscr{C}}(A,B)$, $\mathcal{F}(f)$ is a morphism in {\color{blue}$\hh_{\mathscr{D}}(\mathcal{F}B, \mathcal{F}A)$} such that
-                \begin{enumerate}
-			\item {\color{orange}$\mathcal{F}(gf) = \mathcal{F}(f) \mathcal{F}(g)$,} and
-                        \item $\mathcal{F}(1_{A}) = 1_{\mathcal{F}A}$.
-                \end{enumerate}
-\end{enumerate}
+Functors map categories to categories by associating objects with objects and morphisms with morphisms in ways that respect morphism composition and identities.
 
 \begin{figure}[H]
 	\centering
@@ -150,16 +127,23 @@ Contravariant functors satisfy:
 A \arrow[ru, "f"] \arrow[rrr, dashed, shift right] &                                       &  & \mathcal{F}A \arrow[ru, "\mathcal{F}(f)"] &                                           \\
                                                    & C \arrow[lu, "h"] \arrow[rrr, dashed] &  &                                           & \mathcal{F}C \arrow[lu, "\mathcal{F}(h)"]
 \end{tikzcd}
-	\caption{A functor $\mathcal{F}$ between two categories.}
+\caption{A functor $\mathcal{F}$ between two categories.}
 \end{figure}
 
+\begin{defn}{(Covariant) Functor}{}
+	A \textbf{(covariant) functor} $\mathcal{F}:\mathscr{C}\to \mathscr{D}$ satisfy:
+\begin{enumerate}
+	\item For every object $A$ in $\mathscr{C}$, $\mathcal{F}A$ is an object in $\mathscr{D}$.
+	\item For every $f \in \hh_{\mathscr{C}}(A,B)$, $\mathcal{F}(f)$ is a morphism in $\hh_{\mathscr{D}}(\mathcal{F}A, \mathcal{F}B)$ such that
+		\begin{enumerate}
+			\item $\mathcal{F}(gf) = \mathcal{F}(g) \mathcal{F}(f)$, and
+			\item $\mathcal{F}(1_{A}) = 1_{\mathcal{F}A}$.
+		\end{enumerate}
+\end{enumerate}
+\end{defn}
 
 \begin{ex}{Category Inception}{}
 The category \textbf{CAT} has objects that are themselves categories, and its morphisms are functors.
-\end{ex}
-
-\begin{ex}{Forgetful Functors}{}
-A very basic type of functor might take a category and strip its objects of some kind of complexity, i.e. a functor from \textbf{Grp} to \textbf{Set}. A ``forgetful functor" doesn't have to just map objects to plain sets, though. We could also map \textbf{Ab} to \textbf{Grp}, forgetting the abelian nature of the groups in our category.
 \end{ex}
 
 \begin{defn}{Domain/Codomain}{}
@@ -170,8 +154,16 @@ There are tons of examples of functors, so here are some that aren't too complic
 \begin{enumerate}
 	\item The \textbf{identity functor} $\mathcal{I}_{\mathscr{C}}$ maps $\mathscr{C}$ to $\mathscr{C}$ by sending objects and morphims to themselves.
 	\item If $\mathscr{C}$ is a subcategory of $\mathscr{D}$, then the \textbf{inclusion functor} maps $C$ to $D$ by sending objects and morphisms to themselves, except now as members of $\mathscr{D}$ instead of $\mathscr{C}$.
+	\item \textbf{Forgetful functors} take a category and strip its objects of some kind of complexity, i.e. a functor from \textbf{Grp} to \textbf{Set}. A forgetful functor doesn't have to just map objects to plain sets, though. We could also map \textbf{Ab} to \textbf{Grp}, forgetting the abelian nature of the groups in our category.
 \end{enumerate}
 
 {\color{red}More examples.}
+
+In order to ``respect" morphisms, we might either keep the morphisms all in the same direction or flip them. If we decide to flip them all, we get a different type of functor.
+
+\begin{defn}{Contravariant Functor}{}
+	A \textbf{contravariant functor} from $\mathscr{C}$ to $\mathscr{D}$ is a functor from $\mathscr{C}^{\op}$ to $\mathscr{D}$.
+\end{defn}
+
 
 \end{document}
