@@ -1,0 +1,1338 @@
+\documentclass[10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/math}
+
+\lhead{Braden Hoagland}
+\chead{Algebra}
+\rhead{}
+
+\begin{document}
+\tableofcontents
+
+\addcontentsline{toc}{chapter}{Group Theory}
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Groups and Subgroups
+
+\chapter{Groups and Subgroups}
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Homomorphisms and Isomorphisms
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Homomorphisms and Isomorphisms}
+
+\begin{defn}{Binary Algebraic Structure}{}
+        A \textbf{binary algebraic structure} $(S, *)$ is a set $S$ closed under binary operation $* : S \times S \to S$.
+\end{defn}
+
+\begin{defn}{Homomorphism}{}
+	Let $(A, \cdot)$ and $(B,*)$ be binary algebraic structures. A map $\phi:A \to B$ is a \textbf{homomorphism} if
+	\[
+		\phi(a_1 \cdot a_2) = \phi(a_1) * \phi(a_2)
+	\] for all $a_1, a_2 \in A$.
+\end{defn}
+
+Homomorphisms are really more general than this, and the definition really depends on the context. The above definition works fine for sets with binary operations, but the concept of a homomorphism extends intuitively to other sturctures.
+
+For example, homomorphisms between vector spaces respect scalar multiplication, which is not a binary operation since it involves the base field of the vector space.
+
+For any groups $G$ and $H$, there is at least 1 homomorphism between them, namely the trivial homomorphism $g \mapsto 1_H$.
+
+Below are some properties of homomorphisms. Lots of them use things that haven't been mentioned yet in these notes, but you should know what they mean unless you've forgotten everything.
+
+\begin{prop}
+Suppose $\phi:G\to G'$ is a group homomorphism, and let $H$ be a subgroup of $G$. Then
+\begin{enumerate}
+	\item $\phi(1_G)=1_{G'}$;
+	\item $(\phi(g))^n = \phi(g^n)$;
+	\item $\phi(H)$ is a subgroup of $G'$;
+	\item if $H$ is cyclic, then so is $\phi(H)$;
+	\item if $H$ is abelian, so is $\phi(H)$;
+	\item if $H \trianglelefteq G$, then $\phi(H) \trianglelefteq \phi(G)$;
+	\item if $|g|=n$, then $|\phi(g)|$ divides $n$;
+	\item if $\phi(g)=g'$, then $\phi^{-1}(g') = \left\{ g\in G\;|\; \phi(g)=g' \right\} = g \ker \phi$;
+	\item if $|H| = n$, then $|\phi(H)|$ divides $n$;
+	\item if $|\ker \phi| = n$, then $\phi$ is an $n$-to-one mapping from $G$ onto $\phi(G)$;
+	\item if $K$ is a subgroup of $G'$, then $\phi^{-1}(K)$ is a subgroup of $G$;
+	\item if $ K \trianglelefteq G'$, then $\phi^{-1}(K) \trianglelefteq G$; and
+	\item if $\phi$ is onto and $\ker \phi$ is trivial, then $\phi$ is an isomorphism from $G$ to $G'$.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+{\color{red}Do the non-obvious ones.}
+\end{proof}
+
+{\color{red}I feel like I should break this up, maybe? Put them in different sections so nothing in the notes has weird order to it. I can always make a summary with a bunch of properties in a list, anyway...}
+
+\begin{defn}{Isomorphism}{}
+Let $(A, \cdot)$ and $(B,*)$ be binary algebraic structures. A map $\phi:A \leftrightarrow B$ is an \textbf{isomorphism} if it is a bijective homomorphism.
+
+If an isomorphism exists between $A$ and $B$, we write $A \simeq B$.
+\end{defn}
+
+Showing that two binary structures are isomorphic is straightforward. Find a map that is bijective and that satisfies the homomorphism property.
+
+Showing that two binary structures are \textit{not} isomorphic is harder, as we have to show that no possible map exists. Alternatively, we can show that two binary structures have different structural properties (e.g. cardinality, commutativity), as an isomorphism preserves these properties.
+
+\begin{prop}
+	If a binary structure $(S, \cdot)$ has an identity element, it is unique.
+\end{prop}
+\begin{proof}
+	Suppose $e_1$ and $e_2$ are both identity elements of $(S, \cdot)$. Then since $e_1$ is an identity element, $e_1 \cdot e_2 = e_2$. But since $e_2$ is an identity element, $e_1 \cdot e_2 = e_1$. Combining these two statements gives $e_1=e_2$.
+\end{proof}
+
+\begin{prop}
+	Let $(A, \cdot)$ and $(B, *)$ be binary algebraic structures, and let $e$ be an identity element of $ (A, \cdot)$. If $\phi: A \leftrightarrow B$ is a homomorphism, then $\phi(e)$ is an identity element of $(B, *)$.
+\end{prop}
+\begin{proof}
+	$\phi(e) = \phi(ee) = \phi(e)\phi(e)$, so by cancellation, $\phi(e)$ is the identity of $B$.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Groups
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Groups}
+
+
+\begin{defn}{Group}{}
+A \textbf{group} is a binary algebraic structure $(G, \cdot)$ such that
+\begin{enumerate}
+	\item $(x\cdot y) \cdot z = x \cdot (y \cdot z)$ for all $x,y,z \in G$ (associativity);
+	\item there is an $e \in G$ such that $e \cdot x = x \cdot e = x$ for all $x \in G$ (identity element); and
+	\item for all $x \in G$, there is some $x^{-1} \in G$ such that $x^{-1} \cdot x = x \cdot x^{-1} = e$ (inverse).
+\end{enumerate}
+\end{defn}
+
+\begin{note}{Group operation notation}{}
+In order to clean up the notation, I'll use $xy \doteq x \cdot y$ for groups.
+\end{note}
+
+\begin{prop}
+	The left and right cancellation laws hold for groups.
+\end{prop}
+\begin{proof}
+	We'll show the left cancellation law, as the right cancellation law is similar. Let $G$ be a group, and suppose $a,b,c \in G$ and $ab = ac$, then we have
+\begin{align*}
+	a^{-1} (ab) &= a^{-1} (ac) \\
+	(a^{-1} a) b &= (a^{-1} a) c \\
+	e b &= e c \\
+	b &= c.
+\end{align*}
+\end{proof}
+
+Note that the proof of the left cancellation law uses left inverses and left identities, and the proof of the right cancellation law would use right inverses and right identities.
+
+\begin{prop}
+	Groups have unique identities and inverses.
+\end{prop}
+\begin{proof}
+	\textbf{Identities:} Suppose $e_1$ and $e_2$ are identities of a group $G$. Fix $x \in G$, then $e_1 x = x = e_2 x$, so by the cancellation law, $e_1=e_2$.
+
+	\textbf{Inverses:} Suppose $x_1^{-1}$ and $x_2^{-1}$ are inverses of some $x \in G$. Then $x_1^{-1}x=e=x_2^{-1}x$, so by the cancellation law again, $x_1^{-1}=x_2^{-1}$.
+\end{proof}
+
+\begin{prop}
+	Groups have unique solutions to linear equations.
+\end{prop}
+\begin{proof}
+	The equation $ax=b$ and $ya=b$ have solutions $x=a^{-1}b$ and $y=ba^{-1}$, respectively. Then since inverses are unique, so are these solutions.
+\end{proof}
+
+\begin{note}{}{}
+	The definition of a group could very well have used just left or just right identities and inverses instead of symmetric ones. We show this with the next proposition.
+\end{note}
+
+\begin{prop}
+	A group defined with left inverses and identities is the same as the earlier definition of a group.
+\end{prop}
+\begin{proof}
+	Let $G$ be a group with left inverses and a left identity.
+
+	First we'll show that a left inverse is a right inverse. Let $x \in G$, then there is a left inverse $x^{-1}$. Then since we have left identities,
+	\[
+		x x^{-1} = x (e x^{-1}) = x ( (x^{-1} x) x^{-1}) = (x x^{-1}) (x x^{-1}).
+	\] 
+	The earlier proof of the \textit{left} cancellation law only required the use of left identities and inverses, so we can use it here to get $x x^{-1} = e.$ Thus left inverses are also right inverses.
+
+	Now we can show that the left identity is also a right identity. Let $x \in G$, then since we just showed that left inverses are right inverses, we have
+	\[
+		x e = x (x^{-1} x) = (x x^{-1}) x = e x = x.
+	\] Thus the left identity is also a right identity.
+\end{proof}
+
+Note that we could have also defined a group with just \textit{right} inverses and identities. We could follow the same proof strategy as above to show that that would also be the same as our original definition of a group.
+
+\begin{note}{}{}
+A finite group can be expressed with a table. In order to satisfy the group axioms, each row and column must have exactly 1 of each group element. Tables of size 1x1, 2x2, and 3x3 can only be filled out in one way, so there is only 1 group of size 1, 1 group of size 2, and 1 group of size 3 (up to isomorphism).
+\end{note}
+
+\begin{defn}{Order}{}
+The \textbf{order} of a group $G$ is its number of elements $|G|$.
+\end{defn}
+
+Groups can be thought of as sets of actions that can be performed on other sets.
+
+\begin{defn}{Group Action}{}
+Suppose $X$ is an arbitrary set and $G$ is a group, then the \textbf{action} of $G$ on $X$ is a map $*:G\times X\to X$ such that
+\begin{enumerate}
+	\item $e*x=x$, and
+	\item $(g_1g_2) * x = g_1*(g_2 *x)$
+\end{enumerate}
+for all $g_1,g_2 \in G$ and $x \in X$.
+\end{defn}
+
+\begin{note}{Group Action Notation}{}
+As with the group operation, I'll write $g a \doteq g * a$, since it should be fairly obvious when something is supposed to be a group action instead of just a usual group operation.
+\end{note}
+
+%%%%%%%%%%%%%%%%%%%%
+% Subgroups
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Subgroups}
+
+\begin{defn}{Subgroup}{}
+Let $G$ be a group, and suppose $H \subset G$. If $H$ with the induced operation from $G$ is itself a group, then $H$ is a \textbf{subgroup} of $G$.
+
+We denote this by $H \leq G$ (improper subset) or $H < G$ (proper subset).
+\end{defn}
+
+\begin{ex}{Subgroups}{}
+\begin{itemize}
+	\item Subgroup: $(\mathbb{Z}, +) < (\mathbb{R},+)$.
+	\item Not a subgroup: $(\mathbb{Z}, \cdot)$ vs. $(\mathbb{R}, +)$. Although $\mathbb{Z} \subset \mathbb{R}$, the operations are not the same.
+\end{itemize}
+\end{ex}
+
+Subgroup diagrams can be used to visualize the subgroups of a group. Below is the subgroup diagram for $(\mathbb{Z}_4, +)$, whose subgroups are $(\{0,2\}, +)$ and $(\{0\}, +)$ (none of the other subsets of $\{0,1,2,3\}$ are closed under addition).
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=1]{fig/subgroup-ex.pdf}
+	\caption{The subgroup diagram for $(\mathbb{Z}_4, +)$.}
+\end{figure}
+
+\begin{prop}
+	\label{prop:subgroup}
+	$H \subset G$ is a subgroup of $G$ if and only if
+	\begin{enumerate}
+		\item $H$ is closed under the binary operation of $G$;
+		\item the identity element $e$ of $G$ is in $H$; and
+		\item for all $x \in H$, $x^{-1} \in H$ as well.
+	\end{enumerate}
+\end{prop}
+\begin{proof}
+	The forward implication follows immediately from the definition of a subgroup, so we only show the backward implication. Conditions $(2)$ and $(3)$ show show $H$ has an identity element and inverses. Since $H \subset G$, we can view any expression in $H$ as an expression in $G$, so associativity holds. Then since $H$ is closed under the induced binary operation, it is a group. Now $H$ is a group that is also a subset of $G$, so it it is a subgroup of $G$.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Centralizers, Normalizers, Stabilizers, and Kernels
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Centralizers, Normalizers, Stabilizers, and Kernels}
+
+In this section, we'll use the common notation that $G$ is a group and that $A \subset G$ is a nonempty set.
+
+\begin{defn}{Centralizer}{}
+Define the \textbf{centralizer} of $A$ in $G$ as
+\[
+	C_G(A) \doteq \left\{ g\in G\;|\; ga g^{-1}=a \text{ for all } a \in A \right\}.
+\] This is the set of all elements of $G$ that commute with \textit{every} element of $A$.
+\end{defn}
+
+\begin{prop}
+	$C_G(A)$ is a subgroup of $G$.
+\end{prop}
+\begin{proof}
+	The centralizer of $A$ in $G$ clearly contains the identity element $1 \in G$, as $1 a 1^{-1} = a$ for all $a$. It is also closed under the group operation of $G$, as
+	\[
+		(gh) a (gh)^{-1} = g(hah^{-1})g^{-1} = gag^{-1} = a
+	\] for all $a$. Finally, it contains inverses, as $gag^{-1}=a$ implies $a = g^{-1}ag$, so $g^{-1}$ is in the centralizer.
+\end{proof}
+
+If $A = \left\{ a \right\}$, then we write $C_G(a)$ instead of $C_G(\left\{ a \right\})$. In this case, it is easy to check that $a^n \in C_G(a)$ for all $n \in \mathbb{Z}$.
+
+\begin{defn}{Center}{}
+The \textbf{center} of $G$ is defined as
+\[
+	Z(G) \doteq C_G(G) = \left\{ g\in G\;|\; gx=xg \text{ for all } x \in G \right\}.
+\] This is the set of all elements of $G$ that commute with every other element of $G$.
+\end{defn}
+
+Since the center of a group is a centralizer of that same group, $Z(G)$ is a subgroup of $G$.
+
+\begin{defn}{Normalizer}{}
+If we define $gAg^{-1} \doteq \left\{ gag^{-1} \;|\; a\in A \right\}$, then the \textbf{normalizer} of $A$ in $G$ is
+\[
+	N_G(A) \doteq \left\{ g \in G \;|\; gAg^{-1} = A\right\}.
+\]
+\end{defn}
+
+The proof that that $N_G(A)$ is a subgroup of $G$ is the same as for $C_G(A)$, except every instance of $a$ is replaced by $A$.
+
+\begin{note}{Centralizer vs. Normalizer}{}
+	Note that $C_G(A)$ is a subgroup of $N_G(A)$. They are \textit{not} equal, though. This is because the elements of $N_G(A)$ are allowed to act as permutations on $A$, whereas the elements of $C_G(A)$ are not.
+\end{note}
+
+\begin{defn}{Stabilizer}{}
+Fix $a \in A$, then the \textbf{stabilizer} of $a$ in $G$ is
+\[
+G_a \doteq \left\{ g\in G \;|\; ga=a \right\}.
+\] It is the set of elements of $G$ that do not ``move" $a$.
+\end{defn}
+
+\begin{prop}
+$G_a$ is a subgroup of $G$.
+\end{prop}
+\begin{proof}
+	I'll keep this argument quick, but note that it only uses the two properties of group actions. The identity element $1 \in G$ is clearly in $G_a$. It is closed under the group operation of $G$, since if $g,h \in G_a$, then $(gh)a = g(ha) = ga = a$. Finally, it contains inverses, since if $g \in G_a$, then $g^{-1}a = g^{-1}(ga) = (gg^{-1})a = ea = a$.
+\end{proof}
+
+\begin{defn}{Kernel}{}
+Suppose $G$ and $H$ are two groups, and let $1$ denote the identity element of $H$. Then the kernel of a homomorphism $\varphi:G\to H$ is defined
+\[
+	\ker \varphi \doteq \left\{ g \in G \;|\; \varphi(g) = 1 \right\}.
+\] It is the set of elements of $G$ that $\varphi$ sends to the identity of $H$.
+\end{defn}
+
+The notion of a kernel can be extended to group actions. We say that the kernel of the action of $G$ on $A$ is
+\[
+	\left\{ g \in G \;|\; ga = a \text{ for all } a \in A \right\}.
+\] Every element in this kernel acts trivially on every element of $A$.
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Cyclic Groups
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Cyclic Groups}
+
+Suppose $G$ is a group and $g \in G$. If we want to make a subgroup of $G$ that contains $g$, then it needs to have $g$, $g^n$ for all $n \in \mathbb{N}$, the inverses $g^{-n}$ for $n \in \mathbb{N}$, and the identity $g^0 = e$. This is formalized below.
+
+\begin{defn}{Cyclic}{}
+	Let $G$ be a group, and let $g \in G$. The set $\left\{ g^n \;|\; n \in \mathbb{Z} \right\}$ is a \textbf{cyclic} subgroup of $G$ generated by $g$ and is denoted by $\left\langle g \right\rangle$.
+
+	If $G = \left\langle g \right\rangle$ for some $g$, then $G$ is a cyclic group.
+\end{defn}
+
+\begin{thrm}{}{}
+Let $G$ be a group with $g \in G$. Then $H=\left\langle g \right\rangle$ is the smallest subgroup of $G$ that contains $g$.
+\end{thrm}
+\begin{proof}
+	$H$ is clearly closed under the binary operation of $G$, the identity element $e=g^0$ of $G$ is in $H$, and each element of $H$ has an inverse in $H$, so by Proposition \ref{prop:subgroup}, $H$ is a subgroup of $G$.
+
+	Removing any element from $H$ breaks at least 1 of the 3 previous conditions, so $H$ is the smallest subgroup containing $g$.
+\end{proof}
+
+\begin{note}{}{}
+Since $\left\langle g \right\rangle$ is the smallest subgroup of $G$ containing $g$, any subgroup containing $g$ also contains $\left\langle g \right\rangle$.
+\end{note}
+
+\begin{prop}
+	Any cyclic group is abelian.
+\end{prop}
+\begin{proof}
+	Let $a,b \in \left\langle g \right\rangle$, then there exist $n,m \in \mathbb{Z}$ such that $g^n=a$ and $g^m=b$. Then
+	\[
+	ab = g^n g^m = g^{n+m}=g^{m+n}=g^m g^n=ba.
+	\] 
+\end{proof}
+
+\begin{thrm}{Division Algorithm for $\mathbb{Z}$}{}
+If $n$ is any integer and $m$ is a positive integer, then there exist unique integers $q$ and $r$ such that
+\[
+n = mq + r,
+\] where $0 \leq r < m.$
+\end{thrm}
+\begin{proof}
+	{\color{red}Do this.}
+\end{proof}
+
+\begin{prop}
+	A subgroup of a cyclic group is cyclic.
+\end{prop}
+\begin{proof}
+	Let $G = \left\langle g \right\rangle$ and let $H \leq G$. If $H = \left\{ e \right\}$, then it is clearly cyclic since $\left\langle e \right\rangle = \left\{ e \right\}$. If $H \neq \left\{ e \right\}$, then $g^{m}\in H$ for some $m \in \mathbb{Z}^+$. Consider the smallest such $m$, then we claim that $g^m$ generates $H$.
+
+	Let $h \in H$, then since $h$ is also in $G = \left\langle g \right\rangle$, $h = g^n$ for some $n$. By the division algorithm, there are unique $q$ and $r$ such that
+	\[
+	n = mq+r,
+\] where $0 \leq r < m$. Then $g^n = g^{nq+r}= (g^m)^q g^r$, so $g^r = (g^m)^{-q}g^n$, which is in $H$ since $g^m, g^n \in H$ and $H$ is closed. Since $m$ was the smallest positive integer such that $g^m \in H$, this implies that $r=0$. Then $n=mq$, so $g^n = (g^m)^q$. This was for arbitrary $h$, so each $h \in H$ is a power of $g^m$. jThus $H = \left\langle g^m \right\rangle$.
+\end{proof}
+
+{\color{red}Something about how subgroups of $\mathbb{Z}$ are $n\mathbb{Z}$. Also something about how group that gcd is based off of is cyclic.}
+
+\begin{defn}{GCD}{}
+Let $r$ and $s$ be positive integers. The positive generator $d$ of the cyclic group
+\[
+\left\{ nr+ms \;|\; n,m \in \mathbb{Z} \right\}
+\] under addition is the \textbf{greatest common divisor} of $r$ and $s$. We denote it by $d = \gcd(r,s)$.
+\end{defn}
+
+\begin{defn}{Relatively prime}{}
+	Positive integers $n$ and $m$ are \textbf{relatively prime} if $\gcd(n,m)=1$.
+\end{defn}
+
+\begin{prop}
+	If $r$ and $s$ are relatively prime and $r \;|\; sm$, then $r \;|\; m$.
+\end{prop}
+\begin{proof}
+	Since $r$ and $s$ are relatively prime, $ar+bs=1$ for some $a,b \in \mathbb{Z}$. Multiplying by $m$ yields
+	\[
+	arm + bsm = m.
+	\] Now $r$ clearly divides $arm$, and $r$ divides $bsm$ since we are given $r \;|\; sm$. Thus $r$ divides $arm+bsm=m$.
+\end{proof}
+
+\begin{thrm}{}{}
+	Let $G = \left\langle g \right\rangle$. If $|G| = \infty$, then $G \simeq \mathbb{Z}$ (with standard addition). If $|G| = n$, then $G \simeq \mathbb{Z}_n$, (with addition modulo $n$).
+\end{thrm}
+\begin{proof}
+	\textbf{Infinite order:} For all positive integers $m$, we know $g^m \neq e$ (otherwise $G$ would be finite). We claim that each $g^m$ is distinct. Suppose we have $h \neq k$ and $g^h = g^k$, and suppose without loss of generality that $h > k$. Then $g^{h-k}=e$, which is a contradiction, so $g^h \neq g^k$. Thus every element of $G$ can be written as $g^m$ for some unique $m \in \mathbb{Z}$.
+
+	Then the map $\phi: G \leftrightarrow \mathbb{Z}$ given by $\phi(g^m) = m$ is well-defined and bijective. Additionally, we have
+	\[
+		\phi(g^hg^k) = \phi(g^{h+k}) = h+k = \phi(g^h) + \phi(g^k),
+	\] so $\phi$ is an isomorphism between $(G, \cdot)$ and $(\mathbb{Z}, +)$.
+
+	\textbf{Finite order:} Let $s \in \mathbb{Z}$, then by the division algorithm, $s = nq+r$, where $0 \leq r < n$. Then $g^{s}=(g^n)^q g^r = e^q g^r = g^r$. Thus each element of $G$ is in $\left\{ g^0=e, \dots, g^{n-1} \right\}$.
+
+	We now show that each $g^i$ is unique. If $0 < k < h< n$ and $g^h=g^k$, then $g^{h-k}=e$, but this is a contradiction since $0 <h-k < n$ and $n$ is the the order of $G$. Thus $g^h \neq g^k$ when $h \neq k$, i.e. each $g^i$ is distinct. That means $\left\{ g^0=e, \dots, g^{n-1} \right\}$ has size $n$, so it comprises all of $G$.
+
+	Then the map $\phi: G \leftrightarrow \mathbb{Z}/n\mathbb{Z}$ given by $\phi(g^m)=m$ is well-defined and bijective. Additionally, we have
+	\[
+		\phi(g^h g^k) = \phi(g^{h+k}) = h+k \mod n = \phi(g^h) + \phi(g^k) \mod n,
+	\] so $\phi$ is an isomorphism between $(G, \cdot)$ and $(\mathbb{Z}/n\mathbb{Z}, +)$.
+\end{proof}
+
+\begin{thrm}{}{}
+	Let $G= \left\langle g \right\rangle$ have order $n$, and let $h \in G$ with $h = g^m$. Then $H = \left\langle h \right\rangle$ is a cyclic subgroup of $G$ order $n/d$, where $d = \gcd(n,m)$.
+\end{thrm}
+\begin{proof}
+	{\color{red}Do this.}
+\end{proof}
+
+\begin{cor}
+	If $g$ generates $G$ and $|G|=n$, then the other generators of $G$ are of the form $g^r$, where $r$ is relatively prime to $n$.
+\end{cor}
+\begin{proof}
+	If $d = \gcd(r,n)=1$, then $|\left\langle g^r \right\rangle| = n/d = n$, so $\left\langle g^r \right\rangle=G$. Conversely, if $d \neq 1$, then $|\left\langle g^r \right\rangle| = n/d < n$, so $\left\langle g^r \right\rangle\neq G$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%
+% Generating Sets
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Generating Sets}
+
+\begin{prop}
+	Let $\left\{ H_{\alpha} \right\}_{\alpha \in \mathcal{J}}$ be subgroups of $G$, then $\bigcap_{\alpha}H_{\alpha}$ is also a subgroup of $G$.
+\end{prop}
+\begin{proof}
+	\textbf{Closure:} Let $a,b \in \bigcap_{\alpha}H_{\alpha}$, then $a,b \in H_{\alpha}$ for all $\alpha$. Since each $H_{\alpha}$ is a group, $ab \in H_{\alpha}$ for all $\alpha$. Thus $ab \in \bigcap_{\alpha}H_{\alpha}$.
+
+	\textbf{Associativity:} Each $H_{\alpha}$ is associative, so elements in their intersection must also be associative.
+
+	\textbf{Identity:} Since each $H_{\alpha}$ is a group, $e \in H_{\alpha}$ for all $\alpha$, so $e \in \bigcap_{\alpha}H_{\alpha}$.
+
+	\textbf{Inverses:} Fix $a \in \bigcap_{\alpha}H_{\alpha}$, then $a \in H_{\alpha}$ for all $\alpha$. Then since each $H_{\alpha}$ is a group, $a^{-1} \in H_{\alpha}$ for all $\alpha$, so $a^{-1} \in \bigcap_{\alpha}H_{\alpha}$.
+\end{proof}
+
+Now suppose we have some set $S \doteq \left\{ g_i \;|\; i \in \mathcal{J}\right\}$ that lies in a group $G$. There is at least one subgroup of $G$ that contains each $g_i$ (e.g. $G$ itself). Then by the above proposition, we can take the intersection of all of these subgroups to get the smallest possible subgroup of $G$ containing $S$. Since we know that such a smallest subgroup exists, it makes sense to figure out what it looks like.
+
+\begin{defn}{Subgroup of Generating Set}{}
+	Let $G$ be a group, and let $g_i \in G$ for all $i \in \mathcal{J}$. The \textbf{subgroup} generated by $S \doteq \left\{ g_i \;|\; i \in \mathcal{J} \right\}$ is the smallest subgroup of $G$ containing $S$, and its \textbf{generating set} is $S$.
+
+If  a group $G$ is generated by some finite generating set, then it is \textbf{finitely generated.} 
+\end{defn}
+
+\begin{note}{}{}
+The phrase ``$g$ is a generator of $G$" could mean
+\begin{enumerate}
+	\item $G = \left\langle g \right\rangle$; or
+	\item $g \in S$, where $G = \left\langle S \right\rangle$.
+\end{enumerate}
+Use context to determine which of these is meant.
+\end{note}
+
+\begin{thrm}{}{}
+	Let $g_i \in G$ for all $i \in \mathcal{J}$. The subgroup $H$ of $G$ generated by $\left\{ g_i \;|\; i \in \mathcal{J} \right\}$ has as elements all finite products of integral powers of the $g_i$.
+\end{thrm}
+\begin{proof}
+	Let $K$ denote the set of all finite products of intergral powers of the $g_i$, then clearly $K \subset H$ (since $H$ must be closed under the group operation). If we show that $K$ is a subgroup, then since $H$ is the smallest subgroup containing the $g_i$, we'll have $H \subset K$. This implies $H=K$, which is what we want.
+
+	Thus we now show that $K$ is a subgroup. The product of elements of $K$ is clearly also in $K$, so it is closed under the group operation. The element $(g_i)^0 = e$ is in $K$, so it contains the identity element. Any $k \in K$ can be written as a sequence of products, so reverse the order of the products and negate each exponent to get the inverse $k^{-1}$, which is clearly also in $K$. Thus $K$ is a subgroup, so $H=K$.
+\end{proof}
+
+\begin{ex}{}{}
+	Let $a,b \in G$ for some group $G$, then $\left\langle a,b \right\rangle$ contains all possible finite products involving $a$ and $b$. These include
+	\begin{itemize}
+		\item $a$,
+		\item $b^7$,
+		\item $a^2 b^3$, and
+		\item $a b a^{-1} b^2$.
+	\end{itemize}
+	Note that we can't necessarily simplify that last product because $G$ might not be abelian.
+\end{ex}
+
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Permutations
+
+\chapter{Permutations}
+
+%%%%%%%%%%%%%%%%%%%%
+% Permutation Groups
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Permutation Groups}
+
+\begin{defn}{Permutation}{}
+A \textbf{permutation} of a set $X$ is a bijective function $\phi:X \leftrightarrow X$.
+\end{defn}
+
+If $\tau$ and $\sigma$ are permutations of $X$, consider their composition $\sigma \tau$. It is easily shown that this is also a bijection from $X$ to itself, so the composition of permutations is again a permutation.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=1.2]{fig/permutation-composition.pdf}
+	\caption{The composition $\sigma \tau$.}
+\end{figure}
+
+\begin{note}{Permutation Notation}{}
+The permutation
+\[
+\sigma =
+\begin{pmatrix}
+	1 & 2 & 3 \\
+	3 & 2 & 1
+\end{pmatrix}
+\] maps $1 \mapsto 3$, $2 \mapsto 2$, and $3 \mapsto 1$.
+\end{note}
+
+\begin{defn}{Symmetric Group}{}
+The \textbf{symmetric group} $S_n$ (of degree $n$) is the set of all permutations of $\left\{ 1, \dots, n \right\}$.
+
+If $X$ is any set, then $S_X$ is shorthand for $S_{|X|}$.
+\end{defn}
+
+Note that if $X$ has $n$ elements, then $S_X$ has $n!$ elements.
+
+\begin{thrm}{}{}
+Let $X$ be a nonempty set, then the symmetric group $S_X$ is a group under permutation composition.
+\end{thrm}
+\begin{proof}
+	$S_X$ is closed under permutation composition since the composition of permutations is also a permutation. It is associative because the composition of functions is associative. The permutation that maps $x \mapsto x$ for each $x \in X$ acts as the identity element. Finally, since bijections have inverses, so does each permutation. Thus $S_X$ is a group.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%
+% Cayley's Theorem
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Cayley's Theorem}
+
+\begin{lem}
+	Let $G$ and $G'$ be groups, and let $\phi:G \hookrightarrow  G'$ be a one-to-one homomorphism. Then $\phi(G)$ is a subgroup of $G'$ and $\phi$ is an isomorphism between $G$ and $\phi(G)$.
+\end{lem}
+\begin{proof}
+	By Proposition \ref{prop:subgroup}, in order to show that $\phi(G)$ is a subgroup of $G'$, we need only show that $\phi(G)$ is closed, has an identity, and has inverses for every element.
+
+	Let $x',y' \in \phi(G)$, then there exist $x,y\in G$ such that $\phi(x)=x'$ and $\phi(y)=y'$. Then since $\phi$ is a homomorphism, $x'y' = \phi(x)\phi(y) = \phi(xy)$, so $\phi(G)$ is closed under the group operation of $G'$.
+
+	Let $e'$ be the identity of $G'$, then $e'\phi(e) = \phi(e) = \phi(ee) = \phi(e) \phi(e)$, so by cancellation, $e' = \phi(e)$. Thus $\phi(G)$ contains the identity element.
+
+	Fix $x \in G$ then for $x'=\phi(x)$, we have $e'=\phi(e) = \phi(xx^{-1}) = \phi(x)\phi(x^{-1}) = x'\phi(x^{-1}).$ Then the inverse of $x'$ is $\phi(x^{-1})$, so $\phi(G)$ has inverses for each element.
+
+	This shows that $\phi(G)$ is a subgroup of $G'$. Now $\phi$ is already one-to-one and homomorphic, and it is clearly onto $\phi(G)$, so $\phi$ is an isomorphism between $G$ and $\phi(G)$.
+\end{proof}
+
+\begin{thrm}{Cayley's Theorem}{cayley}
+Every group is isomorphic to a group of permutations.
+\end{thrm}
+\begin{proof}
+	Let $G$ be a group. We will show that $G$ is isomorphic to some subgroup of $S_{G}$. By the previous lemma, we only need to define a one-to-one homomorphism $\phi:S\hookrightarrow S_G$. Fix $x \in G$, then define $\lambda_x:G\to G$ by $\lambda_x(g) =xg$. We claim that $\lambda_x$ is a permutation of $G$.
+
+	If $\lambda_x(a)=\lambda_x(b)$, then $xa=xb$, so by cancellation, $a=b$. Thus $\lambda_x$ is one-to-one. Fix $x \in G$, then $\lambda_x$ maps $x^{-1}g \mapsto g$, so $\lambda_x$ is onto. Thus $\lambda_x$ is a permutation of $G$.
+
+	Now define $\phi:G\to S_G$ by $\phi(x)=\lambda_x$, then we claim that $\phi$ is an injective homomorphism. If $\phi(x)=\phi(y)$, then $\lambda_x(g)=\lambda_y(g)$ for all $g$. Then $xg=yg$, so by cancellation, $x=y$, so $\phi$ is isomorphic. Additionally, for $x,y\in G$, we have
+	\[
+		\lambda_{xy}(g)=(xy)g=x(yg)=(\lambda_x \circ \lambda_y)(g),
+	\] so $\phi(xy)=\lambda_{xy}=\lambda_x \circ \lambda_y = \phi(x)\circ\phi(y)$. Thus $\phi$ is homomorphic.
+
+	Then by the previous lemma, $\phi$ is an isomorphism between $G$ and $\phi(G)$ (which is a subgroup of $S_G$).
+\end{proof}
+
+\begin{defn}{Regular Representation}{}
+	The map $\phi$ in the proof above is the \textbf{left regular representation} of $G$. $\phi(x)$ is the permutation of $G$ gotten by left multiplying every element of $G$ by $x$.
+
+	The \textbf{right regular representation} is defined similarly.
+\end{defn}
+
+\begin{ex}{Regular Representation}{}
+Let $G=\left\{ e,a,b \right\}$, then the table representing $G$ is
+\begin{center}
+	\begin{tabular}{c||c|c|c}
+		& \textbf{e}  & \textbf{a}  & \textbf{b}  \\
+		\hline
+		\hline
+		\textbf{e}  & e & a & b \\
+		\hline
+		\textbf{a}  & a & b & e \\
+		\hline
+		\textbf{b}  & b & e & a
+	\end{tabular}
+\end{center}
+and its left regular representation has elements
+\begin{gather*}
+	\lambda_e =
+	\begin{pmatrix}
+		e & a & b \\
+		e & a & b
+	\end{pmatrix} \quad
+	\lambda_a =
+	\begin{pmatrix}
+		e & a & b \\
+		a & b & e
+	\end{pmatrix} \\
+	\lambda_b =
+	\begin{pmatrix}
+		e & a & b \\
+		b & e & a
+	\end{pmatrix}.
+\end{gather*}
+\end{ex}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Orbits and Cycles
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Orbits and Cycles}
+
+\begin{defn}{Orbit}{}
+	Let $\sigma$ be a permutation of $X$. Define an equivalence relation on $X$ by saying $x \sim y$ if $y=\sigma^n(x)$ for some $n \in \mathbb{Z}$. The equivalence classes of $X$ determined by $\sim$ are the \textbf{orbits} of $X$.
+\end{defn}
+
+\begin{ex}{Orbits}{}
+Consider the permutation
+\[
+\sigma=
+\begin{pmatrix}
+	1&2&3&4&5&6&7&8\\
+	3&8&6&7&4&1&5&2
+\end{pmatrix}.
+\] It has three cycles, pictured below.
+\begin{center}
+\begin{tikzcd}
+1 \arrow[d] &              &                        &                        &             & 4 \arrow[ld] \\
+3 \arrow[r] & 6 \arrow[lu] & 2 \arrow[r, bend left] & 8 \arrow[l, bend left] & 7 \arrow[r] & 5 \arrow[u]
+\end{tikzcd}
+
+\end{center}
+
+It has three equivalence classes: $\left\{ 1,3,6 \right\}$, $\left\{ 2, 8 \right\},$ and $\left\{ 4,5,7 \right\}$.
+\end{ex}
+
+\begin{defn}{Cycle}{}
+	A finite permutation $\sigma\in S_n$ is a \textbf{cycle} if it has at most 1 orbit containg more than 1 element. The \textbf{length} of a cycle is the number of elements in its largest orbit.
+\end{defn}
+
+\begin{ex}{Cycles}{}
+The permutation below is a cycle.
+
+\begin{center}
+\begin{tikzcd}
+1 \arrow[r] & 2 \arrow[d] & 4 \arrow[loop, distance=2em, in=35, out=325] \\
+5 \arrow[u] & 3 \arrow[l] &                                             
+\end{tikzcd}
+\end{center}
+
+The next permutaiton is also a cycle.
+
+\begin{center}
+\begin{tikzcd}
+1 \arrow[r] & 2 \arrow[d]  \\
+            & 3 \arrow[lu]
+\end{tikzcd}
+\end{center}
+
+The next permutation, however, is \textit{not} a cycle.
+
+\begin{center}
+\begin{tikzcd}
+1 \arrow[r, bend left] & 2 \arrow[l, bend left] & 3 \arrow[r, bend left] & 4 \arrow[l, bend left] & 5 \arrow[loop, distance=2em, in=215, out=145]
+\end{tikzcd}
+\end{center}
+\end{ex}
+
+\begin{defn}{Disjoint Cycles}{}
+A collection of cycles is \textbf{disjoint} if each element is moved by at most 1 of the cycles.
+\end{defn}
+
+Multiplication of disjoint cycles is clearly commutative (permutation in general is not).
+
+\begin{thrm}{}{}
+	Every permutation $\sigma$ of a finite set is a product of disjoint cycles.
+\end{thrm}
+\begin{proof}
+	Let $B_1, \dots, B_r$ be the orbits of $\sigma$, and define the cycle $\mu_i$ by
+	\[
+		\mu_i(x) =
+		\begin{cases}
+			\sigma(x) & x \in B_i \\
+			x & \text{otherwise}.
+		\end{cases}
+	\] 
+	Clearly $\sigma = \prod_{i=1}^r \mu_i$. Since the orbits are disjoint (because they are equivalence classes), the cycles $\mu_1, \dots, \mu_r$ are as well.
+\end{proof}
+
+\begin{note}{Cyclic notation}{}
+	When writing a cycle, we write the permutation with a single row (the elements of the cycle in order). For example, $(1\;2\;3)$ is the cycle that sends $1\mapsto 2$, $2\mapsto 3$, and $3\mapsto 1$.
+\end{note}
+
+\begin{defn}{Transposition}{}
+A \textbf{transposition} is a cycle of length 2.
+\end{defn}
+
+\begin{ex}{Transpositions}{}
+	The cycle $(1\;2)$ is a transposition, but the cycle $(1\;2\;3)$ is not.
+\end{ex}
+
+\begin{cor}
+	Any permutation of a finite set of 2 or more elements is a product of transpositions.
+\end{cor}
+\begin{proof}
+	Since
+	\[
+		(x_1 \cdots x_n) = (x_1\;x_n) (x_1\;x_{n-1}) \dots (x_1\;x_2),
+	\] every cycle is the product of transpositions. Then since every permutation of a finite set is the product of cycles, every permutation is also the product of transpositions.
+\end{proof}
+
+\begin{ex}{}{}
+	$(1\;6)(2\;5\;3) = (1\;6)(2\;3)(5\;3)$.
+\end{ex}
+
+\begin{ex}{}{}
+	The identity permutation $\iota$ for $S_n$, where $n \geq 2$, can be written $(1\;2)(1\;2)$.
+\end{ex}
+
+%%%%%%%%%%%%%%%%%%%%
+% Alternating Groups
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Alternating Groups}
+
+\begin{defn}{Even/Odd Permutation}{}
+	A permutation of a finite set is \textbf{even} if it is the product of an even number of transpositions. It is \textbf{odd} if it is the product of an odd number of transpositions.
+\end{defn}
+
+\begin{defn}{Alternating Group}{}
+The \textbf{alternating group} $A_n$ of degree $n$ is the set of even permutations in $S_n$.
+\end{defn}
+
+\begin{thrm}{}{}
+No permutation in $S_n$ is both even and odd. 
+\end{thrm}
+\begin{proof}
+	It is clear that the set $\left\{ 1,\dots, n \right\}$ is isomorphic to the rows of the identity matrix $I_n$. Then a permutation in $S_n$ corresponds to swapping rows of $I_n$. Thus if a permutation were both even and odd, the determinant of the resulting matrix would be both $1$ and $-1$, which is impossible. Thus no permutation can be both even and odd.
+\end{proof}
+
+\begin{thrm}{}{}
+For $n\geq 2$, the number of even permutations in $S_n$ is equal to the number of odd permutations in $S_n$.
+\end{thrm}
+\begin{proof}
+	Let $B_n$ denote the set of odd permutations in $S_n$. If we find a bijection between $A_n$ and $B_n$, then they must have the same number of elements, so this is what we'll do.
+
+	Let $\tau$ be a transposition in $S_n$ (it exists since $n \geq 2$). Define a function $\lambda_{\tau}:A_n \to  B_n$ by $\lambda_{\tau}(\sigma) = \tau \sigma$. Since $\sigma \in A_n$, it is even, so $\tau \sigma$ is odd, so $\tau \sigma \in B_n$. We claim that $\lambda_{\tau}$ is a bijection.
+
+	If $\lambda_{\tau}(\sigma) = \lambda_{\tau}(\mu)$, then $\tau \sigma = \tau \mu$, so by cancellation (since $S_n$ is a group), $\sigma = \mu$. Thus $\lambda_{\tau}$ is one-to-one. Additionally, the inverse of a transposition is itself, so if $\rho \in B_n$, then $\tau^{-1}\rho = \tau \rho \in A_n$ and $\lambda_{\tau}(\tau^{-1}\rho) = \rho$. Thus $\lambda_{\tau}$ is onto.
+
+	We have found a bijection between $A_n$ and $B_n$, so $|A_n| = |B_n|$.
+\end{proof}
+
+\begin{thrm}{}{}
+For $n\geq 2$, $A_n$ forms a subgroup of $S_n$ of order $n!/2$.
+\end{thrm}
+\begin{proof}
+	$|S_n|=n!$, so by the previous theorem, we know $|A_n|=|B_n|=n!/2$. We now show the three criteria from Proposition \ref{prop:subgroup} in order to show that $A_n$ is a subgroup of $S_n$.
+
+	If $\sigma$ and $\mu$ are even, then clearly so is $\sigma \mu$, so $A_n$ is closed under permutation composition.
+
+	Since $n\geq 2$, the identity transposition $\iota$ can be written as $(1\;2)(1\;2)$, so $\iota$ is even.
+
+	Since the inverse of a transposition is itself, decompose a permutation $\sigma$ into its transpositions, then reverse the order of the transpositions to get its inverse $\sigma^{-1}$, which is clearly also even.
+
+	Thus by Proposition \ref{prop:subgroup}, $A_n$ is a subgroup of $S_n$.
+\end{proof}
+
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Quotient Groups
+
+\chapter{Quotient Groups}
+
+%%%%%%%%%%%%%%%%%%%%
+% Cosets and Lagrange's Theorem
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Cosets and Lagrange's Theorem}
+
+
+\begin{thrm}{}{}
+Let $H$ be a subgroup of $G$. The relation $\sim_L$ on $G$ is defined by saying $x \sim_L y$ if $x^{-1}y \in H$. The relation $\sim_R$ on $G$ is defined by saying $x \sim_R$ if $xy^{-1} \in H$. Both of these relations are equivalence relations on $G$.
+\end{thrm}
+\begin{proof}
+	We only prove this for the relation $\sim_L$, as the proof for $\sim_R$ is similar. Since $H$ is a group, it has an identity, so $x^{-1} x = e \in H$. Thus $x \sim_L x$, i.e. the relation is reflexive. If $x \sim_L y$, then $x^{-1}y \in H$, so since $H$ is a group and has inverses, $(x^{-1}y)^{-1}=y^{-1}x\in H$. Thus $y \sim_L x$, i.e. the relation is symmetric. Finally, given $x \sim_L y$ and $y \sim_L z$, we know $x^{-1}y, y^{-1}z \in H$. Since $H$ is closed and associative, we have $x^{-1}yy^{-1}z = x^{-1}z \in H$. Thus $x \sim_L z$, i.e. the relation is transitive.
+\end{proof}
+
+Suppose we partition a group $G$ using the equivalence relation $\sim_L$, then the cell of the partition that contains $g \in G$ is of the form $\left\{ gh \;|\; h \in H \right\}$. We denote this set by $gH$. Similarly, cells based on the partition from $\sim_R$ are of the form $Hg \doteq \left\{ hg \;|\; h \in H \right\}$.
+
+\begin{defn}{Coset}{}
+Let $H$ be a subgroup of $G$. Then $gH$ is the \textbf{left coset} of $H$ in $G$ containing $g$. $Hg$ is the \textbf{right coset} of $H$ in $G$ containing $g$.
+\end{defn}
+
+\begin{note}{Coset Notation}{}
+For additive groups, we write $H+g$ and $g+H$ for the right and left cosets, respectively.
+\end{note}
+
+The left and right cosets are clearly equivalent if $G$ is abelian.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.8]{fig/cosets.pdf}
+	\caption{The left cosets of a subgroup $H$ in a group $G$. The whole grid represents all of $G$.}
+\end{figure}
+
+
+\begin{prop}
+	Every left and right coset of $H$ has the same cardinality as $H$.
+\end{prop}
+\begin{proof}
+	Fix $g$, then we will construct a bijective map from $H$ to $gH$. Define $\phi(h):H\to gH$ by $\phi(h)=gh$. This is clearly onto $gH$ (by the definition of left cosets). Now suppose $\phi(h_1)=\phi(h_2)$, then $gh_1=gh_2$, so by cancellation, $h_1=h_2$. Thus $\phi$ is a bijection, so $H$ and $gH$ have the same cardinality for all $g$. The case for right cosets is similar.
+\end{proof}
+
+\begin{prop}
+{\color{red}Do the properties of cosets here...}
+\end{prop}
+\begin{proof}
+\end{proof}
+
+\begin{thrm}{Langrange's Theorem}{lagrange}
+	Let $H$ be a subgroup of a finite group $G$, then $|H|$ divides $|G|$.
+\end{thrm}
+\begin{proof}
+Suppose a partition of $G$ into cosets of $H$ gives $r$ cells, then by the previous proposition, $|G| = r |H|$.
+\end{proof}
+
+\begin{cor}
+Every group of prime order is cyclic.
+\end{cor}
+\begin{proof}
+	Suppose $G$ is a group with $|G|=p$, where $p$ is prime. Let $g \in G$ be any non-identity element. Then $\left\langle g \right\rangle$ contains 2 or more elements (it has $e$ and $g$ at the very least). But by Lagrange's Theorem, we know $|\left\langle g \right\rangle|$ dives $|G|=p$. Since $p$ is prime, it has no factors other than 1 and itself, so this means $|\left\langle g \right\rangle|=p$, so $\left\langle g \right\rangle=G$.
+\end{proof}
+
+\begin{cor}
+	The order of an element of a finite group divides the order of the group.
+\end{cor}
+\begin{proof}
+	Let $G$ be a finite group, and let $g \in G$. By definition, the order of $g$ is $|\left\langle g \right\rangle|$. Since $\left\langle g \right\rangle$ is a subgroup of $G$, its order divides $|G|$ by Lagrange's theorem.
+\end{proof}
+
+\begin{defn}{Index}{}
+	Let $H$ be a subgroup of $G$. The number of left cosets of $H$ in $G$ is the \textbf{index} of $H$ in $G$, and it is denoted by $(G:H)$.
+\end{defn}
+
+If $G$ is finite, then $(G:H) = |G|/|H|$ is also finite.
+
+\begin{prop}
+	Let $K$ be a subgroup of $H$, which itself is a subgroup of $G$. If $(G:H)$ and $(H:K)$ are both finite, then $(G:K)$ is also finite and $(G:K)=(G:H)(H:K)$.
+\end{prop}
+\begin{proof}
+	Suppose $(G:H)=n$ and $(H:K)=m$, then we can represent $G$ and $H$ as finite disjoint unions of left cosets. We have $G = \bigcup_{i=1}^n g_i H$ and $H = \bigcup_{j=1}^m h_j K$ for $g_i \in G$, $h_j\in H$. Combining these two statements gives
+	\begin{align*}
+		G &= \bigcup_{i=1}^n g_i \left( \bigcup_{j=1}^m h_j K \right) \\
+		  &= \bigcup_{i=1}^n \bigcup_{j=1}^m g_i h_j K.
+	\end{align*}
+	This shows that $G$ is covered by a collection of cosets of $K$ in $G$. The index of $K$ in $G$ is then the number of \textit{distinct} cosets of the enumerated cosets above.
+
+	Since $h_j K \subset H$ for all $j$, we have $g_i h_j K \subset g_i H$ for all $i$. Then since the cosets of $H$ in $G$ are disjoint, the two sets $g_i h_j K$ and $g_l h_j K$ are disjoint for all $j$ when $i \neq l$. Since the cosets of $K$ in $H$ are also disjoint, the two sets $g_i h_j K$ and $g_i h_l K$ are disjoint for all $i$ when $j \neq l$. Thus all the cosets of $K$ in $G$ in the double union above are disjoint, so $(G:K) = m n = (G:H) (H:K)$.
+\end{proof}
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Fibers
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Fibers}
+
+\begin{defn}{Fiber}{}
+	Suppose $\varphi:G\to H$ is some mapping, then for fixed $h\in H$, the \textbf{fiber} of $\varphi$ over $h$ is the set
+	\[
+		\varphi^{-1}(h) = \left\{ g\in G \;|\; \varphi(g) = h \right\}.
+	\] In other words, it is the preimage of the singleton $\left\{ h \right\}$.
+\end{defn}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=1]{fig/fibers.pdf}
+	\caption{Some of the fibers of a map $\varphi:G\to H$, where $G$ is infinite and $H$ is finite. The fibers are the grey circles in $G$.}
+\end{figure}
+
+\begin{prop}
+Let $G$ and $H$ be groups, and let $\varphi:G\to H$ be a homomorphism, then
+\begin{enumerate}
+	\item $\varphi(1_G)=1_H$,
+	\item $\varphi(g^{-1}) = \varphi(g)^{-1}$,
+	\item $\varphi(g^n) = \varphi(g)^n$,
+	\item $\ker \varphi$ is a subgroup of $G$, and
+	\item $\varphi(G)$ is a subgroup of $H$.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+	\begin{enumerate}
+		Parts (1) and (2) are straightforward, and part (3) follows from induction on part (1), using part (2) to apply the result to negative integers as well. By part (1), both $\ker \varphi$ and $\varphi(G)$ contain identities. Checking closure under the group operation is straightforward, and closure under inverses follows from part (2).
+	\end{enumerate}
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Normal Subgroups and Quotient Groups
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Normal Subgroups and Quotient Groups}
+
+\begin{defn}{Conjugate}{}
+$gng^{-1}$ is the \textbf{conjugate} of $n$ by $g$. The set
+\[
+gNg^{-1}=\left\{ gng^{-1}\;|\;n\in N \right\}
+\] is the conjugate of $N$ by $g$.
+\end{defn}
+
+\begin{defn}{Normal Subgroup}{}
+Let $N$ be a subgroup of $G$. Then $N$ is a \textbf{normal subgroup} of $G$ if $gNg^{-1}=N$ for all $g\in G$. In other words, the conjugate of $N$ by $g$ is just $N$ itself.
+
+If $N$ is a normal subgroup of $G$, then we write $N \trianglelefteq G$.
+\end{defn}
+
+\begin{note}{}{}
+A normal subgroup of $G$ creates equivalent left and right cosets, i.e. if $N \trianglelefteq G$, then $gN=Ng$ for all $g \in G$.
+\end{note}
+
+\begin{defn}{Quotient Group}{}
+	Let $N \trianglelefteq G$, then the \textbf{quotient group} $G/K$ is the group with the cosets of $N$ in $G$ as elements and the operation $uN \cdot vN \doteq (uv)N$.
+\end{defn}
+
+We can think of $G/N$ as the result of taking $G$ and dividing out by $N$. Note that the elements of $G/N$ are themselves subsets of $G$.
+
+There is a deep connection between quotient groups and the fibers of a homomorphism. Suppose that $\varphi:G\to H$ is a group homomorphism with kernel $K$, then consider the fiber of $\varphi$ over $h\in H$ (which we denote by $X_h$). We will show that $X_h$ can be represented as a coset of the kernel $K$ of $\varphi$.
+
+\begin{prop}
+Suppose $\varphi:G\to H$ is a group homomorphism with kernel $K$. For all $x$ in $X_h$ (the fiber of $\varphi$ over $h\in H$), we have \[X_h = xK = Kx.\]
+\end{prop}
+\begin{proof}
+We will only show $X_h = xK$, as the proof for right cosets is similar. Let $x \in X_h$, then $\varphi(x)=h$.
+
+We first show $xK \subset X_h$. Let $k \in K$, then $\varphi(xk) = \varphi(x)\varphi(k) = h\cdot 1 = h$, so $xk \in X$.
+
+We now show $X_h \subset gK$. Let $g \in X_h$, then $\varphi(x^{-1}g)=\varphi(x^{-1})\varphi(g)=h^{-1}h=1$, so $x^{-1}g \in K$, so $g \in xK$.
+\end{proof}
+
+\begin{note}{Fibers and Cosets}{}
+	This shows that if $\varphi:G\to H$ is a group homomorphism with kernel $K$, then the quotient group $G/K$ is composed of the fibers of $\varphi$. We will show later that if $N \trianglelefteq G$, then $G/N$ can always be expressed as $G/\ker \varphi$, where $\varphi$ is some homomorphism.
+\end{note}
+
+\begin{ex}{}{}
+	Suppose $\varphi:G\to H$ is a group \textit{isomorphism}, then $K=\ker \varphi$ is trivial (it's one-to-one) and no fibers are empty (it's onto), so $G/K \simeq G$.
+\end{ex}
+
+\begin{ex}{}{}
+	Suppose $\varphi:G\to H$ is the trivial homomorphism, i.e. $\varphi(g) = 1_H$ for all $g$. Then $K=G$, so $G/K$ has the single element $G$. Thus $G/K$ is isomorphic to the trivial group (the group with 1 element).
+\end{ex}
+
+{\color{red}Should I include something about the cosets partitioning $G$?}
+
+We haven't actually shown that $G/N$ is a group, so we should do that. In the process, I'll show that $N$ needs to be normal in order for the group operation to be well-defined.
+
+\begin{prop}
+Let $N$ be a subgroup of $G$, then
+\begin{enumerate}
+	\item The operation $uN \cdot vN \doteq (uv)N$ is well-defined if and only if $N \trianglelefteq G$; and
+	\item if the above operation is well-defined, it makes $G/N$ into a group.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+	\begin{enumerate}
+		\item \textbf{Forward:} Assume the operation is well-defined, i.e. for all $u,v \in G$, if $u,\tilde{u}\in uN$ and $v,\tilde{v} \in vN$, then $uvN = \tilde{u}\tilde{v}N$. Let $g\in G$ and $n\in N$, then set $u=1, \tilde{u}=n$, and $v=\tilde{v}=g^{-1}$, then the assumption gives $g^{-1}N=ng^{-1}N$. {\color{red}Something about 1 being in $N$? Is that obvious?}
+
+			Since $N$ is a subgroup, it contains an identity 1, so $ng^{-1}=ng^{-1} \cdot 1 \in ng^{-1}N = g^{-1}N$, so $ng^{-1}=g^{-1}\tilde{n}$ for some $\tilde{n} \in N$. thus $gng^{-1}=\tilde{n} \in N$. Since $g$ and $n$ were arbitrary, this shows $N\trianglelefteq G$. {\color{red}This feels incomplete...}
+
+			\textbf{Backward:} Assume $N \trianglelefteq G$, then let $u,\tilde{u}\in uN$ and $v,\tilde{v}\in vN$. We must show $\tilde{u}\tilde{v}=uvN$. Since two cosets are the same if they contain a single shared element, then all we need to do is find one. We claim that $\tilde{u}\tilde{v}$ is such a shared element.
+
+			$N$ is a subgroup, so it contains 1, so $\tilde{u}\tilde{v}\in \tilde{u}\tilde{v}N$. Now we hve to show that it's in $uvN$, as well. By definition, $\tilde{u}=un$ and $\tilde{v}=vm$ for some $n,m \in N$. Then
+			\[
+				\tilde{u}\tilde{v}=(un)(vm) = u(vv^{-1})nvm = (uv)(v^{-1}nv)m.
+			\] Now $v \in vN \subset G$, so since $N$ is normal, $v^{-1}nv \in N$. Thus
+			\[
+				\tilde{u}\tilde{v}=(uv)(\tilde{n}m)
+			\] for some $\tilde{n} \in N$. Since $\tilde{n},m \in N$ and $N$ is a subgroup, $\tilde{n}m \in N$ as well. Thus $\tilde{u}\tilde{v}\in uvN$. This shows that $\tilde{u}\tilde{v}N = uvN$.
+
+		\item Showing that $G/N$ is a group is pretty simple if our proposed group operation is well defined. $1_GN$ is its identity element since $gN \cdot 1_GN = gN$. Its associativity follows from the associativity of $G$: let $u,v,w \in G$, then
+			\[
+				(uN \cdot vN) \cdot wN = ((uv)w)N = (u(vw))N = uN \cdot (vN \cdot wN).
+			\] Finally, $gN \cdot g^{-1}N = 1_GN$, so it has inverses. Thus $G/N$ is a group.
+	\end{enumerate}
+\end{proof}
+
+{\color{red}Note about how I used left cosets, but how this doesn't matter because left=right for normal subgroups.}
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Solvable Groups
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Solvable Groups}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% The Isomorphism Theorems
+%%%%%%%%%%%%%%%%%%%%
+
+\section{The Isomorphism Theorems}
+
+There is a fundamental connection between a homomorphism and its kernel, which we build into the first isomorphism theorem.
+
+\begin{prop}
+	If $\varphi:G\to H$ is a homomorphism and $\varphi(g)=h$, then $\varphi^{-1}(\left\{ h \right\})=g \ker \varphi$.
+\end{prop}
+\begin{proof}
+{\color{red}Do this.}
+\end{proof}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=1]{fig/n-to-1.pdf}
+	\caption{If $|\ker\varphi| = n$, then the order of each fiber is also $n$.}
+\end{figure}
+
+This shows that if the kernel is order $n$, then $\varphi$ is an $n$-to-one function. Thus we might expect that there is a bijective correspondence between $G/\ker \varphi$ and $\varphi(G)$, since they should both have $|G|/|\ker \varphi|$ elements. In fact, this correspondence is isomorphic.
+
+\begin{thrm}{The First Isomorphism Theorem}{1st-iso}
+Let $\varphi:G\to H$ be a group homomorphism. Then $\ker \varphi \trianglelefteq G$ and
+\[
+	G/\ker\varphi \simeq \varphi(G).
+\] 
+\end{thrm}
+\begin{proof}
+	Denote $\ker \varphi$ by $K$, then we first show $K \trianglelefteq G$. We know $K$ is a subgroup of $G$, so we only need to show $gkg^{-1} \in K$. {\color{red}Put the proof of the $\in$ statement earlier somewhere? In the normal subgroup section?} We have
+	\[
+		\varphi(gkg^{-1}) = \varphi(g)\varphi(k)\varphi(g^{-1})= 1_H,
+	\] so $gkg^{-1} \in K$, so $K \trianglelefteq G$.
+
+	Now define a map $\phi:G/K\to \varphi(G)$ by $\phi(gK) = \varphi(g).$ It is onto $\varphi(G)$, since if $\varphi(g) \in \varphi(G)$, then $\phi(gK)=\varphi(g)$. It is one-to-one, since if $\phi(uK)=\phi(vK)$, then $\varphi(u)=\varphi(v)$, so $u$ and $v$ are in the same fiber, so $uK=vK$. Finally, it is a homomorphism, since
+	\[
+		\phi(uK)\phi(vK)=\varphi(u)\varphi(v)=\varphi(uv)=\phi(uvK).
+	\] 
+	Thus $\phi$ is an isomorphism, so $G/K = G/\ker \varphi \simeq \varphi(G)$.
+\end{proof}
+
+\begin{cor}
+	If $\varphi$ is a group homomorphism on $G$, $[G:\ker \varphi] = |\varphi(G)|$.
+\end{cor}
+\begin{proof}
+	$G/\ker \varphi \simeq \varphi(G)$, so $[G:K] = |G/K| = |\varphi(G)|$.
+\end{proof}
+
+{\color{red}Connection with rank-nullity? Then insert intuition for iso 2.}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=1]{fig/2nd-iso-thrm.pdf}
+	\caption{A diagram of the 2nd isomorphism theorem.}
+\end{figure}
+
+
+\begin{thrm}{The Second Isomorphism Theorem}{2nd-iso}
+Let $G$ be a group, and let $H \leq G$ and $N \trianglelefteq G$. Then $HN \leq G$, $H \cap N \trianglelefteq H$, and
+\[
+	HN/N \simeq H/(H \cap N).
+\] 
+\end{thrm}
+\begin{proof}
+	We first show that $HN$ is a subgroup of $G$. Its elements are clearly a subset of $G$. Since $N$ is normal, $HN$ is closed under the group operation of $G$, as $(h_1n_1)(h_2n_2) = (h_1h_2)(\tilde{n}n_2) \in HN$. Since both $H$ and $N$ contain the identity of $G$, it is also in $HN$. Finally, {\color{red}inverse stuff.}
+
+	We now show that $H \cap N$ is a normal subgroup of $H$. We know that intersections of subgroups are themselves subgroups, so we need only show that $H \cap N$ is normal in $G$. Since being in $H \cap N$ implies being in $N$, which is normal, this is clear.
+
+	We now define a map $\phi:H \to HN/N$ by $\phi(h)=hN$ (since $N$ need not be a subset of $H$, $hN$ is an element of $HN/N$, not $H/N$). It is a homomorphism, as $\phi(h_1)\phi(h_2) = (h_1N)(h_2N)=h_1h_2N = \phi(h_1h_2)$. Since elements in $N$ get mapped to $N$ (the identity of $HN/N$), the kernel of $\phi$ is $H\cap N$. Finally, $\phi$ is onto, since for $hnN=hN \in HN/N$, $h$ is mapped to $hnN$.
+
+	Thus by the first isomorphism theorem,
+	\[
+		H/\ker \phi = H/(H\cap N) \simeq \phi(H) = HN/N.
+	\] 
+\end{proof}
+
+We can also generalize the concept of denominators cancelling when dividing fractions.
+
+\begin{thrm}{The Third Isomorphism Theorem}{3rd-iso}
+Let $G$ be a group, and let $H,K \trianglelefteq G$ with $H \leq K$. Then $K/H \trianglelefteq  G/H$ and
+\[
+\frac{G/H}{K/H} \simeq G/K.
+\] 
+\end{thrm}
+\begin{proof}
+Let $kH \in K/H$, then for some $gH \in G/H$, since $H,K \trianglelefteq G$,
+\[
+	(gH)(kH)(gH)^{-1} = Hg kH Hg^{-1} = Hgkg^{-1}H = H\tilde{g}H = \tilde{g}H \in G/H.
+\] Thus $K/H \trianglelefteq G/H$.
+
+Now define $\phi:G/H \to G/K$ by $\phi(gH) = gK$. This is a homomorphism, since $\phi(g_1H)\phi(g_2H) = g_1Kg_2K = g_1g_2K = \phi(g_1g_2H)$. Since $K$ is the identity element of $G/K$, the kernel of $\phi$ is all elements of the form $kH$, i.e. the quotient $G/H$. Finally, $\phi$ is onto $G/K$, since if $gK \in G/K$, then $\phi(gH) = gK$.
+
+Thus by the first isomorphism theorem,
+\[
+	\frac{G/H}{\ker \phi} = \frac{G/H}{K/H} \simeq \phi(G/H) = G/K.
+\] 
+\end{proof}
+
+\begin{thrm}{The Fourth Isomorphism Theorem}{4th-iso}
+	Let $N \trianglelefteq G$, then there is a bijection from the set of subgroups $A$ of $G$ containing $N$ to the set of subgroups $A/N$ of $G/N$. In particular, every subgroup of $G/N$ is of the form $A/N$, where $A$ is a subgroup of $G$ containing $N$ (namely, $A$ is the preimage of the natural projection homomorphism). The bijection has the properties
+	\begin{enumerate}
+		\item $A \leq B \iff A/N \leq B/N$;
+		\item if $A \leq B$, then $[B:A] = [B/N:A/N]$;
+		\item $\left\langle A,B \right\rangle/N = \left\langle A/N,B/N \right\rangle$;
+		\item $(A \cap B)/N = A/N \cap B/N$; and
+		\item $A \trianglelefteq G \iff A/N \trianglelefteq G/N$.
+	\end{enumerate}
+\end{thrm}
+\begin{proof}
+{\color{red}Do this.}
+\end{proof}
+
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Group Actions
+
+\chapter{Group Actions}
+
+%%%%%%%%%%%%%%%%%%%%
+% Group Actions as Permutations
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Group Actions as Permutations}
+
+\begin{prop}
+	Let $G$ be a group acting on a set $A$. For $g \in G$, define $\sigma_g:A\to A$ by $\sigma_g(a) = ga$. Then
+	\begin{enumerate}
+		\item $\sigma_g$ is a permutation of $A$, and
+		\item the map $\varphi: G \to S_A$ given by $\varphi(g) = \sigma_g$ is a homomorphism.
+	\end{enumerate}
+\end{prop}
+\begin{proof}
+\begin{enumerate}
+	\item To show that $\sigma_g$ is a bijection (and thus a permutation of $A$), we only need the two properties of group actions. First we show that $\sigma_g$ is one-to-one. Suppose $\sigma_g(a_1) = \sigma_g(a_2)$, then $ga_1=ga_2$. Then
+		\begin{align*}
+			g^{-1}(ga_1) &= g^{-1}(ga_2) \\
+			(g^{-1}g)a_1 &= (g^{-1}g)a_2 \\
+			ea_1 &= ea_2 \\
+			a_1 &= a_2.
+		\end{align*} Now we show that $\sigma_g$ is onto. Suppose $a \in A$, then $g^{-1}a\in A$ is mapped to $a$ since $\sigma_m(g^{-1}a) = g(g^{-1}a)=(gg^{-1})a = ea = a$.
+
+	\item Let $g_1,g_2 \in G$, then $\sigma_{g_1g_2}(a) = (g_1g_2)a = g_1(g_2a) = (\sigma_{g_1}\circ \sigma_{g_2})(a)$ for all $a \in A$. Thus $\varphi(g_1g_2) = \sigma_{g_1g_2}=\sigma_{g_1}\circ \sigma_{g_2} = \varphi(g_1)\circ\varphi(g_2)$, so $\varphi$ is a homomorphism.
+\end{enumerate}
+\end{proof}
+
+\begin{defn}{Permutation Representation}{}
+The homomorphism $\varphi:G\to S_A$ given above is the \textbf{permutation representation} of the given action.
+\end{defn}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% The Class Equation
+%%%%%%%%%%%%%%%%%%%%
+
+\section{The Class Equation}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Automorphisms
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Automorphisms}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% The Sylow Theorems
+%%%%%%%%%%%%%%%%%%%%
+
+\section{The Sylow Theorems}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% The Simplicity of $\protect A_n$
+%%%%%%%%%%%%%%%%%%%%
+
+\section{The Simplicity of \texorpdfstring{$A_n$}{the Alternating Group}}
+
+
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Direct Products and Abelian Groups
+
+\chapter{Direct Products and Abelian Groups}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Direct Products
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Direct Products}
+
+\begin{thrm}{}{}
+Let $G_1, \dots, G_n$ be groups. For $\mathbf{x}$ and $\mathbf{y}$ in the Cartesian product $\prod_{i=1}^n G_i$, define the binary operation
+\[
+	\mathbf{x}\mathbf{y} \doteq (x_1y_1, \dots, x_n y_n).
+\] The \textbf{direct product} $\prod_{i=1}^n G_i$ is a group under this operation.
+\end{thrm}
+\begin{proof}
+	Let $x_i, y_i \in G_i$, where $G_i$ is a group. Since each $G_i$ is a group, $x_i y_i \in G_i$ as well, so the direct product is closed under the defined operation.
+
+	For $\mathbf{x},\mathbf{y},\mathbf{z} \in \prod G_i$, sinc each $G_i$ is a group, we have
+	\begin{align*}
+		\mathbf{x}(\mathbf{y}\mathbf{z}) &= (x_1(y_1z_1), \dots, x_n(y_n z_n)) \\
+						 &= ( (x_1y_1)z_1, \dots, (x_n y_n)z_n) \\
+						 &= (\mathbf{x}\mathbf{y})\mathbf{z},
+	\end{align*}
+	so the direct product is associative.
+
+	If $e_i$ is the identity element of $G_i$, then $(e_1, \dots, e_n)$ is the identity element of the direct product.
+
+	The inverse of $(x_1, \dots, x_n)$ is $(x_1^{-1}, \dots, x_n^{-1})$, which is in the direct product since each $G_i$ has inverses.
+\end{proof}
+
+\begin{note}{}{}
+	If the operation of each $G_i$ is commutative, we sometimes use the notation \[\bigoplus_{i=1}^n G_i\] instead of $\prod_{i=1}^n G_i$. This is called the \textbf{direct sum} instead of the direct product.
+\end{note}
+
+\begin{thrm}{}{}
+$\mathbb{Z}_m \times \mathbb{Z}_n$ is cyclic and is isomorphic to $\mathbb{Z}_{mn}$ if and only if $m$ and $n$ are relatively prime.
+\end{thrm}
+\begin{proof}
+	{\color{red}Do this (page 106).}
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Finitely Generated Abelian Groups
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Finitely Generated Abelian Groups}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Semidirect Products
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Semidirect Products}
+
+
+
+\addcontentsline{toc}{chapter}{Ring Theory}
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Rings
+
+\chapter{Rings}
+
+%%%%%%%%%%%%%%%%%%%%
+% Rings
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Rings}
+
+\begin{defn}{Ring}{}
+A \textbf{ring} $R$ is a set with 2 binary operations $+$ and $\cdot$ such that
+\begin{enumerate}
+	\item $(R,+)$ is an abelian group,
+	\item $\cdot$ is associative, and
+	\item $+$ distributes over $\cdot$ and $\cdot$ distributes over $+$.
+\end{enumerate}
+\end{defn}
+
+If multiplication is commutative, then that ring itself is said to be commutative.
+
+Denote the additive identity by 0 and the multiplicative identity by 1.
+
+{\color{red}Define fields.}
+
+\begin{defn}{Zero-Divisor}{}
+A \textbf{zero-divisor} of a ring $R$ is a nonzero element $a$ such that $ab=0$ or $ba=0$ for some other nonzero $b \in R$.
+\end{defn}
+
+\begin{defn}{Unit}{}
+Suppose $1 \neq 0$ in $R$, then $u \in R$ is a \textbf{unit} in $R$ if there is some $v \in R$ such that $uv=vu=1$.
+
+Denote the set of units in $R$ by $R^{\times}$.
+\end{defn}
+
+It is easy to show that a unit cannot be a zero-divisor.
+
+{\color{red}Show that fields have no zero divisors.}
+
+\begin{defn}{Integral Domain}{}
+An \textbf{integral domain} is a commutative ring with $1 \neq 0$ and no zero-divisors.
+\end{defn}
+
+\begin{prop}
+Let $a,b,c \in R$, where $ a \neq 0$ is not a zero-divisor. Then if $ab=ac$, then $a=0$ or $b=c$.
+\end{prop}
+\begin{proof}
+	If $ab=ac$, then by the distributive property, $a(b-c)=0$. Since $a$ is not a zero-divisor, this means $a=0$ or $b-c=0$.
+\end{proof}
+
+\begin{cor}
+If $ab=ab$ in an integral domain, then $a=0$ or $b=c$.
+\end{cor}
+
+\begin{cor}
+	Any finite integral domain is a field.
+\end{cor}
+\begin{proof}
+	Let $R$ be a finite integral domain, and take $a \neq 0$ in $R$. By cancellation, the map $x \mapsto ax$ is one-to-one. Since $R$ is finite, being one-to-one implies being onto. In particular, this means $ab=1$ for some $b \in R$. Since $a$ was arbitrary, this means every element of $R$ has an inverse, so $R$ is a field. {\color{red}Connection to field stuff from earlier in this section.}
+
+\begin{defn}{Subring}{}
+A \textbf{subring} of a ring $R$ is a subgroup of $R$ that is closed under multiplication. It should be clear that this is also a ring.
+\end{defn}
+\end{proof}
+
+{\color{red}Figure out where to put stuff about fields.}
+
+{\color{red}Stuff about fundamental theorem of group homomorphisms in group theory section?}
+
+\end{document}
