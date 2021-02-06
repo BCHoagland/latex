@@ -6,6 +6,24 @@
 \rhead{}
 
 \begin{document}
+
+\begin{titlepage}
+        \vspace*{\stretch{1.0}}
+        \begin{center}
+                {\Huge\textbf{Differential Geometry}}\\
+                \vspace{4mm}
+                Calculus on Surfaces and Riemannian Geometry\\
+                \vspace{6mm}
+                \textit{Braden Hoagland}
+        \end{center}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.9]{fig/curvy-donut.pdf}
+        \end{figure}
+        \vspace*{\stretch{2.0}}
+
+\end{titlepage}
+
 \tableofcontents
 
 %+-------------------+
@@ -322,7 +340,7 @@ From now on, assume any given 1-form is differentiable.
 \begin{defn}
 Let $f:\mathbb{R}^n\to \mathbb{R}$ be differentiable. Then the \textbf{differential} $df$ of $f$ is the 1-form such that
 \[
-	df(v) = \mathbf{v}_{\mathbf{p}}[f]
+	df(\mathbf{v}_{\mathbf{p}}) = \mathbf{v}_{\mathbf{p}}[f]
 \] for all tangent vectors $\mathbf{v}_{\mathbf{p}}$ of some point $\mathbf{p} \in \mathbb{R}^n$.
 \end{defn}
 
@@ -503,7 +521,7 @@ This is saying that if we have a mapping from $\mathbb{R}^n$ to $\mathbb{R}^n$ t
 % The Dot Product
 %%%%%%%%%%%%%%%%%%%%
 
-\section{The Dot Product}
+\section{Frames}
 
 Earlier we showed that $\mathbf{v}\mapsto \mathbf{v}_{\mathbf{p}} $ was an isomoprhism, so we can naturally extend the usual dot product to work in tangent spaces. Given $\mathbf{v}_{\mathbf{p}}, \mathbf{w}_{\mathbf{p}} \in T_{\mathbf{p}}(\mathbb{R}^n)$, we define their dot product to be
 \[
@@ -511,6 +529,281 @@ Earlier we showed that $\mathbf{v}\mapsto \mathbf{v}_{\mathbf{p}} $ was an isomo
 \] 
 
 {\color{red}Get rid of use of $e_i$ earlier on?}
+
+\begin{defn}[]
+Let $\left\{ \mathbf{e}_i \right\}_{i=1}^n$ be a set of mutually orthogonal unit vectors tangent to $\mathbf{p}$. Then it is a \textbf{frame} of $\mathbb{R}^n$ as $\mathbf{p}$.
+\end{defn}
+
+\begin{ex}[]
+	The natural frame field evaluated at a point $\mathbf{p}$ 
+	\[
+		U_1(\mathbf{p}), \dots, U_n(\mathbf{p})
+	\] is a frame of $\mathbb{R}^n$ at $\mathbf{p}$.
+\end{ex}
+
+\begin{lem}
+	A frame of $\mathbb{R}^n$ is a basis for $T_{\mathbf{p}}(\mathbb{R}^n)$.
+\end{lem}
+\begin{proof}
+	If we dot $\sum \alpha_i \mathbf{e}_i =\mathbf{0}$ with $\mathbf{e}_j$, then the result is $\alpha_j=0$. Thus our frame is linearly independent, so it's a basis for $T_{\mathbf{p}}(\mathbb{R}^n)$.
+\end{proof}
+
+\begin{thrm}[]
+	For $\mathbf{v} \in T_{\mathbf{p}}, $$\mathbf{v} = \sum (\mathbf{v}\cdot \mathbf{e}_i)\mathbf{e}_i$.
+\end{thrm}
+\begin{proof}
+	Since frames are bases of the tangent space, we can write $\mathbf{v} = \sum c_i \mathbf{e}_i$ for some $c_i$, and $\mathbf{v}\cdot \mathbf{e}_j = (\sum_i c_i \mathbf{e}_i)\cdot \mathbf{e}_j = c_j$.
+\end{proof}
+
+The dot product has the same form in any frame:
+\[
+	\mathbf{v}\cdot \mathbf{w} = \sum (\mathbf{v}\cdot\mathbf{e}_i)(\mathbf{w}\cdot\mathbf{e}_i).
+\] 
+
+\begin{defn}[]
+The \textbf{attitude matrix} of a frame $\left\{ \mathbf{e}_i \right\}_{i=1}^n$ is the matrix
+\[
+	A=
+\begin{pmatrix}
+	\rule[.5ex]{2.5ex}{0.5pt} & \mathbf{e}_1 & \rule[.5ex]{2.5ex}{0.5pt} \\
+				  & \vdots & \\
+	\rule[.5ex]{2.5ex}{0.5pt} & \mathbf{e}_n & \rule[.5ex]{2.5ex}{0.5pt}
+\end{pmatrix}.
+\] 
+\end{defn}
+
+Technically, each $\mathbf{e}_i$ is in the tangent space, but $A$'s rows are just the coordinates of each $\mathbf{e}_i$.
+
+Note that the rows are orthonormal, so $A A^T = I_n$, so $A^{-1}=A^T$, i.e. $A$ is an \textbf{orthogonal} matrix.
+
+%%%%%%%%%%%%%%%%%%%%
+% The Cross Product
+%%%%%%%%%%%%%%%%%%%%
+
+\section{The Cross Product}
+
+For $\mathbf{v}, \mathbf{w} \in T_{\mathbf{p}}(\mathbb{R}^3)$, we define the cross product as
+\[
+\mathbf{v} \times \mathbf{w} = \left| 
+\begin{matrix}
+	U_1(\mathbf{p}) & U_2(\mathbf{p}) & U_3(\mathbf{p}) \\
+	v_1 & v_2 & v_3 \\
+	w_1 & w_2 & w_3
+\end{matrix}\right|.
+\] 
+
+{\color{red}Interpretation as signed area?}
+
+The cross product is linear in $\mathbf{v}$ and $\mathbf{w}$, and it satisfies the alternation rule
+\[
+\mathbf{v} \times \mathbf{w} = -\mathbf{w}\times \mathbf{v},
+\] so any vector crossed with itself is $\mathbf{0}$.
+
+The cross product produces a vector that is orthogonal to $\mathbf{v}$ and $\mathbf{w}$, so
+\[
+	\mathbf{v} \cdot (\mathbf{v}\times \mathbf{w}) = \mathbf{w}\cdot (\mathbf{v}\times \mathbf{w}) = 0.
+\] 
+
+{\color{red}$\varepsilon$ stuff and experssion in terms of $\sin$.}
+
+%%%%%%%%%%%%%%%%%%%%
+% Curves
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Curves}
+
+We've already defined curves $\alpha:I \to \mathbb{R}^n$ and their velocity $\alpha'(t)$. We can easily define the \textbf{speed} of a curve by
+\[
+	v(t) = \Vert{\alpha'(t)}\Vert.
+\] 
+
+The \textbf{arc length} function (starting from a constant $t=a$) is then defined
+\[
+	s(t) = \int_{a}^{t} \Vert{\alpha'(\tau)}\Vert\;d\tau.
+\] 
+From this we have $ds/dt = \Vert{\alpha}\Vert=v$ and $\int_{a}^{b} ds = \int_{a}^{b} \Vert{\alpha'(t)}\Vert\;dt$.
+
+{\color{red}$ds = \Vert{\alpha'(t)}\Vert\;dt$?}
+
+\begin{thrm}[]
+We can reparameterize any regular curve $\alpha$ to have unit speed.
+\end{thrm}
+\begin{proof}
+	Since $\alpha$ is regular, $ds/dt = \Vert{\alpha'}\Vert>0$ everywhere. {\color{red}See notes...}
+\end{proof}
+
+The curve $\beta$ above has the \textbf{arc length parameterization}, i.e. it has unit speed.
+
+We can define a notion of vector fields on curves.
+
+\begin{defn}[]
+	A \textbf{vector field} on a curve $\alpha:I\to \mathbb{R}^n$ is a function
+	\[
+		Y: I \to T(\mathbb{R}^n)
+	\] given by mapping $t$ to a point tangent to $\alpha(t)$.
+\end{defn}
+
+A vector field $Y=(y_1, \dots, y_n)$ on a curve $\alpha$ can be decomposed into the natural frame field by
+\[
+	Y = \sum y_i U_i(\alpha).
+\] 
+
+We can then define the derivative of a vector field on a curve in a pointwise fashion:
+\[
+Y' = \sum y_i' U_i.
+\] 
+
+A vector field on a curve is \textbf{parallel} if it products parallel vectors. This means that all of it's $y_i$ are constant.
+
+\begin{lem}
+	\begin{enumerate}
+		\item $\alpha$ is constant $\iff$ $\alpha'=0$.
+		\item $\alpha$ is a nonconstant straight line $\iff$ $\alpha''=0$.
+		\item $Y$ is parallel $\iff$ $Y'=0$.
+	\end{enumerate}
+\end{lem}
+
+%%%%%%%%%%%%%%%%%%%%
+% The Frenet Formulas
+%%%%%%%%%%%%%%%%%%%%
+
+\section{The Frenet Formulas}
+
+We start out by describing a particular frame on a curve that ends up being very helpful. The core idea behind this is that we can take derivatives to find tangent and normal components of the frame, then take their cross product to get a third orthogonal component. This constitutes a frame that changes based on the curve's geometry at each point.
+
+Suppose $\beta$ is a unit speed curve in $\mathbb{R}^3$. Then $T\doteq\beta'$ is the \textbf{unit tangent vector field}. Since $\beta$ is unit speed, $\Vert{T}\Vert=1$ everywhere, so it needs no further modifications to be a part of our frame.
+
+Since $\Vert{T}\Vert^2 = T\cdot T=1$, we differentiate to get $2(T'\cdot T)=0$, so its derivative is orthogonal to it. The normalized version of this field will be the next component of our frame. Define the \textbf{curvature} of $\beta$ by $\kappa(s) = \Vert{T'(s)}\Vert\geq 0$, then when $\kappa > 0$, define $N = T' / \kappa$ to be the \textbf{principal normal vector field}.
+
+Finally, define $\beta = T \times N$ to be the \textbf{binormal vector field}. {\color{red}Cross two units = unit.} In summary, the \textbf{Frenet apparatus} is
+\begin{itemize}
+	\item $T=\alpha'$,
+	\item $\kappa = \Vert{\alpha'}\Vert$,
+	\item $N = T' / \kappa$, and
+	\item $B = T \times N$.
+\end{itemize}
+\begin{defn}[]
+	For a unit speed curve $\beta$ with $\kappa>0$ everywhere, $B$, $N$, and $T$ form the \textbf{Frenet frame field} on $\beta$. They constitute a frame at each point on $\beta$.
+\end{defn}
+
+{\color{red}Picture.}
+
+{\color{red}Stuff about deriving torsion.}
+
+\begin{thrm}[The Frenet Formulas]
+Let $\beta:I \to \mathbb{R}^3$ be a unit speed curve with nonzero $\kappa$ everywhere and torsion $\tau$, then
+\begin{align*}
+	T' &= \kappa N, \\
+	N' &= -\kappa T + \tau B, \\
+	B' &= -\tau N.
+\end{align*}
+\end{thrm}
+\begin{proof}
+	{\color{red}Do expansion of $N'$.}
+\end{proof}
+
+From this we see that the geometry of a curve is encoded in its curvature and torsion.
+
+{\color{red}Examples...}
+
+\begin{prop}
+A curve is a straight line if and only if $\kappa=0$.
+\end{prop}
+{\color{red}Proof?}
+
+\begin{prop}
+ 	A unit speed curve with $\kappa>0$ is planar if and only if $\tau = 0$.
+\end{prop}
+\begin{proof}
+	{\color{red}Do this.}
+\end{proof}
+
+\begin{lem}
+	If $\kappa>0$ and $\kappa'=\tau=0$, then $\beta$ is (part of) a circle of radius $1/\kappa$.
+\end{lem}
+\begin{proof}
+	{\color{red}Do this.}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%
+% Arbitrary Speed Curves
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Arbitrary Speed Curves}
+
+Let $\overline{\alpha} :I\to \mathbb{R}^3$ be a unit speed curve, and let $\alpha=\overline{\alpha}(s)$ be an arbitrary reparameterization. 
+
+We can ``correct" the old Frenet formulas to give formulas that work for our arbitrary curve by simplying multiplying by the speed function $v$. To see this, note that for our new curve $\alpha$,
+\[
+T' = \frac{d T}{d t} = \frac{d T}{d s} \frac{d s}{d t} = \overline{T}'v.
+\] 
+The cases for $B'$ and $N'$ are similar.
+
+\begin{thrm}[]
+	Let $\alpha$ be an arbitrary regular ($\kappa>0)$) curve, then
+\begin{align*}
+	T' &= \kappa v N, \\
+	N' &= -\kappa v T + \tau v B, \\
+	B' &= -\tau v N.
+\end{align*}
+\end{thrm}
+
+If $\beta$ has constant speed $\Vert{\beta'}\Vert$, then differentiating gives $2(\beta''\cdot \beta') = 0$, so $T$ and $N$ are orthogonal. This might not be the case if the speed of $\beta$ isn't constant, though. {\color{red}Does this mean the Frenet ``frame" isn't a frame when $\alpha$ isn't constant speed?}
+
+{\color{red}Are $\beta' and \beta''$ always in correspondence with $T$ and $N$? I assumed so above.}
+
+\begin{lem}
+	Let $\alpha$ be a regular curve with speed function $v$, then it's velocity and acceleration are given by
+	\begin{align*}
+		\alpha' &= vT, \\
+		\alpha'' &= v'T + \kappa v^2 N.
+	\end{align*}
+\end{lem}
+\begin{proof}
+	The velocity is $\alpha' =\overline{\alpha}'(s)v = \overline{T}(s)v = Tv$. Differentiating gives $\alpha''=v'T + vT'$, which is equal to $v'T + \kappa v^2 N$ by the updated Frenet formulas.
+\end{proof}
+
+\begin{thrm}[]
+We can express the Frenet apparatus as
+\begin{gather*}
+	T = \frac{\alpha'}{\Vert{\alpha'}\Vert} ,\quad\quad N = B \times T,\quad\quad B = \frac{\alpha' \times \alpha''}{\Vert{\alpha' \times \alpha''}\Vert} ,\\
+	\kappa = \frac{\Vert{\alpha' \times \alpha''}\Vert}{\Vert{\alpha'}\Vert^3} ,\quad\quad \tau = \frac{(\alpha' \times \alpha'')\cdot \alpha'''}{\Vert{\alpha'\times \alpha''}\Vert^2} .
+\end{gather*}
+\end{thrm}
+\begin{proof}
+	{\color{red}Do this.}
+\end{proof}
+
+{\color{red}Picture.}
+
+%%%%%%%%%%%%%%%%%%%%
+% The Covariant Derivative
+%%%%%%%%%%%%%%%%%%%%
+
+\section{The Covariant Derivative}
+
+The covariant derivative is how we measure the rate of change of a vector field in a particular direction. {\color{red}Comparison to $Y'$ from vector field on curve?}
+
+\begin{defn}[]
+	Let $\mathbf{v} \in T_{\mathbf{p}}$, then the \textbf{covariant derivative} of a vector field $W$ with respect to $\mathbf{v}$ is
+	\[
+		\nabla_{\mathbf{v}}W = \frac{d }{d t} W(\mathbf{p}+t\mathbf{v})\Big|_{t=0}.
+	\] 
+\end{defn}
+
+If $W = \sum w_i U_i$, then this can be written $\nabla_{\mathbf{v}}W = \sum \mathbf{v}[w_i]U_i(\mathbf{p})$.
+
+{\color{red}Linearity and all that.}
+
+We can easily extend this to being based on another vector field instead of a single tangent vector. If $V$ and $W$ are vector fields, then
+\[
+	\nabla_{V}W(\mathbf{p}) = \nabla_{V(\mathbf{p})}W.
+\] If $W = \sum w_i U_i$, then $\nabla_{V}W = \sum V[w_i] U_i$.
+
+Since $\nabla_{V}W$ maps from $\mathbb{R}^n$ to $T_{\mathbf{p}}(\mathbb{R}^n)$, it is itself a vector field.
+
+{\color{red}Linearity and all that stuff.}
+
 
 
 \end{document}
