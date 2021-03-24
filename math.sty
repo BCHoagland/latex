@@ -8,6 +8,12 @@
 \usepackage{xcolor}
 \usepackage{mathtools}
 \usepackage{tikz-cd}
+\usepackage{wrapfig}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CUSTOM COMMANDS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareMathOperator{\im}{im}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CUSTOM COLORS
@@ -17,7 +23,6 @@
 \definecolor{thrm}{HTML}{47E000}
 \definecolor{nte}{HTML}{FFA500}
 \definecolor{lem}{HTML}{6C47FF}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LINKS
@@ -31,93 +36,21 @@
     urlcolor=black
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Theorem
-%\newtcbtheorem{thrm}{Theorem}{
-%  enhanced,
-%  sharp corners,
-%  attach boxed title to top left={
-%    yshifttext=-1mm
-%  },
-%  boxrule=0.5pt,
-%  colback=white,
-%  colframe=thrm,
-%  fonttitle=\bfseries,
-%  boxed title style={
-%    sharp corners,
-%    size=small,
-%    colback=thrm,
-%    colframe=thrm,
-%  }
-%}{thrm}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Definition
-%\newtcbtheorem{defn}{Definition}{
-%  enhanced,
-%  sharp corners,
-%  attach boxed title to top left={
-%    yshifttext=-1mm
-%  },
-%  boxrule=0.5pt,
-%  colback=white,
-%  colframe=defn,
-%  fonttitle=\bfseries,
-%  boxed title style={
-%    sharp corners,
-%    size=small,
-%    colback=defn,
-%    colframe=defn,
-%    % 'defn!75!black' will darken the defn a bit if it's too bright
-%  }
-%}{defn}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Example
-%\newtcbtheorem{ex}{Example}{
-%  enhanced,
-%  sharp corners,
-%  attach boxed title to top left={
-%    yshifttext=-1mm
-%  },
-%  boxrule=0.5pt,
-%  colback=white,
-%  colframe=exmp,
-%  fonttitle=\bfseries,
-%  boxed title style={
-%    sharp corners,
-%    size=small,
-%    colback=exmp,
-%    colframe=exmp,
-%  }
-%}{ex}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%note
-%\newtcbtheorem{note}{Note}{
-%  enhanced,
-%  sharp corners,
-%  attach boxed title to top left={
-%    yshifttext=-1mm
-%  },
-%  boxrule=0.5pt,
-%  colback=white,
-%  colframe=nte,
-%  fonttitle=\bfseries,
-%  boxed title style={
-%    sharp corners,
-%    size=small,
-%    colback=nte,
-%    colframe=nte,
-%  }
-%}{note}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THEOREMS, ETC
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mdfdefinestyle{leftBar}{topline=false, rightline=false, bottomline=false, linewidth=1pt}
 
 \newmdtheoremenv{prop}{Proposition}
 \newmdtheoremenv{cor}{Corollary}
+\newmdtheoremenv[style=leftBar, linecolor=lem]{lem}{Lemma}
+\newmdtheoremenv[style=leftBar, linecolor=thrm]{thrm}{Theorem}
+
+\theoremstyle{definition}
 \newmdtheoremenv{exer}{Exercise}
-\newmdtheoremenv[topline=false, rightline=false, bottomline=false, linecolor=lem, linewidth=1pt]{lem}{Lemma}
-\newmdtheoremenv[topline=false, rightline=false, bottomline=false, linecolor=thrm, linewidth=1pt]{thrm}{Theorem}
-\newmdtheoremenv[topline=false, rightline=false, bottomline=false, linecolor=defn, linewidth=1pt]{defn}{Definition}
-\newmdtheoremenv[topline=false, rightline=false, bottomline=false, linecolor=exmp, linewidth=1pt]{ex}{Example}
-\newmdtheoremenv[topline=false, rightline=false, bottomline=false, linecolor=nte, linewidth=1pt]{note}{Note}
+\newmdtheoremenv[style=leftBar, linecolor=defn]{defn}{Definition}
+\newmdtheoremenv[style=leftBar, linecolor=exmp]{ex}{Example}
+\newmdtheoremenv[style=leftBar, linecolor=nte]{note}{Note}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Page Formatting

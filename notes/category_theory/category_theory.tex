@@ -127,6 +127,46 @@ Given categories $\cat{C}$ and $\cat{D}$, we can define their \textbf{product ca
 It is straightforward to define the identity morphisms and the composition of morphisms in product categories in a piecewise fashion, building off the identities and composition laws of $\cat{C}$ and $\cat{D}$.
 
 %%%%%%%%%%%%%%%%%%%%
+% Universal Properties
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Universal Properties}
+
+\begin{defn}[]
+	An object $A$ is \textbf{initial} if there is a unique morphism $A \to B$ for all objects $B$. An object $C$ is \textbf{final} if there is a unique morhpism $B \to C$ for all objects $C$. An object that is either initial or fianl is called \textbf{universal}, and it's a \textbf{zero object} if it's both.
+\end{defn}
+
+\begin{ex}[]
+In \textbf{Grp}, the trivial group $\left\{ 1 \right\}$ is a zero object.
+\end{ex}
+
+\begin{prop}
+	All initial objects are isomorphic. All final objects are isomorphic.
+\end{prop}
+\begin{proof}
+	If $A,A'$ are both initial, there are unique morphisms $f:A\to A'$ and $g:A'\to A$. Then $gf$ is a morphism $A\to A$. Since $A$ is universal, it has only one endomorphism, namely the identity map. Thus $gf=1_{A}$. Similarly, $fg=1_{A'}$. Thus $A \cong A'$. The proof is similar for final objects.
+\end{proof}
+
+\begin{ex}[]
+If we have a morphism $f:X\to Y$, we can define an equivalence relation
+\[
+	a \sim b \iff f(a) = f(b).
+\] Then if $\pi$ is the canonical projection map, the following diagram commutes.
+\begin{figure}[H]
+	\centering
+\begin{tikzcd}
+X/\sim \arrow[rr, "\exists!\;g", dashed]       &  & Y \\
+                                       &  &   \\
+X \arrow[uu, "\pi"] \arrow[rruu, "f"'] &  &  
+\end{tikzcd}
+\end{figure}
+
+Consider the category with objects the morphisms $X\to Y$ that respect $\sim$ and morphisms given by push-forwards. In this category, $\pi$ is initial (and thus universal). Colloquially, we say that $X/\sim$ has this universal property, although it's really $\pi$ that has the property. But $\pi$ is the only map $X \to  X/\sim$ that makes sense, though, so we can say either and it's obvious what we mean.
+
+{\color{red}Is $\im f \cong X/\sim$ for all categories? Seems like it should depend on what the canonical projection is in the particular category...}
+\end{ex}
+
+%%%%%%%%%%%%%%%%%%%%
 % Functors
 %%%%%%%%%%%%%%%%%%%%
 

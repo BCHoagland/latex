@@ -1,0 +1,73 @@
+\documentclass[10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/math}
+
+\lhead{Braden Hoagland}
+\chead{Homological Algebra}
+\rhead{}
+
+\begin{document}
+%\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%
+% Chain Complexes
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Chain Complexes}
+
+\begin{defn}[]
+	A \textbf{chain complex} is a sequence of abelian group homomorphisms {\color{red}(change to modules?)}
+\begin{center}
+	\begin{tikzcd}
+	\cdots \arrow[r, "d_{i+2}"] & C_{i+1} \arrow[r, "d_{i+1}"]  & C_i \arrow[r, "d_i"]  & C_{i-1} \arrow[r, "d_{i-1}"]  & \cdots
+	\end{tikzcd}
+\end{center}
+such that $d_i \circ d_{i+1}=0$ for all $i$.
+\end{defn}
+
+We can also consider \textbf{cochain complexes}, which are the same except that the maps take you up a level instead of down.
+\begin{center}
+	\begin{tikzcd}
+	\cdots                      & C_{i+1} \arrow[l, "d_{i+1}"'] & C_i \arrow[l, "d_i"'] & C_{i-1} \arrow[l, "d_{i-1}"'] & \cdots \arrow[l, "d_{i-2}"']
+	\end{tikzcd}
+\end{center}
+
+The map $d_i$ is the \textbf{boundary operator}, as it is a generalization of the geometric concept of a boundary (note $d^2=0$). Thus an element in the image of $d$ is a \textbf{boundary}. Since usual geometric cycles have no boundary, we call the elements of the kernel of $d$ \textbf{cycles}.
+
+
+\begin{ex}[]
+Chain complexes generalize the concept of boundaries to objects that don't necessarily have clear cyclic geometric properties. Let $\mathfrak{X}(\mathbb{R}^3)$ denote the smooth vector fields on $\mathbb{R}^3$, then consider the chain complex
+\begin{center}
+\begin{tikzcd}
+	0 \arrow[r] & \mathbb{R} \arrow[r] & C^\infty(\mathbb{R}^3) \arrow[r, "\text{grad}"] & \mathfrak{X}(\mathbb{R}^3) \arrow[r, "\text{curl}"] & \mathfrak{X}(\mathbb{R}^3) \arrow[r, "\text{div}"] & C^\infty(\mathbb{R}^3) \arrow[r] & 0
+\end{tikzcd}
+\end{center}
+If we consider the $\text{grad}$ map, we see that its ``cycles" are actually just constant functions.
+\end{ex}
+
+A map $f:C\to D$ between chain complexes is a sequence of maps \[f_i:C_i\to D_i\] that respect the boundar operators. This means the following diagram commutes.
+\begin{center}
+	\begin{tikzcd}
+		C_i \arrow[d, "f_i"'] \arrow[r, "d_C"] & C_{i-1} \arrow[d, "f_{i-1}"] \\
+		D_i \arrow[r, "d_D"']                & D_{i-1}
+\end{tikzcd}
+\end{center}
+
+\begin{defn}[]
+The $n$-th \textbf{homology group} of a chain complex $\mathcal{C}$ is
+\[
+	H_{n}(\mathcal{C}) = \frac{\ker d_{n}}{\im d_{n+1}} .
+\] 
+\end{defn}
+
+Similarly, the $n$-th \textbf{cohomology group} is $H^{n}(C) = \ker d_{n+1}/\im d_{n}$. In both cases the quotient represents the $n$-th dimensional holes in the complex, as it is the cycles that do not arise as boundaries of higher dimensional objects.
+
+A chain complex $C$ is exact if and only if $H_{n}(C)$ is trivial for all $n$.
+
+Given a map $f:C \to D$ of chain complexes, the commutativity of the above diagram shows that $f$ sends cycles to cycles and boundaries to boundaries, thus inducing a map $H_{n}(C) \to H_{n}(D)$.
+
+\begin{defn}[]
+	A \textbf{quasi-isomorphism} is a map $f:C\to D$ of chain complexes where the induced map $H_{n}(C)\to H_{n}(D)$ is an isomorphism.
+\end{defn}
+
+
+\end{document}
