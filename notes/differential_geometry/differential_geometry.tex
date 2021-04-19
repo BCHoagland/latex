@@ -18,9 +18,6 @@
 
 \chapter{Basics and Tools}
 
-{\color{red}Slowly go through and replace $\mathbb{R}^n$ with $M$ when possible.}
-
-
 %%%%%%%%%%%%%%%%%%%%
 % Differentiable Functions
 %%%%%%%%%%%%%%%%%%%%
@@ -154,59 +151,30 @@ We can reparameterize any regular curve $\alpha$ to have unit speed.
 
 We say that a unit speed curve has the \textbf{arc length parameterization}.
 
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Tangent Spaces
+
+\chapter{Tangent Spaces}
 
 %%%%%%%%%%%%%%%%%%%%
-% Tangent Spaces and Frames
+% Basics
 %%%%%%%%%%%%%%%%%%%%
 
-\section{Tangent Spaces and Frames}
+\section{Basics}
 
 \begin{defn}
 	Let $\mathbf{p} \in M$. Then the \textbf{tangent space} $T_\mathbf{p}(M)$ of $M$ at $\mathbf{p}$ is the vector space of all velocities of curves in $M$ originating at $\mathbf{p}$. The \textbf{tangent bundle} $T( M)$ of $M$ is the collection of all tangent spaces of $M$.
 \end{defn}
 
-\begin{defn}[]
-Let $\left\{ \mathbf{e}_i \right\}_{i=1}^n$ be a set of mutually orthogonal unit vectors tangent to $\mathbf{p}$. Then it is a \textbf{frame} of $M$ at $\mathbf{p}$.
-\end{defn}
-
-\begin{prop}
-	A frame of $M$ is a basis for $T_{\mathbf{p}}(M)$.
-\end{prop}
-\begin{proof}
-	If we dot $\sum a_i \mathbf{e}_i =\mathbf{0}$ with $\mathbf{e}_j$, then the result is $a_j=0$. Thus our frame is linearly independent, so it's a basis for $T_{\mathbf{p}}(M)$.
-\end{proof}
-
-\begin{prop}
-	We can decompose $\mathbf{v} \in T_{\mathbf{p}}(M)$ into $\mathbf{v} = \sum (\mathbf{v}\cdot \mathbf{e}_i)\mathbf{e}_i$.
-\end{prop}
-\begin{proof}
-	Since frames are bases of the tangent space, we can write $\mathbf{v} = \sum c_i \mathbf{e}_i$ for some $c_i$, and $\mathbf{v}\cdot \mathbf{e}_j = (\sum_i c_i \mathbf{e}_i)\cdot \mathbf{e}_j = c_j$.
-\end{proof}
-
-The dot product has the same form in any frame:
-\[
-	\mathbf{v}\cdot \mathbf{w} = \sum (\mathbf{v}\cdot\mathbf{e}_i)(\mathbf{w}\cdot\mathbf{e}_i).
-\] 
-
-\begin{defn}[]
-The \textbf{attitude matrix} of a frame $\left\{ \mathbf{e}_i \right\}_{i=1}^n$ is the matrix
-\[
-	A=
-\begin{pmatrix}
-	\rule[.5ex]{2.5ex}{0.5pt} & \mathbf{e}_1 & \rule[.5ex]{2.5ex}{0.5pt} \\
-				  & \vdots & \\
-	\rule[.5ex]{2.5ex}{0.5pt} & \mathbf{e}_n & \rule[.5ex]{2.5ex}{0.5pt}
-\end{pmatrix}.
-\] 
-\end{defn}
-
-Technically, each $\mathbf{e}_i$ is in the tangent space, but $A$'s rows are just the coordinates of each $\mathbf{e}_i$. Note that the rows are orthonormal, so $A A^T = I_n$, so $A^{-1}=A^T$, i.e. $A$ is an \textbf{orthogonal} matrix.
-
 %%%%%%%%%%%%%%%%%%%%
-% Vector Fields and Frame Fields
+% Vector Fields
 %%%%%%%%%%%%%%%%%%%%
 
-\section{Vector Fields and Frame Fields}
+\section{Vector Fields}
 
 \begin{defn}
 	A \textbf{vector field} $V$ on $M$ is a function
@@ -214,34 +182,8 @@ Technically, each $\mathbf{e}_i$ is in the tangent space, but $A$'s rows are jus
 		V:M \to T_{\mathbf{p}}(M).
 	\] 
 \end{defn}
-Vector fields can be added and scalar multiplied in the usual way for functions.
 
-\begin{defn}[]
-	A set of vector fields $\left\{ E_i \right\}_{i=1}^n$ is a \textbf{frame field} on $M$ if $E_i \cdot E_j = \delta_{ij}$.
-\end{defn}
-
-\begin{ex}[]
-	If $U_i(\mathbf{p})$ returns a vector with 1 in the $i$-th coordinates and 0 everywhere else, then $\left\{ U_i \right\}_{i=1}^n$ is the \textbf{natural frame field} on $M$.
-\end{ex}
-
-Given a frame field $\left\{ E_i \right\}_{i=1}^n$, the set $\left\{ E_i(\mathbf{p}) \right\}_{i=1}^n$ forms an orthonormal basis (frame) of $T_{\mathbf{p}}(M)$.
-
-\begin{prop}
-We can decompose any vector field $V$ into parts based on a frame field by
-\[V = \sum f_i E_i,\]
-where $f_i = V \cdot E_i$.
-\end{prop}
-
-Just like with vectors, frames offer a nice generalized way of computing dot products of vector fields. If $V = \sum f_i E_i$ and $W = \sum g_i E_i$, then
-\[
-	V \cdot W = \sum f_i g_i = \sum (V \cdot E_i) (W \cdot E_i).
-\] 
-
-\begin{note}
-	We say that a vector field is differentiable if its coordinate functions are themselves differentiable. From now on, assume vector fields are differentiable.
-\end{note}
-
-We can define a notion of vector fields on curves.
+Vector fields can be added and scalar multiplied in the usual way for functions. We can also define a notion of vector fields on curves.
 
 \begin{defn}[]
 	A \textbf{vector field} on a curve $\alpha:I\to M$ is a function
@@ -263,6 +205,7 @@ We can then define the derivative of a vector field on a curve in a pointwise fa
 A vector field on a curve is \textbf{parallel} if it produces parallel vectors. This means that all of it's $y_i$ are constant.
 
 \begin{prop}
+	{\color{red}Move first two statements to curve section? Why are they here?}
 	\begin{enumerate}
 		\item $\alpha$ is constant $\iff$ $\alpha'=0$.
 		\item $\alpha$ is a nonconstant straight line $\iff$ $\alpha''=0$.
@@ -272,12 +215,108 @@ A vector field on a curve is \textbf{parallel} if it produces parallel vectors. 
 
 
 %%%%%%%%%%%%%%%%%%%%
+% 1-Forms
+%%%%%%%%%%%%%%%%%%%%
+
+\section{1-Forms}
+
+The derivative $Df_{x}$ of $f$ at $x$ is a linear function that best approximates $f$ at $x$. Note that $Df_{x}$ is a linear function from the tangent space based at $x$ to $\mathbb{R}$ l. 1-forms are a generalization of total derivatives.
+
+\begin{defn}
+A \textbf{1-form} on $M$ is a linear function
+\[
+	\phi:T(M)\to \mathbb{R},
+\] such that for all $\mathbf{p}$, we can limit $\phi$ to
+\[
+	\phi_\mathbf{p}:T_{\mathbf{p}}(M)\to \mathbb{R}.
+\] 
+\end{defn}
+
+There's an equivalent way of formulating this that uses fancier vocab. If $\mathcal{V}$ is a vector space, then the set of all linear maps from $\mathcal{V}$ to $\mathbb{R}$ is itself a vector space. We call it the \textbf{dual space} of $\mathcal{V}$ and denote it by $\mathcal{V}^*$, and its elements are called \textbf{covectors}.
+
+Thus a 1-form $\phi$ is an element of $T^*(\mathbb{R}^n)$. It can be limited to elements $\phi_\mathbf{p}$ of the \textbf{cotangent space} $T_{\mathbf{p}}^*(\mathbb{R}^n)$, in which case we can also call $\phi_\mathbf{p}$ a \textbf{cotangent vector}.
+
+\begin{note}
+Since vector fields produce tangent vectors and 1-forms map tangent vectors to real numbers, we can think of 1-forms as being dual to the notion of vector fields.
+\end{note}
+
+Addition of 1-forms is defined pointwise. We can also define a sort of scalar multiplication with scalar fields. If $\phi$ is a 1-form and $f$ is a scalar field, define
+\[
+	(f\phi)(\mathbf{v}_{\mathbf{p}}) \doteq f(\mathbf{p}) \phi(\mathbf{v}_\mathbf{p})
+\] for all $\mathbf{v}_{\mathbf{p}} \in T_\mathbf{p}(\mathbb{R}^n)$.
+
+Given a vector field $V$, we can naturally act on it with a 1-form $\phi$ by
+\begin{align*}
+	\phi(V):M&\to \mathbb{R} \\
+	\mathbf{p}&\mapsto \phi(V(\mathbf{p})).
+\end{align*}
+Thus we can view 1-forms as operators that convert vector fields into scalar fields. Additionally, it is easy to show that 1-forms act linearly on vector fields.
+
+\begin{defn}
+Let $f:M\to \mathbb{R}$ be differentiable. Then the \textbf{differential} $df$ of $f$ is the 1-form such that
+\[
+	df(\mathbf{v}_{\mathbf{p}}) = \mathbf{v}_{\mathbf{p}}[f]
+\] for all tangent vectors $\mathbf{v}_{\mathbf{p}}$ of some point $\mathbf{p} \in M$.
+\end{defn}
+
+{\color{red}More on this...}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Frames
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Frames}
+
+\begin{defn}[]
+A set of vector fields $\left\{ E_i \right\}_{i=1}^n$ on $M$ if a \textbf{frame} if
+\[
+\left\langle E_i, E_j \right\rangle = \delta_{ij}.
+\] The \textbf{dual frame} is the set of one forms $\left\{ \theta_i \right\}_{i=1}^n$ such that
+\[
+	\theta_i(E_j) = \delta_{ij}.
+\]
+\end{defn}
+
+A frame is used to create the ``axes" of each tangent space, and the dual frame is used to project onto each axis. We can explicitly represent the dual frame by
+\[
+	\theta_i = \left\langle E_i, \;\cdot\; \right\rangle.
+\] 
+
+\begin{ex}[]
+	If $U_i(\mathbf{p})$ returns a vector with 1 in the $i$-th coordinates and 0 everywhere else, then $\left\{ U_i \right\}_{i=1}^n$ is the \textbf{natural frame field} on $M$. The functions $\left\{ dx_{i} \right\}_{i=1}^n$ are the corresponding dual frame. Thus we can interpret $dx_i$ as simply extracting the $ i$-th component of a tangent vector.
+\end{ex}
+
+\begin{prop}
+Any 1-form $\phi$ can be written in terms of a frame by
+\[
+	\phi = \sum \phi(E_i) \theta_i.
+\] 
+\end{prop}
+
+Here we're saying that $\phi$ is uniquely determined by what it does on the elements of the frame. In the special case that $\phi = df$ for some function $f$ and we're working with the natural frame field, this reduces to
+\[
+df = \sum \frac{\partial f}{\partial x_i} dx_i.
+\] 
+
+\begin{prop}
+Any vector field $V$ can be written in terms of a frame by
+\[V = \sum \theta_i(V) E_i = \sum \left\langle V,E_i \right\rangle E_i.\]
+\end{prop}
+
+Then the inner product of two vector fields $V,W$ is
+\[
+	\left\langle V,W \right\rangle = \sum \theta_i(V) \theta_i(W) = \sum \left\langle E_i, V \right\rangle \left\langle E_i, W \right\rangle.
+\] 
+
+
+%%%%%%%%%%%%%%%%%%%%
 % Directional Derivatives
 %%%%%%%%%%%%%%%%%%%%
 
 \section{Directional Derivatives}
 
-{\color{red}Generalize!!!!}
+{\color{red}Generalize and move to `Basics' section.}
 
 \begin{defn}
 	Let $f:\mathbb{R}^n \to \mathbb{R}$ be a scalar field, and let $\mathbf{v}_{\mathbf{p}} \in T_p(\mathbb{R}^n)$. Then
@@ -382,86 +421,6 @@ We can easily extend this to being based on another vector field instead of a si
 Since $\nabla_{V}W$ maps from $\mathbb{R}^n$ to $T_{\mathbf{p}}(\mathbb{R}^n)$, it is itself a vector field.
 
 {\color{red}Linearity and all that stuff.}
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%
-% 1-Forms
-%%%%%%%%%%%%%%%%%%%%
-
-\section{1-Forms}
-
-\begin{defn}
-A \textbf{1-form} on $M$ is a linear function
-\[
-	\phi:T(M)\to \mathbb{R},
-\] such that for all $\mathbf{p}$, we can limit $\phi$ to
-\[
-	\phi_\mathbf{p}:T_{\mathbf{p}}(M)\to \mathbb{R}.
-\] 
-\end{defn}
-
-\begin{ex}
-	The map $(v_1,v_2,v_3)_{\mathbf{p}}\mapsto v_1$ for all $\mathbf{p} \in \mathbb{R}^3$ is a 1-form on $\mathbb{R}^3$.
-\end{ex}
-
-There's an equivalent way of formulating this that uses fancier vocab. If $\mathcal{V}$ is a vector space, then the set of all linear maps from $\mathcal{V}$ to $\mathbb{R}$ is itself a vector space. We call it the \textbf{dual space} of $\mathcal{V}$ and denote it by $\mathcal{V}^*$, and its elements are called \textbf{covectors}.
-
-Thus a 1-form $\phi$ is an element of $T^*(\mathbb{R}^n)$. It can be limited to elements $\phi_\mathbf{p}$ of the \textbf{cotangent space} $T_{\mathbf{p}}^*(\mathbb{R}^n)$, in which case we can also call $\phi_\mathbf{p}$ a \textbf{cotangent vector}.
-
-\begin{note}
-Since vector fields produce tangent vectors and 1-forms map tangent vectors to real numbers, we can think of 1-forms as being dual to the notion of vector fields.
-\end{note}
-
-Addition of 1-forms is defined pointwise. We can also define a sort of scalar multiplication with scalar fields. If $\phi$ is a 1-form and $f$ is a scalar field, define
-\[
-	(f\phi)(\mathbf{v}_{\mathbf{p}}) \doteq f(\mathbf{p}) \phi(\mathbf{v}_\mathbf{p})
-\] for all $\mathbf{v}_{\mathbf{p}} \in T_\mathbf{p}(\mathbb{R}^n)$.
-
-Given a vector field $V$, we can naturally act on it with a 1-form $\phi$ by
-\begin{align*}
-	\phi(V):M&\to \mathbb{R} \\
-	\mathbf{p}&\mapsto \phi(V(\mathbf{p})).
-\end{align*}
-Thus we can view 1-forms as operators that convert vector fields into scalar fields. Additionally, it is easy to show that 1-forms act linearly on vector fields.
-
-\begin{note}
-	If $\phi(V)$ is differentiable whenever $V$ is differentiable, then we say that $\phi$ itself is differentiable. From now on, assume any given 1-form is differentiable.
-\end{note}
-
-\begin{defn}
-Let $f:M\to \mathbb{R}$ be differentiable. Then the \textbf{differential} $df$ of $f$ is the 1-form such that
-\[
-	df(\mathbf{v}_{\mathbf{p}}) = \mathbf{v}_{\mathbf{p}}[f]
-\] for all tangent vectors $\mathbf{v}_{\mathbf{p}}$ of some point $\mathbf{p} \in M$.
-\end{defn}
-
-Since $\mathbf{v}_{\mathbf{p}}[f]$ is a map from the tangent space to $\mathbb{R}$, and since we proved earlier that it is linear for all $p$, $df$ is in fact a 1-form.
-
-\begin{ex}
-Consider the differentials $dx_1, \dots, dx_n$ of the natural coordinate functions on $\mathbb{R}^n$. For a tangent vector $\mathbf{v}_{\mathbf{p}}$ of a point $\mathbf{p}$, we have
-\[
-	dx_i(\mathbf{v}_{\mathbf{p}}) = \mathbf{v}_{\mathbf{p}}[x_i] = \sum_j v_j \frac{\partial x_i}{\partial x_j} (\mathbf{p}) = \sum_j v_j \delta_{ij} = v_i,
-\] where $\delta_{ij}$ is the Kronecker delta. Thus $dx_i$ just extracts the $i$-th coordinate of a tangent vector, regardless of its point of application.
-\end{ex}
-
-\begin{prop}
-Let $\phi$ be a 1-form, then
-\[
-	\phi = \sum_i f_i \;dx_i,
-\] where $f_i = \phi(U_i)$. {\color{red}Doesn't generalize to $M$?}
-\end{prop}
-
-\begin{cor}
-	\[ df = \sum_i \frac{\partial f}{\partial x_i} dx_i.\]
-\end{cor}
-\begin{proof}
-	$df(U_i) = U_i[f] = \frac{\partial f}{\partial x_i} .$
-\end{proof}
-
-{\color{red}Bottom of pg 25 to top of pg 27.}
-
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -685,6 +644,10 @@ We showed earlier that we can decompose the covariant derivative based on the na
 	\nabla_{V}E_i = \sum_j \omega_{ij}(V) E_j,
 \] where $\omega_{ij}$ is composed with $V$ in the usual way for functions.
 
+{\color{red}\[
+		\omega_{ij}(V) = \left\langle \nabla_{V}E_i, E_j \right\rangle.
+\] }
+
 \begin{defn}[]
 We call the $\omega_{ij}$ the \textbf{connection forms} of $\left\{ E_1, \dots, E_n \right\}$.
 \end{defn}
@@ -770,33 +733,6 @@ Prof likes to use Einstein summation convention, so that'll probably start poppi
 %%%%%%%%%%%%%%%%%%%%
 
 \section{The Cartan Structure Equations}
-
-\begin{defn}[]
-Given a frame $\left\{ E_i \right\}_{i=1}^n$, the \textbf{dual frame} $\left\{ \theta_{i} \right\}_{i=1}^n$ is composed of 1-forms given by
-\[
-	\theta_i(\mathbf{v}) = \mathbf{v} \cdot E_i(\mathbf{p})
-\] for all $\mathbf{v} \in T_{\mathbf{p}}(\mathbb{R}^n)$.
-\end{defn}
-
-\begin{ex}[]
-$dx_i$ is dual to $U_i$.
-\end{ex}
-
-Any vector field $V$ can be written $V=\sum (V \cdot E_i)E_i$, but we can rewrite this using the dual frame as
-\[
-	V = \sum \theta_i(V) E_i.
-\] 
-We already know that we can express a $1$-form $\phi$ as $\phi=\sum \phi(U_i)\;dx_i$, but now we can also express it in terms of \textit{any} frame field, not just the natural frame field.
-
-\begin{lem}
-	Any 1-form $\phi$ can be written $\phi=\sum \phi(E_i)\theta_i$.
-\end{lem}
-\begin{proof}
-	For any vector field $V$,
-	\[
-		\left( \sum \phi(E_i)\theta_i \right)(V) = \sum\phi(E_i)\theta_i(V) = \phi\left( \sum \theta_i(V) E_i \right)=\phi(V).
-	\] 
-\end{proof}
 
 \begin{ex}[]
 	$\theta_i(U_j) = E_i \cdot U_j=a_{ij}$, where $a_{ij}$ is an element of the attitude matrix. Thus if

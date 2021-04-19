@@ -1299,6 +1299,13 @@ The power series
 	A power series $p(x)$ is $C^{\infty}$, and each of its derivatives has the same radius of convergence.
 \end{cor}
 
+\begin{thrm}[]
+	If we have a power series $\sum_{k=0}^{\infty} a_k(x-x_0)^{k}$, then its radius of convergence is
+	\[
+	\rho = \lim_{k \to \infty} \left| \frac{a_k}{a_{k+1}}  \right|
+	\] if this limit exists.
+\end{thrm}
+
 \begin{prop}
 	Every power series is equal to its Taylor series.
 \end{prop}

@@ -1,9 +1,6 @@
-\documentclass[10pt]{report}
-\usepackage{/Users/bradenhoagland/latex/math}
-
-\lhead{Braden Hoagland}
-\chead{Homological Algebra}
-\rhead{}
+\documentclass[twoside,10pt]{report}
+\newcommand{\docTitle}{Homological Algebra}
+\usepackage{/Users/bradenhoagland/latex/math2}
 
 \begin{document}
 %\tableofcontents
@@ -35,16 +32,16 @@ The map $d_i$ is the \textbf{boundary operator}, as it is a generalization of th
 
 
 \begin{ex}[]
-Chain complexes generalize the concept of boundaries to objects that don't necessarily have clear cyclic geometric properties. Let $\mathfrak{X}(\mathbb{R}^3)$ denote the smooth vector fields on $\mathbb{R}^3$, then consider the chain complex
+	Chain complexes generalize the concept of boundaries to objects that don't necessarily have clear cyclic geometric properties. Let $\Omega_n(M)$ denote the space of differential $n$-forms on a manifold $M$, then we have a cochain complex
 \begin{center}
 \begin{tikzcd}
-	0 \arrow[r] & \mathbb{R} \arrow[r] & C^\infty(\mathbb{R}^3) \arrow[r, "\text{grad}"] & \mathfrak{X}(\mathbb{R}^3) \arrow[r, "\text{curl}"] & \mathfrak{X}(\mathbb{R}^3) \arrow[r, "\text{div}"] & C^\infty(\mathbb{R}^3) \arrow[r] & 0
+	\Omega_0(M) \arrow[r, "d"] & \Omega_1(M) \arrow[r, "d"] & \Omega_2(M) \arrow[r, "d"] & \cdots
 \end{tikzcd}
 \end{center}
-If we consider the $\text{grad}$ map, we see that its ``cycles" are actually just constant functions.
+where $d$ is the exterior derivative. From this we see that the cycles of $\Omega_0(M)$ (the space of differentiable functions on $M$) are the constant functions.
 \end{ex}
 
-A map $f:C\to D$ between chain complexes is a sequence of maps \[f_i:C_i\to D_i\] that respect the boundar operators. This means the following diagram commutes.
+A map $f:C\to D$ between chain complexes is a sequence of maps \[f_i:C_i\to D_i\] that respect the boundary operators. This means the following diagram commutes.
 \begin{center}
 	\begin{tikzcd}
 		C_i \arrow[d, "f_i"'] \arrow[r, "d_C"] & C_{i-1} \arrow[d, "f_{i-1}"] \\

@@ -965,12 +965,12 @@ If $X$ is path connected, then all points in $X$ have isomorphic fundamental gro
 
 If we have a continuous map
 \begin{align*}
-	f:X&\to Y\\
+	f:X&\to Y,\\
 	x&\mapsto y,
 \end{align*}
 then this induces a homomorphism between fundamental groups
 \begin{align*}
-	f_{*}:\pi_1(X,x)&\to \pi_1(Y,y)\\
+	f_{*}:\pi_1(X,x)&\to \pi_1(Y,y),\\
 	[\alpha]&\mapsto [f\circ \alpha].
 \end{align*}
 This being a homomorphism follows from the distributivity of function composition.
@@ -1016,11 +1016,6 @@ then their induced homomorphisms satisfy $(g\circ f)_{*}=g_{*}\circ f_{*}$.
 	$\pi_1(S^{1})\cong \mathbb{Z}$.
 \end{thrm}
 
-\begin{thrm}[Brouwer Fixed Point]
-	If $X \cong D^{2}$ (the closed unit disk), then every continuous map $f:X\to X$ has a fixed point.
-\end{thrm}
-
-
 %%%%%%%%%%%%%%%%%%%%
 % Covering Spaces
 %%%%%%%%%%%%%%%%%%%%
@@ -1028,43 +1023,8 @@ then their induced homomorphisms satisfy $(g\circ f)_{*}=g_{*}\circ f_{*}$.
 \section{Covering Spaces}
 
 \begin{defn}[]
-	A \textbf{covering space} of $B$ is a space $E$ and a \textbf{covering map} $p:E\to B$. For all $x \in B$, there is a neighborhood $U$ of $x$ such that $p^{-1}(U)$ is a disjoint union of homeomorphic copies of $U$. Such neighborhoods are called \textbf{evenly covered}.
+	A \textbf{covering space} of $B$ is a space $E$ and a \textbf{covering map} $p:E\to B$. For all $x \in B$, there is a neighborhood $U$ of $x$ such that $p^{-1}(U)$ is a disjoint union of homeomorphic copies of $U$.
 \end{defn}
-Equivalently, a covering space of is a fiber bundle with discrete fibers. Note that $p$ must be continuous and surjective.
-
-This is more about open sets than points. Once we get $U$ from $x$, we forget about $x$ in the definition.
-
-{\color{red}Figure.}
-
-\begin{ex}[]
-	$\mathbb{R}$ is a covering space of $S^{1}$. One possible covering map is
-		\begin{align*}
-			p:\mathbb{R}&\to S^{1}\\
-			t&\mapsto (\cos 2\pi t,\sin 2\pi t).
-		\end{align*}
-\end{ex}
-
-\begin{defn}[]
-If $p:E\to B$ is a covering map and $f:X\to B$ is continuous, then we say that $\tilde{f}$ \textbf{lifts} $f$ if $p \circ \tilde{f}=f$.
-\[
-\begin{tikzcd}
-	&E\dar{p}\\
-	X\rar{f}\arrow[ur,"\tilde{f}"]&B
-\end{tikzcd}
-\] 
-\end{defn}
-
-\begin{prop}
-Covering maps are open.
-\end{prop}
-{\color{red}Do this.}
-
-\begin{cor}
-Covering maps are quotient maps.
-\end{cor}
-{\color{red}Why? Also show that the converse isn't necessarily true.}
-
-{\color{red}Lifting theorems.}
 
 
 
