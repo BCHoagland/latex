@@ -1,0 +1,539 @@
+\documentclass[twoside,10pt]{article}
+\usepackage{structure}
+
+\usepackage[
+	backend=biber,
+]{biblatex}
+\addbibresource{paper.bib}
+
+%--------------------------------------------------------------------------------
+% Title
+%--------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{center}
+        {\huge \sffamily \MakeUppercase{Spectral Sequences}}\\
+	\vspace{3mm}
+        {\large \sffamily \spacedsc{Braden Hoagland}}\\
+        \vspace{3mm}
+        {Math 502: Algebraic Structures II}
+        \vspace{5mm}
+\end{center}
+
+\thispagestyle{empty}
+
+%--------------------------------------------------------------------------------
+% The Actual Document
+%--------------------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+% Introduction
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+Spectral sequences are a computational tool in homological algebra that allow for the homology of an unwieldy space to be broken down into a sequence of smaller computations. In this paper, we develop the basic theory of spectral sequences and their common constructions, finishing with a fundamental sufficient condition for their convergence.
+
+At a very high level, each ``element" of a spectral sequence gives a higher order approximation to the homology of a doubly graded object. For many objects, we need only take a finite number of approximations before we obtain the true homology, making spectral sequences a practical instead of just a theoretical tool.
+
+%%%%%%%%%%%%%%%%%%%%
+% Preliminaries
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Preliminaries}
+
+To begin working with homological objects, we first define a basic notion of homology. We say a sequence of $R$-modules $A$ is a \textit{chain complex} if it comes equipped with morphisms $ d_n:A_{n}\to A_{n-1}$ (called \textit{differentials}) such that $d^2 =0$.
+\begin{center}
+	\begin{tikzcd}
+		\cdots \arrow[r,"d_{n+1}"] & A_n \arrow[r,"d_n"] & A_{n-1} \arrow[r,"d_{n-1}"] & \cdots
+	\end{tikzcd}
+\end{center}
+
+Because of the condition $d^2=0$, we know $\im d_n \subset \ker d_{n-1}$. If we also have the reverse inclusion for all $n$, i.e. the image of one map equals the kernel of the next, then we say that $A$ is \textit{exact}. To measure the failure of a complex to be exact, we introduce the notion of homologies. Define the $n$\textit{-th homology} to be the quotient
+\[
+	H_{n}(A) \doteq \ker d_n / \im d_{n+1}.
+\] 
+
+Viewing chain complexes as objects in some category, we can naturally define morphisms between them. A \textit{homomorphism of complexes} $f:A\to B$ is a collection of $R$-module homomorphisms $f_{n}:A_{n}\to B_{n}$ that respect the differentials of $A$ and $B$. Visually, this means the following diagram commutes.
+\begin{center}
+	\begin{tikzcd}
+		\cdots \arrow[r] & A_n \arrow[r]\arrow[d,"f_n"] & A_{n-1} \arrow[r] \arrow[d,"f_{n-1}"]& \cdots \\
+		\cdots \arrow[r] & B_n \arrow[r] & B_{n-1} \arrow[r] & \cdots
+	\end{tikzcd}
+\end{center}
+
+\begin{prop}
+	\label{prop:induced-homo}
+A homomorphism of complexes induces a homomorphism between those complexes' homologies.
+\end{prop}
+\begin{proof}
+	Let $f:A\to B$ be a homomorphism of complexes, then define the map
+	\begin{align*}
+		\phi_n:H_{n}(A)&\to H_{n}(B)\\
+		[a]&\mapsto [f_n(a)].
+	\end{align*}
+This is a homomorphism since each $f_{n}$ is a homomorphism. All that's left to show is that this is well-defined, which follows from the commutativity of the above diagram. If $z \in \ker d_{n}^A$, then $(df_{n})(z) = (f_{n-1}d)(z) = f_{n-1}(0) = 0$, so $f_{n}z \in \ker d_{n}^{B}$. Thus $f$ maps kernels to kernels. If $z \in \im d_{n+1}^{A}$, then $z=da$ for some $a \in A_{n+1}$, so $f_{n}z=f_{n}da = df_{n+1}a$, so $f_{n}z \in \im d_{n+1}^{B}$. Thus $f$ also maps images to images, so the induced map between homologies is well defined.
+\end{proof}
+
+The notion of short exact sequences can be readily extended to work with chain complexes. We say a sequence $0\to A\to B\to C \to 0$ of complexes is exact if each sequence of modules $0 \to A_{n}\to B_{n}\to C_{n} \to 0$ is exact.
+
+The last tool we will need to work with spectral sequences is the long exact homology sequence. It allows us to extend a short exact sequence of complexes into a long exact sequence of the homologies. In order to prove it, we'll make use of the Snake Lemma, which we present here without proof.
+
+\begin{lem}[Snake Lemma]
+	Suppose the rows of
+	\begin{center}
+		\begin{tikzcd}
+			& A\arrow[r]\arrow[d,"a"]&B\arrow[r]\arrow[d,"b"]&C\arrow[r]\arrow[d,"c"]&0\\
+			0\arrow[r]&A'\arrow[r]&B'\arrow[r]&C'
+		\end{tikzcd}
+	\end{center}
+	are exact, then there is an exact sequence
+	\[
+	\ker a \to \ker b\to \ker c\to A'/\im a\to B'/\im b\to C'/\im c.
+	\] 
+\end{lem}
+
+\begin{thrm}[]
+\label{thrm:LES}
+Suppose $0\to A\to B\to C\to 0$ is a short exact sequence of complexes, then there is a long exact sequence of homologies
+\[
+	\cdots \to H_{n}(A)\to H_{n}(B) \to H_{n}(C) \to H_{n-1}(A) \to H_{n-1}(B) \to  \cdots.
+\] 
+\end{thrm}
+\begin{proof}
+	Suppose the morphisms in the short exact sequence are $f:A\to B$ and $g:B\to C$, then consider the diagram
+	\[
+		\begin{tikzcd}
+			&A_n/\im d_{n+1}^A\arrow[r,"f_n^*"]\arrow[d,"a"]&B_n/\im d_{n+1}^B\arrow[r,"g_n^*"]\arrow[d,"b"]&C_n/\im d_{n+1}^C\arrow[r]\arrow[d,"c"]&0 \\
+			0\arrow[r]& \ker d_{n-1}^A\arrow[r,"f_{n-1}^*"]& \ker d_{n-1}^B\arrow[r,"g_{n-1}^*"]& \ker d_{n-1}^C
+		\end{tikzcd}
+	\]
+	where $f_{n}^*$ and $g_{n}^*$ are induced by $f$ and $g$ and are well defined by Proposition \ref{prop:induced-homo}. The vertical map $a$ is induced by $d_{n}^{A}$ by
+	\[
+		a([x]) = d_{n}^{A}(x),
+	\] and the maps $b$ and $c$ are defined similarly. The exactness of both rows follows from the assumption that $\ker g_{n}=\im f_n$ for all $n$. We also have
+	\begin{align*}
+		\ker a&=\frac{\ker d_{n}^{A}}{\im d_{n+1}^{A}} = H_{n}(A),\\
+		\frac{\ker d_{n-1}^{A}}{\im a} &= \frac{\ker d_{n-1}^A}{\im d_{n}^A} = H_{n-1}(A),
+	\end{align*}
+	with similar statements for the other kernels and cokernels. Thus by the Snake Lemma, there is an exact sequence
+	\[
+		H_{n}(A) \to H_{n}(B)\to H_{n}(C)\to H_{n-1}(A)\to H_{n-1}(B)\to H_{n-1}(C).
+	\] Chaining togehter the respective exact sequences for each $n$ gives the desired long exact sequence of homologies.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%
+% Spectral Sequences
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Spectral Sequences}
+
+{\color{red}Intro sentence.}
+
+\begin{defn}[]
+A \textit{homological spectral sequence} is a collection $E = \left\{ E^{r} \right\}_{r\geq 1}$ of \textit{pages:} bigraded $R$-modules with endomorphisms
+\[
+d^{r}: E_{p,q}^{r}\to E_{p-r,p+r-1}^{r}
+\] such that $d^{r}\circ d^{r}=0$. These are the \textit{differentials} of the $E^{r}$ page. The pages are related by
+\[
+	E^{r+1} \cong H_*(E^{r}).
+\] 
+\end{defn}
+
+We'll be primarily concerned with the case when all $E_{p,q}^{r}$ are in the first quadrant: $E_{p,q}^{r}$ is nonzero only if $p,q \geq 0$.
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}
+\bullet & \bullet & \bullet             \\
+\bullet & \bullet & \bullet \arrow[llu] \\
+\bullet & \bullet & \bullet \arrow[llu]
+\end{tikzcd}
+	\caption{Some differentials for $r=2$. Each dot represents some $E_{p,q}^{r}$.}
+\end{figure}
+
+The choice of bidegree for each $d^{r}$ might seem rather odd. In fact, it is actually quite natural, and we will see why later on in the discussion preceding Theorem \ref{thrm:filt-conv}.
+
+Eventually, every $E_{p,q}^{r}$ will stabilize in the sense that $E^{r+1}_{p,q}=E^{r}_{p,q}$. Fix some pair $p,q$, then for $r>\max\left\{ p, q+1 \right\}$, the differential coming into $E_{p,q}^{r}$ will come from the fourth quadrant, and the differntial coming out of $E_{p,q}^{r}$ will enter the second quadrant. This gives us the complex
+\begin{center}
+	\begin{tikzcd}
+		0 \arrow[r, "d^r"] & E_{p,q}^r \arrow[r, "d^r"] & 0
+	\end{tikzcd}
+\end{center}
+which shows that the homology of $E_{p,q}^{r}$ is $H(E_{p,q}^{r}) = E_{p,q}^{r}/0 = E_{p,q}^{r}$. This gives us a notion of pointwise convergence within our spectral sequence, and we denote the stable value of $E_{p,q}^{r}$ by $E_{p,q}^{\infty}$.
+
+A natural question is what these limiting terms actually approach and how the information they contain is helpful. In the next two sections, we examine how spectral sequences arise, and from this we can deduce what $E_{p,q}^{\infty}$ actually represents and how it can be useful.
+
+%%%%%%%%%%%%%%%%%%%%
+% Exact Couples
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Exact Couples}
+
+{\color{red}Fix this section.}
+
+The first way we can build a spectral sequence is through an exact couple. Interesting spectral sequences arise directly from some exact couples, and they are also useful in serving as a stepping stone in the construction process. In the next section, we will see how particular complexes can be turned into exact couples, after which we can carry out the below process and gain a spectral sequence.
+
+\begin{defn}[]
+	An \textit{exact couple} is a cyclic long exact sequence of $R$-modules
+	\begin{center}
+		\begin{tikzcd}
+			\cdots \arrow[r, "j"] & E \arrow[r, "k"] & D \arrow[r, "i"] & D \arrow[r, "j"] & E \arrow[r, "k"] & \cdots
+		\end{tikzcd}
+	\end{center}
+\end{defn}
+
+We can depict an exact couple more compactly with the following diagram.
+\begin{center}
+	\begin{tikzcd}
+D \arrow[rr, "i"] &                   & D \arrow[ld, "j"] \\
+                  & E \arrow[lu, "k"] &
+	\end{tikzcd}
+\end{center}
+
+By exactness, the image of $j$ is the kernel of $ k$. Then if we define an endomorphism of $E$ by $d \doteq jk$, we get $d \circ d = (jk)(jk) = j(kj)k = 0$. It then makes sense to define $H_*(E,d)$, the homology of $E$ with respect to $d$.
+
+This induces a new couple, which we call the \textit{derived couple}, where $D$ is replaced by its image $i(D)$ under $i$ and $E$ is replaced by its homology $H_*(E)$ with respect to $d$.
+\begin{center}
+        \begin{tikzcd}
+		i(D) \arrow[rr, "i'"] &                   & i(D) \arrow[ld, "j'"] \\
+				      & H_*(E) \arrow[lu, "k'"] &
+        \end{tikzcd}
+\end{center}
+The maps in the derived couple are defined
+\begin{align*}
+	i' &\doteq i \;|\;_{i(D)}\quad, \\
+	j'(i(x)) &\doteq [j(x)]\quad, \\
+	k'([y]) &\doteq k(y)\quad,
+\end{align*}
+where the equivalence classes $[\;\cdot\;]$ are modulo the image of $d$.
+
+\begin{prop}
+	The derived couple of an exact couple is itself an exact couple.
+\end{prop}
+\begin{proof}
+	The fact that $j'i'=k'j'=i'k'=0$ all follow from expressing them in terms of $i,j,k$ and using the assumed property $ji=kj=ik=0$. Then we must show that the kernel of each map is contained in the image of the previous map. Suppose $j'(i(x))=[j(x)]=0$, then $j(x) \in \im d$, so $j(x)=(jk)(e)$, so $x-k(e) \in \ker j=\im i$, so $x-k(e)=i(d)$. Then since $ik=0$, $i(x-k(e))=i(x)=i^2(d) \in \im i'$. Thus $\ker j' \subset \im i'$.
+
+	If $k'([y])=k(y)=0$, then $y\in \ker k=\im j$, so $y=j(d)$, so $[y]=[j(d)]=j'(i(d)) \im j'$. Thus $\ker k'\subset \im j'$. Finally, if $i'(i(d))=i^2(d)=0$, then $i(d) \in \ker i=\im k$, so $i(d)=k(e)=k'([e]) \in \im k'$. Thus $\ker i' \subset \im k'$. This shows that our derived couple is in fact an exact couple.
+\end{proof}
+
+Iterating, we can construct a sequence of exact couples with the familiar properties that the next ``$E$" term is the homology of the previous one and that our ``$d$" maps become 0 when composed. Adding in a bigrading makes this into a spectral sequence.
+
+\begin{thrm}[]
+	\label{thrm:ec2ss}
+	Suppose $D$ and $E$ are bigraded $R$-modules that form an exact couple with maps $i,j,k$ satisfying
+	\[
+	\deg i=(1,-1), \quad \deg j=(0,0), \quad \deg k=(-1,0),
+\] then this exact couple determines a homological spectral sequence with $E^{r}$ the $(r-1)$-st derived couple.
+\end{thrm}
+\begin{proof}
+	{\color{red}All we have to check is the bidegree of the differentials.}
+\end{proof}
+
+\begin{ex}[Bockstein Spectral Sequence]
+	Suppose $C$ is a torsion-free complex over $\mathbb{Z}$, meaning that no element in $C$ has finite order except the identity. Now consider the short exact sequence
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & \mathbb{Z} \arrow[r, "p"] & \mathbb{Z} \arrow[r, "\mod p"] & \mathbb{Z}_p \arrow[r] & 0.
+		\end{tikzcd}
+	\end{center}
+	We can take the tensor product with $C$, using the fact that the tensor product of a module and its base ring is isomorphic to the original module, to produce another short exact sequence {\color{red}(it's exact because $C$ is torsion-free)}
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & C \arrow[r, "p"] & C \arrow[r, "\mod p"] & C \otimes \mathbb{Z}_p \arrow[r] & 0.
+		\end{tikzcd}
+	\end{center}
+	Since each element of this sequence is a complex, we can construct a long exact sequence of homologies using Theorem \ref{thrm:LES}. We can then arrange this long exact sequence into an exact couple. {\color{red}(show LES to talk about bigradings and all that, which checks that this actually induces a SS)}
+	\begin{center}
+		\begin{tikzcd}
+			H_*(C) \arrow[rr] & & H_*(C) \arrow[dl] \\
+					  & H_*(C \otimes \mathbb{Z}_p) \arrow[ul]
+		\end{tikzcd}
+	\end{center}
+	The spectral sequence induced by this exact couple is called the \textit{Bockstein spectral sequence}.
+\end{ex}
+
+%%%%%%%%%%%%%%%%%%%%
+% Filtered Complexes
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Filtered Complexes}
+
+Filtered complexes are a natural decomposition of complexes that give rise to exact couples, and thus also induce spectral sequences. Suppose $C$ is a complex of $R$-modules, then a \textit{filtration} of $C$ is a sequence
+\[
+\cdots \;\subset\; F_{p-1}C \;\subset\; F_{p}C \;\subset\; F_{p+1}C \;\subset\; \cdots \;\subset\; C
+\] 
+of subcomplexes $F_{p}C$ of $C$. This induces a filtration on each module of $C$ as well. Just define $F_{p}C_n = F_p C \cap C_n$. This gives us a bigrading on our complex that will be vital in the proof of Theorem \ref{thrm:filt-conv}.
+
+\begin{defn}[]
+	We say that $C$ if a \textit{filtered complex} if there is some filtration $F$ on $C$ that the differential of $C$ respects, i.e. $d(F_{p}C_{n}) \subset F_{p}C_{n-1}$ for all $n$.
+\end{defn}
+
+A filtration is \textit{bounded} if it only has a finite number of layers: for all $n$, there are numbers $s(n), t(n)$ such that $F_{s(n)}C_{n}=0$ and $F_{t(n)}C_{n}=C_{n}$. If a filtration satisfies $F_{-1}C_n=0$ and $F_{n}C_{n}=C_{n}$ for all $n$, we call it the \textit{canonically bounded} filtration. We visualize this particular filtration below.
+\[
+	\begin{tikzcd}
+		F_{n}C = C:&\cdots\arrow[r]&C_{2}\arrow[r]&C_1\arrow[r]&C_{0}\arrow[r]&0\\
+		\vdots\arrow[draw=none]{u}[sloped,auto=false]{\subset}&&\vdots\arrow[draw=none]{u}[sloped,auto=false]{\subset}&\vdots\arrow[draw=none]{u}[sloped,auto=false]{\subset}&\vdots\arrow[draw=none]{u}[sloped,auto=false]{\subset}&\vdots\\
+		F_{1}C:\arrow[draw=none]{u}[sloped,auto=false]{\subset}&\cdots\arrow[r]&F_{1}C_{2}\arrow[r]\arrow[draw=none]{u}[sloped,auto=false]{\subset}&C_1\arrow[r]\arrow[draw=none]{u}[sloped,auto=false]{\subset}&C_{0}\arrow[r]\arrow[draw=none]{u}[sloped,auto=false]{\subset}&0\\
+		F_{0}C:\arrow[draw=none]{u}[sloped,auto=false]{\subset}&\cdots\arrow[r]&F_{0}C_{2}\arrow[draw=none]{u}[sloped,auto=false]{\subset}\arrow[r]&F_{0}C_1\arrow[draw=none]{u}[sloped,auto=false]{\subset}\arrow[r]&C_{0}\arrow[draw=none]{u}[sloped,auto=false]{\subset}\arrow[r]&0\\
+		F_{-1}C:\arrow[draw=none]{u}[sloped,auto=false]{\subset}&\cdots\arrow[r]&0\arrow[draw=none]{u}[sloped,auto=false]{\subset}\arrow[r]&0\arrow[draw=none]{u}[sloped,auto=false]{\subset}\arrow[r]&0\arrow[draw=none]{u}[sloped,auto=false]{\subset}\arrow[r]&0
+	\end{tikzcd}
+\]
+
+Note that each layer of any filtration is intertwined with all others below it, but we would like to be working with disjoint parts. To do this, we can simply take quotients: define the \textit{associated graded complex} $E^{0}C$ componentwise by
+\[
+	E_{p,q}^{0}C \doteq F_{p}C_{p+q}/F_{p-1}C_{p+q}.
+\] Since $d$ respects the filtration, this has its own differential {\color{red}(the maps moving down 0 rows)} induced by that of $C$. Our filtration on $C$ also induces a filtration on the homology of $C$ by {\color{red}(make this match up with version in Thrm 3)}
+\[
+	F_{p}H_{p+q}(C) \doteq F_{p}H_{*}(C) \cap H_{p+q}(C).
+\]
+
+To show that filtered complexes give rise to spectral sequences, we construct an exact couple from $C$. Our filtration levels of $C$ and their respective quotients fit into a natural short exact sequence of complexes
+\[
+0 \to  F_{p-1}C \hookrightarrow F_{p}C \twoheadrightarrow E_{p}^{0}C \to 0,
+\] where the two intermediate maps are the canonical inclusion and projection maps, respectively. The associated long exact sequence of homologies is then
+\[
+	\cdots \to H_{n}(F_{p-1}C) \stackrel{i}{\to }  H_{n}(F_{p}C) \stackrel{j}{\to }  H_{n}(E_{p}^{0}C) \stackrel{k}{\to }  H_{n-1}(F_{p-1}C) \to \cdots.
+\] 
+Letting $D_{p,q} \doteq H_{p+q}(F_{p}C)$ and $E_{p,q} \doteq H_{p+q}(E_{p}^{0}C)$, we can form an exact couple $(D, E, i, j, k)$. For $p+q=n$, the above long exact sequence can be written
+\[
+	\cdots \to D_{p-1,q+1} \stackrel{i}{\to } D_{p,q} \stackrel{j}{\to } E_{p,q} \stackrel{k}{\to } D_{p-1,q} \to \cdots
+\] which shows that $i,j,k$ have the bidegrees from Theorem \ref{thrm:ec2ss}. This means that our exact couple determines a spectral sequence, so we can always build a spectral sequence from any filtered complex.
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Convergence of Spectral Sequences
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Convergence of Spectral Sequences}
+
+Now that we've determined ways to construct spectral sequences, we can begin to endow our limiting terms $E_{p,q}^{\infty}$ with meaning. In particular, the limiting terms of a spectral sequenced induced by a filtered complex $C$ capture significant information about the homology $H_*(C)$ of $C$.
+
+\begin{defn}[]
+	Suppose $C$ is some chain complex. A spectral sequence $E$ is said to \textit{converge} to $H_*(C)$ if there is some filtration on $C$ such that
+	\[
+		E_{p,q}^{\infty} \cong F_{p}H_{p+q}(C) / F_{p-1} H_{p+q}(C).
+	\] 
+\end{defn}
+
+Note that a single $E_{p,q}^{\infty}$ term only gives some of the information about $H_{p+q}C$. If we want as much information as possible about some $H_{n}(C)$, we need to examine all $E_{p,q}^{\infty}$ such that $p+q=n$. In the special case that our filtration is canonically bounded and $C$ is finite dimensional,  we recover the quotients
+\[
+	F_{0}H_{n}(C), \quad F_1H_{n}(C)/F_{0}H_{n}(C), \quad \cdots \quad H_{n}(C)/F_{n-1}H_{n}(C).
+\]
+We can then construct $H_{n}(C)$ by simply taking the direct sum of all these quotients:
+\[
+	H_{n}(C) \cong \bigoplus_{p+q=n}E_{p,q}^{\infty}.
+\] 
+As a visual example, the highlighted terms in the following grid are the limiting terms we would use to determine $H_{3}(C)$.
+\begin{center}
+	\begin{tikzcd}
+		{\color{cyan}E_{0,3}^\infty} & E_{1,3}^\infty & E_{2,3}^\infty & E_{3,3}^\infty \\
+		E_{0,2}^\infty & {\color{cyan}E_{1,2}^\infty} & E_{2,2}^\infty & E_{3,2}^\infty \\
+		E_{0,1}^\infty & E_{1,1}^\infty & {\color{cyan}E_{2,1}^\infty} & E_{3,1}^\infty \\
+		E_{0,0}^\infty & E_{1,0}^\infty & E_{2,0}^\infty & {\color{cyan}E_{3,0}^\infty}
+	\end{tikzcd}
+\end{center}
+
+We have now seen that, at least in the case that each $C_{n}$ is finite dimensional and $F$ is bounded, this convergence property allows us to determine homologies of our complex $C$ up to isomorphism. Even if $C$ and $F$ were not so simple, having a sequence of quotients of $H(C)$ gives great insight into the structure of $H(C)$; however, it remains to be seen under which conditions a filtered complex's induced spectral sequence will converge. As it turns out, having a bounded filtration is all we need to guarantee convergence.
+
+Before proving this, we'll need a bit of setup. We'll start by considering the map $d$ on a filtered complex $C$. As noted earlier, we can use our filtration to give a bigrading on our complex. We can visualize this as
+\[
+	\begin{tikzcd}
+                &\vdots&\vdots&\vdots\\
+                \cdots&F_{p+1}C_{p+q+1}\arrow[r,magenta]\arrow[rd,magenta]\arrow[rdd,magenta]\arrow[rddd,magenta]&F_{p+1}C_{p+q}&F_{p+1}C_{p+q-1}&\cdots\\
+                \cdots&F_{p}C_{p+q+1}\arrow[draw=none]{u}[sloped,auto=false]{\subset}&F_{p}C_{p+q}\arrow[r,cyan]\arrow[rd,cyan]\arrow[rdd,cyan]\arrow[draw=none]{u}[sloped,auto=false]{\subset}&F_{p}C_{p+q-1}\arrow[draw=none]{u}[sloped,auto=false]{\subset}&\cdots\\
+                \cdots&F_{p-1}C_{p+q+1}\arrow[draw=none]{u}[sloped,auto=false]{\subset}&F_{p-1}C_{p+q}\arrow[draw=none]{u}[sloped,auto=false]{\subset}&F_{p-1}C_{p+q-1}\arrow[draw=none]{u}[sloped,auto=false]{\subset}&\cdots\\
+                               &\vdots&\vdots&\vdots
+        \end{tikzcd}
+\] 
+where the arrows represent the differential $d$ and its restrictions to the various levels of its range. Every element in this grid should have arrows attached to them, but only two sets of arrows are shown to reduce clutter. Also note that $d$ cannot send elements ``up" the grid since it respects the filtration by assumption.
+
+To construct a spectral sequence from all this, we can construct the associated graded module $E^{0}$ and take homologies to gain $E^{1}, E^{2},$ etc., using $d$ to induce endomorphisms $d^{r}$ on each page $E^{r}$. Intuitively, each $d^{r}$ corresponds to the restriction of $d$ sending elements down $r$ levels. In the proof of Theorem \ref{thrm:filt-conv}, we will construct these maps explicitly. An effect of our indexing convention is that our grid will become ``skewed" once we start working with the $E^{r}$ pages. The result is that while the restrictions of $d$ on the original filterex complex have bidegrees of the form $(1,-r)$, each $d^{r}$ will have bidegree $(-r,r-1)$. This motivates the definition of a homological spectral sequence, in which we required the bidegrees of each $d^{r}$ to be $(-r,r-1)$.
+
+For example, the $E^{0}$ page will have differentials with bidegree $(0,-1)$, as visualized below.
+\[
+\begin{tikzcd}
+	&\vdots&\vdots&\vdots\\
+	\cdots&E^{0}_{p-1,q+1}&E^{0}_{p,q+1}&E^{0}_{p+1,q+1}&\cdots\\
+	\cdots&E^{0}_{p-1,q}&E^{0}_{p,q}\dar[cyan]&E^{0}_{p+1,q}\dar[magenta]&\cdots\\
+	\cdots&E^{0}_{p-1,q-1}&E^{0}_{p,q-1}&E^{0}_{p+1,q-1}&\cdots\\
+	&\vdots&\vdots&\vdots
+\end{tikzcd}
+\] 
+The two arrows in this diagram correspond to the two sets of arrows in the diagram of the original filtered complex. As we go to higher pages, the arrows will extend up and to the left as an effect of their bidegree. In the below diagram, we visualize the first few $d^{r}$ originating from the same $(p,q)$-th component of each page.
+\[
+\begin{tikzcd}
+	\bullet&\bullet&\bullet&\bullet\\
+	\bullet&\bullet&\bullet&\bullet\\
+	\bullet&\bullet&\bullet&\bullet\dar{d^{0}}\lar{d^{1}}\arrow[llu,"d^{2}"]\arrow[llluu,"d^{3}"']\\
+	\bullet&\bullet&\bullet&\bullet
+\end{tikzcd}
+\] 
+
+
+\begin{thrm}[]
+	\label{thrm:filt-conv}
+	Suppose $C$ is a filtered complex with bounded filtration $F$, then the induced spectral sequence $E$ converges to $H_*(C)$, i.e.
+\[
+	E_{p,q}^{\infty} \cong  F_{p}H_{p+q}(C)/F_{p-1}H_{p+q}(C).
+\] 
+\end{thrm}
+\begin{proof}
+	{\color{red}Move this up.} We begin with a few definitions. Suppose our filtered complex is
+	\[
+	\cdots \to C_{n+1}\to C_{n}\to C_{n-1}\to \cdots
+\] with differential $d$. Since its given filtration $F$ is bounded, we know that for all $n$, we can find $s(n)$ and $t(n)$ such that
+\[
+	F_{s(n)}C_{n}=0, \quad F_{t(n)}C_{n}=C_{n}.
+\]
+
+Define $Z_{p,q}^{r}$ as the elements of $F_{p}C_{p+q}$ that are mapped $r$ ``levels" down by $d$, and define $B_{p,q}^{r}$ as the elements of $F_{p}C_{p+q}$ that came from $r$ levels up. Explicitly,
+\begin{align*}
+	Z_{p,q}^{r} &\doteq F_{p}C_{p+q} \;\cap\; d^{-1}(F_{p-r}C_{p+q-1}),\\
+	B_{p,q}^{r} &\doteq F_{p}C_{p+q} \;\cap\; d(F_{p+r}C_{p+q+1}).
+\end{align*}
+The limiting case of both of these is straightforward (and also a more familiar use of the letters $Z$ and $B$). Define
+\begin{align*}
+	Z_{p,q}^{\infty} &\doteq \ker d \;\cap\; F_{p}C_{p+q},\\
+	B_{p,q}^{\infty} &\doteq \im d \;\cap\; F_{p}C_{p+q}.
+\end{align*}
+{\color{red}Alternate expression for $B_{p,q}^{r}$.} Because of the filtration's structure as a collection of subsets, we get the following sequence of inclusions.
+\[
+B_{p,q}^{0}\;\subset \;B_{p,q}^{1}\;\subset \;\cdots\;\subset \;B_{p,q}^{\infty}\;\subset \;Z_{p,q}^{\infty}\;\subset \;\cdots\;\subset \;Z_{p,q}^{1}\;\subset \;Z_{p,q}^{0}
+\] 
+Because our filtration is bounded, we get the useful computational property that we will actually reach $Z_{p,q}^{\infty}$ and $B_{p,q}^{\infty}$ after some finite number of inclusions in the sequence above. To see this, note that for $r > \max\left\{ s(p+q+1)-p, p-t(p+q-1) \right\}$, the component to the left of and $r$ levels above $F_{p}C_{p+q}$ is just $C_{p+q+1}$ and the component to the right of and $r$ levels below $F_{p}C_{p+q}$ is just 0. Thus for this particular $r$ (and all larger values), $Z_{p,q}^{r}=Z_{p,q}^{\infty}$ and $B_{p,q}^{r}=B_{p,q}^{\infty}$.
+
+With this setup out of the way, we can begin the actual proof. We will first explicitly construct a homological spectral sequence induced by our filtered complex $C$, then show that its limiting terms approach the desired quotients of $H_{*}(C)$. We divide this process into four main steps.
+
+\textbf{Part I: Constructing the pages and differentials.} The 0-th page of our sequence will just be the associated graded complex $E^{0}$ given by
+\[
+	E^{0}_{p,q} = F_{p}H_{p+q}(C) / F_{p-1}H_{p+q}(C).
+\] 
+Now for $r \geq 0$, recursively define
+\[
+	E^{r+1}_{p,q} = \frac{Z^{r+1}_{p,q}}{ Z^{r}_{p-1,q+1}+B_{p,q}^{r} }.
+\] 
+{\color{red}Differentials.}
+
+\textbf{Part III: Showing that each page is the homology of the previous page.} Now that we have defined our pages and differentials, we must show $E_{p,q}^{r+1}\cong  H(E_{p,q}^{r})$ in order for this to define a spectral sequence.
+
+{\color{red}Do this.}
+
+\textbf{Part III: Constructing the desired isomorphism.} Throughout this part of the proof, we will implicitly use the fact that since $E_{p,q}^{\infty}$ is achieved after a finite number of pages, it is in fact just $E_{p,q}^{r}$ for some $r$. This means we can use all our definitions from the previous two parts of the proof without worry. Also note that we can do the same for $Z_{p,q}^{\infty}$ and $B_{p,q}^{\infty}$.
+
+We claim that $d$ induces a map between $E^{\infty}_{p,q}$ and $F_{p}H_{p+q}(C)/F_{p-1}H_{p+q}(C)$. Suppose $\eta$ and $\pi$ are the following natural projections.
+\[
+	\begin{tikzcd}
+		Z^{\infty}_{p,q}\dar{\eta}&\ker d\dar{\pi}\\
+		E^{\infty}_{p,q}&H_{p+q}(C)
+	\end{tikzcd}
+\] Then since
+\[
+	F_{p}H_{p+q}(C) = H_{p+q}( {\color{red} \im(F_{p}C \hookrightarrow C))} = \pi(F_{p}C_{p+q}\cap \ker d)=\pi(Z^{\infty}_{p,q}),
+\] 
+$\pi$ induces a surjective map $Z^{\infty}_{p,q}\twoheadrightarrow F_{p}H_{p+q}(C)$. Also, by the definition of $E_{p,q}^{r}$,
+\[
+	\pi(\ker \eta) = \pi(Z^{\infty}_{p-1,q+1}+B^{\infty}_{p,q}) = F_{p-1}H_{p+q}(C),
+\] so $\pi$ induces a surjective map $Z^{\infty}_{p-1,q+1}+B^{\infty}_{p,q} \twoheadrightarrow F_{p-1}H_{p+q}(C)$. We then have an induced surjection
+\[
+	d^{\infty} : E_{p,q}^{\infty} \twoheadrightarrow F_{p}H_{p+q}(C) / F_{p-1}H_{p+q}(C).
+\] We claim that $d^{\infty}$ is also injective. Since the kernel of $d^{\infty}$ is all elements of $E_{p,q}^{\infty}$ that get mapped to $F_{p-1}H_{p+q}(C)$, we can express it in terms of $\eta$ and $\pi$ by
+\begin{align*}
+	\ker d^{\infty} &= \eta\left( \pi^{-1}\left( F_{p-q}H_{p+q}(C) \right) \cap Z_{p,q}^{\infty} \right)\\
+			&= \eta\left( Z^{\infty}_{p-1,q+1} \cap d(C) \cap Z_{p,q}^{\infty} \right) \\
+			&\subset \eta\left( Z^{\infty}_{p-1,q+1} + B_{p,q}^{\infty} \right) \\
+			&= 0,
+\end{align*}
+where the last equality follows from the definition of $E_{p,q}^{r}$. Thus $d^{\infty}$ is the isomorphism that shows
+\[
+	E_{p,q}^{\infty} \cong F_{p}H_{p+q}(C) / F_{p-1}H_{p+q}(C).
+\] 
+Hence the spectral sequence induced from $C$ converges to $H_{*}(C)$.
+\end{proof}
+
+\vspace{10mm}
+
+\begin{ex}[Homology of the 3-Sphere]
+	With a bit of extra information, it's possible to calculate the homology of $S^{3}$ using the homologies of $S^{1}$ and $S^{2}$. We use the following theorem on the existence of the ``Serre" spectral sequence without proof.
+
+	 \begin{thrm}[]
+		 \label{thrm:serre}
+		 Suppose $F\to X\to B$ is a fibration with $B$ a path-connected space. If $\pi_1(B)$ acts trivially on $H_{*}(F)$, then there is a spectral sequence with
+		 \[
+			 E_{p,q}^{2}\cong H_{p}(B;H_{q}(F)),
+		 \] 
+		 where the limiting terms $E_{p,q}^{\infty}$ are isomorphic to successive quotients of $H_{p+q}(S^{3})$.
+	\end{thrm}
+	We will also need the following special case of the Hurewicz theorem.
+	\begin{lem}
+		\label{lem:hur}
+		Given a path connected topological space $X$, the abelianization of $\pi_1(X)$ is isomorphic to $H_{1}(X)$.
+	\end{lem}
+	Finally, we assume that the homologies of $S^{1}$ and $S^{2}$ are known to be
+	\begin{align*}
+		H_{k}(S^{1}) &=
+		\begin{cases}
+			\mathbb{Z}&k=0,1\\
+			0&\text{otherwise}
+		\end{cases}\\
+		H_{k}(S^{2}) &=
+                \begin{cases}
+                        \mathbb{Z}&k=0,2\\
+                        0&\text{otherwise}
+                \end{cases},
+	\end{align*}
+	and we assume the existence of the Hopf fibration $S^{1}\to S^{3}\to S^{2}$. We now have enough tools to calculate $H_{*}(S^{3})$. Note that since $S^{3}$ is simply connected, $\pi_1(S^{3})$ must act trivially, so by Theorem \ref{thrm:serre} we can construct the Serre spectral sequence for $S^{3}$ using the Hopf fibration. This gives the second page $E^{2}$ componentwise by
+	\[
+		E_{p,q}^{2}= H_{p}(S^{2}; H_{q}(S^{1})).
+	\] 
+	When $q=0,1$, $H_{q}(S^{1})=\mathbb{Z}$, so the homology of $S^{2}$ is computed using the usual coefficients. Otherwise, we're working with trivial coefficients. Similarly, when $p=0,2$, $H_{p}(S^2;\mathbb{Z})=\mathbb{Z}$, and otherwise it's 0. Thus the only nontrivial portion of the $E^2$ page is
+	\begin{center}
+		\begin{tabular}{ c | c c c }
+			1 & $\mathbb{Z}$ & $0$ &$\mathbb{Z}$\\
+			0 & $\mathbb{Z}$ & $0$ &$\mathbb{Z}$\\
+			\hline
+			  & 0 & 1 & 2
+		\end{tabular}.
+	\end{center}
+	Since differentials on the $E^{2}$ page have bidegree $(-2,1)$, there is only one nontrivial differential.
+	\begin{center}
+		\begin{tikzcd}
+			\mathbb{Z} & 0 & \mathbb{Z} \\
+			\mathbb{Z} & 0 & \mathbb{Z}\arrow[llu,"d"']
+		\end{tikzcd}
+	\end{center}
+	Since $S^{3}$ is simply connected, $\pi_1(S^{3})$ is trivial, and then so is its abelianization. Then by Lemma \ref{lem:hur}, $H_{1}(S^{3}) \cong 0$. This forces the top-left $\mathbb{Z}$ to become 0 after taking homology, so $d$ must be surjective. Now since $d$ is necessarily a homomorphism, $\mathbb{Z}$ is generated by $d(1)$. We must then have $d(1) = \pm 1$ in order for $d$ to be surjective, so then any nonzero $n$ is mapped to $\pm n$. Thus $\ker d$ is trivial, so $d$ is injective and the homology of the bottom-right $\mathbb{Z}$ must subsequently also be 0. Since all other entries have stabilized already, the third page of our spectral sequence is
+	\begin{center}
+                \begin{tabular}{ c | c c c }
+                        1 & $0$ & $0$ &$\mathbb{Z}$\\
+                        0 & $\mathbb{Z}$ & $0$ &$0$\\
+                        \hline
+                          & 0 & 1 & 2
+                \end{tabular}.
+        \end{center}
+	At this point, all differentials are trivial, so all the terms on the third page are in fact the limiting terms $E_{p,q}^{\infty}$. To recover $H_{n}(S^{3})$, we can take the direct sum over diagonals satisfying $p+q=n$. Doing so gives
+	\[
+		H_{n}(S^{3}) =
+		\begin{cases}
+			\mathbb{Z} & n=0,3\\
+			0 &\text{otherwise}
+		\end{cases}.
+	\] 
+\end{ex}
+
+
+%--------------------------------------------------------------------------------
+% Bibliography
+%--------------------------------------------------------------------------------
+
+\nocite{mccleary}
+\nocite{chow}
+\nocite{df}
+\nocite{weibel}
+\nocite{rotman}
+
+\printbibliography
+
+\end{document}
+

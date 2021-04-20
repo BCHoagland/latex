@@ -1,0 +1,19 @@
+\ProvidesPackage{sansiwona}
+
+\DeclareOption{regular}{\renewcommand{\sfdefault}{iwona}}
+\DeclareOption{light}{\renewcommand{\sfdefault}{iwonal}}
+\DeclareOption{condensed}{\edef\sfdefault{\sfdefault c}}
+
+\ExecuteOptions{regular}
+\ProcessOptions
+
+\let\sansiwona@saved@rmdefault\rmdefault
+\let\sansiwona@saved@bfdefault\bfdefault
+
+\RequirePackage[mathnoalias]{iwona}
+
+\let\rmdefault\sansiwona@saved@rmdefault
+\let\bfdefault\sansiwona@saved@bfdefault
+\mathversion{normal}
+
+\endinput

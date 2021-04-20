@@ -1,0 +1,12 @@
+\frametitle{Indexing Convention}
+
+	We have
+	\[
+	\begin{tikzcd}
+		C_{p-3,q+2} & C_{p-2,q+2} & C_{p-1,q+2} & C_{p,q+2} \\
+		C_{p-3,q+1} & C_{p-2,q+1} & C_{p-1,q+1} & C_{p,q+1} & \\
+		C_{p-3,q} & C_{p-2,q} & C_{p-1,q} & C_{p,q}\dar{d^{0}}\lar{d^{1}}\arrow[llu,"d^{2}"]\arrow[llluu,"d^{3}"'] \\
+		C_{p-3,q-1} & C_{p-2,q-1} & C_{p-1,q-1} & C_{p,q-1}
+	\end{tikzcd}
+	\]
+	{\color{red}Change color of the $d^{i}$.}
