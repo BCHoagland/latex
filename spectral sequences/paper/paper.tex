@@ -44,11 +44,11 @@ At a very high level, each ``element" of a spectral sequence gives a higher orde
 \section{Preliminaries}
 
 To begin working with homological objects, we first define a basic notion of homology. We say a sequence of $R$-modules $A$ is a \textit{chain complex} if it comes equipped with morphisms $ d_n:A_{n}\to A_{n-1}$ (called \textit{differentials}) such that $d^2 =0$.
-\begin{center}
+\[
 	\begin{tikzcd}
 		\cdots \arrow[r,"d_{n+1}"] & A_n \arrow[r,"d_n"] & A_{n-1} \arrow[r,"d_{n-1}"] & \cdots
 	\end{tikzcd}
-\end{center}
+\]
 
 Because of the condition $d^2=0$, we know $\im d_n \subset \ker d_{n-1}$. If we also have the reverse inclusion for all $n$, i.e. the image of one map equals the kernel of the next, then we say that $A$ is \textit{exact}. To measure the failure of a complex to be exact, we introduce the notion of homologies. Define the $n$\textit{-th homology} to be the quotient
 \[
@@ -56,12 +56,12 @@ Because of the condition $d^2=0$, we know $\im d_n \subset \ker d_{n-1}$. If we 
 \] 
 
 Viewing chain complexes as objects in some category, we can naturally define morphisms between them. A \textit{homomorphism of complexes} $f:A\to B$ is a collection of $R$-module homomorphisms $f_{n}:A_{n}\to B_{n}$ that respect the differentials of $A$ and $B$. Visually, this means the following diagram commutes.
-\begin{center}
+\[
 	\begin{tikzcd}
 		\cdots \arrow[r] & A_n \arrow[r]\arrow[d,"f_n"] & A_{n-1} \arrow[r] \arrow[d,"f_{n-1}"]& \cdots \\
 		\cdots \arrow[r] & B_n \arrow[r] & B_{n-1} \arrow[r] & \cdots
 	\end{tikzcd}
-\end{center}
+\]
 
 \begin{prop}
 	\label{prop:induced-homo}
@@ -73,7 +73,7 @@ A homomorphism of complexes induces a homomorphism between those complexes' homo
 		\phi_n:H_{n}(A)&\to H_{n}(B)\\
 		[a]&\mapsto [f_n(a)].
 	\end{align*}
-This is a homomorphism since each $f_{n}$ is a homomorphism. All that's left to show is that this is well-defined, which follows from the commutativity of the above diagram. If $z \in \ker d_{n}^A$, then $(df_{n})(z) = (f_{n-1}d)(z) = f_{n-1}(0) = 0$, so $f_{n}z \in \ker d_{n}^{B}$. Thus $f$ maps kernels to kernels. If $z \in \im d_{n+1}^{A}$, then $z=da$ for some $a \in A_{n+1}$, so $f_{n}z=f_{n}da = df_{n+1}a$, so $f_{n}z \in \im d_{n+1}^{B}$. Thus $f$ also maps images to images, so the induced map between homologies is well defined.
+	This is a homomorphism since each $f_{n}$ is a homomorphism. All that's left to show is that this is well-defined, which follows from the commutativity of the above diagram. If $z \in \ker d_{n}^A$, then $(d \circ f_{n})(z) = (f_{n-1} \circ d)(z) = f_{n-1}(0) = 0$, so $f_{n}(z) \in \ker d_{n}^{B}$. Thus $f$ maps kernels to kernels. If $z \in \im d_{n+1}^{A}$, then $z=d(a)$ for some $a \in A_{n+1}$, so $f_{n}(z)=(f_{n}\circ d)(a) = (d\circ f_{n+1})(a)$, so $f_{n}(z) \in \im d_{n+1}^{B}$. Thus $f$ also maps images to images, so the induced map between homologies is well-defined.
 \end{proof}
 
 The notion of short exact sequences can be readily extended to work with chain complexes. We say a sequence $0\to A\to B\to C \to 0$ of complexes is exact if each sequence of modules $0 \to A_{n}\to B_{n}\to C_{n} \to 0$ is exact.
@@ -109,7 +109,7 @@ Suppose $0\to A\to B\to C\to 0$ is a short exact sequence of complexes, then the
 			0\arrow[r]& \ker d_{n-1}^A\arrow[r,"f_{n-1}^*"]& \ker d_{n-1}^B\arrow[r,"g_{n-1}^*"]& \ker d_{n-1}^C
 		\end{tikzcd}
 	\]
-	where $f_{n}^*$ and $g_{n}^*$ are induced by $f$ and $g$ and are well defined by Proposition \ref{prop:induced-homo}. The vertical map $a$ is induced by $d_{n}^{A}$ by
+	where $f_{n}^*$ and $g_{n}^*$ are induced by $f$ and $g$ and are well-defined by Proposition \ref{prop:induced-homo}. The vertical map $a$ is induced by $d_{n}^{A}$ by
 	\[
 		a([x]) = d_{n}^{A}(x),
 	\] and the maps $b$ and $c$ are defined similarly. The exactness of both rows follows from the assumption that $\ker g_{n}=\im f_n$ for all $n$. We also have
@@ -129,19 +129,23 @@ Suppose $0\to A\to B\to C\to 0$ is a short exact sequence of complexes, then the
 
 \section{Spectral Sequences}
 
-{\color{red}Intro sentence.}
+With these preliminaries taken care of, we can define and study spectral sequences. In particular, we will be working spectral sequences of homological type, as defined below.
 
 \begin{defn}[]
-A \textit{homological spectral sequence} is a collection $E = \left\{ E^{r} \right\}_{r\geq 1}$ of \textit{pages:} bigraded $R$-modules with endomorphisms
+A \textit{spectral sequence} is a collection $E = \left\{ E^{r} \right\}_{r\geq 0}$ of bigraded $R$-modules called \textit{pages}. Each page $E^{r}$ is equipped with endomorphisms
 \[
-d^{r}: E_{p,q}^{r}\to E_{p-r,p+r-1}^{r}
-\] such that $d^{r}\circ d^{r}=0$. These are the \textit{differentials} of the $E^{r}$ page. The pages are related by
+d^{r}:E^{r}\to E^{r}
+\] such that $d^{r}\circ d^{r}=0$. These are the \textit{differentials} of $E^{r}$. The pages are related by
 \[
 	E^{r+1} \cong H_*(E^{r}).
 \] 
+A \textit{homological spectral sequence} is a spectral sequence whose differentials have bidegree $(-r,r-1)$, i.e.
+\[
+d^{r}: E_{p,q}^{r}\to E_{p-r,p+r-1}^{r}.
+\] 
 \end{defn}
 
-We'll be primarily concerned with the case when all $E_{p,q}^{r}$ are in the first quadrant: $E_{p,q}^{r}$ is nonzero only if $p,q \geq 0$.
+We'll be primarily concerned with the case when all $E_{p,q}^{r}$ are in the first quadrant, i.e. $E_{p,q}^{r}$ is nonzero only when $p,q \geq 0$.
 
 \begin{figure}[H]
 	\centering
@@ -233,17 +237,19 @@ Iterating, we can construct a sequence of exact couples with the familiar proper
 
 \begin{ex}[Bockstein Spectral Sequence]
 	Suppose $C$ is a torsion-free complex over $\mathbb{Z}$, meaning that no element in $C$ has finite order except the identity. Now consider the short exact sequence
-	\begin{center}
+	\[
 		\begin{tikzcd}
 			0 \arrow[r] & \mathbb{Z} \arrow[r, "p"] & \mathbb{Z} \arrow[r, "\mod p"] & \mathbb{Z}_p \arrow[r] & 0.
 		\end{tikzcd}
-	\end{center}
-	We can take the tensor product with $C$, using the fact that the tensor product of a module and its base ring is isomorphic to the original module, to produce another short exact sequence {\color{red}(it's exact because $C$ is torsion-free)}
-	\begin{center}
+	\]
+	We can take the tensor product with $C$, using the fact that the tensor product of a module and its base ring is isomorphic to the original module, to produce another short exact sequence
+	\[
 		\begin{tikzcd}
 			0 \arrow[r] & C \arrow[r, "p"] & C \arrow[r, "\mod p"] & C \otimes \mathbb{Z}_p \arrow[r] & 0.
 		\end{tikzcd}
-	\end{center}
+	\]
+	Note that the exactness of this sequences follows from $C$ being torsion-free, since this forces $p$ to be injective and $\text{mod } p$ to be surjective onto $C \otimes \mathbb{Z}_{p}$.
+
 	Since each element of this sequence is a complex, we can construct a long exact sequence of homologies using Theorem \ref{thrm:LES}. We can then arrange this long exact sequence into an exact couple. {\color{red}(show LES to talk about bigradings and all that, which checks that this actually induces a SS)}
 	\begin{center}
 		\begin{tikzcd}
@@ -410,13 +416,29 @@ With this setup out of the way, we can begin the actual proof. We will first exp
 \[
 	E^{0}_{p,q} = F_{p}H_{p+q}(C) / F_{p-1}H_{p+q}(C).
 \] 
-Now for $r \geq 0$, recursively define
+Now for $r \geq 1$, recursively define
 \[
-	E^{r+1}_{p,q} = \frac{Z^{r+1}_{p,q}}{ Z^{r}_{p-1,q+1}+B_{p,q}^{r} }.
+	E^{r}_{p,q} = \frac{Z^{r}_{p,q}}{ Z^{r-1}_{p-1,q+1}+B_{p,q}^{r-1} }.
 \] 
-{\color{red}Differentials.}
+We now show that $d$ induces endomorphisms $d^{r}$ on each $E^{r}$. Note that since the elements of $Z^{r}_{p,q}$ are mapped down $r$ levels in our filtration,
+\[
+	d(Z^{r}_{p,q}) \subset B_{p-r,q+r-1}^{r}.
+\] Then by our tower of $Z$ and $B$ inclusions,
+\[
+	d(Z^{r}_{p,q}) \subset Z_{p-r,q+r-1}^{r}
+\] and
+\begin{align*}
+	d(Z_{p-1,q+1}^{r-1}+B_{p,q}^{r-1}) &= d(Z_{p-1,q+1}^{r-1}) + d(B_{p,q}^{r-1}) \\
+				       &\subset B_{p-r,q+r-1}^{r-1} + 0 \\
+				       &\subset B^{r-1}_{p-r,q+r-1} + Z_{p-r-1,q+r}^{r-1}.
+\end{align*}
+Thus our original differential $d$ induces a well-defined map
+\[
+	d^{r}: E^{r}_{p,q} \to E_{p-r,q+r-1}^{r}.
+\] 
+Note that $d^{r}$ has bidegree $(-r,r-1)$, as desired.
 
-\textbf{Part III: Showing that each page is the homology of the previous page.} Now that we have defined our pages and differentials, we must show $E_{p,q}^{r+1}\cong  H(E_{p,q}^{r})$ in order for this to define a spectral sequence.
+\textbf{Part II: Showing that each page is the homology of the previous page.} Now that we have defined our pages and differentials, we must show $E_{p,q}^{r+1}\cong  H(E_{p,q}^{r})$ in order for this to define a spectral sequence.
 
 {\color{red}Do this.}
 
@@ -463,7 +485,7 @@ Hence the spectral sequence induced from $C$ converges to $H_{*}(C)$.
 		 \[
 			 E_{p,q}^{2}\cong H_{p}(B;H_{q}(F)),
 		 \] 
-		 where the limiting terms $E_{p,q}^{\infty}$ are isomorphic to successive quotients of $H_{p+q}(S^{3})$.
+		 where the limiting terms $E_{p,q}^{\infty}$ are isomorphic to successive quotients of $H_{p+q}(X)$.
 	\end{thrm}
 	We will also need the following special case of the Hurewicz theorem.
 	\begin{lem}

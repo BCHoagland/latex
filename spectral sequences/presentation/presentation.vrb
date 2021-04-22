@@ -1,12 +1,16 @@
-\frametitle{Indexing Convention}
+\frametitle{Homology of the 3-Sphere}
 
-	We have
-	\[
-	\begin{tikzcd}
-		C_{p-3,q+2} & C_{p-2,q+2} & C_{p-1,q+2} & C_{p,q+2} \\
-		C_{p-3,q+1} & C_{p-2,q+1} & C_{p-1,q+1} & C_{p,q+1} & \\
-		C_{p-3,q} & C_{p-2,q} & C_{p-1,q} & C_{p,q}\dar{d^{0}}\lar{d^{1}}\arrow[llu,"d^{2}"]\arrow[llluu,"d^{3}"'] \\
-		C_{p-3,q-1} & C_{p-2,q-1} & C_{p-1,q-1} & C_{p,q-1}
-	\end{tikzcd}
-	\]
-	{\color{red}Change color of the $d^{i}$.}
+	Only one differential is nontrivial.
+	\begin{center}
+                \begin{tikzcd}
+                        \mathbb{Z} & 0 & \mathbb{Z} \\
+                        \mathbb{Z} & 0 & \mathbb{Z}\arrow[llu,"d"']
+                \end{tikzcd}
+        \end{center}
+	\onslide<2->$S^{3}$ is path connected, so $\pi_{1}(S^{3})$ is trivial.
+
+	\vspace{5mm}
+	Hurewicz: $H_1(S^{3})$ is trivial, so the top-left $\mathbb{Z}$ must become 0.
+
+	\vspace{5mm}
+	\onslide<3>$d$ must be surjective $\implies $ $d$ must be injective $\implies $ the bottom-right $\mathbb{Z}$ also becomes 0.
