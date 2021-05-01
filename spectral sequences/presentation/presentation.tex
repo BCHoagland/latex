@@ -159,7 +159,7 @@
 	\frametitle{Calculating Homology}
 
 	\begin{itemize}
-		\item Suppose calculating $H_{*}(C)$ directly is diffiult.
+		\item Suppose calculating $H_{*}(C)$ directly is difficult.
 		\item  We can try a ``divide and conquer" strategy to make the computation easier.
 	\end{itemize}
 \end{frame}
@@ -189,7 +189,7 @@
 		\frac{F_{p-1}C_{n+1}}{F_{p-2}C_{n+1}}\rar&\frac{F_{p-1}C_{n}}{F_{p-2}C_{n}}\rar&\frac{F_{p-1}C_{n-1}}{F_{p-2}C_{n-1}}
         \end{tikzcd}
 	\] 
-	{\color{white}Still fails. The rows aren't subsets of each other anymore, but $d$ still travels between rows.}
+	{\color{white}Still fails. The rows aren't subsets of each other anymore, but $d$ still travels between rows, so we're missing information.}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -204,28 +204,27 @@
 		\end{tikzcd}
         \]
 
-	Still fails. The rows aren't subsets of each other anymore, but $d$ still travels between rows.
+	Still fails. The rows aren't subsets of each other anymore, but $d$ still travels between rows, so we're missing information.
 \end{frame}
 
 \begin{frame}[fragile]
 	\frametitle{Calculating Homology}
 
-	We can remove inter-level dependencies by taking homology again.
+	We can incorporate inter-level dependencies by taking homology again.
 	\[
 		\begin{tikzcd}
-			\frac{F_{p+1}C_{n+1}}{F_{p}C_{n+1}}\rar\arrow[rd,dashed]\arrow[rdd,dashed]&\frac{F_{p+1}C_{n}}{F_{p}C_{n}}&\frac{F_{p+1}C_{n-1}}{F_{p}C_{n-1}}\\
+			\frac{F_{p+1}C_{n+1}}{F_{p}C_{n+1}}\rar\arrow[rd,dashed]\arrow[rdd,dashed]&\frac{F_{p+1}C_{n}}{F_{p}C_{n}}\rar&\frac{F_{p+1}C_{n-1}}{F_{p}C_{n-1}}\\
 			\frac{F_{p}C_{n+1}}{F_{p-1}C_{n+1}}\rar[blue]&\frac{F_{p}C_{n}}{F_{p-1}C_{n}}\rar[blue]\arrow[rd,dashed]&\frac{F_{p}C_{n-1}}{F_{p-1}C_{n-1}}\\
-			\frac{F_{p-1}C_{n+1}}{F_{p-2}C_{n+1}}&\frac{F_{p-1}C_{n}}{F_{p-2}C_{n}}&\frac{F_{p-1}C_{n-1}}{F_{p-2}C_{n-1}}
+			\frac{F_{p-1}C_{n+1}}{F_{p-2}C_{n+1}}\rar&\frac{F_{p-1}C_{n}}{F_{p-2}C_{n}}\rar&\frac{F_{p-1}C_{n-1}}{F_{p-2}C_{n-1}}
                 \end{tikzcd}
         \]
-	Note that the diagonal maps of bidegree $(-1,-1)$ induce maps on these homologies.
 \end{frame}
 
 \begin{frame}
 	\frametitle{Calculating Homology}
 
 	\begin{itemize}
-		\item We repeat this process, getting rid of another inter-level dependency every time we take another homology.
+		\item We repeat this process, incorporating another inter-level dependency every time we take another homology.
 		\item If our filtration is finite, eventually we run out of dependencies.
 	\end{itemize}
 \end{frame}
@@ -239,7 +238,7 @@
 
 	If $C_{n}$ is finite dimensional and $F$ is a bounded filtration, then
 	\[
-		H_{n}(C) \cong \bigoplus_{p} E_{n,p}^{\infty} \cong \bigoplus_{p} F_{p}H_{n}/F_{p-1}H_{n}.
+		H_{n}(C) \cong \bigoplus_{p} E_{n,p}^{\infty} \cong \bigoplus_{p} F_{p}H_{n}(C)/F_{p-1}H_{n}(C).
 	\] 
 \end{frame}
 
@@ -250,7 +249,7 @@
 	\vspace{5mm}
 
 	\begin{definition}
-		A \textit{spectral sequence} is a collection of $R$-modules $\left\{ E^{r} \right\}_{r \geq 0}$ called \textit{pages} with endomorphisms
+		A \textit{spectral sequence} is a collection of bigraded $R$-modules $\left\{ E^{r} \right\}_{r \geq 0}$ called \textit{pages} with endomorphisms
 		\[
 		d^{r}:E^{r}\to E^{r}
 		\] called \textit{differentials} such that $d^{r}\circ d^{r}=0$. Subsequent pages are related by
@@ -356,7 +355,6 @@
                 \end{tikzcd}
 	\] 
 	is also exact.
-	{\color{red}Go over why.}
 \end{frame}
 
 \begin{frame}
@@ -384,8 +382,6 @@
 		This exact couple induces a homological spectral sequence.
 	\end{theorem}
 	\vspace{5mm}
-	
-	\onslide<2> Cool application: the relations between the elements on each page give a generalization of the \textit{universal coefficient theorem} for homologies with coefficients in $\mathbb{Z}_{p}$.
 \end{frame}
 
 \begin{frame}
