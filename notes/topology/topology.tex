@@ -1,9 +1,10 @@
 \documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/breaks}
+\toggletrue{sectionbreaks}
 \newcommand{\docTitle}{Topology}
 \usepackage{/Users/bradenhoagland/latex/math2}
 
-% make all mathcal symbols look different
-\usepackage{dutchcal}
+%\renewcommand{\theenumi}{\alph{enumi}}
 
 \begin{document}
 \tableofcontents
@@ -685,7 +686,7 @@ The following give the same topologies on $\mathbb{R}^n$:
 \end{enumerate}
 \end{prop}
 
-We say a topological space is \textbf{metrizable} if there is some metric such that induces its topology.
+We say a topological space is \textbf{metrizable} if there is some metric that induces its topology.
 
 \begin{prop}
 Metrizable spaces are Hausdorff.
@@ -976,6 +977,7 @@ We can ``multiply" paths $\alpha$ and $\beta$ by first traveling along $\alpha$,
 \begin{prop}
 Path multiplication respects path homotopy, i.e. if $\alpha \simeq_p \alpha'$ and $\beta \simeq_p \beta'$, then $\alpha\beta \simeq_{p} \alpha'\beta'$.
 \end{prop}
+{\color{red}I do this for general homotopies in the next section.}
 
 A \textbf{loop} at $p$ is a path that starts and ends at $p$. Path homotopies easily extend to work with loops instead, since loops are just a special type of path.
 
@@ -1050,6 +1052,7 @@ maps $(x,0) \mapsto (gf)(x)$ and $(x,1)\mapsto (g'f')(x)$.
 
 \begin{cor}
 If $f \simeq g$, then $f_{*}=g_{*}$.
+{\color{red}Only works if $f$ and $g$ are homotopic rel endpoints, I think. Otherwise the equivalence classes are in different fundamental groups.}
 \end{cor}
 \begin{proof}
 	Since $f \simeq g$ and $\alpha \simeq \alpha$, we know $f\circ \alpha \simeq g\circ \alpha$, so $f_{*}([\alpha]) = [f\circ \alpha] = [g\circ \alpha]=g_{*}([\alpha])$.
@@ -1208,7 +1211,7 @@ If $n \geq 2$, then $S^{n}$ is simply connected.
 		d_i(x) = \inf_{y \in A_{i}}{\Vert{x-y}\Vert}.
 	\] This is continuous, so
 	\begin{align*}
-		f:S^{n}&\to \mathbb{R}^{n}
+		f:S^{n}&\to \mathbb{R}^{n}\\
 		x&\mapsto (d_1(x), \dots, d_{n}(x))
 	\end{align*}
 	is also continuous. Then by Borsuk-Ulam, $f(x)=f(-x)$ for some $x \in S^{n}$. This implies $d_{i}(x)=d_{i}(-x)$ for all $i$. If $d_i(x)=d_i(-x)=0$ for some $i$, then $x,-x$ are both limit points of $A_i$. Since $A_i$ is closed, though, $x,-x \in A_i$. If none of the $d_i(x)$ are 0, then $x,-x \not\in A_i$ for $1 \leq i \leq n$, which forces $x,-x \in A_{n+1}$.

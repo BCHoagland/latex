@@ -1,13 +1,14 @@
-\documentclass[10pt]{report}
-\usepackage{/Users/bradenhoagland/latex/math}
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/breaks}
+\toggletrue{sectionbreaks}
+\newcommand{\docTitle}{Real Analysis}
+\usepackage{/Users/bradenhoagland/latex/math2}
 
-\lhead{Braden Hoagland}
-\chead{Real Analysis}
-\rhead{}
+%\renewcommand{\theenumi}{\alph{enumi}}
 
 \begin{document}
-
 \tableofcontents
+
 
 %===================
 %===================
@@ -36,8 +37,6 @@
 \begin{ex}[]
 	 The \textbf{discrete metric} is defined $d(x,y)=1$ if $x\neq y$, $d(x,y)=0$ if $x=y$. For any set $S$, $(S,d)$ is a metric space.
 \end{ex}
-
-\pagebreak
 
 %%%%%%%%%%%%%%%%%%%%
 % Open Sets
@@ -117,8 +116,6 @@ Any finite set in $\mathbb{R}^n$ is closed since it is the union of finitely man
 \begin{ex}[]
 	Let \[F_n = \left[\frac{1}{n}, 1-\frac{1}{n}\right] .\] The union $\bigcup_{j=1}^\infty F_j = (0,1)$, so the union of an arbitrary collection of closed sets is not necessarily closed.
 \end{ex}
-
-\pagebreak
 
 %%%%%%%%%%%%%%%%%%%%
 % Accumulation Points
@@ -212,7 +209,7 @@ Closed subsets of compact sets are closed.
 \end{thrm}
 
 \begin{defn}[]
-	$A$ is \textbf{totally bounded} if for every $\varepsilon>0$, there is a finite set $\left\{ x_1,\dots,x_{N(\varepsilon} \right\} \subset M$ such that \[A \subset \bigcup_{i=1}^{N(\varepsilon)} D(x_i,\varepsilon).\]
+	$A$ is \textbf{totally bounded} if for every $\varepsilon>0$, there is a finite set \[\{ x_1,\dots,x_{N(\varepsilon)} \} \subset M\] such that \[A \subset \bigcup_{i=1}^{N(\varepsilon)} D(x_i,\varepsilon).\]
 \end{defn}
 
 \begin{prop}
@@ -415,8 +412,6 @@ The limit inferior need not be the infimum, and the limit supremum need not be t
 	\end{enumerate}
 \end{prop}
 
-\pagebreak
-
 %%%%%%%%%%%%%%%%%%%%
 % Cauchy Sequences
 %%%%%%%%%%%%%%%%%%%%
@@ -451,8 +446,6 @@ The limit inferior need not be the infimum, and the limit supremum need not be t
 \begin{prop}
 	A convergent sequence in a metric space is bounded.
 \end{prop}
-
-\pagebreak
 
 \begin{prop}
 	\begin{enumerate}
@@ -583,8 +576,6 @@ The norm of $x \in \mathbb{R}^n$ is defined
 \] 
 
 The distance between $x$ and $y$ is defined $d(x,y) = |x-y|$. The inner product is defined $\left\langle x,y \right\rangle = \sum_{i=1}^{n} x_i y_i$. Note that $|x|^2 = \left\langle x,x \right\rangle$.
-
-\pagebreak
 
 \begin{prop}
 	Let $v,w \in \mathbb{R}^n$, and let
@@ -776,6 +767,7 @@ Suppose that $f$ and $g$ are differentiable at $x$ and that $k \in \mathbb{R}$, 
 \end{enumerate}
 \end{thrm}
 
+\newpage
 \begin{thrm}[Chain Rule]
 	If $f$ is differentiable at $x$ and $g$ is differentiable at $f(x)$, then $g \circ f$ is differentiable at $x$ and
 	\[
@@ -902,8 +894,7 @@ Note that the supremum and infimum for each subinterval exist since $f$ is bound
 
 Let $P$ and $Q$ be two partitions, then neither is necessarily a subset of the other. To get around this, we note that for all $P$ and $Q$, there exists a partition $R$ which refines both, i.e. $R \succ P$ and $R \succ Q$. The set $P \cup Q$ arranged into an ordered set is one such partition.
 
-\pagebreak
-
+\newpage
 \begin{defn}[]
 Given a bounded function $f:A \to \mathbb{R}$ over a bounded set $A$, define the \textbf{upper integral} by
 \[
@@ -943,8 +934,6 @@ Note that this definition does \textit{not} involve any notions of smoothness or
 	\end{enumerate}
 \end{prop}
 
-\pagebreak
-
 \begin{cor}
 	The absolute value of a definite integral of $f$ is a lower bound of the definite integral of the absolute value of $f$:
 	\[
@@ -952,6 +941,7 @@ Note that this definition does \textit{not} involve any notions of smoothness or
 	\] 
 \end{cor}
 
+\newpage
 \begin{prop}
 	The lower definite integral of $f$ is a lower bound of the upper definite integral, i.e.
 	\[
@@ -1010,8 +1000,6 @@ Consider the sequence of sigmoid-like functions
 \begin{defn}[]
 	Suppose $f_k : X \to M$ is a sequence of functions such that for all $\varepsilon>0$, there is a $K$ such that $d(f_k(x), f(x)) < \varepsilon$ for all $x \in X$ when $k > K$. Then we say that $f_k$ \textbf{converges uniformly} to $f$.
 \end{defn}
-
-\pagebreak
 
 With uniform convergence, we have a bound on how slowly each $f_k(x)$ converges to its particular $f(x)$. As you might expect, this results in the preservation of more properties of the $f_k$. As we'll see later, if each $f_k$ is continuous or differentiable, then $f$ is continuous or differentiable, respectively.
 
@@ -1085,8 +1073,6 @@ The Cauchy criterion can easily be rewritten to apply to series of functions ins
 		\lim_{k \to \infty} \int_{a}^{b} f_k(x) \;dx = \int_{a}^{b} f(x)\;dx.
 	\] 
 \end{thrm}
-
-\pagebreak
 
 \begin{cor}
 	Let $g_k : [a,b] \to \mathbb{R}$ be Riemann integrable, and suppose $\sum_{k=1}^{\infty} g_k$ converges uniformly on $[a,b]$. Then
@@ -1258,8 +1244,6 @@ Suppose $\mathcal{B}$ is an algebra. If $f,g \in \mathcal{B}$ and $\alpha$ is a 
 	\end{enumerate}
 	Then $\mathcal{B}$ is dense in $\mathcal{C}(M, \mathbb{R})$.
 \end{thrm}
-
-\pagebreak
 
 %%%%%%%%%%%%%%%%%%%%
 % Power Series
@@ -1464,6 +1448,7 @@ and
 \] 
 \end{note}
 
+\newpage
 \begin{ex}[]
 Let $f: \mathbb{R}^2 \to \mathbb{R}^2$, with
 \[

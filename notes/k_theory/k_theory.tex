@@ -1,0 +1,82 @@
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/breaks}
+\toggletrue{sectionbreaks}
+\newcommand{\docTitle}{K-Theory}
+\usepackage{/Users/bradenhoagland/latex/math2}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+\tableofcontents
+
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Vector Bundles
+
+\chapter{Vector Bundles}
+
+%%%%%%%%%%%%%%%%%%%%
+% Vector Bundles
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Vector Bundles}
+
+\begin{note}[]
+Throughout these notes, a \textbf{map} is a continuous function.
+\end{note}
+
+A fiber bundle is a space that looks locally like a product space. It's a generalization of a covering space. Vector bundles are just fiber bundles whose fibers are vector spaces.
+
+\begin{defn}[]
+	A \textbf{fiber bundle} is a surjective map $p:E\to B$ along with a \textbf{fiber} $F$. For each $x \in B$, there is a neighborhood $U$ of $x$ such that there is a homeomorphism $\phi$ making the following diagram commute.
+\[
+\begin{tikzcd}
+	p^{-1}(U) \rar{\phi}\dar{p} & U\times F\arrow[dl,"\pi_1"]\\
+	U
+\end{tikzcd}
+\]
+\end{defn}
+We call $p^{-1}(x)$ the \textbf{fiber over} $x$. {\color{red}Note that it must be isomorphic to $F$}, so it makes sense to refer to the ``fibers" of a fiber bundle even if we defined it in terms of the single fiber $F$. Each fiber in the bundle is its own object, but they're each homeomorphic to $F$.
+
+\begin{defn}
+A \textbf{vector bundle} is a fiber bundle whose fibers are vector spaces and where $\phi$ is a linear isomorphism on each $p^{-1}(U)$.
+\end{defn}
+
+If the fibers of a vector bundle are over $\mathbb{R}$, then we call it a \textbf{real vector bundle}. If they're over $\mathbb{C}$, then it's a \textbf{complex vector bundle}. In the case of real vector bundles with finite-dimensional fibers, we can specialize the definition a bit more. Since any finite-dimensional real vector space is isomorphic to $\mathbb{R}^{n}$ for some $n$, we can equivalently write the diagram as follows.
+\[
+\begin{tikzcd}
+        p^{-1}(U) \rar{\phi}\dar{p} & U\times \mathbb{R}^{n}\arrow[dl,"\pi_1"]\\
+        U
+\end{tikzcd}
+\]
+Once we define maps between bundles, we can use them as morphisms in the category of all fiber bundles. If we add a condition to make them respect vector space structure, then we can extend them to work with vector bundles.
+
+\begin{defn}[]
+	A \textbf{bundle map} is a map $\phi:E_1\to E_2$ that induces another map $f:B_1\to B_2$ making the following diagram commute.
+	\[
+	\begin{tikzcd}
+		E_1\rar{\phi}\dar{p_1}&E_2\dar{p_2}\\
+		B_1\rar{f}&B_2
+	\end{tikzcd}
+	\]
+	If $\phi$ is a linear map (isomorphism) between fibers $p_1^{-1}(x)$ and $p_2^{-1}(f(x))$, then it is a \textbf{vector bundle morphism (isomorphism)}.
+\end{defn}
+{\color{red}Confused about what an inverse of a bundle map would be, and thus confused about how to define bundle isomorphisms.}
+
+If $B_1=B_2=B$, then $f=1_{B}$, so we don't have to worry about $f$ at all and defining isomorhpisms becomes more straightforward. In this case, a bundle isomorphism is a homeomorphism that maps $p_1^{-1}(x) \to p_2^{-1}(x)$, and a vector bundle isomorphism additionally restricts to a linear isomorphism $p_1^{-1}(x)\to p_2^{-1}(x)$.
+
+\begin{defn}[]
+A \textbf{section} of $p:E\to B$ is a map $f:B\to E$ such that $pf=1_{B}$.
+\end{defn}
+The image of a section in $E$ is homeomorphic to $B$ via $p$: consider the section $f(x)$, then $fp(f(x)) = f(pf(x)) = f(x)$ by definition, so $fp=1_{f(x)}$.
+{\color{red}Image.}
+
+\begin{ex}[]
+	The \textbf{zero section} of a vector bundle maps every $x \in B$ to the 0 element in the corresponding fiber $f^{-1}(x)$.
+\end{ex}
+
+\end{document}

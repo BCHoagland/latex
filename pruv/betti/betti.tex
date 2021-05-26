@@ -1,0 +1,86 @@
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/breaks}
+%\toggletrue{sectionbreaks}
+\newcommand{\docTitle}{Random Betti Numbers}
+\usepackage{/Users/bradenhoagland/latex/math2}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%
+% Notation
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Notation}
+
+Any probability $p$ is implicitly a function of $n$, so keep this in mind when taking limits as $n\to \infty$. You can't just treat $p$ like a constant.
+
+The $O,\Omega,\Theta,o,\omega$ notation is all standard. If
+\[
+\lim_{n \to \infty} \frac{A_{n}}{B_{n}} =1
+\] then we say $A_{n} \approx B_{n}$. We abuse notation a bit by saying $A_{n} \leq B_{n}$ if there is some constant $c$ such that $A_{n} \leq c B_{n}$ for all $n$.
+
+%%%%%%%%%%%%%%%%%%%%
+% Erdos-Renyi Random Clique Complexes
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Erdos-Renyi Random Clique Complexes}
+
+\begin{imp}
+In the Erdos-Renyi clique complex, if $p$ is in a certain regime, the betti numbers will be nonzero with high probability.
+\end{imp}
+
+\begin{lem}[Morse Inequalities]
+	{\color{red}Change name? I dont think "Morse inequalities" is standard.}
+	Let $f_{k}$ denote the number of $k$-dimensional faces of a simplicial complex $\Delta$, and let $\beta_{k}$ denote the $k$-th Betti number of $\Delta$. Then
+	\[
+	-f_{k-1}+f_{k}-f_{k+1} \leq \beta_{k} \leq f_{k}.
+	\] 
+\end{lem}
+\begin{proof}
+	{\color{red}Do this. Uses definition of simplicial homology and the rank nullity theorem.}
+\end{proof}
+
+\begin{thrm}[]
+	Suppose $p=\omega(n^{-1/k})$ and $p=o(n^{-1/(k+1}))$, then
+\[
+	\lim_{n \to \infty} \frac{\mathbb{E}[\beta_{k}]}{n^{k+1}p^{\binom{k+1}{2}}} = \frac{1}{(k+1)!} .
+\] 
+\end{thrm}
+\begin{proof}
+	The desired limit relation is actually straightforward to show for $f_{k}$ instead of $\beta_{k}$. So we'll do that, then use our assumptions on $p$ and the Morse inequalities to show that $\beta_{k}$ has the same property.
+
+	Note that $f_{k}$ also represents the number of $(k+1)$-cliques of our complex. Since the complex is Erdos-Renyi, each of the $\binom{n}{k+1}$ possible $(k+1)$-cliques occur with the same probability. Since a $(k+1)$-clique has $\binom{k+1}{2}$ distinct edges, this probability is $p^{\binom{k+1}{2}}$.
+
+	But $f_k$ is really just the sum of $\binom{n}{k+1}$ indicator functions, each tracking whether or not a particular $(k+1)$-clique is present in the complex. Since each clique has equal probability of forming, this means the expectation of $f_{k}$ is
+	\[
+		\mathbb{E}[f_{k}] = \binom{n}{k+1}p^{\binom{k+1}{2}} = \frac{n!}{(n-k-1)!(k+1)!} p^{\binom{k+1}{2}}.
+	\] The limit of our desired quantity, but with $f_{k}$ substituted in place of $\beta_{k}$, is then
+	\[
+		\lim_{n \to \infty} \frac{\mathbb{E}[f_{k}]}{n^{k+1}p^{\binom{k+1}{2}}} = \lim_{n \to \infty} \frac{n \cdots (n-k)}{n^{k+1}(k+1)!} = \frac{1}{(k+1)!}.
+	\] 
+	We can then use our assumption on the regime of $p$ and the Morse inequalities to show that $\beta_{k}$ has the same property. Since $p = \omega(n^{-1/k})$,
+	\[
+		\lim_{n \to \infty} \frac{\mathbb{E}[f_{k-1}]}{\mathbb{E}[f_k]} = \lim_{n \to \infty} \frac{k+1}{n p^{k}} = 0.
+	\] And since $p= o(n^{-1/(k+1)})$, we similarly have $\lim_{n \to \infty} \mathbb{E}\left[ f_{k+1} \right] / \mathbb{E}\left[ f_{k} \right] =0$. Thus in this regime of $p$,
+	\[
+	\lim_{n \to \infty} \frac{\mathbb{E}\left[ -f_{k-1}+f_{k}-f_{k+1} \right]}{\mathbb{E}\left[ f_{k} \right]}=1.
+	\] 
+	Then by the Morse inqualities, $\beta_{k}$ must satisfy the desired limit property.
+\end{proof}
+
+Now we know that $\beta_{k}$ is very likely nonzero (at least in our specific regime of $p$). Since it's not just some trivial quantity, proving a central limit theorem for it is a nontrivial statement.
+
+\begin{thrm}[]
+Suppose $p=\omega(n^{-1/k})$ and $p=o(n^{-1/(k+1}))$, then
+\[
+	\frac{\beta_{k}- \mathbb{E}\left[ \beta_{k} \right]}{\sqrt{\var(\beta_{k})} } .
+\] 
+\end{thrm}
+\begin{proof}
+	{\color{red}Do this.}
+\end{proof}
+
+\end{document}

@@ -1,0 +1,79 @@
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/breaks}
+%\toggletrue{sectionbreaks}
+\newcommand{\docTitle}{Merging Rules}
+\usepackage{/Users/bradenhoagland/latex/math2}
+
+\begin{document}
+
+
+Lemmas 4 and 5 and Theorem 1 used general $\ell$-vertex rules, but these cannot guarantee uniqueness of the giant component: consider a rule that only adds an edge if all $\ell$ points come from different components, and it will merge the two smallest components in this case. Then $\ell-1$ large components are able to grow, and they will never be merged together.
+
+The underlying issue here is that the probability of our large components merging is 0, an issue that is remedied by forcing our rule to be merging.
+
+\begin{defn}[]
+Suppose $C_1$ and $C_2$ are distinct components with
+\[
+|C_1|, |C_2| \geq \varepsilon n.
+\] An $\ell$-vertex rule is \textbf{merging} if the probability of $C_1$ and $C_2$ merging after a single step is at least $\varepsilon^{\ell}$.
+\end{defn}
+
+So merging rules have a lower bound on this merging probability that grows based on the size of the components, ensuring that they will always be likely to merge. We will show in Theorem 2 that merging rules have unique giant components. But before we get there, we'll need two technical lemmas about merging rules. The first is a standard half life bound.
+
+\begin{lem}
+Suppose $|C_1|,|C_2| \geq \varepsilon n$. Using a merging $\ell$-vertex rule, the probability that $C_1$ and $C_2$ are \textit{not} merged after $m$ steps is at least $e^{-\varepsilon^{\ell}m}$.
+\end{lem}
+
+\begin{cor}
+	If $|C_1|,|C_2| \geq \frac{\varepsilon n}{2\ell} $, then the probability they \textit{don't} merge after $\Delta/2$ steps is at least
+	\[
+		\exp\left(-\frac{\varepsilon n}{\ell^\ell k}\right).
+	\] 
+\end{cor}
+\begin{proof}
+	By the previous lemma,
+	\[
+		\mathbb{P}(C_i, C_j \text{ don't merge}) \leq \exp\left( - \left(\frac{\varepsilon}{2\ell} \right)^{\ell} \frac{\Delta}{2}  \right) = \exp\left( - \frac{\varepsilon^{\ell}}{2^{\ell}\ell^{\ell}} \left\lceil \frac{2^{\ell}n}{\varepsilon^{\ell-1}k} \right\rceil \right) \leq \exp\left( -\frac{\varepsilon n}{\ell^{\ell}k}  \right).
+	\] 
+\end{proof}
+
+We can now prove an analogue of Lemma 4 for merging rules. Let $V_{\geq k}(m)$ be the union of all components with $k$ or more vertices, so $|V_{\geq k}(m)| = N_{\geq k}(m)$.
+
+\setcounter{lem}{5}
+\begin{lem}
+	Suppose we have a merging $\ell$-vertex rule, and set $\Delta = 2 \left\lceil \frac{2^{\ell}n}{\varepsilon^{\ell-1}k} \right\rceil$. With probability at least $1- \ell e^{-cn/k}$, there is a component of $G(m+\Delta)$ with at least $N_{\geq k}(m)-\varepsilon n$ vertices from $V_{\geq k}(m)$, where $c>0$ is a function of $\varepsilon$ and $\ell$.
+\end{lem}
+\begin{proof}
+	Let $W = V_{\geq k}(m)$. Assume $|W| \geq \varepsilon n$, and let $\alpha = |W|/n \geq \varepsilon$. Suppose we haven't yet gotten to the point where $\ell-1$ components together contain at least $(\alpha-\varepsilon/2)n$ vertices from $W$, then the probability that we choose $\ell$ vertices all in $W$ and all in different components is at least $\alpha(\varepsilon/2)^{\ell-1}$:
+	\begin{enumerate}
+		\item Pick some $v_1$, say in component $C_1$. The probability that $v_1 \in W$ is $\alpha$.
+		\item Pick some $v_2$. If $\mathbb{P}(v_2 \in W-C_1) < \varepsilon/2$, then $|C_1| \geq (\alpha-\varepsilon/2)n$, so by contradiction, $\mathbb{P}(v_2 \in W-C_1) \geq \varepsilon/2$.
+		\item Continue picking verticies until we get to $v_{\ell}$. If $\mathbb{P}(v_{\ell} \in W-C_1-\cdots-C_{\ell-1}) < \varepsilon/2$, then $|C_1 \cup \cdots \cup C_{\ell-1}| \geq (\alpha-\varepsilon/2)n$, so by contradiction, $\mathbb{P}(v_2 \in W-C_1) \geq \varepsilon/2$.
+	\end{enumerate}
+	Thus the probability of picking $\ell$ vertices all in $W$ and all in different components is at least $\alpha(\varepsilon/2)^{\ell-1}$. In this case, since all the components of the chosen vertices are distinct, at least 2 components must merge, so the number of components intersecting $W$ must decrease by at least 1.
+
+	{\color{red}Appeal to Lemma 4.}
+
+	Thus after $\Delta/2$ steps, we have {\color{red}(with high probability?)} components $C_1, \dots, C_{\ell-1}$ that together contain at least $(\alpha-\varepsilon/2)n$ vertices of $W$.
+
+	Ignore any $C_i$ with fewer than $\frac{\varepsilon n}{2\ell} $ vertices in $W$, then by the previous corollary, the probability that any two sufficiently large $C_i$ merge after $\Delta/2$ steps is at least $\exp\left(-\frac{\varepsilon n}{\ell^\ell k}\right)$.
+
+	{\color{red}Need to take this statement about \textit{some} pair of components and make it a bound for \textit{all} the component pairs, which the paper coincidentally doesn't do. This will show whp that all components merge, giving one large component of the proper size. There's also the issue that we have two bounds: one for the first $\Delta/2$ steps and one for the last $\Delta/2$ steps). Combining these bounds should give the desired $1-\ell \exp\left( -\frac{\varepsilon n}{\ell^{\ell}k}  \right)$.}
+
+		To make this fit with the statement of the lemma, simply set $c(\varepsilon,\ell) = \varepsilon/\ell^{\ell}$.
+\end{proof}
+
+This lemma lets us prove Theorem 2 from the paper, which essentially says that with high probability, there will be \textit{no} time throughout our graph construction process where we have lots of vertices in equally large, yet still separate, components. Thus the bad example that I started these notes with can't happen with merging rules.
+
+\setcounter{thrm}{1}
+\begin{thrm}[]
+	Suppose we have a merging $\ell$-vertex rule for some $\ell \geq 2$ that generates a random sequence of graphs $\left\{ G(m) \right\}_{m \geq 0}$. For each $\varepsilon > 0$, there is a $K = K(\varepsilon,\ell)$ such that:w
+	\[
+		\mathbb{P}(\text{for all } m, N_{\geq K}(m) < L_1(m) + \varepsilon n) \to 1.
+	\] as $n\to \infty$.
+\end{thrm}
+\begin{proof}
+	{\color{red}I haven't worked through this entirely yet.}
+\end{proof}
+
+\end{document}

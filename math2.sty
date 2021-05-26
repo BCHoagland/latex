@@ -35,7 +35,11 @@
 }
 
 \titleformat{\section}{\relax\large}{\thesection}{1em}{\spacedsc}
-\newcommand{\sectionbreak}{\clearpage}
+\iftoggle{sectionbreaks}{
+	\newcommand{\sectionbreak}{\clearpage}
+}{
+	\titlespacing*{\section}{0pt}{1in}{5mm}
+}
 
 \linespread{1.2}
 
@@ -50,8 +54,9 @@
 \DeclareMathOperator{\im}{im}
 \let\hom\relax
 \DeclareMathOperator{\hom}{Hom}
+\DeclareMathOperator{\var}{Var}
 \DeclareMathOperator{\p}{\partial}
-\newcommand{\cat}[1]{{\sffamily\textbf{#1}}}
+\newcommand{\cat}[1]{\text{\sffamily\textbf{#1}}}
 
 %--------------------------------------------------------------------------------
 % Colors
@@ -69,14 +74,17 @@
 
 \newmdtheoremenv{prop}{Proposition}
 \newmdtheoremenv{cor}{Corollary}
-\newmdtheoremenv[style=leftBar, linecolor=lem]{lem}{Lemma}
 \newmdtheoremenv[style=leftBar, linecolor=thrm]{thrm}{Theorem}
 
 \theoremstyle{definition}
 \newmdtheoremenv{exer}{Exercise}
+\newmdtheoremenv[style=leftBar, linecolor=lem]{lem}{Lemma}
 \newmdtheoremenv[style=leftBar, linecolor=defn]{defn}{Definition}
 \newmdtheoremenv[style=leftBar, linecolor=exmp]{ex}{Example}
 \newmdtheoremenv[style=leftBar, linecolor=nte]{note}{Note}
+
+\newtheorem*{imp}{Important}
+\surroundwithmdframed[linewidth=2pt]{imp}
 
 %--------------------------------------------------------------------------------
 % Header and Footer

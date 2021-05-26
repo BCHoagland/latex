@@ -1,13 +1,14 @@
-\documentclass[10pt]{report}
-\usepackage{/Users/bradenhoagland/latex/math}
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/breaks}
+\toggletrue{sectionbreaks}
+\newcommand{\docTitle}{Differential Geometry}
+\usepackage{/Users/bradenhoagland/latex/math2}
 
-
-\lhead{Braden Hoagland}
-\chead{Differential Geometry}
-\rhead{}
+%\renewcommand{\theenumi}{\alph{enumi}}
 
 \begin{document}
 \tableofcontents
+
 
 %+-------------------+
 %| +---------------+ |
@@ -31,7 +32,7 @@ The \textbf{coordinate functions} are maps from $\mathbb{R}^n$ to $\mathbb{R}$, 
 \end{align*}
 If I'm working in $\mathbb{R}^3$, I'll probably use $x,y,$ and $z$ instead of $x_1, x_2,$ and $x_3$.
 
-We say that a function $f:\mathbb{R}^n \to \mathbb{R}$ is \textbf{differentiable} if $f$ can be written as $f(x_1, x_2, \dots, x_n)$ and all partial derivatives of all orders exist and are continuous, i.e. $f$ is $C^{\infty}$. A differentiable function is also called a \textbf{scalar field}.
+We say that a function $f:\mathbb{R}^n \to \mathbb{R}$ is \textbf{differentiable} if $f$ can be written $f(x_1, \dots, x_n)$ and if all partial derivatives of all orders exist and are continuous, i.e. $f$ is $C^{\infty}$. A differentiable function is also called a \textbf{scalar field}.
 
 The set of all differentiable functions/scalar fields forms a ring, so we can perform basic arithmetic with them.
 
@@ -82,7 +83,6 @@ A \textbf{curve} in $M$ is a differentiable function $\alpha:I\to M$, where $I$ 
 \end{defn}
 
 Although curves could be defined without the condition that $I$ is open, it makes defining derivatives easier. Without open intervals, we'd have edge cases where some derivatives need to be defined with one-sided limits, and we'd rather just avoid that altogether.
-\pagebreak
 
 \begin{ex}
 	To draw a helix, we can parameterize a curve $\alpha:\mathbb{R}\to \mathbb{R}^3$ by 
