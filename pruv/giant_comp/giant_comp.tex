@@ -1,0 +1,22 @@
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/breaks}
+%\toggletrue{sectionbreaks}
+\newcommand{\docTitle}{Emergence of Giant Component}
+\usepackage{/Users/bradenhoagland/latex/math2}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+In the proof of Lemma 6, $k \geq 1$ and $\Delta= 2\left\lceil \frac{2^{\ell}n}{\varepsilon^{\ell-1}k} \right\rceil$. Then taking $\varepsilon>0$ small enough so that $N_{\geq k}(m) \geq \varepsilon n$, we use Lemma 4 to show that whp, after $\Delta/2$ steps we have $\ell-1$ components together containing at least $\varepsilon n /2$ vertices (this part of the proof actually shows a bit more than this, but it doesn't really matter).
+
+\begin{prop}
+	For all $\varepsilon>0$, whp there is a giant component after at most $(1+\varepsilon)n$ steps.
+\end{prop}
+\begin{proof}
+	We can assume $0 < \varepsilon \leq 2$. Note that if we set $k = 2^{\ell}/\varepsilon^{\ell-1}$, then $k \geq 1$, so we can set $m=0$ and apply the same reasoning as in the proof of Lemma 6. Thus after $\Delta/2 = n < (1+\varepsilon)n$ steps, whp we have $\ell-1$ components together containing at least $\varepsilon n/2$ vertices. This means that we must have at least one component with $\frac{\varepsilon}{2(\ell-1)} n$ vertices. Since $\varepsilon$ and $\ell$ are fixed, this component is a giant component.
+\end{proof}
+
+
+\end{document}

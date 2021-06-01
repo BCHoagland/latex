@@ -6,6 +6,11 @@
 
 \begin{document}
 
+%%%%%%%%%%%%%%%%%%%%
+% Uniqueness of the Giant Component
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Uniqueness of the Giant Component}
 
 Lemmas 4 and 5 and Theorem 1 used general $\ell$-vertex rules, but these cannot guarantee uniqueness of the giant component: consider a rule that only adds an edge if all $\ell$ points come from different components, and it will merge the two smallest components in this case. Then $\ell-1$ large components are able to grow, and they will never be merged together.
 
@@ -67,13 +72,118 @@ This lemma lets us prove Theorem 2 from the paper, which essentially says that w
 
 \setcounter{thrm}{1}
 \begin{thrm}[]
-	Suppose we have a merging $\ell$-vertex rule for some $\ell \geq 2$ that generates a random sequence of graphs $\left\{ G(m) \right\}_{m \geq 0}$. For each $\varepsilon > 0$, there is a $K = K(\varepsilon,\ell)$ such that:w
+	Suppose we have a merging $\ell$-vertex rule for some $\ell \geq 2$ that generates a random sequence of graphs $\left\{ G(m) \right\}_{m \geq 0}$. For each $\varepsilon > 0$, there is a $K = K(\varepsilon,\ell)$ such that
 	\[
-		\mathbb{P}(\text{for all } m, N_{\geq K}(m) < L_1(m) + \varepsilon n) \to 1.
+		\mathbb{P}(\forall\; m,\; N_{\geq K}(m) < L_1(m) + \varepsilon n) \to 1.
 	\] as $n\to \infty$.
 \end{thrm}
 \begin{proof}
 	{\color{red}I haven't worked through this entirely yet.}
 \end{proof}
+
+%%%%%%%%%%%%%%%%%%%%
+% No Jumps
+%%%%%%%%%%%%%%%%%%%%
+
+\section{No Jumps}
+
+The following theorem says that with high probability, a merging rule won't result in a linear jump in the size of the giant component after a sublinear amount of time.
+
+\setcounter{thrm}{6}
+\begin{thrm}[]
+	Suppose we have a merging $\ell$-vertex rule that generates a random sequence of graphs $\left\{ G(m) \right\}_{m \geq 0}$. Let $h(n)$ be any $o(n)$ function and let $0 \leq a < b$ be any constants. Let $\mathcal{J}$ be the event that there exist $m_1,m_2$ such that all three of the following conditions hold:
+	\begin{enumerate}
+		\item $L_1(G(m_1)) \leq an$;
+		\item $L_1(G(m_2)) \geq bn$;
+		\item $m_2 \leq m_1 + h(n)$.
+	\end{enumerate}
+	Then $\mathbb{P}\left( \mathcal{J} \right) \to 0$ as $n\to \infty$.
+\end{thrm}
+\begin{proof}
+	As with the earlier theorems, we'll use a proof by contradiction. To derive the contradiction, we'll use the uniqueness of the giant component that we got from Theorem 2. Suppose $\mathcal{J}$ holds, i.e. we can find $m_1$ and $m_2$ satisfying all three conditions. This means that the quantities
+	\begin{align*}
+		m^{-} &= \max\left\{ m \;|\; L_1(m) \leq an \right\},\\
+		m^{+} &= \min\left\{ m \;|\; L_1(m) \leq bn \right\}.
+	\end{align*}
+	both exist and $m^+-m^-$ differ by an $o(n)$ function. Set $\varepsilon = (b-a)/2$, then Theorem 2 gives us (with high probability) a $K=K(\varepsilon,\ell)$ such that
+	\[
+		N_{\geq K}(m) < L_1(m) + \varepsilon n
+	\] for all times $m$ (which of course includes $m^-$ and $m^+$). Now set
+	\[
+	m^* = m^+ - \frac{\varepsilon n}{2 \ell^2 K} .
+	\] {\color{red}Similar to what we did in the proof of Theorem 2,}
+	\[
+		N_{\geq K}(m^*) \geq  L_1(m^+) - \ell^{2}K(m^+-m^*) > (b-\varepsilon)n = (a+\varepsilon)n.
+	\] However, our assumption that $m^+ - m^-$ is $o(n)$ means that we can take $n$ large enough so that $m^* < m^-$. Then by Theorem 2 and the fact that $m^-$ satisfies condition 1,
+	\[
+		N_{\geq K}(m^*) \leq N_{\geq K}(m^-) < L_1(m^-) + \varepsilon n \leq (a+\varepsilon)n,
+	\] which is a contradiction to the previous inequality. Thus when Theorem 2 holds, $\mathcal{J}$ cannot occur. Since Theorem 2 holds with high probability, this means $\mathcal{J}$ fails with high probability, as desired.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Local Convergence Implies Global Convergence
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Local and Global Convergence}
+
+$X_{n}$ converges to $X$ in probability, denoted $X_{n} \stackrel{p}{\to } X$, if
+\[
+\lim_{n \to \infty} \mathbb{P}\left( |X_n-X|>\varepsilon \right) =0.
+\] 
+We say that a rule is locally convergent if there are functions $\rho_{k}:[0,\infty)\to [0,1]$ such that for all fixed $k \geq 1$ and $t \geq 0$,
+\[
+	\frac{N_{k}(\lfloor tn \rfloor)}{n} \stackrel{p}{\to } \rho_{k}(t).
+\] 
+We say that a rule is globally convergent if there is a nondecreasing function $\rho:[0,\infty)\to [0,1]$such that for all $t$ at which $\rho $ is continuous,
+\[
+	\frac{L_1(\lfloor tn \rfloor)}{n} \stackrel{p}{\to } \rho(t).
+\] A corollary of Theorem 7 is that $\rho$, if it exists, is continuous everywhere, i.e. this limiting behavior exists at all timesteps throughout the graph creation process.
+
+\setcounter{cor}{7}
+\begin{cor}
+	\label{cor:rho-cts}
+	If a merging $\ell$-vertex rule is globally convergent, then $\rho$ is continuous on $[0,\infty)$.
+\end{cor}
+\begin{proof}
+	Since any $\ell$-vertex rule can add at most $\binom{\ell}{2}$ edges per step, $0 \leq \rho(t) \leq \binom{\ell}{2}t$. Thus
+	\[
+		0 \leq \lim_{t \searrow 0} \rho(t) \leq \lim_{t \searrow 0} \binom{\ell}{2}t = 0.
+	\] Note that the only possible value for $\rho(0)$ is 0, since $L_1(0) \to 0$ as $n\to \infty$, so $\rho$ must be continuous at 0. Now suppose $\rho$ is discontinuous at some other time $t > 0$. Since $\rho$ is nondecreasing, this means that $\sup_{t'<t}\rho(t') < \inf_{t'>t}\rho(t')$, so we can take $a<b$ such that
+	\[
+	\sup_{t'<t}\rho(t') < a < b < \inf_{t'>t}\rho(t').
+	\] Fix $\varepsilon > 0$, then {\color{red}by the definition of global convergence}, we can take $n$ large enough such that
+	\[
+		\mathbb{P}\left( L_1(\lfloor (t-\varepsilon)n \rfloor \leq an \text{ and } L_1(\lfloor (t+\varepsilon)n \rfloor \geq bn \right) \geq 1-\varepsilon.
+	\] Since $\varepsilon$ was arbitrary, we can let $\varepsilon\to 0$. But then we contradict Theorem 7, since our times $\lfloor (t-\varepsilon)n \rfloor$ and $\lfloor (t+\varepsilon)n \rfloor$ become too close to allow this event to happen almost surely. {\color{red}(should make precise)}
+\end{proof}
+
+\setcounter{thrm}{2}
+\begin{thrm}[]
+Suppose we have a locally convergent merging $\ell$-vertex rule, then it is also globally convergent. Furthermore, $\rho$ is continuous and satisfies
+\[
+	\rho(t) = 1 - \sum_{k \geq 1}^{} \rho_{k}(t).
+\] 
+\end{thrm}
+\begin{proof}
+	When a single edge is added to a graph, $N_{k}$ changes by at most $2k$ (when two components of size $k$ are joined), so it is Lipschitz continuous. Then since the definition of local convergence doesn't depend on any specific $t$, the convergence of $N_{k}(\lfloor t n \rfloor)/n$ to $\rho_{k}(t)$ is uniform as $n\to \infty$. Thus each $\rho_{k}$ is also continuous.
+
+	It should be clear that the function $\rho_{\leq k}(t) = \sum_{j \leq k}\rho_{j}(t)$ is nonincreasing for each $k$. Then the function
+	\[
+		\rho(t) = 1 - \lim_{k \to \infty} \rho_{\leq k}(t)
+	\] must be increasing. Fix $t$ and $\varepsilon$, then we claim that the probability that
+	\[
+		\sup_{0 \leq t' < t} \rho(t') - \varepsilon \leq \frac{L_1(\lfloor tn \rfloor)}{n} \leq \rho(t) + \varepsilon
+	\] goes to 1 as $n\to \infty$ {\color{red}(can we just use $\rho(t)$ in the lower bound? Is that not the same thing?)}. If this is true, then $L_1(\lfloor tn \rfloor)/n \stackrel{p}{\to } \rho(t)$ whenever $\rho$ is continuous at $t$, i.e. our rule is globally convergent. Then by Corollary \ref{cor:rho-cts}, $\rho$ must also be continuous everywhere.
+
+	Now all that's left to do is prove the claim. We'll start with the upper bound. By the definition of $\rho$, there is some $K$ such that $\rho_{\leq K}(t) \geq 1 - \rho(t) - \varepsilon/4$. Then by the local convergence of our rule, with high probability,
+	\[
+		N_{\leq K}(\lfloor tn \rfloor)/n \quad\geq\quad \rho_{\leq K}(t) - \varepsilon/4 \quad\geq\quad 1 - \rho(t) - \varepsilon/2.
+	\] So for $n$ large enough,
+	\[
+		L_1(\lfloor tn \rfloor)/n \quad\leq\quad {\color{red}1 - N_{\leq K}(\lfloor tn \rfloor)/n} \quad\leq\quad \rho(t) + \varepsilon.
+	\] Now we show the lower bound. Choose $t' < t$ such that $\rho(t')$ is within $\varepsilon/2$ of the supremum. {\color{red}(there's one step in the proof I dont understand. I highlighted it on my paper copy)}
+\end{proof}
+
 
 \end{document}
