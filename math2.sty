@@ -58,6 +58,9 @@
 \DeclareMathOperator{\p}{\partial}
 \newcommand{\cat}[1]{\text{\sffamily\textbf{#1}}}
 
+\DeclareMathOperator{\isct}{\;\cap\;}
+\DeclareMathOperator{\uni}{\;\cup\;}
+
 %--------------------------------------------------------------------------------
 % Colors
 %--------------------------------------------------------------------------------
@@ -96,8 +99,12 @@
 \setlength{\headsep}{0.6in}
 
 \fancyhf{}
-\fancyhead[LO]{\thepage \quad $\vert$ \spacedsc{Braden Hoagland}}
-\fancyhead[RO]{\spacedsc{\rightmark}}
-\fancyhead[RE]{\spacedsc{\docTitle} $\vert$ \quad \thepage}
-\fancyhead[LE]{\spacedsc{Braden Hoagland}}
+\fancyhead[LE]{\color{gray}\spacedsc{Braden Hoagland}}
+\iftoggle{sectionheaders}{
+	\fancyhead[RE]{\color{gray}\spacedsc{\rightmark} $\vert$ \quad \thepage}
+}{
+	\fancyhead[RE]{\color{gray}\spacedsc{\docTitle} $\vert$ \quad \thepage}
+}
+\fancyhead[RO]{\color{gray}\spacedsc{\docTitle}}
+\fancyhead[LO]{\color{gray}\thepage \quad $\vert$ \spacedsc{Braden Hoagland}}
 

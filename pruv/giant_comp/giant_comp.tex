@@ -9,13 +9,19 @@
 \begin{document}
 %\tableofcontents
 
-In the proof of Lemma 6, $k \geq 1$ and $\Delta= 2\left\lceil \frac{2^{\ell}n}{\varepsilon^{\ell-1}k} \right\rceil$. Then taking $\varepsilon>0$ small enough so that $N_{\geq k}(m) \geq \varepsilon n$, we use Lemma 4 to show that whp, after $\Delta/2$ steps we have $\ell-1$ components together containing at least $\varepsilon n /2$ vertices (this part of the proof actually shows a bit more than this, but it doesn't really matter).
-
 \begin{prop}
 	For all $\varepsilon>0$, whp there is a giant component after at most $(1+\varepsilon)n$ steps.
 \end{prop}
 \begin{proof}
-	We can assume $0 < \varepsilon \leq 2$. Note that if we set $k = 2^{\ell}/\varepsilon^{\ell-1}$, then $k \geq 1$, so we can set $m=0$ and apply the same reasoning as in the proof of Lemma 6. Thus after $\Delta/2 = n < (1+\varepsilon)n$ steps, whp we have $\ell-1$ components together containing at least $\varepsilon n/2$ vertices. This means that we must have at least one component with $\frac{\varepsilon}{2(\ell-1)} n$ vertices. Since $\varepsilon$ and $\ell$ are fixed, this component is a giant component.
+	We can assume $0 < \varepsilon \leq 2$. Then set $k = 2^{\ell}/\varepsilon^{\ell-1} \geq 1$, and $\Delta = 2 \left\lceil \frac{2^{\ell}n}{\varepsilon^{\ell-1}k} \right\rceil$.
+
+	Let $W$ denote the union of all components of size at least $k$ at time $m=0$, and take $\tilde{\varepsilon} \leq \varepsilon$ such that $W \geq \tilde{\varepsilon}n$. Let $H$ denote the event that there are \textit{not} $\ell-1$ components together containing $|W| - \varepsilon n /2$ vertices. While $H$ holds, the probability of choosing $\ell$ vertices in distinct components of $W$ is at least $\frac{|W|}{n} \left( \frac{\tilde{\varepsilon}}{2}  \right)^{\ell-1}$. In this case, the number of components of $W$ must decrease by 1.
+
+But as in the proof of Lemma 4, the probability of $H$ holding is exponentially small in $n/k$, so whp we have $\ell-1$ components of $W$ together containing at least
+\[
+	|W| - \varepsilon n /2 \quad\geq\quad \tilde{\varepsilon}n - \varepsilon n / 2 \quad\geq\quad \varepsilon n/2
+\]
+vertices after $\Delta/2 = n < (1+\varepsilon)n$ steps. At least one of these components must have at least $\frac{\varepsilon}{2(\ell-1)} n$ vertices, so it is a giant component.
 \end{proof}
 
 

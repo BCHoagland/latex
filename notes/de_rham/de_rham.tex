@@ -1,0 +1,82 @@
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/toggles}
+\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{De Rham Theory}
+\usepackage{/Users/bradenhoagland/latex/math2}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%
+% The De Rham Complex on R^n
+%%%%%%%%%%%%%%%%%%%%
+
+\section{The De Rham Complex on \texorpdfstring{$\mathbb{R}^n$}{Rn}}
+
+Denote the space of $k$-forms on an $n$-dimensional manifold $N$ by $\Omega^{k}(N)$, then the $C^{\infty}$ differential forms on $N$ form the vector space
+\[
+	\Omega^{*}(N) \doteq \bigoplus_{k=0}^{n} \Omega^{k}(N).
+\] The exterior derivative is defined as usual: if $f$ is a smooth function, then $df \doteq \sum \p_{i}{f} \;dx_i$, and if $\omega = \sum f_{I}dx_{I}$ is a differential form, then $d\omega \doteq \sum df_{I} \wedge dx_{I}$.
+
+\begin{defn}[]
+$\left( \Omega^{*}(N), d \right)$ is the \textbf{de Rham complex} on $N$, which we represent by the cochain complex
+\[
+\begin{tikzcd}
+	0\rar &\Omega^{0}(N) \rar{d}&\Omega^{1}(N)\rar{d}&\cdots\rar{d}&\Omega^{n}(N)\rar&0.
+\end{tikzcd}
+\] The $k$-th \textbf{de Rham cohomology} of $N$ is then the vector space
+\[
+	H^{k}(N) \doteq \frac{\ker d \isct\Omega^{k}(N)}{\im d \isct \Omega^{k}(N)} .
+\] 
+\end{defn}
+Since our complex is finite, the $0$-th and $n$-th cohomologies will always be a bit simpler:
+\begin{align*}
+	H^{0}(N) &= \ker d \isct \Omega^{0}(N),\\
+	H^{n}(N) &= \frac{\Omega^{n}(N)}{\im d \isct \Omega^{n}(N)} .
+\end{align*}
+Any differential form in the kernel of $d$ is \textbf{closed}, and any in the image of $d$ is \textbf{exact}. Note that since $d^{2}=0$, an exact form must also be closed.
+
+%%%%%%%%%%%%%%%%%%%%
+% Functoriality of de Rham Cohomology
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Functoriality of de Rham Cohomology}
+
+Suppose we have a smooth map of manifolds $f:M\to N$, then this induces a pullback
+\begin{align*}
+	f^{*}:\Omega^{*}(N)&\to \Omega^{*}(M)\\
+	g&\mapsto g\circ f,
+\end{align*}
+which is easily seen from the following diagram.
+\[
+\begin{tikzcd}
+	M\rar{f}\arrow[dr,"g\circ f"']&N\dar{g}\\
+				     &\mathbb{R}
+\end{tikzcd}
+\]
+Given smooth maps between manifolds $A,B,C$, we can show that the pullbacks satisfy a reversed composition law: $g^{*}\circ f^{*}=(f\circ g)^{*}$. {\color{red}It's straightforward} to do this calculation, but the following picture makes it clear.
+\[
+\begin{tikzcd}
+	A\rar{f}&B\rar{g}&C\\
+	\Omega^{*}(A)&\Omega^{*}(B)\arrow[l,"f^{*}"']&\Omega^{*}(C)\arrow[l,"g^{*}"']
+\end{tikzcd}
+\] All this shows that $\Omega^{*}$ is a contravariant functor from the category of smooth manifolds to the category of commutative differential graded algebras. The commutativity bit refers to the identity
+\[
+	\tau \wedge \omega = (-1)^{\deg \tau \deg \omega} \; \omega \wedge \tau.
+\] 
+
+We can check that $f^{*}$ commutes with the exterior derivative: $f^{*}(d_{N}\omega) = d_{M}(f^{*}\omega)$ for any differential form $\omega$ on $N$. {\color{red}(Do this)} This means $f^{*}$ is a chain map $\Omega^{*}(N) \to \Omega^{*}(M)$, so it induces homomorphisms $H^{k}(N)\to H^{k}(M)$ for all $k$.
+\[
+\begin{tikzcd}
+	0\rar&\Omega^{0}(N)\rar{d_{N}}\dar{f^{*}}&\cdots\rar{d_{N}}&\Omega^{k}(N)\rar{d_{N}}\dar{f^{*}}&\cdots\\
+	0\rar&\Omega^{0}(M)\rar{d_{M}}&\cdots\rar{d_{M}}&\Omega^{k}(M)\rar{d_{M}}&\cdots
+\end{tikzcd}
+\] 
+
+Then since taking the induced homological structure is functorial {\color{red}(check)}, this means that $H^{*}$ is also a contravariant functor {\color{red}(be specific about the category it's going to)}.
+
+
+\end{document}
