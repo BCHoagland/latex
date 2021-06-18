@@ -1,0 +1,129 @@
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/toggles}
+\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{Algebraic Topology}
+\usepackage{/Users/bradenhoagland/latex/math2}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+\tableofcontents
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% The Fundamental Group
+
+\chapter{The Fundamental Group}
+
+%%%%%%%%%%%%%%%%%%%%
+% Basics
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Basics}
+
+\begin{prop}
+        $\pi_1(S^{n}) = 0$ when $n \geq 2$.
+\end{prop}
+\begin{proof}
+        \warn{Do this.}
+\end{proof}
+
+\begin{cor}
+        $\mathbb{R}^2 \not\cong \mathbb{R}^{n}$ when $n \neq 2$.
+\end{cor}
+\begin{proof}
+	When $n=1$, removing a point destroys the path connectivity of $\mathbb{R}$ but not of $\mathbb{R}^2$. For $n > 2$, use the relation $\mathbb{R}^{n} - \left\{ 0 \right\} \cong S^{n-1} \times \mathbb{R}$ and compare fundamental groups, using the above proposition.
+\end{proof}
+
+You might expect that if we can deformation retract one space onto another, they'll have the same fundamental groups (with fixed basepoint, of course). Although this doesn't hold with plain retracts, we still get some information about the relationship between the fundamental groups.
+
+\begin{prop}
+If $X$ retracts onto $A$, then
+\[
+	i_{*}: \pi_1(A,x) \to \pi_1(X,x)
+\] is surjective. If $A$ is a deformation retract of $X$, then $i_{*}$ is an isomorphism, i.e.
+\[
+	\pi_1(A,x) \cong \pi_1(X,x).
+\] 
+\end{prop}
+\begin{proof}
+	Given a retraction $r:X\to A$, we have $ri=1_{A}$, so $r_{*}i_{*} = 1_{\pi_1(A)}$, so $i_{*}$ is injective. If $r_{t}$ is a deformation retraction of $X$ onto $A$, then $r_0=1_{X}$, $r_{t}|A = 1_{A}$, and $r_1(X) \subset A$. Let $f$ be any loop in $X$, then $r_t f$ gives a homotopy to some loop in $A$. Thus $i_{*}$ is surjective, so it's an isomorphism.
+\end{proof}
+
+Consider homotopic functions $f \simeq g$. It seems reasonable that the fundamental groups of the codomain at $f(x)$ and at $g(x)$ will be isomorphic, as $f$ and $g$ are related by some continuous deformation. We can in fact show more than this: the isomorphism in question plays nicely with the induced maps $f_{*}$ and $g_{*}$.
+\begin{lem}
+	Let $f \simeq g$ and let $h$ be the map between $f(x)$ and $g(x)$ induced by the homotopy. Then
+	\[
+		\pi_1(Y,f(x)) \cong \pi_1(Y,g(x))
+	\] and the following diagram commutes.
+	\[
+	\begin{tikzcd}
+		\pi_1(X,x) \rar{g_{*}} \arrow[dr, "f_{*}"'] & \pi_1(Y, g(x)) \dar{\beta_{h}} \\
+					     & \pi_1(Y,f(x))
+	\end{tikzcd}
+	\] 
+	Here $\beta_{h}$ denotes the change of basepoint isomorphism induced by $h$.
+\end{lem}
+\begin{proof}
+	\warn{Do this.}
+
+	\warn{Should this even be a lemma?}
+\end{proof}
+
+\begin{prop}
+Suppose $X \simeq Y$ via $\phi$, then $\pi_1(X,x) \cong \pi_1(Y,\phi(x))$ via $\phi_{*}$.
+\end{prop}
+\begin{proof}
+	\warn{Do this.}
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Van Kampen's Theorem
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Van Kampen's Theorem}
+
+The problem: how to calculate $\pi_1$ of complicated spaces. The idea: decompose a complicated space into simpler spaces with known $\pi_1$, then patch these together somehow to construct $\pi_1$ for the entire space.
+
+Our object of interest will be the map $\phi$ in the following property of free products.
+
+\begin{prop}
+	Any collection of group morphisms $\left\{ \phi_{\alpha}:G_{\alpha}\to H \right\}_{\alpha}$ extends uniquely to a group morphism $\phi:*_{\alpha}G_{\alpha}\to H$.
+\end{prop}
+\begin{proof}
+	\warn{Do this.}
+\end{proof}
+
+Suppose $X = \bigcup_{\alpha}A_{\alpha}$, where each $A_{\alpha}$ is open, path connected, and contains some fixed basepoint $x_0 \in X$. By the previous proposition, the family of morphisms
+\[
+	\left\{ i_{\alpha *}:\pi_1(A_{\alpha}) \to \pi_1(X) \right\}_{\alpha}
+\] induced by the inclusions extends uniquely to the morphism
+\[
+	\phi:*_{\alpha}\pi_1(A_{\alpha}) \to \pi_1(X)
+\] (the path connectedness and shared basepoint ensure that the above statments, which don't ever reference a basepoint for any $\pi_1$, aren't nonsensical). Van Kampen's Theorem is then, informally, ``$\phi$ is usually surjective, but it's usually not injective."
+
+This means $*_{\alpha}\pi_1(A_{\alpha})$ will usually be ``too big", but we can fix this by simply modding out the extra stuff. This will give some subgroup of $*_{\alpha}\pi_1(A_{\alpha})$ that $\pi_1(X)$ is isomorphic to.
+
+\begin{thrm}[van Kampen]
+	Suppose $X = \bigcup_{\alpha}A_{\alpha}$, where each $A_{\alpha}$ is open, path connected, and contains some fixed basepoint $x_0 \in X$.
+	\begin{enumerate}
+		\item If each $A_{\alpha}\isct A_{\beta}$ is path connected, then
+			\[
+				\phi: *_{\alpha}\pi_1(A_{\alpha}) \to \pi_1(X)
+			\] is surjective.
+		\item If each $A_{\alpha}\isct A_{\beta} \isct A_{\gamma}$ is path connected, then $\ker \phi$ is a normal subgroup of $*_{\alpha}\pi_1(A_{\alpha})$ generated by all elements of the form
+			\[
+				i_{\alpha\beta*}(\omega) i_{\beta\alpha*}(\omega)^{-1},
+			\] where $i_{\alpha\beta*}$ is the group morphism induced by the inclusion $A_{\alpha}\isct A_{\beta} \hookrightarrow A_{\alpha}$. Thus $\phi$ induces an isomorphim 
+			\[
+				\pi_1(X) \cong \frac{*_{\alpha}\pi_1(A_{\alpha})}{\ker \phi} .
+			\] 
+	\end{enumerate}
+\end{thrm}
+
+\end{document}

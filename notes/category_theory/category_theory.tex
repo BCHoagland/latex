@@ -1,6 +1,7 @@
 \documentclass[twoside,10pt]{report}
-\usepackage{/Users/bradenhoagland/latex/breaks}
+\usepackage{/Users/bradenhoagland/latex/toggles}
 \toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
 \newcommand{\docTitle}{Category Theory}
 \usepackage{/Users/bradenhoagland/latex/math2}
 
@@ -10,158 +11,126 @@
 \begin{document}
 \tableofcontents
 
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% The Basics
+
+\chapter{The Basics}
+
 %%%%%%%%%%%%%%%%%%%%
 % Categories
 %%%%%%%%%%%%%%%%%%%%
 
 \section{Categories}
 
+
 \begin{defn}
-	A \textbf{category} $\cat{C}$ is a class of \textbf{objects} $\ob(\cat{C})$ along with sets of \textbf{morphisms} between those objects. The set of morphisms $A$ to $B$ is denoted $\hom_{\cat{C}}(A,B)$ or $\cat{C}(A,B)$. There must be a law of composition of morphisms
-	\[
-		(f, g) \mapsto gf.
-	\] Finally, the objects and morphisms satisfy:
+	A \textbf{category} $\cat{C}$ is a collection of \textbf{objects} $\ob(\cat{C})$ and \textbf{morphisms} $\mor({\cat{C} })$. There are several requirements:
 	\begin{enumerate}
-		\item If $A \neq C$ or $B \neq D$, then $\hom_{\cat{C}}(A,B)$ and $\hom_{\cat{C}}(C,D)$ are disjoint sets.
+		\item Morphisms must compose: $(f, g) \mapsto gf.$
 		\item Morphism composition is associative.
-		\item Each object has an identity morphism.
+		\item If $A \neq C$ or $B \neq D$, then $\hom_{\cat{C}}(A,B)$ and $\hom_{\cat{C}}(C,D)$ are disjoint sets.
+		\item Each object has an identity morphism, which is a two-sided identity.
 	\end{enumerate}
 \end{defn}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=1.4]{fig/category.pdf}
+\end{figure}
 
-We will drop the subscript $\cat{C}$ in $\hom_{\cat{C}}$ if the category is clear.
+A category is \textbf{concrete} if, informally, its objects are underlying sets and its morphisms are functions between them, e.g. $\cat{Set} , \cat{Top} , \cat{Grp} $. \textbf{Abstract} categories don't have this structure, e.g. $BG$ for a group $G$.
 
+A category is \textbf{discrete} if all its morphisms are identities, i.e. all its objects are isolated.
+
+Because of set-theoretical issues, it's useful to denote when a category is ``small enough". We say a category is \textbf{small} if it has only a set's worth of morphisms. Since
+\begin{center}
+	identity morphisms $\leftrightarrow $ objects,
+\end{center}
+small categories also have a set's worth of objects. We can loosen this somewhat: if $\hom(X,Y)$ is always a set, the category is \textbf{locally small}.
+
+\begin{prop}
+Identity morphisms and morphism inverses are unique.
+\end{prop}
+
+\begin{defn}[]
+An \textbf{isomorphism} is an invertible morphism.
+\[
+\begin{tikzcd}
+	X \rar[bend left]{f} & Y \lar[bend left]{f^{-1}}
+\end{tikzcd}
+\] 
+\end{defn}
+Isomorphisms (isos) generalize bijective functions, which are both injective and surjective. Injective functions generalize to monomorphisms (monos), and surjective functions to epimorphisms (epis).
+\begin{defn}[]
+	A morphism $f$ is a \textbf{monomorphism} if for all parallel (between same objects) morphisms $g,h$ with the proper domains,
+	\[
+	fg = fh \implies g=h.
+	\] Similarly, $f$ is an \textbf{epimorphism} if
+	\[
+	gf = hf \implies g=h.
+	\] 
+\end{defn}
+There's some fun vocab and symbols to go along with these. Monos are monic and denoted by $\mono$, and epis are epic and denoted by $\epi$. An isomorphism is necessarily both monic and epic, although the converse doesn't hold in general.
+
+Special types of morphisms get their own special names sometimes too. An \textbf{endomorphism} is a morphism $X\to X$. An isomorphic endomorphism is called an \textbf{automorphism}.
 \begin{defn}
 	A category $\cat{S}$ is a \textbf{subcategory} of $\cat{C}$ if
 	\begin{enumerate}
-		\item $\ob(\cat{S})$ is a subclass of $\ob(\cat{C})$; and
-		\item for all $A, B \in \ob(\cat{S})$, $\hom_{\cat{S}}(A,B)$ is a subclass of $\hom_{\cat{C}}(A,B)$.
+		\item $\ob(\cat{S})$ is a subcollection of $\ob(\cat{C})$; and
+		\item for all $A, B \in \ob(\cat{S})$, $\hom_{\cat{S}}(A,B)$ is a subcollection of $\hom_{\cat{C}}(A,B)$ with identity.
 	\end{enumerate}
-	A \textbf{full} subcategory maintains all morphisms from $\cat{C}$ among the objects that it maintains, i.e. for $A, B \in \ob(\cat{S})$, $\hom_{\cat{S}}(A,B) = \hom_{\cat{C}}(A,B)$.
 \end{defn}
-
-\begin{note}
-The image of a category need not be a subcategory.
-\end{note}
-
-\begin{prop}
-The identity morphism of an object is unique.
-\end{prop}
-\begin{proof}
-	Suppose $1_{A}$ and $1_{A}'$ are both identity morphisms of $A$. Then $1_{A}=1_{A}1_{A}'=1_{A}'$.
-\end{proof}
-
-\begin{defn}
-An \textbf{endomorphism} of $A$ is a morphism from $A$ to itself.
-\end{defn}
-
-\begin{defn}
-	An \textbf{isomorphism} $f:A\to B$ is an invertible morphism, i.e. there exists a morphism $g:B\to A$ such that $gf=1_{A}$ and $fg=1_{B}$.
-\end{defn}
-
-\begin{prop}
-Inverses of morphisms are unique.
-\end{prop}
-\begin{proof}
-Suppose $f:A \to B$ is a morphism and $g,g': B \to A$ are both inverses of it. Then by associativity of morphism composition, $g=g1_{B}=g(fg')=(gf)g'=1_{A}g'=g'.$
-\end{proof}
+A \textbf{full} subcategory doesn't remove any morphisms between the remaining objects, i.e. $\hom_{\cat{S} }(A,B) = \hom_{\cat{C} }(A,B)$.
 
 \begin{defn}[]
-A \textbf{groupoid} is a category whose morphisms are all isomorphisms. Every category contains a subcategory called the \textbf{maximal groupoid}, which is all of the objects along with only the morphisms that are isomorphisms.
+A \textbf{groupoid} is a category whose morphisms are all isomorphisms.
 \end{defn}
+Every category contains a subcategory called the \textbf{maximal groupoid}, which is all of the objects along with only the morphisms that are isomorphisms.
 
 \begin{ex}[]
 	We can define a \textbf{group} as a groupoid that has only one object. The group elements are the morphisms. The properties of a group follow from the properties of categories and the fact that our morphisms are all isomorphisms.
+
+	Given a group $G$, its representation as a single-object category is denoted $BG$.
 \end{ex}
 
-{\color{red}Put picture of group and groupoid as category.}
 
-Now for some examples to make this \textit{somewhat} less abstract.
 
-\begin{enumerate}
-	\item \cat{Set}: the category of all sets. The category of all finite sets is a subcategory of this.
-		\begin{itemize}
-			\item $\hom(A,B)$ is the set of all functions from $A$ to $B$.
-			\item Morphism composition is the usual composition of functions.
-			\item The identity morphism sends $a \in A$ to itself.
-		\end{itemize}
-	\item \cat{Grp}: the category of all groups. \textbf{Ab}, the category of all abelian groups, is a subcategory of this. Morphisms are group homomorphisms, and isomorphisms are, well, group isomorphisms.
-	\item \cat{Ring}: the category of all nonzero rings with $1$. The morphisms are ring homomorphisms that send 1 to 1.
-	\item \cat{R-mod}: the category of all left $R$-modules. The morphisms are $R$-module homomorphisms.
-	\item \cat{Top}: the category of all topological spaces. The morphisms are continuous maps between spaces, and the isomorphisms are homeomorphisms.
-\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%
+% Duality
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Duality}
+
 
 \begin{defn}
-A \textbf{discrete category} is a category in which all the morphisms are identities, i.e. every object is isolated.
+	Given a category $\cat{C}$, its \textbf{opposite} or \textbf{dual} category $\cat{C}^{\text{op}}$ is the category gotten by ``reversing" the morphisms of $\cat{C}$. This means
+	\begin{align*}
+		\ob(\cat{C}^{\op}) &= \ob(\cat{C}),\\
+		\hom_{\cat{C}^{\text{op}}}(A,B) &= \hom_{\cat{C}}(B,A).
+	\end{align*}
 \end{defn}
+My biggest misconception of this at first was that we were actually reversing each morphism, but this is clearly impossible. For example, if we're working in \cat{Set}, we physically can't reverse all the morphisms since not all functions are invertible.
 
-\begin{defn}
-	Given a category $\cat{C}$, its \textbf{opposite} or \textbf{dual} category $\cat{C}^{\text{op}}$ is the category gotten by reversing the morphisms of $\cat{C}$. Formally, $\ob(\cat{C}^{\op}) = \ob(\cat{C})$, but
-	\[
-		\hom_{\cat{C}^{\text{op}}}(A,B) = \hom_{\cat{C}}(B,A).
-	\] 
-\end{defn}
+\begin{note}[]
+	We aren't actually changing any of the morphisms. The ``reversal" of a morphism is a completely formal process. In fact, we can't even compare $f$ and $f^{\op}$ since they live in different categories! At the end of the day, a category's dual has the same information, but the notation is just all reversed.
+\end{note}
 
-Note that the identities in a category and its dual are the same. Compositions, on the other hand, are reversed.
-
-\begin{figure}[H]
-	\centering
+Note that the identities in a category and its dual are the same. Compositions, on the other hand, are necessarily reversed:
+\[
+	f^{\op} g^{\op} \doteq (gf)^{\op}.
+\] 
+\[
 \begin{tikzcd}
-\bullet \arrow[r, "f"] \arrow[rd, "gf"'] & \bullet \arrow[d, "g"] &  & \bullet & \bullet \arrow[l, "f'"']                    \\
+	\bullet \arrow[r, "f"] \arrow[rd, "gf"'] & \bullet \arrow[d, "g"] &  & \bullet & \bullet \arrow[l, "f'"']                    \\
                                          & \bullet                &  &         & \bullet \arrow[lu, "f'g'"] \arrow[u, "g'"']
 \end{tikzcd}
-	\caption{A category and its dual. Since every object must have an identity morphism, I usually won't include them in a diagram unless necessary.}
-\end{figure}
-
-\begin{defn}
-Given categories $\cat{C}$ and $\cat{D}$, we can define their \textbf{product category} $\cat{C} \times \cat{D}$ as having the objects
-\[
-	\ob(\cat{C} \times \cat{D}) = \ob(\cat{C}) \times \ob(\cat{D})
-\] and the morphisms
-\[
-	\hom_{\cat{C} \times \cat{D}}( (A,B), (A',B') ) = \hom_{\cat{C}}(A,A') \times \hom_{\cat{D}}(B,B').
 \] 
-\end{defn}
-It is straightforward to define the identity morphisms and the composition of morphisms in product categories in a piecewise fashion, building off the identities and composition laws of $\cat{C}$ and $\cat{D}$.
 
-%%%%%%%%%%%%%%%%%%%%
-% Universal Properties
-%%%%%%%%%%%%%%%%%%%%
+Duals are important because they make universal quantifications twice as valuable: if a theorem applies ``for all categories", then it certainly applies to the opposites of all categories. We can then reinterpret the theorem in the opposite case to get a dual theorem, and to prove it we just reverse all the morphisms in our original proof.
 
-\section{Universal Properties}
-
-\begin{defn}[]
-	An object $A$ is \textbf{initial} if there is a unique morphism $A \to B$ for all objects $B$. An object $C$ is \textbf{final} if there is a unique morhpism $B \to C$ for all objects $C$. An object that is either initial or fianl is called \textbf{universal}, and it's a \textbf{zero object} if it's both.
-\end{defn}
-
-\begin{ex}[]
-In \textbf{Grp}, the trivial group $\left\{ 1 \right\}$ is a zero object.
-\end{ex}
-
-\begin{prop}
-	All initial objects are isomorphic. All final objects are isomorphic.
-\end{prop}
-\begin{proof}
-	If $A,A'$ are both initial, there are unique morphisms $f:A\to A'$ and $g:A'\to A$. Then $gf$ is a morphism $A\to A$. Since $A$ is universal, it has only one endomorphism, namely the identity map. Thus $gf=1_{A}$. Similarly, $fg=1_{A'}$. Thus $A \cong A'$. The proof is similar for final objects.
-\end{proof}
-
-\begin{ex}[]
-If we have a morphism $f:X\to Y$, we can define an equivalence relation
-\[
-	a \sim b \iff f(a) = f(b).
-\] Then if $\pi$ is the canonical projection map, the following diagram commutes.
-\begin{figure}[H]
-	\centering
-\begin{tikzcd}
-X/\sim \arrow[rr, "\exists!\;g", dashed]       &  & Y \\
-                                       &  &   \\
-X \arrow[uu, "\pi"] \arrow[rruu, "f"'] &  &  
-\end{tikzcd}
-\end{figure}
-
-Consider the category with objects the morphisms $X\to Y$ that respect $\sim$ and morphisms given by push-forwards. In this category, $\pi$ is initial (and thus universal). Colloquially, we say that $X/\sim$ has this universal property, although it's really $\pi$ that has the property. But $\pi$ is the only map $X \to  X/\sim$ that makes sense, though, so we can say either and it's obvious what we mean.
-
-{\color{red}Is $\im f \cong X/\sim$ for all categories? Seems like it should depend on what the canonical projection is in the particular category...}
-\end{ex}
 
 %%%%%%%%%%%%%%%%%%%%
 % Functors
@@ -169,69 +138,57 @@ Consider the category with objects the morphisms $X\to Y$ that respect $\sim$ an
 
 \section{Functors}
 
-Functors map categories to categories by associating objects with objects and morphisms with morphisms in ways that respect morphism composition and identities.
-
-\begin{figure}[H]
-	\centering
-	\begin{tikzcd}
-                                                   & B \arrow[dd, "g"] \arrow[rrr, dashed] &  &                                           & \mathcal{F}B \arrow[dd, "\mathcal{F}(g)"] \\
-A \arrow[ru, "f"] \arrow[rrr, dashed, shift right] &                                       &  & \mathcal{F}A \arrow[ru, "\mathcal{F}(f)"] &                                           \\
-                                                   & C \arrow[lu, "h"] \arrow[rrr, dashed] &  &                                           & \mathcal{F}C \arrow[lu, "\mathcal{F}(h)"]
-\end{tikzcd}
-\caption{A functor $\mathcal{F}$ between two categories.}
-\end{figure}
+Functors are the morphisms associated with categories: they map categories to categories in ways that respect categorical structure.
 
 \begin{defn}
-	A \textbf{functor} $\mathcal{F}:\cat{C}\to \cat{D}$ satisfies:
-\begin{enumerate}
-	\item For every object $A$ in $\cat{C}$, $\mathcal{F}A$ is an object in $\cat{D}$.
-	\item For every $f \in \hom_{\cat{C}}(A,B)$, $\mathcal{F}(f)$ is a morphism in $\hom_{\cat{D}}(\mathcal{F}A, \mathcal{F}B)$ such that
-		\begin{enumerate}
-			\item $\mathcal{F}(gf) = \mathcal{F}(g) \mathcal{F}(f)$, and
-			\item $\mathcal{F}(1_{A}) = 1_{\mathcal{F}A}$.
-		\end{enumerate}
-\end{enumerate}
-	Sometimes we call a functor a \textbf{covariant functor} to differentiate it from another type of functor, which we define in a bit.
+	A \textbf{(covariant) functor} $\mathcal{F}:\cat{C}\to \cat{D}$ satisfies:
+	\begin{itemize}
+		\item If $A \in \cat{C}$, then $\mathcal{F}A \in \cat{D}$.
+		\item If $f:A \to B$, then $\mathcal{F}f:\mathcal{F}A\to \mathcal{F}B$.
+	\end{itemize}
+	These are subject to the functoriality axioms:
+	\begin{itemize}
+		\item $\mathcal{F}(fg) = \mathcal{F}f \cdot \mathcal{F}g$ for all $f,g$.
+		\item $\mathcal{F}1_{A} = 1_{\mathcal{F}A}$ for all $A$.
+	\end{itemize}
 \end{defn}
+\[
+\begin{tikzcd}
+                                                   & B \arrow[dd, "g"] \arrow[rrr, dashed] &  &                                           & \mathcal{F}B \arrow[dd, "\mathcal{F}g"] \\
+A \arrow[ru, "f"] \arrow[rrr, dashed, shift right] &                                       &  & \mathcal{F}A \arrow[ru, "\mathcal{F}f"] &                                           \\
+                                                   & C \arrow[lu, "h"] \arrow[rrr, dashed] &  &                                           & \mathcal{F}C \arrow[lu, "\mathcal{F}h"]
+\end{tikzcd}
+\] 
 
-\begin{ex}[Category Inception]
-The category \textbf{CAT} has objects that are themselves categories, and its morphisms are functors.
+\begin{defn}
+	A \textbf{contravariant functor} is the same but with the morphisms $\mathcal{F} f$ reversed. We an represent this by a standard functor but with a different domain:
+	\[
+	\mathcal{F}: \cat{C}^{\op}\to \cat{D}.
+	\]
+\end{defn}
+\[
+\begin{tikzcd}                                                   & B \arrow[dd, "g"] \arrow[rrr, dashed] &  &                                           & \mathcal{F}B \arrow[dl, blue, "\mathcal{F}f"'] \\A \arrow[ru, "f"] \arrow[rrr, dashed, shift right] &                                       &  & \mathcal{F}A \arrow[dr, blue, "\mathcal{F}h"'] &                                           \\                                                   & C \arrow[lu, "h"] \arrow[rrr, dashed] &  &                                           & \mathcal{F}C \arrow[uu, blue, "\mathcal{F}g"']
+\end{tikzcd}
+\]
+
+\begin{ex}[]
+Some fun functors :)
+\begin{enumerate}
+	\item Forgetful functors.
+	\item $\cat{Top}\to \cat{Htpy}$ is the identity on objects (topological spaces) and sends morphisms (continuous functions) to their homotopy class.
+	\item $\pi_1$ is a functor $\cat{Top}_{*}\to \cat{Grp}$.
+\end{enumerate}
 \end{ex}
 
-\begin{defn}
-	Given a functor $f \in \hom_{\cat{C}}(A,B)$, $A$ is the \textbf{domain} and $B$ is the \textbf{codomain} of $f$.
-\end{defn}
-
-There are tons of examples of functors, so here are some that aren't too complicated.
-\begin{enumerate}
-	\item The \textbf{identity functor} $\mathcal{I}_{\cat{C}}$ maps $\cat{C}$ to $\cat{C}$ by sending objects and morphims to themselves.
-	\item If $\cat{C}$ is a subcategory of $\cat{D}$, then the \textbf{inclusion functor} maps $C$ to $D$ by sending objects and morphisms to themselves, except now as members of $\cat{D}$ instead of $\cat{C}$.
-	\item \textbf{Forgetful functors} take a category and strip its objects of some kind of complexity, i.e. a functor from \textbf{Grp} to \textbf{Set}. A forgetful functor doesn't have to just map objects to plain sets, though. We could also map \textbf{Ab} to \textbf{Grp}, forgetting the abelian nature of the groups in our category.
-\end{enumerate}
-
-{\color{red}More examples.}
-
-In order to ``respect" morphisms, we might either keep the morphisms all in the same direction or flip them. If we decide to flip them all, we get a different type of functor.
-
 \begin{prop}
-Functors preserve isomorphisms.
+Functors preserve isos and split monos/epis.
 \end{prop}
-\begin{proof}
-	Suppose $\mathcal{F}:\cat{A}\to \cat{B}$ is a functor, and suppose $A \cong A'$ are isomorphic objects in $\cat{A}$. Since $A$ and $A'$ are isomorphic, there are inverses $f:A\to A'$ and $g:A'\to A$. By definition, $\mathcal{F}(f)$ and $\mathcal{F}(g)$ can be composed and
-	\[
-		\mathcal{F}(f)\mathcal{F}(g) = \mathcal{F}(fg) = \mathcal{F}(1_{A'}) = 1_{\mathcal{F}A'}.
-	\] Similarly, $\mathcal{F}(g)\mathcal{F}(f)=1_{\mathcal{F}A}$, so $\mathcal{F}A \cong \mathcal{F}A'$.
-\end{proof}
-
-\begin{defn}
-	A \textbf{contravariant functor} from $\cat{C}$ to $\cat{D}$ is a functor from $\cat{C}^{\op}$ to $\cat{D}$.
-\end{defn}
 
 \begin{defn}
 A functor $\mathcal{F}:\cat{C}\to \cat{D}$ is \textbf{faithful} if for all objects $A,B$ of $\cat{C}$, the map
 \begin{align*}
-	\hom_{\cat{C}}(A,B) &\to \hom_{\cat{D}}(\mathcal{F}A, \mathcal{F}B) \\
-	f &\mapsto \mathcal{F}(f)
+	\hom(A,B) &\to \hom(\mathcal{F}A, \mathcal{F}B) \\
+	f &\mapsto \mathcal{F}f
 \end{align*} is one-to-one. $\mathcal{F}$ is \textbf{full} if this map is onto.
 \end{defn}
 
@@ -253,76 +210,26 @@ The inclusion functor from $\cat{S}$ to $\cat{C}$ is always faithful, and it's f
 
 \section{Natural Transformations}
 
-When functors have the same domain and codomain, we can define a map between them.
-
-\begin{defn}
-Suppose $\mathcal{F},\mathcal{G}:\cat{A}\to \cat{B}$ are functors. Then a \textbf{natural transformation} $\alpha:\mathcal{F}\to \mathcal{G}$ is a family
-\[
-	(\alpha_A: \mathcal{F}A \to \mathcal{G}A)_{A \in \cat{A}}
-\] such that the following diagram commutes.
+Natural transformations change one functor into another in a way that respects the underlying structure of the categories involved.
 \begin{figure}[H]
 	\centering
+	\includegraphics[scale=1]{fig/nat-trans.pdf}
+\end{figure}
+
+\begin{defn}
+Suppose $\mathcal{F},\mathcal{G}:\cat{C}\to \cat{D}$ are functors. Then a \textbf{natural transformation} $\alpha:\mathcal{F}\Rightarrow \mathcal{G}$ is a family of \textbf{components}
+\[
+	\{ \eta_X: \mathcal{F}X \to \mathcal{G}X\}_X
+\] such that the following diagram commutes for any $f:X\to Y$ in $\cat{C}$.
+\[
 \begin{tikzcd}
-\mathcal{F}A \arrow[d, "\alpha_A"'] \arrow[r, "\mathcal{F}(f)"] & \mathcal{F}A' \arrow[d, "\alpha_{A'}"] \\
-\mathcal{G}A \arrow[r, "\mathcal{G}(f)"']                       & \mathcal{G}A'
+	\mathcal{F}X \rar{\eta_{X}} \arrow[d, "\mathcal{F}f"'] & \mathcal{G}X \dar{\mathcal{G}f} \\
+	\mathcal{F}Y \rar{\eta_{Y}} & \mathcal{G}Y
 \end{tikzcd}
-\end{figure}
-
-The maps $\alpha_A$ are the \textbf{components} of $\alpha$.
-\end{defn}
-
-The diagram above commuting means $\mathcal{G}(f) \circ \alpha_A = \alpha_{A'} \circ \mathcal{F}(f)$, but it's easier to understand the diagram, so you should remember it by that.
-
-Also, the diagram commuting means that there's only one map from $\mathcal{F}A$ to $\mathcal{G}A'$, namely the diagonal of the diagram (which you can construct by taking the composition of either path).
-
-\begin{figure}[H]
-	\centering
-	\begin{tikzpicture}
-		\node (A) at (-1,0) {$\cat{A}$};
-		\node (B) at (1,0) {$\cat{B}$};
-		\node at (0,0) {$\Downarrow \alpha$};
-		\path[->,font=\scriptsize]
-			(A) edge [bend left] node[above] {$\mathcal{F}$} (B)
-			edge [bend right] node[below] {$\mathcal{G}$} (B);
-	\end{tikzpicture}
-	\caption{Because we love overloading notation, we'll denote natural transformations with a $\implies$, as in this diagram.}
-\end{figure}
-
-Given two natural transformations $\alpha$ and $\beta$, we can form the composition
-\[
-	(\beta \circ \alpha)_A = \beta_A \circ \alpha_A.
-\] Additionally, we can define the identity natural transformation $1_F$ by
-\[
-	(1_F)_A = 1_{F(A)}.
 \] 
-
-\begin{ex}[Even more category inception]
-	We can form a category whose objects are functors from $\cat{A}$ to $\cat{B}$ and whose morphisms are natural transformations. This is called the \textbf{functor category} from $\cat{A}$ to $\cat{B}$, and we denote it by $[\cat{A},\cat{B}]$ or $\cat{B}^{\cat{A}}$.
-\end{ex}
-
-	For funsies, we'll break down what's going on in the category functor $[2, \cat{C}]$, where $2$ is the discrete category with 2 objects and $\cat{C}$ is arbitrary, by examining what two functors $\mathcal{F}, \mathcal{G} \in \ob([2, \cat{C}])$ do.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=1]{fig/functor-cat.pdf}
-	\caption{Two functors $\mathcal{F}$ and $\mathcal{G}$ in $[2,\cat{C}]$.}
-\end{figure}
-
-Although a functor is more than just an object, we can uniquely represent both functors by a pair of objects $(\mathcal{F}A, \mathcal{F}B)$ and $(\mathcal{G}A, \mathcal{G}B)$. A natural transformation between them can then be uniqely represented by a pair of morphisms in $\mathcal{C}$ that run from $\mathcal{F}A\to \mathcal{G}A$ and $\mathcal{F}B\to \mathcal{G}B$ (the dotted lines in the figure). So we've represented $[2, \cat{C}]$ using only 1) pairs objects in $\mathcal{C}$ and 2) pairs of morphisms in $\mathcal{C}$.
-
-Thus structurally, this functor category is the same as $\cat{C} \times \cat{C}$, i.e. $[2, \cat{C}] \cong \cat{C} \times \cat{C}$. This particular case works nicely with the other notation for functor categories, i.e. $\cat{C}^2$.
-
-\begin{defn}
-	A \textbf{natural isomorphism} between functors from $\cat{A}$ to $\cat{B}$ is an isomorphism in $[\cat{A},\cat{B}].$
 \end{defn}
+If every $\eta_{X}$ is an isomorphism, then $\eta$ is a \textbf{natural isomorphism} and we write $\eta: \mathcal{F} \cong \mathcal{G}$.
 
-\begin{prop}
-Let $\mathcal{F},\mathcal{G}:\cat{A}\to \cat{B}$ be functors, and let $\alpha:F\implies G$ be a natural transformation between them. Then $\alpha$ is a natural isomorphism if and only if $\alpha_A:\mathcal{F}A\to \mathcal{G}A$ is an isomorphism for all $A \in \cat{A}$.
-\end{prop}
-\begin{proof}
-{\color{red}You should read over your proof again cause it seems a little trivial? This statement kinda is, though?}
-\end{proof}
 
-{\color{red}replace implies arrow with Rightarrow}
 
 \end{document}

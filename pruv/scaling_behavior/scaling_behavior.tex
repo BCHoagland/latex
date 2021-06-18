@@ -1,0 +1,59 @@
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/toggles}
+%\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{Scaling Behavior}
+\usepackage{/Users/bradenhoagland/latex/math2}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%
+% Erdos Renyi
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Erdos Renyi}
+
+We've assumed that this scaling behavior exists near $t_{c}$, but it's natural to ask what is meant by ``near". In the case of the \ER rule, we can describe the size of this window using our earlier differential equation for $\p_{t}{P}(s, t)$. I use the following two relationships, which hold when $t < t_c$ and $s$ is large:
+\begin{itemize}
+        \item $P(x) {\color{red}=} \delta^{(\tau-1)/\sigma} \tilde{f}(x \delta^{1/\sigma})$.
+	\item $\tilde{f}(x) \propto x^{\lambda} \exp\left( -Cx^{1 + \log_2 m} \right)$, where $\lambda = (1+\log_2 m)\left( 1 + \frac{1}{4m-2}  \right)-\frac{2m}{2m-1} $.
+\end{itemize}
+In the below computation, I represent the constant of proportionality for $\tilde{f}$ by $\tilde{C}_{f}$. And to clean up notation (cause there's a lot of it), I use the following shorthand:
+\begin{itemize}
+        \item $\mathcal{E}_x \doteq \exp\left( -C x \delta^{1/\sigma} \right)$.
+\end{itemize}
+Note that $1 + \log_2 m = 1$ when $m=1$, so our exponential law for $\tilde{f}$ becomes pretty simple. I'll also only be considering the case when $t< t_{c}$, so $\delta$ becomes just $t_c - c$ (this makes derivatives nicer). When $s$ is large, our ODE gives
+\begin{align*}
+	\p_{t}{P}(s) &= \frac{s}{2} \int_{0}^{s} P(u)P(s-u)\;du - sP(s) \\
+	\p_{t}\left\{ \delta^{(\tau-1)/\sigma} \tilde{f}\left( s \delta^{1/\sigma} \right) \right\} &= \frac{s}{2} \int_{0}^{s} \delta^{2(\tau-1)/\sigma} \tilde{f}(u \delta^{1/\sigma})\tilde{f}(v \delta^{1/\sigma}) - s \delta^{(\tau-1)/\sigma}\tilde{f}(s \delta^{1/\sigma}).
+\end{align*}
+	We can pull out a $\mathcal{E}_{s}$, $\tilde{C}_{f}$, $s$, and $\delta^{(\tau-1+\lambda)/\sigma}$ from each side, leaving us with
+\begin{align*}
+	s^{\lambda-1} \left[ \frac{Cs}{\sigma} \delta^{(1-\sigma)/\sigma} - \frac{\tau-1+\lambda}{\sigma \delta} \right] &= \frac{\tilde{C}_{f}}{2} \delta^{(\tau-1+\lambda)/\sigma} \int_{0}^{s} (us-u^2)^\lambda\;du - s^{\lambda}.
+	\intertext{Now for \ER, we know $\sigma=1/2, \tau=5/2$, so we get $\lambda=-1/2$. Plugging these in yields}
+	4s^{-3/2}\left( Cs \delta - \frac{1}{\delta}  \right) &= \tilde{C}_{f} \delta^{2} \int_{0}^{s} (us-u^2)^{-1/2}\;du - s^{-1/2}.
+\end{align*}
+	Now \warn{(in the limit as $s \to \infty$)} this integral evaluates to $\pi$. So letting $s$ be very large, we can take only the nonvanishing terms to get
+	\[
+	0 \approx \tilde{C}_f \delta^{3} \pi \sqrt{s} - \delta - 4 C\delta^{2}.
+	\] Cancelling out a $\delta$ gives a quadratic, whose solution gives
+	\[
+		\delta = \Theta(1 / \sqrt{s} ).
+	\] 
+	So the scaling window gets smaller as $s$ gets bigger, which seems reasonable.
+
+	\warn{to be completely rigorous, should probably have integral from $\varepsilon$ to $s$ instead of $0$ to $s$.}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% DaCosta
+%%%%%%%%%%%%%%%%%%%%
+
+\section{DaCosta}
+
+The DaCosta rule isn't as easy, mainly because there are a lot of extra exponents that make things a pain. One big issue is that the exponential terms no longer cancel out. At one point in the \ER computation, we get $\mathcal{E}_{u+v} = \mathcal{E}_{s}$, but for DaCosta with $m=2$, this would be $\mathcal{E}_{u^2+v^2}$, which doesn't really simplify.
+
+\end{document}

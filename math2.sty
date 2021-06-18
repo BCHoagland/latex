@@ -7,7 +7,7 @@
 \usepackage{float}
 \usepackage{amsmath, amsthm, amsfonts, amssymb}
 \usepackage{mathrsfs}
-\usepackage{xcolor}
+\usepackage{xcolor, xspace}
 \usepackage{mathtools}
 \usepackage{tikz-cd}
 \usepackage{xcolor, mdframed}
@@ -51,15 +51,32 @@
         \sffamily\textls[80]{\textsc{#1}}
 }
 
+\newcommand{\warn}[1]{\textbf{\color{red}#1}}
+
+% random operators and names
 \DeclareMathOperator{\im}{im}
 \let\hom\relax
 \DeclareMathOperator{\hom}{Hom}
+\DeclareMathOperator{\mor}{mor}
 \DeclareMathOperator{\var}{Var}
 \DeclareMathOperator{\p}{\partial}
 \newcommand{\cat}[1]{\text{\sffamily\textbf{#1}}}
+\newcommand{\ER}{Erd\H{o}s R\'enyi\xspace}
 
+% arrows
+\newcommand{\mono}{\rightarrowtail}
+\newcommand{\epi}{\twoheadrightarrow}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\bij}{\leftrightarrow}
+
+% more spacing on intersections and unions
 \DeclareMathOperator{\isct}{\;\cap\;}
 \DeclareMathOperator{\uni}{\;\cup\;}
+
+% < >
+\newcommand{\ang}[1]{\langle #1 \rangle}
+\newcommand{\Ang}[1]{\left\langle #1 \right\rangle}
 
 %--------------------------------------------------------------------------------
 % Colors
@@ -75,11 +92,13 @@
 %--------------------------------------------------------------------------------
 \mdfdefinestyle{leftBar}{topline=false, rightline=false, bottomline=false, linewidth=1pt}
 
-\newmdtheoremenv{prop}{Proposition}
-\newmdtheoremenv{cor}{Corollary}
+% Fancy text
 \newmdtheoremenv[style=leftBar, linecolor=thrm]{thrm}{Theorem}
 
+% Plain text
 \theoremstyle{definition}
+\newmdtheoremenv{prop}{Proposition}
+\newmdtheoremenv{cor}{Corollary}
 \newmdtheoremenv{exer}{Exercise}
 \newmdtheoremenv[style=leftBar, linecolor=lem]{lem}{Lemma}
 \newmdtheoremenv[style=leftBar, linecolor=defn]{defn}{Definition}

@@ -11,31 +11,31 @@
 %\tableofcontents
 
 %%%%%%%%%%%%%%%%%%%%
-% The De Rham Complex on R^n
+% The De Rham Complex
 %%%%%%%%%%%%%%%%%%%%
 
-\section{The De Rham Complex on \texorpdfstring{$\mathbb{R}^n$}{Rn}}
+\section{The De Rham Complex}
 
-Denote the space of $k$-forms on an $n$-dimensional manifold $N$ by $\Omega^{k}(N)$, then the $C^{\infty}$ differential forms on $N$ form the vector space
+Denote the space of $k$-forms on an $n$-dimensional manifold $M$ by $\Omega^{k}(M)$, then the $C^{\infty}$ differential forms on $M$ form the vector space
 \[
-	\Omega^{*}(N) \doteq \bigoplus_{k=0}^{n} \Omega^{k}(N).
+	\Omega^{*}(M) \doteq \bigoplus_{k=0}^{n} \Omega^{k}(M).
 \] The exterior derivative is defined as usual: if $f$ is a smooth function, then $df \doteq \sum \p_{i}{f} \;dx_i$, and if $\omega = \sum f_{I}dx_{I}$ is a differential form, then $d\omega \doteq \sum df_{I} \wedge dx_{I}$.
 
 \begin{defn}[]
-$\left( \Omega^{*}(N), d \right)$ is the \textbf{de Rham complex} on $N$, which we represent by the cochain complex
+$\left( \Omega^{*}(M), d \right)$ is the \textbf{de Rham complex} on $M$, which we represent by the cochain complex
 \[
 \begin{tikzcd}
-	0\rar &\Omega^{0}(N) \rar{d}&\Omega^{1}(N)\rar{d}&\cdots\rar{d}&\Omega^{n}(N)\rar&0.
+	0\rar &\Omega^{0}(M) \rar{d}&\Omega^{1}(M)\rar{d}&\cdots\rar{d}&\Omega^{n}(M)\rar&0.
 \end{tikzcd}
-\] The $k$-th \textbf{de Rham cohomology} of $N$ is then the vector space
+\] The $k$-th \textbf{de Rham cohomology} of $M$ is then the vector space
 \[
-	H^{k}(N) \doteq \frac{\ker d \isct\Omega^{k}(N)}{\im d \isct \Omega^{k}(N)} .
+	H^{k}(M) \doteq \frac{\ker d \isct\Omega^{k}(M)}{\im d \isct \Omega^{k}(M)} .
 \] 
 \end{defn}
 Since our complex is finite, the $0$-th and $n$-th cohomologies will always be a bit simpler:
 \begin{align*}
-	H^{0}(N) &= \ker d \isct \Omega^{0}(N),\\
-	H^{n}(N) &= \frac{\Omega^{n}(N)}{\im d \isct \Omega^{n}(N)} .
+	H^{0}(M) &= \ker d \isct \Omega^{0}(M),\\
+	H^{n}(M) &= \frac{\Omega^{n}(M)}{\im d \isct \Omega^{n}(M)} .
 \end{align*}
 Any differential form in the kernel of $d$ is \textbf{closed}, and any in the image of $d$ is \textbf{exact}. Note that since $d^{2}=0$, an exact form must also be closed.
 
@@ -77,6 +77,40 @@ We can check that $f^{*}$ commutes with the exterior derivative: $f^{*}(d_{N}\om
 \] 
 
 Then since taking the induced homological structure is functorial {\color{red}(check)}, this means that $H^{*}$ is also a contravariant functor {\color{red}(be specific about the category it's going to)}.
+
+%%%%%%%%%%%%%%%%%%%%
+% The Mayer-Vietoris Sequence
+%%%%%%%%%%%%%%%%%%%%
+
+\section{The Mayer-Vietoris Sequence}
+
+Suppose $M = U \uni V$, where $U$ and $V$ are both open {\color{red}(why do they have to be open?)}. There's a natural sequence of inclusions
+\[
+\begin{tikzcd}
+	M&U \coprod V \lar & U \isct V\lar[bend left]{i_{U}}\arrow[l, bend right, "i_{V}"'],
+\end{tikzcd}
+\] {\color{red}(go over use of coproduct)} where $i_{U}$ and $i_{V}$ are the inclusions into $U$ and $V$, respectively. Applying the $\Omega^{*}$ functor then gives
+\[
+\begin{tikzcd}
+	\Omega^{*}(M) \rar & \Omega^{*}(U) \bigoplus_{}\Omega^{*}(V) \rar[bend left]{i_{V}^*}\arrow[r, bend right, "i_{U}^*"'] & U \isct V.
+\end{tikzcd}
+\] We can take the difference of $i_{V}^{*}$ and $i_{U}^{*}$ to get a new sequence.
+
+\begin{defn}[]
+The sequence
+\[
+\begin{tikzcd}
+        \Omega^{*}(M) \rar & \Omega^{*}(U) \bigoplus_{}\Omega^{*}(V) \rar & U \isct V\\
+			   & (\omega, \tau) \rar[maps to]&\tau-\omega
+\end{tikzcd}
+\] 
+is the \textbf{Mayer-Vietoris sequence}.
+\end{defn}
+{\color{red}You should go through this and make some of the maps explicit to make sure you understand what they each represent.}
+
+\begin{thrm}[]
+The Mayer-Vietoris sequence is exact.
+\end{thrm}
 
 
 \end{document}

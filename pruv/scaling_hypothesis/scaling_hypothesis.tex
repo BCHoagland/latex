@@ -1,0 +1,42 @@
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/toggles}
+%\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{Scaling Hypothesis}
+\usepackage{/Users/bradenhoagland/latex/math2}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%
+% Moments and Typical Size
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Moments and Typical Size}
+
+Throughout, we'll be focused on solutions to the differential equation
+\[
+	\p_{t}{c(m,t)} = \int_{y=0}^{m} K(y,m-y) c(y,t) c(m-y,t) - \int_{z=0}^{\infty} K(z,m) c(z,t) c(m,t).\tag{$\star$}
+\] 
+{\color{red}Should there be a 1/2 at the beginning?} The disrete version of this is
+\[
+\p_{t}{c(m,t)} = \frac{1}{2} \sum_{j+k=m}K(j,k)c(j,t)c(k,t) - \sum_{k}K(k,m)c(k,t)c(m,t).
+\] {\color{red}Why the 1/2?}
+
+\begin{prop}
+	if $K(m,m')$ is homogeneous of degree $\lambda$ and if $c(m,t)$ is a solution to $(\star)$, then
+\[
+	T_{a,b}c(m,t) \doteq a^{\lambda+1}bc(am,bt)
+\] is also a solution. 
+\end{prop}
+\begin{proof}
+	Since $c(m,t)$ is a solution to $(\star)$, we can expand
+	\[
+		\p_{t}{T_{a,b}c(m,t)} = a^{\lambda+1}b^{2} \p_{bt}{c(am,bt)} 
+	\] into its integral expression. Making a change of variables $y=ay'$ and $z=az'$ and then using the homogeneity of $K$, we recover $(\star)$ but with $T_{a,b}c(m,t)$ in place of $c(m,t)$.
+	{\color{red}If we're discrete instead, seems like we'd need $a^{\lambda+2}$ instead.}
+\end{proof}
+
+\end{document}
