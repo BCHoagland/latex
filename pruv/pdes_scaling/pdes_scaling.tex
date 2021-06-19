@@ -26,7 +26,7 @@ At every step we choose some finite collection of vertices $\left\{ v_i \right\}
 	R(k,t) &= \mathbb{P}\left( \kappa_1 + \kappa_2 = k \right); \\
 	\hat{R}(k,t) &= \mathbb{P}\left( \kappa_1 + \kappa_2 \geq k \right).
 \end{align*}
-\warn{Would it be useful to generalize R?} A common case for $X_{m}$ is $m=1$ or 2, so we can abbreviate those as
+A common case for $X_{m}$ is $m=1$ or 2, so we can abbreviate those as
 \[
 P \doteq X_{1}, \quad\quad Q \doteq X_{2}.
 \] Note that we can express $X_{m}$ as
@@ -60,7 +60,7 @@ Let $S(t)$ denote the relative size (i.e. divided by $n$) of the percolation clu
 		\sum_{k} X_{m}(k,t) = 1 - S^{m}(t).
 	\] 
 \end{prop}
-	To justify this, we can interpret $\sum_{k}X_{m}(k, t)$ as the probability that, at time $t$, the minimum cluster size of $m$ vertex choices is finite (this is in the limit as $n\to \infty$). $S$ is then the probability that a single choice is from an ``infinite" cluster size. \warn{I kinda want to do this more rigorously...}
+	To justify this, we can interpret $\sum_{k}X_{m}(k, t)$ as the probability that, at time $t$, the minimum cluster size of $m$ vertex choices is finite (this is in the limit as $n\to \infty$). $S$ is then the probability that a single choice is from an ``infinite" cluster size. \warn{I kinda want to do this more rigorously, but that's not too important right now...}
 
 	Differentiating this identity for $X_1=P$ gives
 \[
@@ -69,7 +69,7 @@ Let $S(t)$ denote the relative size (i.e. divided by $n$) of the percolation clu
 so we can track the size of the percolation cluster by knowing $P(s)$ for all $s$. In the following computations, we'll express $\p_{t}{S} $ in terms of the moments of various $X_{m}$, which we denote by
 \[
 	\langle s^k \rangle_{X_{m}} \doteq \sum_{s} s^{k} X_{m}(s).
-\] Sometimes I might denote $\ang{\;\cdot\;}_{X_m}$ by $\ang{\;\cdot\;}_m$. The below table gives $\p_{t}{S} $ for each of our rules. A derivation of this quantity is given afterwards for the \ER rule; the other quantities are derived similarly. 
+\] Sometimes I might denote $\ang{\;\cdot\;}_{X_m}$ by $\ang{\;\cdot\;}_m$. The below table gives $\p_{t}{S} $ for each of our rules. A derivation of this quantity is given afterwards for the \ER rule; the other quantities are derived similarly. \warn{We don't really do anything with this information, so it could be fun to figure out what it tells us.}
 \begin{center}
 	\begin{tabular}{ c | c }
 		Rule & $\p_{t}{S} $ \\
@@ -82,7 +82,7 @@ so we can track the size of the percolation cluster by knowing $P(s)$ for all $s
 	\end{tabular}
 \end{center}
 \begin{prop}
-	For the \ER rule, $\p_{t}{S} = S \langle s \rangle_{P}.$
+	For the \ER rule, $\p_{t}{S} = S\langle s \rangle_{P}.$
 \end{prop}
 \begin{proof}
 	In the below computation, I suppress the time $t$ for clarity.
@@ -110,7 +110,7 @@ We're similarly able to calculate $\p_{t}{\langle s \rangle_{P}} $ for these rul
 	\end{tabular}
 \end{center}
 \begin{prop}
-	For the \ER rule, $\p_{t}{\langle s \rangle_{P}} = S\langle s \rangle_{P}$.
+	For the \ER rule, $\p_{t}{\langle s \rangle_{P}} = \ang{s}^2_{P}-\ang{s^2}_{P}S$.
 \end{prop}
 \begin{proof}
 	Once again, I suppress the time $t$ for clarity.
@@ -125,27 +125,29 @@ We're similarly able to calculate $\p_{t}{\langle s \rangle_{P}} $ for these rul
 \end{proof}
 \warn{NEED TO DEFINE $\sim$.}
 
-If $\delta \doteq |t-t_c|$ is very small, then \warn{(at least for DaCosta)} we have the scaling relationship
+If $\delta \doteq |t-t_c|$ is very small, then we have the scaling relationship
 \[
 	\langle s \rangle_{X_{m}} \sim \delta^{-\gamma}
 \]
-for some $\gamma$ dependent on $X_{m}$ \warn{(Go over why. This is also under the assumption that $P$ has a scaling form near $t_c$)}. Differentiating gives us the relation
+for some $\gamma$ dependent on $X_{m}$ \warn{(Include lots more details about this)}. Differentiating gives us the relation
 \[
 	\p_{t}{\langle s \rangle_{X_{m}}} \sim \delta^{-\gamma-1}.
 \]
-Given a particular rule, we can take these two relations and subsitute them into our earlier calculation of $\p_{t}{\langle s \rangle_{P}} $ to find out how $\gamma_{P}$ and $\gamma_{Q}$ are related. The below table sumarizes this relationship for all our rules.
+Given a particular rule, we can take these two relations and subsitute them into our earlier calculation of $\p_{t}{\langle s \rangle_{P}} $ to find out how the various $\gamma$ are related. The below table sumarizes this relationship for all our rules.
+
+\warn{Right now, I'm using the fact that $S=0$ when $t<t_c$. I don't think it's necessary to be symmetric, though, since the behavior of the system seems to change after $t_c$ anyway.}
 \begin{center}
 	\begin{tabular}{ c | c }
 		Rule & Scaling Relationship \\
 		\hline
-		ER & \warn{Nonsense right now.} \\
-		AE & \warn{Do this.} \\
-		DaCosta {\color{blue}$(m=2)$} & $\gamma_{P} + 1 = 2 \gamma_{Q}$
+		ER & $\gamma_{P}=1$ \\
+		AE & $\gamma_{Q}=1$ \\
+		DaCosta & $\gamma_{P} + 1 = 2 \gamma_{X_m}$ \\
+		Sum & \warn{Do this.} \\
+		Product & \warn{Do this.}
 	\end{tabular}
 \end{center}
-\warn{I need to go over the definition of $\sim$ for this to make sense. Right now I'm getting nonsense for some of these.}
-
-\warn{Note that this holds because when $t<t_c$, $S = 0$. Not sure what to do for times past $t_c$.}
+\warn{Do we get any special information when $\gamma=1$? At least in the Adjacent Edge case, I hope it gives us more since this method didn't give me $\gamma_{P}$.}
 
 %%%%%%%%%%%%%%%%%%%%
 % Generalizations
@@ -153,12 +155,12 @@ Given a particular rule, we can take these two relations and subsitute them into
 
 \section{Generalizations}
 
-{\color{blue}Try to generalize a lot of this. When will these expressions be nice and simple, i.e. in terms of the $\langle s \rangle_{k,X_{m}}$?}
+\warn{I had some fun generalizing this somewhat. This particular version isn't useful whatsoever, but I'm keeping it here as a reminder to think about patterns in our rules that could actually be useful to generalize.}
 
 \begin{prop}
 If
 \[
-	\p_{t}{P(s)} = \zeta_0 \left[ \sum_{u_1 + \cdots + u_m=s} \prod_{i}X_{m_i}(u_i) \right] - \sum_{i} \zeta_i s X_{m_i}(u_i),
+	\p_{t}{P(s)} = \zeta_0 \left[ s \sum_{u_1 + \cdots + u_m=s} \prod_{i}X_{m_i}(u_i) \right] - \sum_{i} \zeta_i s X_{m_i}(u_i),
 \] then the time derivative of $S$ is
 \[
 	\p_{t}{S} = \sum_{i} \ang{s}_{m_i} \left[ -\zeta_0 \prod_{j \neq i}(1-S^{m_j}) + \zeta_{i} \right].
@@ -173,46 +175,6 @@ If
 			  &= \sum_i \ang{s}_{m_i} \left[ -\zeta_0 \prod_{j \neq i}(1-S^{m_j}) + \zeta_i \right].
 	\end{align*}
 \end{proof}
-\warn{This is a start, but the class of ODEs is very, very restricted at the moment.}
-
-\warn{Also, probably only want to care about when we add one edge at a time. I think the above ODE is adding $m-1$ edges at once, which isn't what we want.}
-
-%%%%%%%%%%%%%%%%%%%%
-% Scaling Behavior
-%%%%%%%%%%%%%%%%%%%%
-
-\section{Scaling Behavior}
-
-I use the following two relationships:
-\begin{itemize}
-	\item $P(s) = \delta^{(\tau-1)/\sigma} \tilde{f}(s \delta^{1/\sigma})$ for large $s$.
-	\item $\tilde{f}(x) \propto \exp\left( -Cx^{1 + \log_2 m} \right)$ when $t < t_c$.
-\end{itemize}
-In the below computation, I represent the constant of proportionality for $\tilde{f}$ by $\tilde{C}_{f}$. And to clean up notation (cause there's a lot of it), I use the following shorthands
-\begin{itemize}
-	\item $\tilde{f}_{x} \doteq \tilde{f}(x \delta^{1/\sigma})$.
-	\item $\mathcal{E}_x \doteq \exp\left( -C x \delta^{1/\sigma} \right)$.
-\end{itemize}
-We've assumed that this scaling behavior exists near $t_{c}$, but it's natural to ask how big this window is. In the case of the \ER rule, we can describe the size of the window using our earlier differential equation for $\p_{t}{P}(s, t)$.
-
-Note that $1 + \log_2 m = 1$ when $m=1$, so our exponential law for $\tilde{f}$ becomes pretty simple. I'll also only be considering the case when $t< t_{c}$, so $\delta$ becomes just $t_c - c$ (this makes derivatives nicer). When $s$ is large, our ODE gives
-\begin{align*}
-	\p_{t}{P}(s) &= \frac{s}{2} \sum_{u+v=s} P(u)P(v) - sP(s) \\
-	\p_{t}{\left[ s^{\frac{\tau-1}{\sigma} }\tilde{f}_s \right]} &= \frac{s}{2} \sum_{u+v=s} \delta^{\frac{2(\tau-1)}{\sigma} }\tilde{f}_u \tilde{f}_v - s \delta^{\frac{\tau-1}{\sigma} }\tilde{f}_s \\
-	\delta^{\frac{\tau-1}{\sigma} }\tilde{C}_{f} \mathcal{E}_{s} \left[ \frac{\tau-1}{\sigma \delta} + \frac{C s}{\sigma} \delta^{\frac{1-\sigma}{\sigma} }\right] &= \delta^{\frac{\tau-1}{\sigma} }\tilde{C}_{f} \mathcal{E}_{s} \left[ \frac{s}{2} \delta^{\frac{\tau-1}{\sigma} } \tilde{C}_{f} \left( \sum_{u+v=1}1 \right) - s \right] \\
-	\frac{\tau-1}{\sigma \delta} + \frac{C s}{\sigma} \delta^{\frac{1-\sigma}{\sigma} } &= \frac{s}{2} \delta^{\frac{\tau-1}{\sigma} } \tilde{C}_{f} (s-1) - s.
-\end{align*}
-Now $\delta$ is bounded between 0 and 1, so as $s \to \infty$, the dominating terms give the relation
-\begin{align*}
-	\delta^{\frac{2-\tau-\sigma}{\sigma} } &\approx \frac{\tilde{C}_{f} \sigma s}{2 C} \\
-					       &\propto \sigma s.
-\end{align*}
-We know that for \ER, $\sigma=1/2$ and $\tau=5/2$, so this relation becomes
-\begin{align*}
-	\delta &\approx \sqrt{\frac{4C}{\tilde{C}_{f} s} } \\
-	       &\propto \sqrt{\frac{1}{s} } .
-\end{align*}
-So the scaling window is smaller when $s$ is larger, which seems reasonable.
 
 
 \end{document}
