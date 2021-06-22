@@ -20,29 +20,29 @@
 
 At every step we choose some finite collection of vertices $\left\{ v_i \right\}_{i=1}^{m}$. Let $\kappa_i$ denote the size of the cluster to which $v_i$ belongs. We'll use the following quantities a lot (all probabilities are implicitly taken at time $t$):
 \begin{align*}
-	X_{m}(k,t) &\doteq \mathbb{P}\left( \min\left\{ \kappa_1, \dots, \kappa_{m} \right\} = k \right); \\
-	\hat{X}_{m}(k,t) &\doteq \mathbb{P}\left( \min\left\{ \kappa_1, \dots, \kappa_{m} \right\} \geq k \right)\\
-	&= 1 - \sum_{j=1}^{k-1} X_{m}(j,t); \\
+	Q_{m}(k,t) &\doteq \mathbb{P}\left( \min\left\{ \kappa_1, \dots, \kappa_{m} \right\} = k \right); \\
+	\hat{Q}_{m}(k,t) &\doteq \mathbb{P}\left( \min\left\{ \kappa_1, \dots, \kappa_{m} \right\} \geq k \right)\\
+	&= 1 - \sum_{j=1}^{k-1} Q_{m}(j,t); \\
 	R(k,t) &= \mathbb{P}\left( \kappa_1 + \kappa_2 = k \right); \\
 	\hat{R}(k,t) &= \mathbb{P}\left( \kappa_1 + \kappa_2 \geq k \right).
 \end{align*}
-A common case for $X_{m}$ is $m=1$ or 2, so we can abbreviate those as
+A common case for $Q_{m}$ is $m=1$ or 2, so we can abbreviate those as
 \[
-P \doteq X_{1}, \quad\quad Q \doteq X_{2}.
-\] Note that we can express $X_{m}$ as
+P \doteq Q_{1}, \quad\quad Q \doteq Q_{2}.
+\] Note that we can express $Q_{m}$ as
 \[
-	X_{m}(k,t) = \hat{P}(k-1, t)^{m} - \hat{P}(k,t)^m,
+	Q_{m}(k,t) = \hat{P}(k-1, t)^{m} - \hat{P}(k,t)^m,
 \] 
-\warn{(go over why)} so every $X_{m}$ is a function of $P$. As a final note, I will frequently suppress $t$ from now on.
+\warn{(go over why)} so every $Q_{m}$ is a function of $P$. Let $S(t)$ denote the relative size (i.e. divided by $n$) of the percolation cluster at time $t$. As a final note, I will frequently suppress the time $t$ from now on.
 
-We're interested in how $P$ changes throughout the percolation process. The following table gives the value of $\p_{t}{P} $, written in terms of the proper $X_{m}$, for each of our rules.
+We're interested in how $P$ changes throughout the percolation process. The following table gives the value of $\p_{t}{P} $, written in terms of the proper $Q_{m}$, for each of our rules.
 \begin{center}
 	\begin{tabular}{ c | c }
 		Rule & $\p_{t}{P(s,t)} $ \\
 		\hline
 		\ER & $\frac{s}{2} \sum_{u+v=s} P(u,t) P(v,t) - s P(s,t)$ \\
 		Adjacent Edge & $s \sum_{u+v=s}P(u,t)Q(v,t) - s P(s,t)- s Q(s,t)$ \\
-		DaCosta & $s \sum_{u+v=s}X_m(u,t)X_m(v,t) - 2s X_m(s,t)$ \\
+		DaCosta & $s \sum_{u+v=s}Q_m(u,t)Q_m(v,t) - 2s Q_m(s,t)$ \\
 		Sum & \warn{Do this.} \\
 		Product & \warn{Do this.}
 	\end{tabular}
@@ -54,33 +54,31 @@ We're interested in how $P$ changes throughout the percolation process. The foll
 
 \section{Consequences}
 
-Let $S(t)$ denote the relative size (i.e. divided by $n$) of the percolation cluster at time $t$, and let $X_{m}(k,t) \doteq \mathbb{P}\left( \min\left\{ \kappa_1, \dots, \kappa_{m} \right\} = k \right) $.
 \begin{prop}
-	\[
-		\sum_{k} X_{m}(k,t) = 1 - S^{m}(t).
-	\] 
+	$\sum_{k} Q_{m}(k,t) = 1 - S^{m}(t)$.
 \end{prop}
-	To justify this, we can interpret $\sum_{k}X_{m}(k, t)$ as the probability that, at time $t$, the minimum cluster size of $m$ vertex choices is finite (this is in the limit as $n\to \infty$). $S$ is then the probability that a single choice is from an ``infinite" cluster size. \warn{I kinda want to do this more rigorously, but that's not too important right now...}
+	To justify this, we can interpret $\sum_{k}Q_{m}(k, t)$ as the probability that, at time $t$, the minimum cluster size of $m$ vertex choices is finite (this is in the limit as $n\to \infty$). $S$ is then the probability that a single choice is from an ``infinite" cluster size. \warn{I kinda want to do this more rigorously, but that's not too important right now...}
 
 	Differentiating this identity for $X_1=P$ gives
 \[
 \p_{t}{S} = - \sum_{s} \p_{t}{P},
 \] 
-so we can track the size of the percolation cluster by knowing $P(s)$ for all $s$. In the following computations, we'll express $\p_{t}{S} $ in terms of the moments of various $X_{m}$, which we denote by
+so we can track the size of the percolation cluster by knowing $P(s)$ for all $s$. In the following computations, we'll express $\p_{t}{S} $ in terms of the moments of various $Q_{m}$, which we denote by
 \[
-	\langle s^k \rangle_{X_{m}} \doteq \sum_{s} s^{k} X_{m}(s).
-\] Sometimes I might denote $\ang{\;\cdot\;}_{X_m}$ by $\ang{\;\cdot\;}_m$. The below table gives $\p_{t}{S} $ for each of our rules. A derivation of this quantity is given afterwards for the \ER rule; the other quantities are derived similarly. \warn{We don't really do anything with this information, so it could be fun to figure out what it tells us.}
+	\langle s^k \rangle_{Q_{m}} \doteq \sum_{s} s^{k} Q_{m}(s).
+\] Sometimes I might denote $\ang{\;\cdot\;}_{Q_m}$ by $\ang{\;\cdot\;}_m$. The below table gives $\p_{t}{S} $ for each of our rules. A derivation of this quantity is given afterwards for the \ER rule; the other quantities are derived similarly.
 \begin{center}
 	\begin{tabular}{ c | c }
 		Rule & $\p_{t}{S} $ \\
 		\hline
 		ER & $S \langle s \rangle_{P}$ \\
 		AE & $\langle s \rangle_{P}S^2 + S\langle s \rangle_{Q}$ \\
-		DC & $2 S^{m}\langle s \rangle_{X_m}$ \\
+		DC & $2 S^{m}\langle s \rangle_{Q_m}$ \\
 		Sum & \warn{Do this.} \\
 		Product & \warn{Do this.}
 	\end{tabular}
 \end{center}
+Using the assumption $S = \delta^{\beta}$ near $t_c$, these quantities can be used to relate $\beta$ to the various other exponents.
 \begin{prop}
 	For the \ER rule, $\p_{t}{S} = S\langle s \rangle_{P}.$
 \end{prop}
@@ -104,7 +102,7 @@ We're similarly able to calculate $\p_{t}{\langle s \rangle_{P}} $ for these rul
 		\hline
 		ER & $\langle s \rangle_{P}^2 - \langle s^2 \rangle_{P}S$ \\
 		AE & $2\langle s \rangle_{P}\langle s \rangle_{Q} - \langle s^2 \rangle_{P}S^2 - \langle s^2 \rangle_{Q}S$ \\
-		DC & $2\langle s \rangle_{X_m}^2 - 2 \langle s^2 \rangle_{X_m}S^m$ \\
+		DC & $2\langle s \rangle_{Q_m}^2 - 2 \langle s^2 \rangle_{Q_m}S^m$ \\
 		Sum & \warn{Do this.} \\
 		Product & \warn{Do this.}
 	\end{tabular}
@@ -127,11 +125,11 @@ We're similarly able to calculate $\p_{t}{\langle s \rangle_{P}} $ for these rul
 
 If $\delta \doteq |t-t_c|$ is very small, then we have the scaling relationship
 \[
-	\langle s \rangle_{X_{m}} \sim \delta^{-\gamma}
+	\langle s \rangle_{Q_{m}} \sim \delta^{-\gamma}
 \]
-for some $\gamma$ dependent on $X_{m}$ \warn{(Include lots more details about this)}. Differentiating gives us the relation
+for some $\gamma$ dependent on $Q_{m}$. Differentiating gives us the relation
 \[
-	\p_{t}{\langle s \rangle_{X_{m}}} \sim \delta^{-\gamma-1}.
+	\p_{t}{\langle s \rangle_{Q_{m}}} \sim \delta^{-\gamma-1}.
 \]
 Given a particular rule, we can take these two relations and subsitute them into our earlier calculation of $\p_{t}{\langle s \rangle_{P}} $ to find out how the various $\gamma$ are related. The below table sumarizes this relationship for all our rules.
 
@@ -142,39 +140,74 @@ Given a particular rule, we can take these two relations and subsitute them into
 		\hline
 		ER & $\gamma_{P}=1$ \\
 		AE & $\gamma_{Q}=1$ \\
-		DaCosta & $\gamma_{P} + 1 = 2 \gamma_{X_m}$ \\
+		DaCosta & $\gamma_{P} + 1 = 2 \gamma_{Q_m}$ \\
 		Sum & \warn{Do this.} \\
 		Product & \warn{Do this.}
 	\end{tabular}
 \end{center}
-\warn{Do we get any special information when $\gamma=1$? At least in the Adjacent Edge case, I hope it gives us more since this method didn't give me $\gamma_{P}$.}
+\warn{Do we get any special information when $\gamma=1$? I wonder if that makes any other computations elsewhere easier...}
 
 %%%%%%%%%%%%%%%%%%%%
-% Generalizations
+% Scaling Relationships
 %%%%%%%%%%%%%%%%%%%%
 
-\section{Generalizations}
+\section{Scaling Relationships}
 
-\warn{I had some fun generalizing this somewhat. This particular version isn't useful whatsoever, but I'm keeping it here as a reminder to think about patterns in our rules that could actually be useful to generalize.}
+There are relationships between the coefficients $\beta, \tau$, and $\sigma$ that all our models use, and we can use the $\gamma$ relationships from the previous table to express everything in terms of just two of these.
 
-\begin{prop}
-If
-\[
-	\p_{t}{P(s)} = \zeta_0 \left[ s \sum_{u_1 + \cdots + u_m=s} \prod_{i}X_{m_i}(u_i) \right] - \sum_{i} \zeta_i s X_{m_i}(u_i),
-\] then the time derivative of $S$ is
-\[
-	\p_{t}{S} = \sum_{i} \ang{s}_{m_i} \left[ -\zeta_0 \prod_{j \neq i}(1-S^{m_j}) + \zeta_{i} \right].
-\] 
-\end{prop}
-\begin{proof}
+\begin{thrm}
+	Suppose a rule has a scaling function $f$ such that
+	\[
+		\lim_{x \to \infty} x^{2-\tau}f(x) = 0
+	\] and
+	\[
+		\int_{0}^{\infty} x^{2-\tau} f'(x) \;dx
+	\] is finite. Then
 	\begin{align*}
-		\p_{t}{S} &= -\sum_{s}\p_{t}{P(s)} \\
-			  &= -\zeta_0 \left[ \sum_{s} s \sum_{\sum_i u_i = s} \prod_{i}X_{m_i}(u_i) \right] + \sum_i \zeta_i \ang{s}_{m_i} \\
-			  &= -\zeta_0 \left[ \sum_{u_1, \dots, u_m} \Big(\sum_i u_i\Big) \prod_{i}X_{m_i}(u_i) \right] + \sum_i \zeta_i \ang{s}_{m_i} \\
-			  &= -\zeta_0 \left[ \sum_i \ang{s}_{m_i} \prod_{j \neq i} (1-S^{m_{j}}) \right] + \sum_i \zeta_i \ang{s}_{m_i} \\
-			  &= \sum_i \ang{s}_{m_i} \left[ -\zeta_0 \prod_{j \neq i}(1-S^{m_j}) + \zeta_i \right].
+		\beta &= (\tau-2)/\sigma, \\
+		\gamma_{P} &= (3-\tau)/\sigma, \\
+		\gamma_{Q} &= (2m-m\tau+1)/\sigma.
 	\end{align*}
+\end{thrm}
+\begin{proof}
+	We'll begin with the relation for $\beta$. Since
+	\begin{align*}
+		S &\approx \int_{0}^{\infty} s^{1-\tau}(f(0)-f(s \delta^{1/\sigma})) \;ds,
+		\intertext{we can make the change of variable $s = x \delta^{-1/\sigma}$ to get}
+		  &= \delta^{(\tau-2)/\sigma} \int_{0}^{\infty} x^{1-\tau} (f(0)-f(x)) \;dx.
+		\intertext{Integrating by parts gives}
+		&= \frac{\delta^{(\tau-2)/\sigma}}{\tau-2} \left[ \left[ -x^{2-\tau} (f(0) - f(x)) \right]^{x=\infty}_{x=0} - \int_{0}^{\infty} x^{2-\tau} f'(x) \;dx \right].
+	\end{align*}
+	So by our assumptions on $f$, we have $S = \Theta\left( \delta^{(\tau-2)/\sigma} \right)$. Since we're already assuming $S \approx \delta^{\beta}$, this means $\beta = (\tau-2)/\sigma$. The proof is similar for $\gamma_{P}$. Since
+	\[
+		\ang{s}_{P} = \int_{0}^{\infty} s^{2-\tau}f(s \delta^{1/\sigma}) \;ds,
+	\] we can once again make a change of variables and integrate by parts. \warn{(Actually, at this point I'm confused since there's another $x$ term floating around everywhere, but the paper doesn't seem to address this).} Then since $\ang{s}_{P} \approx \delta^{-\gamma_{P}}$, we get $\gamma_{P} = (3-\tau)/\sigma$. The derivation for $\gamma_{Q}$ is similar, with the relations in Appendix $E$ of DaCosta between $f'$ and $g'$ ensuring that the final integral will be finite with $g'$ instead of $f'$.
 \end{proof}
+
+%%%%%%%%%%%%%%%%%%%%
+% Computations for Adjacent Edge Rule
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Computations for Adjacent Edge Rule}
+
+Results we've already shown:
+\begin{align*}
+	\p_{t}{S} &= \ang{s}_{P} S^2 + S\ang{s}_{Q}, \\
+	\gamma_{Q} &= 1.
+\end{align*}
+If we have scaling behavior, then the previous theorem applies and we get
+\begin{align*}
+	\beta &= (\tau-2)/\sigma \tag{1} \\
+	\gamma_{P} &= (3-\tau)/\sigma \tag{2} \\
+	\gamma_{Q} &= (5-2\tau)/\sigma. \tag{3}
+\end{align*}
+Since we know $\gamma_{Q}=1$, we have three equations and four unknowns, so we can solve for all of them in terms of just one. Plugging $\gamma_{Q}=1$ into $(3)$ and rearranging gives $\sigma=5-2\tau$, which we can plug into $(1)$ to get $\tau = (5\beta+2)/(2\beta+1)$. Plug this new expression for $\tau$ into $\sigma=5-2\tau$ to get $\sigma = 1/(2\beta+1)$. Finally, plug these expressions for $\sigma$ and $\tau$ into $(2)$ to get $\gamma_{P} = \beta+1$. In summary,
+\begin{align*}
+	\sigma &= \frac{1}{2\beta+1} , \\
+	\tau &= \frac{5\beta+2}{2\beta+1} , \\
+	\gamma_{P} &= \beta+1, \\
+	\gamma_{Q} &= 1.
+\end{align*}
 
 
 \end{document}
