@@ -1,0 +1,82 @@
+\usepackage[%
+        a4paper,
+        left=1.5in,right=1.5in,top=1in,bottom=1in,
+        includehead,includefoot
+]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{amsmath, amsthm, amsfonts, amssymb}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{tikz-cd}
+\usepackage{xcolor, mdframed}
+
+\usepackage{mathpazo}
+\usepackage{lipsum}
+\usepackage{microtype}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+%\usepackage{sansiwona}
+
+%\usepackage{showframe}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\titleformat{\section}{\relax\large}{\thesection}{1em}{\spacedsc}
+
+\linespread{1.1}
+
+%--------------------------------------------------------------------------------
+% Custom Commands
+%--------------------------------------------------------------------------------
+
+\DeclareRobustCommand{\spacedsc}[1]{%
+        \sffamily\textls[80]{\textsc{#1}}
+}
+\DeclareMathOperator{\im}{im}
+
+%--------------------------------------------------------------------------------
+% Colors
+%--------------------------------------------------------------------------------
+\colorlet{defn}{cyan}
+\colorlet{thrm}{magenta}
+\definecolor{lem}{HTML}{6C47FF}
+
+%--------------------------------------------------------------------------------
+% Theorems, etc.
+%--------------------------------------------------------------------------------
+\mdfdefinestyle{leftBar}{topline=false, rightline=false, bottomline=false, linewidth=1pt}
+
+\newtheorem{prop}{Proposition}
+\newtheorem{cor}{Corollary}
+%\newmdtheoremenv{prop}{Proposition}
+%\newmdtheoremenv{cor}{Corollary}
+\newmdtheoremenv[style=leftBar, linecolor=lem]{lem}{Lemma}
+\newmdtheoremenv[style=leftBar, linecolor=thrm]{thrm}{Theorem}
+
+\theoremstyle{definition}
+\newmdtheoremenv{exer}{Exercise}
+\newmdtheoremenv[style=leftBar, linecolor=defn]{defn}{Definition}
+%\newmdtheoremenv[style=leftBar, linecolor=exmp]{ex}{Example}
+\newtheorem{ex}{Example}
+\newmdtheoremenv[style=leftBar, linecolor=nte]{note}{Note}
+
+%--------------------------------------------------------------------------------
+% Header and Footer
+%--------------------------------------------------------------------------------
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhf{}
+%\lhead{\thepage}
+\fancyhead[LE]{\thepage \quad $\vert$ \spacedsc{Brigid Hoagland}}
+\fancyhead[RO]{\spacedsc{An Education in Reality} $\vert$ \quad \thepage}

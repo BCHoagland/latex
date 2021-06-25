@@ -1,9 +1,10 @@
 \documentclass[twoside,10pt]{report}
 \usepackage{/Users/bradenhoagland/latex/toggles}
-%\toggletrue{sectionbreaks}
+\toggletrue{sectionbreaks}
 %\toggletrue{sectionheaders}
 \newcommand{\docTitle}{PDEs and Scaling}
-\usepackage{/Users/bradenhoagland/latex/math2}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\usepackage{/Users/bradenhoagland/latex/styles/color}
 
 \setlength{\headheight}{15pt}
 
@@ -42,7 +43,7 @@ We're interested in how $P$ changes throughout the percolation process. The foll
 		\hline
 		\ER & $\frac{s}{2} \sum_{u+v=s} P(u,t) P(v,t) - s P(s,t)$ \\
 		Adjacent Edge & $s \sum_{u+v=s}P(u,t)Q(v,t) - s P(s,t)- s Q(s,t)$ \\
-		DaCosta & $s \sum_{u+v=s}Q_m(u,t)Q_m(v,t) - 2s Q_m(s,t)$ \\
+		da Costa & $s \sum_{u+v=s}Q_m(u,t)Q_m(v,t) - 2s Q_m(s,t)$ \\
 		Sum & \warn{Do this.} \\
 		Product & \warn{Do this.}
 	\end{tabular}
@@ -140,7 +141,7 @@ Given a particular rule, we can take these two relations and subsitute them into
 		\hline
 		ER & $\gamma_{P}=1$ \\
 		AE & $\gamma_{Q}=1$ \\
-		DaCosta & $\gamma_{P} + 1 = 2 \gamma_{Q_m}$ \\
+		da Costa & $\gamma_{P} + 1 = 2 \gamma_{Q_m}$ \\
 		Sum & \warn{Do this.} \\
 		Product & \warn{Do this.}
 	\end{tabular}
@@ -181,7 +182,7 @@ There are relationships between the coefficients $\beta, \tau$, and $\sigma$ tha
 	So by our assumptions on $f$, we have $S = \Theta\left( \delta^{(\tau-2)/\sigma} \right)$. Since we're already assuming $S \approx \delta^{\beta}$, this means $\beta = (\tau-2)/\sigma$. The proof is similar for $\gamma_{P}$. Since
 	\[
 		\ang{s}_{P} = \int_{0}^{\infty} s^{2-\tau}f(s \delta^{1/\sigma}) \;ds,
-	\] we can once again make a change of variables and integrate by parts. \warn{(Actually, at this point I'm confused since there's another $x$ term floating around everywhere, but the paper doesn't seem to address this).} Then since $\ang{s}_{P} \approx \delta^{-\gamma_{P}}$, we get $\gamma_{P} = (3-\tau)/\sigma$. The derivation for $\gamma_{Q}$ is similar, with the relations in Appendix $E$ of DaCosta between $f'$ and $g'$ ensuring that the final integral will be finite with $g'$ instead of $f'$.
+	\] we can once again make a change of variables and integrate by parts. \warn{(Actually, at this point I'm confused since there's another $x$ term floating around everywhere, but the paper doesn't seem to address this).} Then since $\ang{s}_{P} \approx \delta^{-\gamma_{P}}$, we get $\gamma_{P} = (3-\tau)/\sigma$. The derivation for $\gamma_{Q}$ is similar, with the relations in Appendix $E$ of da Costa between $f'$ and $g'$ ensuring that the final integral will be finite with $g'$ instead of $f'$.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%
@@ -208,6 +209,156 @@ Since we know $\gamma_{Q}=1$, we have three equations and four unknowns, so we c
 	\gamma_{P} &= \beta+1, \\
 	\gamma_{Q} &= 1.
 \end{align*}
+\warn{Prof's $\tau$ disagrees with mine.}
+
+%%%%%%%%%%%%%%%%%%%%
+% General Methods
+%%%%%%%%%%%%%%%%%%%%
+
+\section{General Methods}
+
+The following is a collection of various methods of computing these different quantities. Some methods might product the same or completely different information for different rules, some might only work with some rules. It could be interesting to investigate why these have different behavior with different rules.
+
+%-------------------
+% Differentiating $S$ once
+%-------------------
+
+\subsection{Differentiating \texorpdfstring{$S$}{S} once}
+
+Since $S \sim \delta^{\beta}$, we can differentiate once to get $\p_{t}{S} \sim \delta^{\beta-1}$. If $\p_{t}{S} $ is dependent only on $S$ and $\ang{s}_{m}$ for some fixed $m$, then we can get useful relations between $\gamma_{m}$ and $\beta$, or perhaps even determine one entirely.
+
+If $\p_{t}{S} $ is only depends on $S$ and $\ang{s}_{m}$, then it induces a function $\varphi(\beta, \gamma_{m})$ such that $\delta^{\beta-1} \sim \p_{t}{S} \sim \delta^{\varphi(\beta, \gamma_{m})}$. Thus $\beta-1 = \varphi(\beta, \gamma_{m})$.
+
+\begin{ex}
+For \ER, $\p_{t}{S} = S \ang{s}_{P}$, so $\beta-1 = \beta - \gamma_{P}$, which implies $\gamma_{P}=1$. For da Costa, $\p_{t}{S} = 2S^{m} \ang{s}_{m}$, so $\beta-1 = \beta m - \gamma_{m}$, which implies $\gamma_{m} = 1 + (m-1)\beta$.
+\end{ex}
+
+
+%-------------------
+% Differentiating $S$ twice
+%-------------------
+
+\subsection{Differentiating \texorpdfstring{$S$}{S} twice}
+
+If the time derivative of $S$ is only dependent on $S$ and $\ang{s}_{P}$, then we can relate $\gamma_{P}$ and $\beta$ or even determine one. To start, suppose $\p_{t}{S} = \phi(S, \ang{s}_{P})$. In this case, both derivatives $\p_{S}{\phi} $ and $\p_{\ang{s}_{P}}{\phi} $ will necessarily exhibit scaling behavior. We can denote this by
+\begin{align*}
+	\p_{S}{\phi} &\sim \delta^{A}, \\
+	\p_{\ang{s}_{P}}{\phi} &\sim \delta^{B}.
+\end{align*}
+
+\begin{prop}
+	If $\p_{t}{S} = \phi(S, \ang{s}_{P})$, then
+	\[
+	\beta-2 = \min\left\{ A+\beta-1, B-\gamma_{P}-1 \right\}.
+	\]
+\end{prop}
+\begin{proof}
+	The second time derivative of $S$ is
+	\begin{align*}
+		\p_{tt}{S} &= \p_{t}{\phi} \\
+			   &= \p_{S}{\phi} \cdot \p_{t}{S} + \p_{\ang{s}_{P}}{\phi} \cdot \p_{t}{\ang{s}_{P}} 
+	\end{align*}
+	Replacing all these terms with their respective scaling forms then yields
+	\begin{align*}
+		\delta^{\beta-2} &\sim \delta^{A} \cdot \delta^{\beta-1} + \delta^{B} \cdot \delta^{-\gamma_{P}-1} \\
+						 &= \delta^{A + \beta - 1} + \delta^{B - \gamma_{P} - 1}.
+	\end{align*}
+	Since $\delta < 1$, the term on the right with the \textit{smaller} exponent will dominate. Thus $\beta-2 = \min\left\{ A+\beta-1, B-\gamma_{P}-1 \right\}$.
+\end{proof}
+
+\begin{ex}[\ER]
+For \ER, $\phi = S \ang{s}_{P}$, so
+\begin{align*}
+	\p_{S}{\phi} = \ang{s}_{P}, &\quad\quad \p_{\ang{s}_{P}}{\phi} = S, \\
+	A = -\gamma_{P}, &\quad\quad B = \beta.
+\end{align*}
+Now $A+\beta-1 = B - \gamma_{P} - 1 = \beta - \gamma_{P} - 1$, so setting this equal to $\beta-2$ and simplyfing yields $\gamma_{P} = 1$.
+\end{ex}
+
+%%%%%%%%%%%%%%%%%%%%
+% Equal Term Orders
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Equal Term Orders}
+
+Here's a strange pattern in the previous computations for $\p_{t}{S} $ and $\p_{t}{\ang{s}_{P}} $. For every rule, each term in $\p_{t}{S} $ has the same scaling coefficient, and the same holds for every term in $\p_{t}{\ang{s}_{P}} $. This would have pretty big implications, as we wouldn't have to check to see which coefficient is smallest (i.e. which dominates) if there is more than one term. We would instead get multiple relations among the coefficients that have to hold, potentially making it much easier to solve for all of them.
+
+To actually show this, we'll need the following result.
+
+\begin{prop}
+	Suppose $\ang{s}_{m} \sim \delta^{-\gamma_{m}}$, then
+	\[
+		\ang{s^{k}}_{m} \sim \delta^{-\left( \gamma_{m} + \frac{k-1}{\sigma}  \right)}.
+	\]
+\end{prop}
+\begin{proof}
+	This derivation is essentially the same as for $\ang{s}_{m}$, but with an extra constant $k$ floating around everywhere. We can expand the definition of $\ang{s^{k}}_{m}$ near $t_c$ using our scaling form assumption:
+	\begin{align*}
+		\ang{s^{k}}_{m} &= \int_{0}^{\infty} s^{k} Q_{m}(s) \;ds \\
+				&= \int_{0}^{\infty} s^{k + 2m-m\tau - 1} g(s \delta^{1\sigma}) \;ds.
+				\intertext{Then making the change of variable $s = x \delta^{-1/\sigma}$, this becomes}
+				&= \delta^{-\frac{2m - m\tau + k}{\sigma} } \int_{0}^{\infty} x^{2m - m\tau -1 + k} g(x) \;dx.
+	\end{align*}
+	Assuming this integral is finite, then the identity $\gamma_{Q} = (2m-m\tau+1)/\sigma$ (see Theorem 1) means that
+	\[
+		\ang{s^{k}}_{m} \sim \delta^{-\left( \gamma_{m}+\frac{k-1}{\sigma} \right)}.
+	\] 
+\end{proof}
+
+Showing that all terms in each different $\p_{t}{S} $ and $\p_{t}{\ang{s}_{P}} $ have the same $\delta$ coefficient is then just a tedious exercise in algebra. I found it helpful to use our identities for the different standard coefficients in terms of $\beta$, which we have already derived for \ER, da Costa, and the adjacent edge rule.
+
+\begin{ex}[Adjacent Edge]
+For reference, the adjacent edge rule has
+\begin{align*}
+	\p_{t}{S} &= \ang{s}_{P}S^2 + S\ang{s}_{Q}, \\
+	\p_{t}{\ang{s}_{P}} &= 2\ang{s}_{P}\ang{s}_{Q} - \ang{s^2}_{P}S^2 - \ang{s^2}_{Q}S,
+\end{align*}
+and the various identities we'll be using all over the place are
+\[
+\frac{1}{\sigma} = 2\beta+1, \quad\quad \gamma_{P} = \beta+1, \quad\quad \gamma_{Q}=1,
+\] which I derived in section 0.4. Now we compute the orders for the terms in $\p_{t}{S} $:
+\begin{align*}
+	\ang{s}_{P}S^2 &:\quad -\gamma_{P}+2\beta = \beta-1, \\
+	S\ang{s}_{Q} &:\quad \beta-\gamma_{Q} = \beta-1.
+\end{align*}
+As claimed, the orders are the same (we also expected the dominating order to be $\beta-1$, so nothing here is broken). Now for $\p_{t}{\ang{s}_{P}} $ (the last two terms will require the use of the previous proposition):
+\begin{align*}
+	\ang{s}_{P}\ang{s}_{Q} &:\quad -\gamma_{P}-\gamma_{Q} = -\beta-2, \\
+	\ang{s^2}_{P}S^2 &:\quad -\gamma_{P} - \frac{1}{\sigma} + 2\beta = -\beta-2, \\
+	\ang{s^2}_{Q}S &:\quad -\gamma_{Q} - \frac{1}{\sigma} + \beta = -\beta-2.
+\end{align*}
+So they're also all the same, and they're the expected order since we know the dominating order is $-\gamma_{P}-1 = -\beta-2$.
+\end{ex}
+{\color{blue}When does this hold in general?}
+
+%%%%%%%%%%%%%%%%%%%%
+% Uniform Scaling Rules
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Uniform Scaling Rules}
+
+Motivated by the previous section, it makes sense to define a class of rules where all the terms in $\p_{t}{S} $ and in $\p_{t}{\ang{s}_{m}} $ have the same order. I think \textbf{uniform scaling rule} is a nice name, so that's what I'm sticking with.
+
+So suppose $\mathcal{R}$ is a uniform scaling rule with ODE $\p_{t}{P}(s) $. If the derivative of $S$ is in terms of the $\ang{s}_{m}$ and $S$, then
+\[
+	\delta^{\beta-1} \sim \sum_{i=1}^{\ell} \delta^{A_i}
+\] for some collection of unique coefficients $\left\{ A_i \right\}$. But since $\mathcal{R}$ scales uniformly, this gives us $\ell(\ell+1)/2$ relations between the various coefficients in play. Note that each $A_i$ is some linear combination of $\tau, \sigma, \{\gamma_{m}\}_m, \beta$. So if we have at most $1 + \ell(\ell+1)/2$ of these unknowns, then we can solve for them all in terms of $\beta$ \warn{(this makes sense to me, at least)}.
+
+If $\p_{t}{\ang{s}_{P}} $ is also in terms of the $\ang{s}_{m}$ and $S$, then
+\[
+\delta^{-\gamma_{P}-1} \sim \sum_{i=1}^{k} \delta^{B_{i}}
+\] for some collection of unique coefficients $\left\{ B_i \right\}$. There's a similar condition for when we're guaranteed to be able to solve for all our unknowns in terms of $\beta$.
+
+\begin{ex}[Adjacent Edge]
+For reference, the adjacent edge rule has
+\begin{align*}
+	\p_{t}{S} &= \ang{s}_{P}S^2 + S\ang{s}_{Q}, \\
+	\p_{t}{\ang{s}_{P}} &= 2\ang{s}_{P}\ang{s}_{Q} - \ang{s^2}_{P}S^2 - \ang{s^2}_{Q}S.
+\end{align*}
+Under the assumption that the adjacent edge rule scales uniformly, the first equation allows us to derive $\gamma_{P}=\beta+1$ and $\gamma_{Q}=1$, and the second equation gives us enough extra information to derive $1/\sigma = 2\beta+1$ (it also has enough information to derive the first two identities, as well).
+\end{ex}
+
+The obvious question is then: \warn{when are a rule's $\p_{t}{S} $ and $\p_{t}{\ang{s}_{P}} $ in terms of only $S$ and the $\ang{s}_{m}$? If we know this, then any uniform scaling rule must obey the properties above, and we can guarantee that it can be solved.}
 
 
 \end{document}

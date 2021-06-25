@@ -1,9 +1,10 @@
 \documentclass[twoside,10pt]{report}
-\usepackage{/Users/bradenhoagland/latex/toggles}
+\usepackage{/Users/bradenhoagland/latex/styles/toggles}
 \toggletrue{sectionbreaks}
 %\toggletrue{sectionheaders}
 \newcommand{\docTitle}{Topology}
-\usepackage{/Users/bradenhoagland/latex/math2}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\usepackage{/Users/bradenhoagland/latex/styles/colors}
 
 %\renewcommand{\theenumi}{\alph{enumi}}
 
@@ -516,7 +517,7 @@ $\left\{ x_n \right\}$ \textbf{converges} to $x$ if it's eventually in every ope
 \end{defn}
 
 \begin{prop}
-$\left\{ x_{n} \right\}$ converges to $x$ if and only if it's eventually in every basis/subbasis element containing $x$.
+$x_{n} \to x$ if and only if $\left\{ x_n \right\}$ is eventually in every basis/subbasis element containing $x$.
 \end{prop}
 
 \begin{ex}[]

@@ -1,0 +1,77 @@
+\usepackage[
+        letterpaper,
+        left=1.5in,right=1.5in,top=0.8in,bottom=1in,
+        includehead,includefoot
+]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{amsmath, amsthm, amsfonts, amssymb}
+\usepackage{mathrsfs}
+\usepackage{xcolor, xspace}
+\usepackage{mathtools}
+\usepackage{tikz-cd}
+\usepackage{xcolor, mdframed}
+\usepackage{cancel}
+
+\usepackage{lipsum}
+\usepackage{microtype}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+%\usepackage{showframe}
+
+%--------------------------------------------------------------------------------
+% Links
+%--------------------------------------------------------------------------------
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+%--------------------------------------------------------------------------------
+% Common Toggles
+%--------------------------------------------------------------------------------
+\iftoggle{sectionbreaks}{
+        \newcommand{\sectionbreak}{\clearpage}
+}{
+        \titlespacing*{\section}{0pt}{0.5in}{5mm}
+}
+
+%--------------------------------------------------------------------------------
+% Custom Commands
+%--------------------------------------------------------------------------------
+\DeclareRobustCommand{\spacedsc}[1]{%
+        \sffamily\textls[80]{\textsc{#1}}
+}
+
+\newcommand{\warn}[1]{\textbf{\color{red}#1}}
+
+% random operators and names
+\DeclareMathOperator{\im}{im}
+\let\hom\relax
+\DeclareMathOperator{\hom}{Hom}
+\DeclareMathOperator{\mor}{mor}
+\DeclareMathOperator{\var}{Var}
+\DeclareMathOperator{\p}{\partial}
+\newcommand{\cat}[1]{\text{\sffamily\textbf{#1}}}
+\newcommand{\ER}{Erd\H{o}s R\'enyi\xspace}
+
+% arrows
+\newcommand{\mono}{\rightarrowtail}
+\newcommand{\epi}{\twoheadrightarrow}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\bij}{\leftrightarrow}
+
+% more spacing on intersections and unions
+\DeclareMathOperator{\isct}{\;\cap\;}
+\DeclareMathOperator{\uni}{\;\cup\;}
+
+% < >
+\newcommand{\ang}[1]{\langle #1 \rangle}
+\newcommand{\Ang}[1]{\left\langle #1 \right\rangle}
