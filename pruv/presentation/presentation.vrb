@@ -1,0 +1,14 @@
+\frametitle{\ER}
+
+	Start with a graph with $n$ vertices and no edges.
+	\vspace{5mm}
+
+	Every $t=1/n$ units of time, pick two random vertices and add an edge between them.
+	\vspace{5mm}
+
+	\pause
+
+	A \textit{giant component} is a cluster comprising a finite fraction $\varepsilon n$ of the graph.
+	\vspace{5mm}
+
+	Before $t_c=1/2$, whp there is no giant component. After $t_c$, whp a giant component has emerged. {\color{red}This emergence is called \textit{percolation}.}

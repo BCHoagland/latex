@@ -1,38 +1,32 @@
-%\linespread{1.2}
-
 %--------------------------------------------------------------------------------
 % Title Page
 %--------------------------------------------------------------------------------
-
 \newcommand{\formalTitle}[3]{
-	% all introductory pages have lowercase roman numerals as page numbers
-	\pagenumbering{roman}
+        % all introductory pages have lowercase roman numerals as page numbers
+        \pagenumbering{roman}
 
-	% title page
-	\thispagestyle{empty}
-	\begin{center}
-		\vspace*{20mm}
-		\uppercase{
-			\textbf{#1}\\
-			\vspace{5mm}
-			{\small #2}\\
-			\vspace{10mm}
-		}
-		#3
-	\end{center}
-	\newpage
+        % title page
+        \thispagestyle{empty}
+        \begin{center}
+                \vspace*{20mm}
+                \MakeUppercase{
+                        \textbf{#1}\\
+                        \vspace{5mm}
+                        {\small #2}\\
+                        \vspace{10mm}
+                }
+                #3
+        \end{center}
+        \newpage
 }
 
 %--------------------------------------------------------------------------------
-% Header and Footer
+% Sections
 %--------------------------------------------------------------------------------
-
 \titleformat{\subsection}{\center\bfseries}{\thesubsection}{1em}{}
 
 %--------------------------------------------------------------------------------
 % Header and Footer
-%--------------------------------------------------------------------------------
-
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\sectionmark}[1]{\markboth{}{#1}}
@@ -42,7 +36,7 @@
 \fancyhead[RE]{\color{gray}\thepage}
 \fancyhead[LO]{\color{gray}\thepage}
 \iftoggle{sectionheaders}{
-	\fancyhead[C]{\color{gray}\small\MakeUppercase{\rightmark}}
+        \fancyhead[C]{\color{gray}\small\MakeUppercase{\rightmark}}
 }{
-	\fancyhead[C]{\color{gray}\small\MakeUppercase{\docTitle}}
+        \fancyhead[C]{\color{gray}\small\MakeUppercase{\docTitle}}
 }

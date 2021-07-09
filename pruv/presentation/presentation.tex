@@ -1,0 +1,333 @@
+\documentclass{beamer}
+
+%\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{amsmath,amssymb,tikz-cd}
+\usepackage{xcolor, xspace}
+
+\usefonttheme[onlymath]{serif}
+%\usetheme{Warsaw}
+
+\definecolor{darkblue}{HTML}{12335F}
+\definecolor{myblue}{HTML}{00A2FF}
+
+%--------------------------------------------------------------------------------
+% Custom Template
+%--------------------------------------------------------------------------------
+\usecolortheme[named=myblue]{structure}
+
+\setbeamertemplate{frametitle}{\vspace{5mm}\bfseries\insertframetitle}
+\setbeamercolor{frametitle}{fg=darkblue}
+
+\setbeamerfont{section in toc}{series=\bfseries}
+\setbeamercolor{section in toc}{fg=darkblue}
+
+\AtBeginEnvironment{theorem}{%
+	\setbeamercolor{block title}{fg=white, bg=darkblue}
+	\setbeamercolor{block body}{fg=black,bg=myblue!20}
+}
+
+%--------------------------------------------------------------------------------
+% Custom Commands
+%--------------------------------------------------------------------------------
+\newcommand{\ER}{Erd\H{o}s R\'enyi\xspace}
+
+%--------------------------------------------------------------------------------
+% Fonts
+%--------------------------------------------------------------------------------
+\setsansfont{Helvetica Neue}
+
+\begin{document}
+
+%--------------------------------------------------------------------------------
+% Title Page
+%--------------------------------------------------------------------------------
+{
+\setbeamercolor{background canvas}{bg=darkblue}
+\begin{frame}
+	\bfseries
+	{\color{white}
+		\huge Percolation Phase Transitions on Dynamically Grown Graphs
+	}
+	\vspace{5mm}
+
+	{\color{myblue}
+		\large Braden Hoagland
+
+		Advised by Rick Durrett
+	}
+
+	\vspace*{\fill}
+	{\color{white}
+		\small July 8, 2021
+	}
+\end{frame}
+}
+
+\begin{frame}
+	\tableofcontents
+\end{frame}
+
+%--------------------------------------------------------------------------------
+% Background
+%--------------------------------------------------------------------------------
+\section{Background}
+
+{
+\setbeamercolor{background canvas}{bg=darkblue}
+\begin{frame}
+        \bfseries
+        {\color{white}
+                \huge Background
+        }
+        \vspace{5mm}
+
+	{\color{myblue}
+		Dynamically grown graphs and percolation
+	}
+\end{frame}
+}
+
+%-------------------
+% Dynamically Grown Graphs
+%-------------------
+\subsection{Dynamically Grown Graphs}
+
+\begin{frame}{Dynamically Grown Graphs}
+	Start with a graph with $n$ vertices and no edges.
+	\vspace{5mm}
+
+	Every $t=1/n$ units of time, add edges to the graph by sampling $m$ vertices i.i.d. and following some fixed rule.
+	\vspace{5mm}
+
+	\pause
+	Let $n\to \infty$.
+\end{frame}
+
+%-------------------
+% Percolation
+%-------------------
+\subsection{Percolation}
+
+\begin{frame}{Percolation}
+	A \textit{giant component} is a cluster comprising a finite fraction $\varepsilon n$ of the graph.
+	\vspace{5mm}
+
+	Percolation is the emergence of a giant component.
+	\vspace{5mm}
+
+	Percolation can have lots of different qualitative behaviors.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Explosive Percolation}
+
+	For simple rules, the giant component might emerge is a predictable, linear manner.
+	\vspace{5mm}
+
+	If a rule prioritizes adding together smaller clusters, the giant component's emergence is delayed and happens very quickly (seemingly discontinuous). This is called \textit{explosive percolation}.
+\end{frame}
+
+%--------------------------------------------------------------------------------
+% Basic Results
+%--------------------------------------------------------------------------------
+\section{Basic Results}
+
+{
+\setbeamercolor{background canvas}{bg=darkblue}
+\begin{frame}
+        \bfseries
+        {\color{white}
+                \huge Basic Results
+        }
+        \vspace{5mm}
+
+        {\color{myblue}
+                Continuity of the phase transition and scaling behavior
+        }
+\end{frame}
+}
+
+%-------------------
+% Continuity of the Phase Transition
+%-------------------
+\subsection{Continuity of the Phase Transition}
+
+\begin{frame}
+	\frametitle{Continuity of the Phase Transition}
+
+	\textit{$\ell$-vertex rule}: choose $\ell$ vertices i.i.d., and you're only required to add an edge if all $\ell$ of them are in distinct clusters.
+	\vspace{5mm}
+
+	Riordan, R., and Warnke, L. (2012): all $\ell$-vertex rules have a continuous phase transition. We just can't see it in simulation because the coefficients are insanely small.
+	\vspace{5mm}
+
+	\pause
+	Their proof is by contradiction, so it doesn't give us much quantitative information about the clusters' behavior.
+\end{frame}
+
+%-------------------
+% Scaling Behavior
+%-------------------
+\subsection{Scaling Behavior}
+
+\begin{frame}
+	\frametitle{Scaling Behavior}
+
+	For rules with continuous phase transitions, we see \textit{scaling behavior}.
+	\vspace{5mm}
+
+	Let $\delta = t-t_c$ and let $P(s, t)$ be the probability that a randomly chosen vertex has cluster size $s$ at time $t$. Then near $t_c$, there are constants $\tau$ and $\sigma$ such that
+	\[
+		P(s) = s^{1-\tau}f(s \delta^{1/\sigma}).
+	\] Scaling behavior lets us express several important quantities as powers of $\delta$.
+	\vspace{5mm}
+
+	\pause
+	{\color{myblue}\bfseries From now on, we assume scaling behavior.}
+\end{frame}
+
+\begin{frame}{Scaling Behavior}
+	Let $S$ be the size of the giant component, and let
+	\[
+		\chi_k(t) = \sum_s s^{k} P(s, t).
+	\] Then
+	\[
+		S \approx \delta^{\beta}, \quad\quad
+		\chi_1(t) \approx \delta^{-\gamma}, \quad\quad
+		\frac{\chi_k(t)}{\chi_{k-1}(t)}  \approx \delta^{-\Delta}
+	\]
+	These unknowns are called \textit{critical exponents}.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Scaling Relations}
+
+	Goal: determine all critical exponents in terms of one unknown.
+	\vspace{5mm}
+
+	Why is this useful?
+	\vspace{5mm}
+
+	\pause
+	What kinds of rules can we do this for?
+\end{frame}
+
+%--------------------------------------------------------------------------------
+% 2-Choice Rules
+%--------------------------------------------------------------------------------
+\section{2-Choice Rules}
+
+{
+\setbeamercolor{background canvas}{bg=darkblue}
+\begin{frame}
+        \bfseries
+        {\color{white}
+                \huge 2-Choice Rules
+        }
+        \vspace{5mm}
+
+        {\color{myblue}
+		Generalizing rules with useful properties
+        }
+\end{frame}
+}
+
+\begin{frame}{2-Choice Rules}
+	Pick two groups of vertices i.i.d.
+	\vspace{5mm}
+
+	Select one vertex from each and add an edge between them.
+	\vspace{5mm}
+
+	$\phi_i(s) = \mathbb{P}\left( \text{vertex chosen from group } i \text{ has cluster size } s \right) $.
+\end{frame}
+
+%-------------------
+% Examples
+%-------------------
+\subsection{Examples}
+
+\begin{frame}{\ER}
+	Pick two random vertices and add an edge between them.
+	\vspace{5mm}
+
+	\pause
+	Percolation occurs after $t_c=1/2$.
+	\vspace{5mm}
+
+	$\beta=1$, so $S$ grows linearly near $t_c$.
+\end{frame}
+
+\begin{frame}{da Costa}
+	Introduced by da Costa to disprove Achlioptas' discontinuity conjecture.
+	\vspace{5mm}
+
+	Pick two groups of vertices, both of size $m$. Pick the vertex with the smallest cluster size from the two groups and add an edge between them.
+	\vspace{5mm}
+
+	Same as \ER when $m=1$. As $m\to \infty$,
+	\[
+	\beta\to 0, \quad\quad t_c \to 1.
+	\]
+\end{frame}
+
+%-------------------
+% Uniform Scaling
+%-------------------
+\subsection{Uniform Scaling}
+
+\begin{frame}{Uniform Scaling}
+	For any 2-choice rule, the quantity $\partial_{t}{S} $ has a simple form that can be explicitly calculated.
+	\vspace{5mm}
+
+	Near $t_c$, $\partial_t S$ will look like
+	\[
+	\delta^{a}+\delta^{b}+\delta^{c}+\cdots
+	\] 
+	We say that a rule \textit{scales uniformly} if $a=b=c=\cdots$
+	\vspace{5mm}
+	
+	\pause
+	All 2-choice rules \textbf{almost} scale uniformly.
+\end{frame}
+
+\begin{frame}{Uniform Scaling}
+	\begin{theorem}
+		For any 2-choice rule, there will be two dominating terms of $\partial_t S$ with the same order. If some extra technical conditions hold, then the rule scales uniformly.
+	\end{theorem}
+\end{frame}
+
+\begin{frame}{Uniform Scaling}
+	Consequences:
+	\begin{itemize}
+		\item For all 2-choice rules, we can solve for all critical exponents, as well as the growth rate of the average cluster size, in terms of $\beta$.
+		\item For a large family of 2-choice rules, we can do this algorithmically.
+	\end{itemize}
+\end{frame}
+
+%--------------------------------------------------------------------------------
+% Future Directions
+%--------------------------------------------------------------------------------
+\section{Future Directions}
+
+{
+\setbeamercolor{background canvas}{bg=darkblue}
+\begin{frame}
+        \bfseries
+        {\color{white}
+                \huge Future Directions
+        }
+\end{frame}
+}
+
+\begin{frame}{Future Directions}
+	\begin{itemize}
+		\item Interaction between the groups?
+		\item When does scaling behavior actually occur?
+		\item What about $n$-choice rules?
+	\end{itemize}
+\end{frame}
+
+
+\end{document}

@@ -1,0 +1,46 @@
+\linespread{1.2}
+
+%--------------------------------------------------------------------------------
+% Fonts
+%--------------------------------------------------------------------------------
+\setmainfont{Baskerville}
+
+%--------------------------------------------------------------------------------
+% Sections
+%--------------------------------------------------------------------------------
+% {command to alter}{format number}{what the number should say}{spacing between # and text}{format text}
+\titleformat{\chapter}{\relax\Huge\bfseries\spacedSans}{\thechapter}{1em}{\LARGE\spacedSans}
+\titleformat{\section}{\relax\huge\bfseries\spacedSans}{\thesection}{1em}{\large\spacedSans}
+\titleformat{\subsection}{\relax\Large\bfseries\spacedSans}{\thesubsection}{1em}{\normalsize\spacedSans}
+
+%--------------------------------------------------------------------------------
+% Table of Contents
+%--------------------------------------------------------------------------------
+\let\tocold\tableofcontents
+\renewcommand{\tableofcontents}{
+        \pagestyle{empty}
+        \pagenumbering{roman}
+        \tocold
+        \newpage
+        \pagenumbering{arabic}
+        \pagestyle{fancy}
+}
+
+%--------------------------------------------------------------------------------
+% Header and Footer
+%--------------------------------------------------------------------------------
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\sectionmark}[1]{\markboth{}{#1}}
+\setlength{\headsep}{0.6in}
+
+\fancyhf{}
+\fancyhead[LE]{\color{gray}\spacedSans{Braden Hoagland}}
+\iftoggle{sectionheaders}{
+        \fancyhead[RE]{\color{gray}\small\spacedSans{\rightmark} $\vert$ \quad \thepage}
+}{
+        \fancyhead[RE]{\color{gray}\small\spacedSans{\docTitle} $\vert$ \quad \thepage}
+}
+\fancyhead[RO]{\color{gray}\small\spacedSans{\docTitle}}
+\fancyhead[LO]{\color{gray}\small\thepage \quad $\vert$ \spacedSans{Braden Hoagland}}

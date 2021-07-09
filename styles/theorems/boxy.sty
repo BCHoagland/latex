@@ -1,0 +1,20 @@
+%--------------------------------------------------------------------------------
+% Theorems, etc.
+%--------------------------------------------------------------------------------
+\mdfdefinestyle{leftBar}{topline=false, rightline=false, bottomline=false, linewidth=1pt}
+\mdfdefinestyle{coloredBox}{linewidth=1pt}
+
+% Fancy text
+
+% Plain text
+\theoremstyle{definition}
+
+\newmdtheoremenv{prop}{Proposition}
+\newmdtheoremenv{cor}{Corollary}
+\newmdtheoremenv{exer}{Exercise}
+\newmdtheoremenv[style=leftBar, linecolor=exmp]{ex}{Example}
+\newmdtheoremenv[style=leftBar, linecolor=nte]{note}{Note}
+
+\newmdtheoremenv[style=coloredBox, linecolor=defn, backgroundcolor=defn!10]{defn}{Definition}
+\newmdtheoremenv[style=coloredBox, linecolor=thrm, backgroundcolor=thrm!10]{thrm}{Theorem}
+\newmdtheoremenv[style=coloredBox, linecolor=lem, backgroundcolor=lem!10]{lem}{Lemma}

@@ -4,7 +4,8 @@
         includehead,includefoot
 ]{geometry}
 
-\usepackage[utf8]{inputenc}
+%\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
 \usepackage{float}
 \usepackage{amsmath, amsthm, amsfonts, amssymb}
 \usepackage{mathrsfs}
@@ -15,11 +16,20 @@
 \usepackage{cancel}
 
 \usepackage{lipsum}
-\usepackage{microtype}
+%\usepackage{microtype}
 \usepackage{titlesec}
 \usepackage{fancyhdr}
 
 %\usepackage{showframe}
+
+%--------------------------------------------------------------------------------
+% Importing Styles
+%--------------------------------------------------------------------------------
+\newcommand{\importStyles}[3]{
+	\usepackage{/Users/bradenhoagland/latex/styles/general/#1}
+	\usepackage{/Users/bradenhoagland/latex/styles/colors/#2}
+	\usepackage{/Users/bradenhoagland/latex/styles/theorems/#3}
+}
 
 %--------------------------------------------------------------------------------
 % Links
@@ -45,8 +55,8 @@
 %--------------------------------------------------------------------------------
 % Custom Commands
 %--------------------------------------------------------------------------------
-\DeclareRobustCommand{\spacedsc}[1]{%
-        \sffamily\textls[80]{\textsc{#1}}
+\DeclareRobustCommand{\spacedSans}[1]{%
+	{\fontspec{Graphik}\addfontfeature{LetterSpace=10.0}\MakeUppercase{#1}}
 }
 
 \newcommand{\warn}[1]{\textbf{\color{red}#1}}
