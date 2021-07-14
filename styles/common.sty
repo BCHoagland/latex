@@ -10,7 +10,7 @@
 \usepackage{amsmath, amsthm, amsfonts, amssymb}
 \usepackage{mathrsfs}
 \usepackage{xcolor, xspace}
-\usepackage{mathtools}
+%\usepackage{mathtools}
 \usepackage{tikz-cd}
 \usepackage{xcolor, mdframed}
 \usepackage{cancel}
@@ -62,7 +62,9 @@
 \newcommand{\warn}[1]{\textbf{\color{red}#1}}
 
 % random operators and names
-\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\im}{Im}
+\let\ker\relax
+\DeclareMathOperator{\ker}{Ker}
 \let\hom\relax
 \DeclareMathOperator{\hom}{Hom}
 \DeclareMathOperator{\mor}{mor}
@@ -72,6 +74,7 @@
 \newcommand{\ER}{Erd\H{o}s R\'enyi\xspace}
 
 % arrows
+\newcommand{\ot}{\leftarrow}
 \newcommand{\mono}{\rightarrowtail}
 \newcommand{\epi}{\twoheadrightarrow}
 \newcommand{\inj}{\hookrightarrow}

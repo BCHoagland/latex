@@ -1,0 +1,365 @@
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/styles/toggles}
+\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{Module Theory}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\importStyles{modern}{rainbow}{boxy}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\usepackage{multicol}
+\setlength{\columnseprule}{0.5pt}
+\setlength{\columnsep}{1cm}
+
+\begin{document}
+\tableofcontents
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Modules
+
+\chapter{Modules}
+
+%--------------------------------------------------------------------------------
+% Modules and Algebras
+%--------------------------------------------------------------------------------
+\section{Modules and Algebras}
+
+Modules are a generalization of vector spaces, replacing the field of scalars with a unital ring of scalars.
+
+\begin{defn}[]
+	Let $R$ be a unital ring. A \textbf{(left) $R$-module} is an additive abelian group $M$ with a left action $R \times M \to  M$ satisfying
+\begin{enumerate}
+	\item $\lambda(x+y) = \lambda x + \lambda y$;
+	\item $(\lambda + \mu)x = \lambda x + \mu x$;
+	\item $\lambda(\mu x) = (\lambda \mu)x$; and
+	\item $1_{R}x = x$.
+\end{enumerate}
+\textbf{Right $R$-modules} are defined similarly.
+\end{defn}
+
+Note that if $R$ is commutative, then {\color{red}a left $R$-module is the same thing as a right $R $-module.} If $F$ is a field, then an $F$-module is the same thing as an $F$-vector space.
+
+\begin{prop}
+Basic properties of modules:
+\begin{enumerate}
+	\item $\lambda 0_{M} = 0_{M}$;
+	\item $0_{R}x = 0_{M}$;
+	\item $\lambda(-x) = -(\lambda x) = (-\lambda) x$.
+\end{enumerate}
+If $R$ is a division ring, then we also have
+\begin{enumerate}
+	\item[4.] $\lambda x = 0_{M} \implies \lambda=0_{R}$ or $x = 0_{M}$.
+\end{enumerate}
+\end{prop}
+
+The definition of modules gives us addition and scalar multiplication, but we still don't have a way of multiplying module elements together. Providing this is exactly the role of an algebra, which adds a ring structure to a module. \warn{It seems like there isn't much of a difference between a ring a an algebra, so you should ask someone about this...}
+
+\begin{defn}[]
+Let $R$ be a commutative unital ring. An $R$-\textbf{algebra} is an $R$-module $M$ along with a ``multiplication" map
+\begin{align*}
+	M \times M &\to M \\
+	(x,y) &\mapsto xy.
+\end{align*}
+This map distributes over addition and satisfies
+\[
+	\lambda(xy) = (\lambda x)y = x (\lambda y).
+\] 
+\end{defn}
+\warn{Why is $R$ commutative?}
+We can form more specific types of algebras by putting restrictions on the multiplication map. \textbf{Associative and commutative algebras} have associative and commutative multiplication maps, respectively. A \textbf{unital} algebra has a multiplicative identity. A \textbf{division algebra} is a unital associative algebra in which every nonzero element has a multiplicative inverse.
+
+%--------------------------------------------------------------------------------
+% Submodules
+%--------------------------------------------------------------------------------
+\section{Submodules}
+
+A module is just an abelian group with a left action, so we can define a submodule to be just a subgroup that respects this action.
+
+\begin{defn}[]
+A \textbf{submodule} of an $R$-module $M$ is a subgroup of $M$ that is closed under the left action of $R$ on $M$.
+\end{defn}
+
+A module $N$ is a submodule of $M$ if and only if $N$ is closed under subtraction and scalar multiplication (the subtraction emcompasses both addition and additive inverses). From this we infer the following simple characterization of a submodule.
+\begin{prop}
+$N$ is an submodule of $M$ if and only if
+\[
+\lambda x + \mu y \in N
+\] for all $x,y \in N$ and $\lambda,\mu \in R$.
+\end{prop}
+Thus given any set $S \subseteq M$, we can form a submodule of $M$ by adding in all linear combinations of the elements of $S$. This could be a good enough definition of $\ang{S}$, but we have to make sure that we aren't adding in any unnecessary terms. The following definition ensures this is the case, the next proposition shows that the definition makes sense, and the following theorem shows that our definition is equivalent to the linear combination approach.
+
+\begin{defn}[]
+Given a set $S \subseteq M$, let $\ang{S}$ denote the intersection of all submodules of $M$ containing $S$.
+\end{defn}
+
+\begin{prop}
+If $\left\{ M_{\alpha} \right\}_{\alpha}$ is a family of submodules of $M$, then $\bigcap_{\alpha}M_{\alpha}$ is also a submodule of $M$.
+\end{prop}
+
+\begin{thrm}[]
+	\label{thrm:LC}
+	Let $S \subseteq M$, and let $LC(S)$ denote the set of all linear combinations of $S$. Then
+	\[
+	\ang{S}=
+	\begin{cases}
+		\left\{ 0 \right\} & \text{ if } S = \varnothing,\\
+		LC(S) & \text{ otherwise}.
+	\end{cases}
+	\] 
+\end{thrm}
+\begin{proof}
+	The case $S = \varnothing$ is clear since all subgroups must contain 0, so assume $S$ is nonempty. It's clear that $LC(S)$ is a submodule of $M$. Since $S \subseteq LC(S)$, this means $LC(S)$ is a submodule of $M$ containing $S$, i.e. $\ang{S} \subseteq LC(S)$. But every linear combination of $S$ must be in any submodule containing $S$, so $LC(S) \subseteq \ang{S}$ too. Thus $\ang{S}= LC(S)$.
+\end{proof}
+
+If \{$M_{\alpha}\}_{\alpha}$ is a family of submodules of $M$, then $\bigcup_{\alpha}M_{\alpha}$ won't be a submodule in general (unlike $\bigcap_{\alpha}M_\alpha$), but it can certainly generate one. $\ang{\cup_{\alpha}M_{\alpha}}$ can be interpreted as the smallest submodule of $M$ containing each of the $M_{\alpha}$, and we can construct it by once again filling in all the missing linear combinations. \warn{(recall that all linear combinations must be finite by defn)}
+
+\begin{prop}
+	Let $\mathcal{A}$ be some index set, and let $\mathbb{P}^{\star}(\mathcal{A})$ denote the set of all nonempty finite subsets of $\mathcal{A}$. Then $\Ang{\;\bigcup_{\alpha}M_{\alpha}\;}$ is all finite sums of the form
+	\[
+	\sum_{\beta \in \mathcal{B}} m_{\beta},
+	\] where $\mathcal{B} \in \mathbb{P}^{\star}(\mathcal{A})$ and $m_{\beta} \in M_{\beta}$.
+\end{prop}
+\begin{proof}
+	All linear combinations of the elements of $\bigcup_{\alpha}M_{\alpha}$ is this form, and $LC = \Ang{\;\bigcup_{\alpha}M_{\alpha}\;}$ by Theorem \ref{thrm:LC} since $\bigcup_{\alpha}M_{\alpha}$ is nonempty (it must contain 0).
+\end{proof}
+This motivates the notation
+\[
+\sum_{\alpha}M_{\alpha} \doteq \ang{\; \bigcup_{\alpha}M_{\alpha}\;}
+\] 
+and the terminology ``sum of the family $\left\{ M_{\alpha} \right\}_{\alpha}$."
+
+\begin{thrm}[Modular Law]
+Let $M$ be an $R$-module, and let $A,B,C$ be submodules of $M$ with $C \subseteq A$. Then
+\[
+	A \uni (B+C) = (A\uni B) + C.
+\] 
+\end{thrm}
+\warn{I have no idea why the book introduced this now.}
+
+%--------------------------------------------------------------------------------
+% Morphisms
+%--------------------------------------------------------------------------------
+\section{Morphisms}
+
+As usual, an $R$-morphism respects the structure of $R$-modules.
+\begin{defn}[]
+An $R$-\textbf{morphism} is a map $f:M\to N$ between $R$-modules satisfying
+\begin{enumerate}
+	\item $f(x+y) = f(x) + f(y)$;
+	\item $f(\lambda x) = \lambda f(x)$.
+\end{enumerate}
+\end{defn}
+
+Note that if $R$ is a field, then an $R$-morphism is just a linear map.
+
+\begin{prop}
+Basic properties an $R$-morphism $f:M\to N$.
+\begin{enumerate}
+	\item $f(0_{M})=0_{N}$.
+	\item $f(-x)=-f(x)$.
+\end{enumerate}
+\end{prop}
+
+Because we like to be fancy, we'll use categorical language to describe specific variants of $R$-morphisms:
+\begin{align*}
+	R\text{-monomorphism}&: \quad\quad M \mono N,\\
+	R\text{-epimorphism}&: \quad\quad M \epi N.
+\end{align*}
+It's straightforward to show that the inverse of a bijective $R$-morphism is also an $R$-morphism, i.e. an $R$-isomorphism is just a bijective $R$-morphism. The usual properties of composed morphisms of course hold too:
+\begin{itemize}
+	\item The composition of morphisms/monos/epis is a morphism/mono/epi.
+	\item If $g \circ f$ is mono, then so is $f$.
+	\item If $g \circ f$ is epi, then so if $g$.
+\end{itemize}
+As you might expect, a map between modules induces maps between their submodules.
+
+\begin{prop}
+	Suppose we have an $R$-morphism $f:M\to N$. Then for any submodule $X$ of $M$, the image $f(X)$ is a submodule of $N$. Additionally, for any submodule $Y$ of $N$, the preimage $f^{-1}(Y)$ is a submodule of $ M$.
+\end{prop}
+These maps induce maps between the entire submodule lattices $L(M)$ and $L(N)$:
+\begin{equation*}
+	\begin{aligned}[c]
+		\begin{tikzcd}
+			L(M) \rar[bend left]{f^{\to }} & L(N) \lar[bend left]{f^{\leftarrow}}
+		\end{tikzcd}
+	\end{aligned}
+	\qquad\qquad
+	\begin{aligned}[c]
+		f^{\to }: X &\mapsto f(X) \\
+	f^{\leftarrow}: Y &\mapsto f^{-1}(Y)
+	\end{aligned}
+\end{equation*}
+Note that $f^{\to }$ and $f^{\leftarrow}$ are inclusion-preserving. We can also show how they interact with each other.
+\begin{prop}
+	Let $f$ be an $R$-morphism $M\to N$. If $A \in L(M)$ and $B \in L(N)$, then
+	\begin{enumerate}
+		\item $f^{\to }\left( A \isct f^{\ot}(B) \right) = f^{\to }(A) \isct B$;
+		\item $f^{\ot}\left( B + f^{\to }(A) \right) = f^{\ot}(B) + A$.
+	\end{enumerate}
+\end{prop}
+\warn{Prove this.}
+\begin{cor}
+	If $A \in L(M)$ and $B \in L(N)$, then
+	\begin{enumerate}
+		\item $f^{\to }(f^{\ot}(B)) = B \isct \im f$;
+		\item $f^{\ot}(f^{\to }(A)) = A + \ker f$.
+	\end{enumerate}
+\end{cor}
+
+
+\warn{Is there a way to generalize this to something other than modules? If we have a morphism $f:X\to Y$, will $f(x)$ and $f^{-1}(y)$ have that proerty if $x$ and $y$ have the property, respectively?}
+
+\warn{Is the defn of $R$-morphism really just saying that it preserves module-ness by respecting linear combs?}
+
+{\color{blue}
+	$f$ inj: There is a map $g:B\to A$ such that $g \circ f = 1_{A}$.
+
+	$f$ surj: There is a map $g:B\to A$ such that $f \circ g = 1_{B}$.
+}
+
+%-------------------
+% Lifts and Extensions of $R$-Morphisms
+%-------------------
+\subsection{Lifts and Extensions of \texorpdfstring{$R$}{R}-Morphisms}
+
+It's common to want to extend or lift an $R$-morphism. The following propositions give criteria for when this is possible.
+
+\begin{prop}
+	\label{prop:unique-lift}
+Suppose $A, B, C$ are nonempty.
+\[
+\begin{tikzcd}
+	& B \dar{f} \\
+	C \arrow[ur, dashed, "\exists! \;h"] \rar{g} & A
+\end{tikzcd}
+\] 
+Suppose $f$ is monic. Then there is a unique $R$-morphism $h$ lifting $g$ if and only if $\im g \subseteq \im f$. In this case, $h$ is epic if and only if $\im g = \im f$.
+\end{prop}
+\begin{proof}
+	The forward direction of the first statement is clear. To go backwards, note that any $c$, there is a $b$ such that $g(c) = f(b)$ since $\im g \subseteq \im f$. Define $h$ by $c \mapsto b$, then $f(h(c)) = f(b)=g(c)$, so $h$ lifts $g$. This map is well-defined and unique since $f$ is monic. To show it's an $R$-morphism, use the morphism properties of $f$ and $g$ to show $f(h(\lambda c)) = f(\lambda h(c))$ and $f(h(c_1+c_2)) = f(h(c_1)+h(c_2))$, then use the fact that $f$ is monic.
+
+	If $h$ is epic, it's straightforward to show that $\im f \subseteq \im g$, which proves their equality. Conversely, fix $b$ and suppose $\im f = \im g$. Then $f(b) = g(c) = f(h(c))$ for some $c$, which implies $b = h(c)$ since $f$ is monic.
+\end{proof}
+
+\begin{lem}
+Suppose $f$ and $g$ are $R$-morphisms. If $\ker f \subseteq \ker g$, then
+\[
+	f(x) = f(y) \implies g(x) = g(y).
+\] 
+\end{lem}
+\begin{proof}
+	If $f(x) = f(y)$, then $f(x-y)=0$, so $x-y \in \ker f \subseteq \ker g$. Thus $g(x-y) = 0$, so $g(x)=g(y)$.
+\end{proof}
+
+\begin{prop}
+	\label{prop:unique-ext}
+	Suppose $A, B, C$ are nonempty.
+	\[
+	\begin{tikzcd}
+		& B \dar[dashed]{\exists! \; h} \\
+		A \arrow[ur, "f"] \rar{g} & C
+	\end{tikzcd}
+	\] 
+	Suppose $f$ is epic. Then there is a unique $R$-morphism $h$ extending $g$ if and only if $\ker f \subseteq \ker g$. In this case, $h$ is monic if and only if $\ker f=\ker g$.
+\end{prop}
+\begin{proof}
+	The forward direction of the first statement is clear. To go backwards, since $f$ is epic, any $b$ can be written $b=f(a)$ for some $a$. Then define $h:b \mapsto g(a)$. This clearly lifts $g$, and it is well-defined and unique by the preceding lemma. Showing it's an $R$-morphism is a standard check by writing $b=f(a)$ and using the morphism properties of $f$ and $g$.
+
+	If $h$ is monic, then for $a \in \ker g$, we have $h(f(a)) = g(a)=0$. But since $f$ is monic, this implies $f(a)=0$, so $a \in \ker f$. Thus $\ker g \subseteq \ker f$, and we already know the opposite inclusion. Conversely, using the $b=f(a)$ fact, $h(b_1)=b(b_2)\implies g(a_1)=g(a_2)$, so $a_1-a_2 \in \ker g = \ker  f$, so $b_1=f(a_1) = f(a_2)=b_2$.
+\end{proof}
+
+
+%-------------------
+% Exact Sequences
+%-------------------
+\subsection{Exact Sequences}
+
+We'll start out by noting some obvious characterizations of morphisms in terms of exact sequences. Quick reminder if if a sequence is exact, the composition of any two subsequent morphisms is 0.
+\begin{prop}
+	Monos, epis, and isos in terms of exact sequences:
+\begin{enumerate}
+	\item $f$ is monic $\iff 0\to M \stackrel{f}{\to } N$ is exact.
+	\item $f$ is epic $\iff M \stackrel{f}{\to } N \to 0$ is exact.
+	\item $f$ is iso $\iff 0 \to M \stackrel{f}{\to } N \to 0$ is exact.
+\end{enumerate}
+\end{prop}
+
+Now to prove that a bunch of diagrams commute. I don't include any diagram chases, but luckily only the Four Lemma needs one.
+\begin{prop}
+The diagram commutes if the row is exact and $\theta g = 0$.
+\[
+\begin{tikzcd}
+	& & A \arrow[dl, dashed, "\exists! \;h"'] \dar{g} \\
+	0 \rar & X \rar{f} & Y \rar{\theta} & Z
+\end{tikzcd}
+\] 
+\end{prop}
+\begin{proof}
+	Our assumptions say that $f$ is monic and $\im g \subseteq \ker \theta = \im f$, so $h$ exists and is unique by Proposition \ref{prop:unique-lift}.
+\end{proof}
+
+\begin{cor}
+The diagram commutes if $fg=0$.
+\[
+\begin{tikzcd}
+	& P \arrow[dl, dashed, "\exists!\;h"'] \dar{g} \\
+	\ker f \rar[hook] & M \rar{f} & N
+\end{tikzcd}
+\] 
+\end{cor}
+\begin{proof}
+	Note that the bottom row is exact. Then we can invoke the previous proposition.
+\end{proof}
+
+\begin{thrm}[Four Lemma]
+Suppose the following diagram of $R$-modules and $R$-morphisms commutes and has exact rows.
+\[
+\begin{tikzcd}
+	A \rar\dar{\alpha} & B \rar\dar{\beta} & C\rar\dar{\gamma} & D\dar{\delta} \\
+	A'\rar & B'\rar & C'\rar & D'
+\end{tikzcd}
+\] Then the following hold:
+\begin{enumerate}
+	\item If $\alpha,\gamma$ are epic and $\delta$ is monic, then $\beta$ is epic.
+	\item If $\alpha$ is epic and $\beta,\gamma$ are monic, then $\gamma$ is monic.
+\end{enumerate}
+\end{thrm}
+
+\begin{thrm}[Five Lemma]
+Suppose the following diagram of $R$-modules and $R$-morphisms commutes and has exact rows.
+\[
+\begin{tikzcd}
+	A\rar\dar{\alpha_1} & B\rar\dar{\alpha_2} & C\rar\dar{\alpha_3} & D\rar\dar{\alpha_4} & E\dar{\alpha_5} \\
+	A'\rar & B'\rar & C'\rar & D'\rar & E'
+\end{tikzcd}
+\] 
+If $\alpha_1,\alpha_2,\alpha_4,\alpha_5$ are iso, then so is $\alpha_3$.
+\end{thrm}
+\begin{proof}
+	Apply the Four Lemma to the first three squares to show that $\alpha_3$ is monic, and to the last three squares to show that $\alpha_3$ is epic. Since it's an $R$-morphism, this is enough to show it's iso.
+\end{proof}
+
+\begin{cor}
+Suppose the following diagram of $R$-modules and $R$-morphisms commutes and has exact rows.
+\[
+\begin{tikzcd}
+	0\rar & A\rar\dar{\alpha} & B\rar\dar{\beta} & C\rar\dar{\gamma} & 0 \\
+        0\rar & A'\rar & B'\rar & C'\rar & 0
+\end{tikzcd}
+\] 
+If $\alpha,\gamma$ are iso, then so is $\beta$.
+\end{cor}
+\warn{Check D\&F about the case "any two are iso".}
+
+This last corollarly is just a special case of the Five Lemma when our two rows are short exact sequences. \warn{If the D\&F case applies here, that would be very useful for determining when a map of SESs is iso.}
+
+\warn{Are all epis split in the category of modules?}
+
+
+
+\end{document}

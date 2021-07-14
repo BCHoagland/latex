@@ -4,7 +4,7 @@
 %\toggletrue{sectionheaders}
 \newcommand{\docTitle}{Category Theory}
 \usepackage{/Users/bradenhoagland/latex/styles/common}
-\usepackage{/Users/bradenhoagland/latex/styles/colors}
+\importStyles{modern}{rainbow}{boxy}
 
 \DeclareMathOperator{\op}{op}
 \DeclareMathOperator{\ob}{ob}
@@ -29,11 +29,11 @@
 
 
 \begin{defn}
-	A \textbf{category} $\cat{C}$ is a collection of \textbf{objects} $\ob(\cat{C})$ and \textbf{morphisms} $\mor({\cat{C} })$. There are several requirements:
+	A \textbf{category} $\cat{C}$ is a collection of \textbf{objects} $\ob(\cat{C})$ and \textbf{morphisms} $\mor({\cat{C} })$, where $\hom(A,B)$ denotes the morphsisms from object $A$ to object $B$. There are several requirements:
 	\begin{enumerate}
 		\item Morphisms must compose: $(f, g) \mapsto gf.$
 		\item Morphism composition is associative.
-		\item If $A \neq C$ or $B \neq D$, then $\hom_{\cat{C}}(A,B)$ and $\hom_{\cat{C}}(C,D)$ are disjoint sets.
+		\item If $A \neq C$ or $B \neq D$, then $\hom(A,B)$ and $\hom(C,D)$ are disjoint.
 		\item Each object has an identity morphism, which is a two-sided identity.
 	\end{enumerate}
 \end{defn}
@@ -42,7 +42,7 @@
 	\includegraphics[scale=1.4]{fig/category.pdf}
 \end{figure}
 
-A category is \textbf{concrete} if, informally, its objects are underlying sets and its morphisms are functions between them, e.g. $\cat{Set} , \cat{Top} , \cat{Grp} $. \textbf{Abstract} categories don't have this structure, e.g. $BG$ for a group $G$.
+A category is \textbf{concrete} if, informally, its objects are underlying sets and its morphisms are functions between them, e.g. $\cat{Set} , \cat{Top} , \cat{Grp} $. By contrast, \textbf{abstract} categories don't have this structure, e.g. $BG$ for a group $G$.
 
 A category is \textbf{discrete} if all its morphisms are identities, i.e. all its objects are isolated.
 
@@ -164,12 +164,10 @@ A \arrow[ru, "f"] \arrow[rrr, dashed, shift right] &                            
 \end{tikzcd}
 \] 
 
-\begin{defn}
-	A \textbf{contravariant functor} is the same but with the morphisms $\mathcal{F} f$ reversed. We an represent this by a standard functor but with a different domain:
-	\[
+A \textbf{contravariant functor} is the same but with the morphisms $\mathcal{F} f$ reversed. This is just a covariant functor in disguise, though: we can represent it by a covariant functor with domain $\cat{C}^{\op}$.
+\[
 	\mathcal{F}: \cat{C}^{\op}\to \cat{D}.
-	\]
-\end{defn}
+\]
 \[
 \begin{tikzcd}                                                   & B \arrow[dd, "g"] \arrow[rrr, dashed] &  &                                           & \mathcal{F}B \arrow[dl, blue, "\mathcal{F}f"'] \\A \arrow[ru, "f"] \arrow[rrr, dashed, shift right] &                                       &  & \mathcal{F}A \arrow[dr, blue, "\mathcal{F}h"'] &                                           \\                                                   & C \arrow[lu, "h"] \arrow[rrr, dashed] &  &                                           & \mathcal{F}C \arrow[uu, blue, "\mathcal{F}g"']
 \end{tikzcd}

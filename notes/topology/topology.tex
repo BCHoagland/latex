@@ -4,7 +4,7 @@
 %\toggletrue{sectionheaders}
 \newcommand{\docTitle}{Topology}
 \usepackage{/Users/bradenhoagland/latex/styles/common}
-\usepackage{/Users/bradenhoagland/latex/styles/colors}
+\importStyles{modern}{rainbow}{boxy}
 
 %\renewcommand{\theenumi}{\alph{enumi}}
 
@@ -86,7 +86,6 @@ From this we see that ``fine" is a notion of a large topology, and ``coarse" is 
 \begin{proof}
 This is a straightforward application of DeMorgan's Laws.
 \end{proof}
-
 Properties of a closed set $A$ in a subspace $Y$ of $X$:
 \begin{itemize}
 	\item $A$ is the intersection of $Y$ and a closed set in $X$.
@@ -897,7 +896,7 @@ Arbitrary products of compact spaces are compact.
 	$K \subset \mathbb{R}^{n}$ (with the standard topology) is compact if and only if it's closed and bounded.
 \end{thrm}
 \begin{proof}
-	\textbf{Forward:} Since $\mathbb{R}^{n}$ is Hausdorff and $K$ is compact, $K$ is also closed. Additionally, $\left\{ B(0,r) \right\}_{r>0}$ covers $K$, so we can find a finite subcover. Because of the nested structure, that means there's a single $B(0,r)$ containing $K$, i.e. $K$ is bounded.
+	\textbf{Forward:} Since $\mathbb{R}^{n}$ is Hausdorff and $K$ is compact, $K$ is also closed. Additionally, the set $\left\{ B(0,r) \right\}_{r>0}$ covers $K$, so we can find a finite subcover. Because of the nested structure, that means there's a single $B(0,r)$ containing $K$, i.e. $K$ is bounded.
 
 	\textbf{Backward:} Since $K$ is bounded, $K \subset B(0,r)$ for some $r$. Then $K \subset [-r,r]^{n}$, which we know to be compact. Since $K$ is the subset of a compact set and it's closed by assumption, $K$ must be compact.
 \end{proof}
@@ -1100,10 +1099,14 @@ then their induced homomorphisms satisfy $(g\circ f)_{*}=g_{*}\circ f_{*}$.
 \begin{thrm}[]
 	$\pi_1(S^{1})\cong \mathbb{Z}$.
 \end{thrm}
+A simple enough and intuitive statement, but it has lots of important corollaries. The following is one of them.
 
 \begin{thrm}[Brouwer Fixed Point]
 	If $X \cong D^{2}$ (the closed unit disk), then every continuous map $f:X\to X$ has a fixed point.
 \end{thrm}
+\begin{proof}
+	We'll prove this for the case when $X$ actually is $D^{2}$, since the homeomorphic case follows easily from it. Assume there's no fixed point, then the following map is well-defined: draw a ray starting at $f(x)$ and going through $x$, then map $x$ to the point where this ray intersects $\partial D^2 = S^{1}$. But this map is continuous and a retraction onto $S^{1}$, {\color{red}(did I put the following in the notes anywhere? I remember it from hw)} so it induces a surjection $\pi_1(D^{2}) \epi \pi_1(S^{1})$. But this is impossible since $\pi_1(D^{2}) \cong 1$ and $\pi_1(S^{1}) \cong \mathbb{Z}$. Thus there must be a fixed point somewhere on $D^{2}$.
+\end{proof}
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -1115,11 +1118,7 @@ then their induced homomorphisms satisfy $(g\circ f)_{*}=g_{*}\circ f_{*}$.
 \begin{defn}[]
 	A \textbf{covering space} of $B$ is a space $E$ and a \textbf{covering map} $p:E\to B$. For all $x \in B$, there is a neighborhood $U$ of $x$ such that $p^{-1}(U)$ is a disjoint union of homeomorphic copies of $U$. Such neighborhoods are called \textbf{evenly covered}.
 \end{defn}
-Equivalently, a covering space of is a fiber bundle with discrete fibers. Note that $p$ must be continuous and surjective.
-
-This is more about open sets than points. Once we get $U$ from $x$, we forget about $x$ in the definition.
-
-{\color{red}Figure.}
+Equivalently, a covering space of is a fiber bundle with discrete fibers. Note that $p$ must be continuous and surjective. This is more about open sets than points. Once we get $U$ from $x$, we forget about $x$ in the definition.
 
 \begin{ex}[]
 	$\mathbb{R}$ is a covering space of $S^{1}$. One possible covering map is
