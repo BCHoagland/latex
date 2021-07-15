@@ -2,41 +2,55 @@
 % Title Page
 %--------------------------------------------------------------------------------
 \newcommand{\formalTitle}[3]{
-        % all introductory pages have lowercase roman numerals as page numbers
-        \pagenumbering{roman}
-
         % title page
         \thispagestyle{empty}
         \begin{center}
-                \vspace*{20mm}
+		\iftoggle{separateTitlePage}{
+			\vspace*{20mm}
+		}{}
                 \MakeUppercase{
                         \textbf{#1}\\
-                        \vspace{5mm}
-                        {\small #2}\\
                         \vspace{10mm}
+                        {\footnotesize #2}\\
+                        \vspace{5mm}
                 }
-                #3
+		{\footnotesize\textit{#3}}
         \end{center}
-        \newpage
+	\iftoggle{separateTitlePage}{
+		\newpage
+	}{}
 }
 
 %--------------------------------------------------------------------------------
 % Sections
 %--------------------------------------------------------------------------------
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}{\center\bfseries}{\thesubsection}{1em}{}
 
 %--------------------------------------------------------------------------------
 % Header and Footer
+%--------------------------------------------------------------------------------
+\newcommand{\formalHeader}[2]{
+	% odd pages
+	\iftoggle{sectionheaders}{
+		\fancyhead[RO]{\color{gray}\small\textit{\rightmark} \quad \thepage}
+	}{
+		\fancyhead[RO]{\color{gray}\small\textit{#2} \quad \thepage}
+	}
+	% even pages
+	\fancyhead[LE]{\color{gray}\small\thepage \quad \textit{#1}}
+}
+
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\sectionmark}[1]{\markboth{}{#1}}
 \setlength{\headsep}{0.3in}
 
 \fancyhf{}
-\fancyhead[RE]{\color{gray}\thepage}
-\fancyhead[LO]{\color{gray}\thepage}
-\iftoggle{sectionheaders}{
-        \fancyhead[C]{\color{gray}\small\MakeUppercase{\rightmark}}
-}{
-        \fancyhead[C]{\color{gray}\small\MakeUppercase{\docTitle}}
-}
+%\fancyhead[RE]{\color{gray}\thepage}
+%\fancyhead[LO]{\color{gray}\thepage}
+%\iftoggle{sectionheaders}{
+%        \fancyhead[C]{\color{gray}\small\MakeUppercase{\rightmark}}
+%}{
+%        \fancyhead[C]{\color{gray}\small\MakeUppercase{\docTitle}}
+%}
