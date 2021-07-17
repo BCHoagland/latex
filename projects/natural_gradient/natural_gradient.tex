@@ -19,8 +19,6 @@
 
 \begin{document}
 
-%\markboth{Braden Hoagland}{The Natural Gradient and Reinforcement Learning}
-
 % =====
 % TITLE
 % =====
@@ -42,9 +40,9 @@ Although widely used as a simple method for optimization, traditional gradient d
 % INTRODUCTION
 % ============
 \subheader{Introduction}
-Gradient descent is a widely-used used method for minimizing nonlinear equations, and its stochastic variant is a common way of fitting models to large amounts of data. Although it is follows the direction of steepest descent in Euclidean spaces, it does not do so on general manifolds\cite{amari}. This issue mainly arises due to differing notions of the gradient of a function on different spaces, but can be addressed by introducing a regularizer. This takes the form of a matrix that modifies the Euclidiean gradient to be correct in more general metric spaces, and is referred to as the ``natural gradient".
+Gradient descent is a widely-used used method for minimizing nonlinear equations, and its stochastic variant is a common way of fitting models to large amounts of data. Although it is follows the direction of steepest descent in Euclidean spaces, it does not do so on general manifolds.\cite{amari} This issue mainly arises due to differing notions of the gradient of a function on different spaces, but can be addressed by introducing a regularizer. This takes the form of a matrix that modifies the Euclidiean gradient to be correct in more general metric spaces, and is referred to as the ``natural gradient".
 
-In this paper, we will motivate the natural gradient using the gradient descent framework, then highlight its properties when applied specifically to gradient descent on probability spaces. We will then show its applications to the field of reinforcement learning, in which it has been used to create state-of-the-art algorithms for continuous control tasks\cite{peters-schaal} \cite{trpo}.
+In this paper, we will motivate the natural gradient using the gradient descent framework, then highlight its properties when applied specifically to gradient descent on probability spaces. We will then show its applications to the field of reinforcement learning, in which it has been used to create state-of-the-art algorithms for continuous control tasks.\cite{peters-schaal, trpo}
 
 % ==================================
 % GRADIENT DESCENT AND TRUST REGIONS
@@ -56,7 +54,7 @@ In gradient descent, one of the simplest methods of optimization, a differentiab
 \end{gather*}
 where $\alpha$ is a step size chosen small enough to keep the local gradient information accurate. An exact line search for $\alpha_t$ makes each step more efficient, but is only feasible when computing the minimum of $f(x)$ along a given search direction is cheap. This occurs when the form of $f(x)$ is known and well understood, such as $f(x)$ being quadratic. For arbitrary functions, a backtracking line search may be used instead. An optimistic $\alpha$ is chosen and then repeatedly decreased until a decrease condition on $f(x_t + \alpha_t \nabla f(x_t))$ is met. A simpler method is to just use a fixed step size, although the performance of this is strictly worse than that of the line search methods.
 
-Gradient descent can also be viewed as a trust region method\cite{tr}. Trust region methods construct a model of $f(x)$ that has bounded error over some small region around the current iterate. This model is constructed in such a way that it can be easily optimized at each step. The optimization of $f(x)$ reduces to the optimization of many smaller sub-problems, namely the optimization of many locally-accurate models of $f(x)$.
+Gradient descent can also be viewed as a trust region method.\cite{tr} Trust region methods construct a model of $f(x)$ that has bounded error over some small region around the current iterate. This model is constructed in such a way that it can be easily optimized at each step. The optimization of $f(x)$ reduces to the optimization of many smaller sub-problems, namely the optimization of many locally-accurate models of $f(x)$.
 
 In the particular case of gradient descent, the model is linear and a constraint is placed on the distance between iterates $x_t$ and $x_{t+1}$.
 \begin{gather*}
@@ -77,7 +75,7 @@ A simple example is the optimization of probability distributions parameterized 
     \caption{The parameters of the orange distributions all have the same Euclidean distance from the parameters of the blue distribution, yet each orange distribution is considerably qualitatively different.}
 \end{figure}
 
-In fact, for Riemannian manifolds in general, the gradient isn't the steepest descent direction\cite{amari}. The direction of steepest descent for a function $f$ on a manifold is defined as follows: it is the vector $dx$ that minimizes $f(x+dx)$ under the constraint that $\vert dw \vert^2$ is a sufficiently small constant. In Euclidean space, $\vert dw \vert^2 = \sum_i \vert dx_i \vert^2$, so gradient descent uses the correct notion of distance. On a Riemannian manifold, however, this form is a more general quadratic $\vert dw \vert^2 = \sum_{i,j} g_{ij}(x) \, dx_i \, dx_j = x^T G x$. The elements $g_{ij}$ make up what's called the metric tensor $G$ for the coordinate system based on $x$.\cite{amari}
+In fact, for Riemannian manifolds in general, the gradient isn't the steepest descent direction.\cite{amari} The direction of steepest descent for a function $f$ on a manifold is defined as follows: it is the vector $dx$ that minimizes $f(x+dx)$ under the constraint that $\vert dw \vert^2$ is a sufficiently small constant. In Euclidean space, $\vert dw \vert^2 = \sum_i \vert dx_i \vert^2$, so gradient descent uses the correct notion of distance. On a Riemannian manifold, however, this form is a more general quadratic $\vert dw \vert^2 = \sum_{i,j} g_{ij}(x) \, dx_i \, dx_j = x^T G x$. The elements $g_{ij}$ make up what's called the metric tensor $G$ for the coordinate system based on $x$.\cite{amari}
 
 We can describe a point on a general manifold by transforming a point from the base coordinates using the metric tensor $G$. Intuitively, this matrix weights certain dimensions in our base coordinate system more than others when describing distance in the corresponding metric space.
 
@@ -157,7 +155,7 @@ This general formulation is not practical, however, since $G$ is unknown for an 
 % ======================================
 \subheader{The Natural Gradient on Probability Spaces}
 
-In order to use the natural gradient to optimize a function over probability space, we must express a probability metric with a matrix. We can then use it in place of the metric tensor $G$. A suitable metric for this purpose is the Fisher information metric\cite{amari}, which can be expressed as the expected outer product of the gradient of a log probability:
+In order to use the natural gradient to optimize a function over probability space, we must express a probability metric with a matrix. We can then use it in place of the metric tensor $G$. A suitable metric for this purpose is the Fisher information metric,\cite{amari} which can be expressed as the expected outer product of the gradient of a log probability:
 \begin{gather*}
 F = \mathbb{E}_{x \sim p_\theta} \big[ (\nabla \log p_\theta(x)) (\nabla \log p_\theta(x))^T \big].
 \end{gather*}
@@ -175,7 +173,7 @@ It is natural to use this to define our trust region during the optimization pro
     \theta_{t+1} = \arg\min_\theta f(\theta_t) + \nabla f(\theta_t)^T (\theta-\theta_t) \\
     \text{s.t. } D_{KL}(p_{\theta_t} \;\Vert\; p_\theta) = \varepsilon.
 \end{gather*}
-To use this constraint with the natural gradient update scheme would not be feasible, as the KL divergence is not expressed in terms of some matrix. A workaround for this issue is to instead approximate the KL divergence using a second order Taylor expansion\cite{ng-deriv}. Letting $d = \theta - \theta_t$, the KL divergence before the expansion can be written
+To use this constraint with the natural gradient update scheme would not be feasible, as the KL divergence is not expressed in terms of some matrix. A workaround for this issue is to instead approximate the KL divergence using a second order Taylor expansion,\cite{ng-deriv} Letting $d = \theta - \theta_t$, the KL divergence before the expansion can be written
 \begin{align*}
     D_{KL}(p_{\theta_t} \;\Vert\; p_\theta) &= \int p_{\theta_t}(x) \log \frac{p_{\theta_t}(x)}{p_{\theta}(x)} dx \\
     &= \int p_{\theta_t}(x) \log p_{\theta_t}(x) dx - \int p_{\theta_t}(x) \log p_{\theta}(x) dx.
@@ -296,13 +294,13 @@ We now begin calculating the gradient term in the gradient ascent scheme.
     \nabla_\theta \tilde{J}(\theta) &= \nabla_\theta \mathbb{E}_{\pi_\theta} \Big[ \sum_{t=0}^T r(s_t, a_t) \Big] \\
     &= \nabla_\theta \int p(\tau \vert \pi_\theta) \sum_{t=0}^T r(s_t, a_t) \,d\tau \\
     &= \int \nabla_\theta p(\tau \vert \pi_\theta) \sum_{t=0}^T r(s_t, a_t) \,d\tau.
-    \intertext{By examining the expression for $\nabla_\theta p(\tau \vert \pi_\theta)$ above, it is clear that the gradient will rely on the transition dynamics. Since the dynamics are unknown, we cannot calculate this. We can, however, use the identity $\nabla \log x = \frac{\nabla x}{x}$ to transform the integral\cite{pg}.}
+    \intertext{By examining the expression for $\nabla_\theta p(\tau \vert \pi_\theta)$ above, it is clear that the gradient will rely on the transition dynamics. Since the dynamics are unknown, we cannot calculate this. We can, however, use the identity $\nabla \log x = \frac{\nabla x}{x}$ to transform the integral.\cite{pg}}
     &= \int p(\tau \vert \pi_\theta) \nabla_\theta \log p(\tau \vert \pi_\theta) \sum_{t=0}^T r(s_t, a_t) \,d\tau \\
     &= \mathbb{E}_{\pi_\theta} \Big[ \nabla_\theta \log p(\tau \vert \pi_\theta) \sum_{t=0}^T r(s_t, a_t) \Big].
     \intertext{By examining the expression for the log density of $\tau$, we see that the gradient of this term does \textit{not} rely on the transition dynamics and instead relies only on $\log \pi_\theta$. Our final gradient expression is}
     \nabla_\theta \tilde{J}(\theta) &= \mathbb{E}_{\pi_\theta} \bigg[ \bigg( \sum_{t=0}^T \nabla_\theta \log \pi_\theta(a_t \vert s_t) \bigg) \bigg( \sum_{t=0}^T r(s_t, a_t) \bigg) \bigg].
 \end{align*}
-Since we control $\theta$, we can determine the form of $\pi_\theta$ and know how to calculate log densities. Thus we can calculate the terms inside the expectation exactly, and the expectation itself we can approximate using sampling.\cite{pg}
+Since we control $\theta$, we can determine the form of $\pi_\theta$ and know how to calculate log densities. Thus we can calculate the terms inside the expectation exactly, and the expectation itself we can approximate using sampling\cite{pg}.
 
 This allows us to define a more explicit policy gradient algorithm in which we sample multiple trajectories, calculate the above expectation using these samples, and then use this to perform a gradient update on the parameters of our policy.
 
@@ -326,7 +324,7 @@ This allows us to define a more explicit policy gradient algorithm in which we s
 
 One shortcoming of this algorithm is its data inefficiency. Multiple trajectories are needed to gain an accurate estimation of the policy gradient, but gaining multiple trajectories requires many interactions with the environment.
 
-To address this inefficiency, we can take natural gradient steps instead\cite{npg}. We saw that the natural gradient made maximum likelihood estimation more efficient, so it is reasonable to assume that it may have a similar effect here. Since the policy gradient method operates in probability space, using the natural gradient is equivalent to left multiplying the policy gradient by the inverse of the Fisher information matrix. This gives us the natural policy gradient method, which uses the same sampling approximations as in Algorithm~\ref{alg:PG}.
+To address this inefficiency, we can take natural gradient steps instead.\cite{npg} We saw that the natural gradient made maximum likelihood estimation more efficient, so it is reasonable to assume that it may have a similar effect here. Since the policy gradient method operates in probability space, using the natural gradient is equivalent to left multiplying the policy gradient by the inverse of the Fisher information matrix. This gives us the natural policy gradient method, which uses the same sampling approximations as in Algorithm~\ref{alg:PG}.
 
 {\centering
 \begin{minipage}{0.7\linewidth}
@@ -362,13 +360,13 @@ This particular environment allowed for a simple policy with few parameters, but
 
 \subheader{Efficiently Calculating the Fisher Information Matrix}
 
-Instead of forming and then inverting the Fisher information matrix, it is of computational benefit to instead calculate just the matrix vector product $g = F^{-1} \nabla_\theta J(\theta)$. If we left-multiply both sides of this equation by $F$, we get $F g = \nabla_\theta J(\theta)$. Then if we have access to a function that maps $g \to F g$, we can solve this system of equations without ever explicitly forming $F$ or $F^{-1}$. One possible choice for solving this system is using the conjugate gradient method, which was employed successfully in the Trust Region Policy Optimization algorithm, a modification of the natural policy gradient with performance improvement guarantees\cite{trpo}.
+Instead of forming and then inverting the Fisher information matrix, it is of computational benefit to instead calculate just the matrix vector product $g = F^{-1} \nabla_\theta J(\theta)$. If we left-multiply both sides of this equation by $F$, we get $F g = \nabla_\theta J(\theta)$. Then if we have access to a function that maps $g \to F g$, we can solve this system of equations without ever explicitly forming $F$ or $F^{-1}$. One possible choice for solving this system is using the conjugate gradient method, which was employed successfully in the Trust Region Policy Optimization algorithm, a modification of the natural policy gradient with performance improvement guarantees.\cite{trpo}
 
 \subheader{Conclusion}
 
-We saw that the natural gradient extends gradient descent into general metric spaces, which is especially useful when optimizing probabilistic models. We also saw that the natural gradient can increase the efficiency of reinforcement learning algorithms. In fact, it plays a major role in most state-of-the-art reinforcement learning methods. For example, the aforementioned Trust Region Policy Optimization is a recent extension of the natural gradient\cite{trpo}, and Proximal Policy Optimization uses the connection between the natural gradient and KL divergence to relax the trust region constraint for more efficient policy updates\cite{ppo}.
+We saw that the natural gradient extends gradient descent into general metric spaces, which is especially useful when optimizing probabilistic models. We also saw that the natural gradient can increase the efficiency of reinforcement learning algorithms. In fact, it plays a major role in most state-of-the-art reinforcement learning methods. For example, the aforementioned Trust Region Policy Optimization is a recent extension of the natural gradient,\cite{trpo} and Proximal Policy Optimization uses the connection between the natural gradient and KL divergence to relax the trust region constraint for more efficient policy updates.\cite{ppo}
 
-It is also possible to derive completely different optimization methods using the same trust region formulation. It is possible to limit policy updates using the Wasserstein distance from optimal transport theory instead of KL divergence\cite{wgf}. Such methods can be shown to have ties to the natural gradient that we derived\cite{ng-ot}. This also shows potential connections between reinforcement learning and generative modeling, the latter of which commonly uses Wasserstein distances. The extent of the connections between these two branches of machine learning and the effect of trust regions on optimizing generative models are outside the scope of this paper, but are potential areas for future research.
+It is also possible to derive completely different optimization methods using the same trust region formulation. It is possible to limit policy updates using the Wasserstein distance from optimal transport theory instead of KL divergence.\cite{wgf} Such methods can be shown to have ties to the natural gradient that we derived.\cite{ng-ot} This also shows potential connections between reinforcement learning and generative modeling, the latter of which commonly uses Wasserstein distances. The extent of the connections between these two branches of machine learning and the effect of trust regions on optimizing generative models are outside the scope of this paper, but are potential areas for future research.
 
 % \newpage
 %\subheader{References}

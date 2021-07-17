@@ -42,7 +42,9 @@ Modules are a generalization of vector spaces, replacing the field of scalars wi
 \textbf{Right $R$-modules} are defined similarly.
 \end{defn}
 
-Note that if $R$ is commutative, then {\color{red}a left $R$-module is the same thing as a right $R $-module.} If $F$ is a field, then an $F$-module is the same thing as an $F$-vector space.
+Note that if $R$ is commutative, then any left $R$-module can be given the structure of a right $R$-module by defining $x \lambda \doteq \lambda x$ (commutativity of $R$ is needed to prove 3). Similarly, any right $R$-module is also a left $R$-modules. Thus when $R$ is commutative, left and right $R$-modules are really the same thing, so we don't need to specify.
+
+If $F$ is a field, then an $F$-module is the same thing as an $F$-vector space.
 
 \begin{prop}
 Basic properties of modules:
@@ -57,7 +59,7 @@ If $R$ is a division ring, then we also have
 \end{enumerate}
 \end{prop}
 
-The definition of modules gives us addition and scalar multiplication, but we still don't have a way of multiplying module elements together. Providing this is exactly the role of an algebra, which adds a ring structure to a module. \warn{It seems like there isn't much of a difference between a ring a an algebra, so you should ask someone about this...}
+The definition of modules gives us addition and scalar multiplication, but we still don't have a way of multiplying module elements together. Providing this is exactly the role of an algebra, which adds a ring structure to a module. \warn{It seems like there isn't much of a difference between a ring and an algebra, so you should ask someone about this...}
 
 \begin{defn}[]
 Let $R$ be a commutative unital ring. An $R$-\textbf{algebra} is an $R$-module $M$ along with a ``multiplication" map
@@ -91,7 +93,7 @@ $N$ is an submodule of $M$ if and only if
 \lambda x + \mu y \in N
 \] for all $x,y \in N$ and $\lambda,\mu \in R$.
 \end{prop}
-Thus given any set $S \subseteq M$, we can form a submodule of $M$ by adding in all linear combinations of the elements of $S$. This could be a good enough definition of $\ang{S}$, but we have to make sure that we aren't adding in any unnecessary terms. The following definition ensures this is the case, the next proposition shows that the definition makes sense, and the following theorem shows that our definition is equivalent to the linear combination approach.
+Thus given any set $S \subseteq M$, we can form a submodule of $M$ by adding in all linear combinations of the elements of $S$ (remember that linear combinations are by definition finite sums, so the induction works). This could be a good enough definition of $\ang{S}$, but we have to make sure that we aren't adding in any unnecessary terms. The following definition ensures this is the case, the next proposition shows that the definition makes sense, and the following theorem shows that our definition is equivalent to the linear combination approach.
 
 \begin{defn}[]
 Given a set $S \subseteq M$, let $\ang{S}$ denote the intersection of all submodules of $M$ containing $S$.
@@ -116,7 +118,7 @@ If $\left\{ M_{\alpha} \right\}_{\alpha}$ is a family of submodules of $M$, then
 	The case $S = \varnothing$ is clear since all subgroups must contain 0, so assume $S$ is nonempty. It's clear that $LC(S)$ is a submodule of $M$. Since $S \subseteq LC(S)$, this means $LC(S)$ is a submodule of $M$ containing $S$, i.e. $\ang{S} \subseteq LC(S)$. But every linear combination of $S$ must be in any submodule containing $S$, so $LC(S) \subseteq \ang{S}$ too. Thus $\ang{S}= LC(S)$.
 \end{proof}
 
-If \{$M_{\alpha}\}_{\alpha}$ is a family of submodules of $M$, then $\bigcup_{\alpha}M_{\alpha}$ won't be a submodule in general (unlike $\bigcap_{\alpha}M_\alpha$), but it can certainly generate one. $\ang{\cup_{\alpha}M_{\alpha}}$ can be interpreted as the smallest submodule of $M$ containing each of the $M_{\alpha}$, and we can construct it by once again filling in all the missing linear combinations. \warn{(recall that all linear combinations must be finite by defn)}
+If \{$M_{\alpha}\}_{\alpha}$ is a family of submodules of $M$, then $\bigcup_{\alpha}M_{\alpha}$ won't be a submodule in general (unlike $\bigcap_{\alpha}M_\alpha$), but it can certainly generate one. $\ang{\cup_{\alpha}M_{\alpha}}$ can be interpreted as the smallest submodule of $M$ containing each of the $M_{\alpha}$, and we can construct it by once again filling in all the missing linear combinations.
 
 \begin{prop}
 	Let $\mathcal{A}$ be some index set, and let $\mathbb{P}^{\star}(\mathcal{A})$ denote the set of all nonempty finite subsets of $\mathcal{A}$. Then $\Ang{\;\bigcup_{\alpha}M_{\alpha}\;}$ is all finite sums of the form
@@ -360,10 +362,28 @@ This last corollarly is just a special case of the Five Lemma when our two rows 
 
 \warn{Are all epis split in the category of modules?}
 
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Constructing Modules
+
+\chapter{Constructing Modules}
+
 %--------------------------------------------------------------------------------
 % Quotient Modules
 %--------------------------------------------------------------------------------
 \section{Quotient Modules}
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Special Modules
+
+\chapter{Special Modules}
 
 %--------------------------------------------------------------------------------
 % Chain Conditions and Towers
@@ -372,6 +392,90 @@ This last corollarly is just a special case of the Five Lemma when our two rows 
 
 \warn{What does being maximal look like if there are multiple towers? Can more than 1 thing be maximal?}
 
+Any modules can be broken down into some ascending or descending sequences of submodules. If we restrict our attention to only modules with finite such sequences, then we characterize these modules by defining the ``height" of their submodule chains, which we'll define later. It'll take a bit of work to get there, though. To begin, let's formalize the ascending/descending submodule sequence concept.
+
+\begin{defn}[]
+An $R$-module $M$ is \textbf{Noetherian} if for all ascending submodule chains
+\[
+M_0 \subseteq M_1 \subseteq M_2 \subseteq \cdots,
+\] there is some $n \in \mathbb{N}$ such that $M_{n+k} = M_{n}$ for all $k \in \mathbb{N}$, i.e. the chain stabilizes at $n$. We say that $M$ is \textbf{Artinian} if for all descending chains
+\[
+M_0 \supseteq M_1 \supseteq M_2 \supseteq \cdots,
+\] there is again some $n$ at which the chain stabilizes. We call these two qualities \textbf{chain conditions}.
+\end{defn}
+
+We can also define similar concepts for unordered sets of submodules.
+\begin{defn}[]
+	An $R$-module $M$ has the \textbf{maximum (minimal) condition} if every nonempty collection of submodules of $M$ has some maximal (minimal) submodule w.r.t. set inclusion.
+\end{defn}
+
+Although the chain conditions are for ordered chains and the max/min conditions are for unordered sets, they are actually equivalent.
+\begin{thrm}[]
+	TFAE:
+	\begin{enumerate}
+		\item $M$ is Noetherian.
+		\item $M$ satisfies the maximum condition.
+		\item Every submodule of $M$ is finitely generated.
+	\end{enumerate}
+\end{thrm}
+
+\begin{thrm}[]
+TFAE:
+\begin{enumerate}
+	\item $M$ is Artinian.
+	\item $M$ satisfies the minimum condition.
+\end{enumerate}
+\end{thrm}
+
+A nice property of chain conditions is that they are passed onto submodules and quotient modules. The converse also holds.
+\begin{prop}
+If $M$ has some chain condition, then each of its submodules and quotient modules has it too. Conversely, if every submodule $N$ of $M$ and every quotient module $M/N$ has the same chain condition, then so does $M$.
+\end{prop}
+
+%-------------------
+% Simple Modules
+%-------------------
+\subsection{Simple Modules}
+
+A very extreme case of the above conditions is when a module's only proper submodule is the trivial submodule. These modules are called \textbf{simple}. As you might expect (since $R$-morphisms induce maps between submodules), modules going to or coming from a simple module are pretty restricted.
+
+\begin{prop}
+If $f:M\to N$ is a nonzero $R$-morphism, then:
+\begin{enumerate}
+	\item If $M$ is simple, then $f$ is monic.
+	\item If $N$ is simple, then $f$ is epic.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+	For (1), since $f \neq 0$ and $\ker f$ is a submodule, $\ker f = \left\{ 0 \right\}$. For (2), since $f \neq 0$ and $\im f$ is a submodule, $\im f = M$.
+\end{proof}
+
+\begin{cor}[Schur]
+	If $M$ is simple, then $\text{End}_{R}(M)$ is a division ring.
+\end{cor}
+\begin{proof}
+	Every nonzero endomorphism is necessarily iso. Since the natural multiplication on $\text{End}_{R}(M)$ is composition, this means every nonzero element has a multiplicative inverse.
+\end{proof}
+
+%-------------------
+% Submodule Towers
+%-------------------
+\subsection{Submodule Towers}
+
+\warn{Stuff here.}
+
+
+
+
+
+
+
+
+
+
+
+
+Extra nice modules will be both Noetherian and Artinian, and its these modules that have that special height characterization.
 
 
 
