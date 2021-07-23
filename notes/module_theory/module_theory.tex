@@ -13,6 +13,36 @@
 \setlength{\columnsep}{1cm}
 
 \begin{document}
+
+\textbf{Notes}
+\begin{enumerate}
+	\item Done
+	\item Done
+	\item Done
+	\item {\color{red}Nope}
+	\item {\color{orange}Partially}
+	\item {\color{orange}Partially}
+	\item {\color{orange}Partially}
+	\item {\color{red}Nope}
+	\item {\color{red}Nope}
+	\item {\color{red}Nope}
+\end{enumerate}
+
+\vspace{5mm}
+\textbf{Exercises}
+\begin{enumerate}
+        \item Done
+        \item {\color{yellow}Almost}
+        \item {\color{yellow}Almost}
+        \item {\color{red}Nope}
+	\item {\color{red}Nope}
+	\item {\color{red}Nope}
+	\item {\color{red}Nope}
+        \item {\color{red}Nope}
+        \item {\color{red}Nope}
+        \item {\color{red}Nope}
+\end{enumerate}
+
 \tableofcontents
 
 %+-------------------+
@@ -93,6 +123,7 @@ $N$ is an submodule of $M$ if and only if
 \lambda x + \mu y \in N
 \] for all $x,y \in N$ and $\lambda,\mu \in R$.
 \end{prop}
+
 Thus given any set $S \subseteq M$, we can form a submodule of $M$ by adding in all linear combinations of the elements of $S$ (remember that linear combinations are by definition finite sums, so the induction works). This could be a good enough definition of $\ang{S}$, but we have to make sure that we aren't adding in any unnecessary terms. The following definition ensures this is the case, the next proposition shows that the definition makes sense, and the following theorem shows that our definition is equivalent to the linear combination approach.
 
 \begin{defn}[]
@@ -277,9 +308,9 @@ Suppose $f$ and $g$ are $R$-morphisms. If $\ker f \subseteq \ker g$, then
 
 
 %-------------------
-% Exact Sequences
+% Consequences of Exactness
 %-------------------
-\subsection{Exact Sequences}
+\subsection{Consequences of Exactness}
 
 We'll start out by noting some obvious characterizations of morphisms in terms of exact sequences. Quick reminder if if a sequence is exact, the composition of any two subsequent morphisms is 0.
 \begin{prop}
@@ -291,7 +322,7 @@ We'll start out by noting some obvious characterizations of morphisms in terms o
 \end{enumerate}
 \end{prop}
 
-Now to prove that a bunch of diagrams commute. I don't include any diagram chases, but luckily only the Four Lemma needs one.
+Now to prove that a bunch of diagrams commute if some exactness condition holds. I don't include any diagram chases, but luckily only the Four Lemma needs one. Also, everything below is implicitly assumed to be using $R$-modules and $R$-morphisms.
 \begin{prop}
 The diagram commutes if the row is exact and $\theta g = 0$.
 \[
@@ -302,21 +333,25 @@ The diagram commutes if the row is exact and $\theta g = 0$.
 \] 
 \end{prop}
 \begin{proof}
-	Our assumptions say that $f$ is monic and $\im g \subseteq \ker \theta = \im f$, so $h$ exists and is unique by Proposition \ref{prop:unique-lift}.
+	$f$ must be monic and $\im g \subseteq \im f$, so a unique $h$ exists by Proposition \ref{prop:unique-lift}.
 \end{proof}
 
-\begin{cor}
-The diagram commutes if $fg=0$.
+Note that if $X = \ker \theta$ and $f$ is an inclusion map, then the row will always be exact.
+
+\begin{prop}
+The diagram commutes if the row is exact and $g\theta=0$.
 \[
 \begin{tikzcd}
-	& P \arrow[dl, dashed, "\exists!\;h"'] \dar{g} \\
-	\ker f \rar[hook] & M \rar{f} & N
+	& A \\
+	X \rar{\theta} & Y \uar{g}\rar{f} & Z \rar\arrow[ul, dashed, "\exists!\; h"'] & 0
 \end{tikzcd}
 \] 
-\end{cor}
+\end{prop}
 \begin{proof}
-	Note that the bottom row is exact. Then we can invoke the previous proposition.
+	$f$ must be epic and $\ker f \subseteq \ker g$, so a unique $h$ exists by Proposition \ref{prop:unique-ext}.
 \end{proof}
+
+Note that if $Z = X / \im \theta$ and the $f$ is a projection map, then the row will always be exact.
 
 \begin{thrm}[Four Lemma]
 Suppose the following diagram of $R$-modules and $R$-morphisms commutes and has exact rows.
@@ -376,6 +411,90 @@ This last corollarly is just a special case of the Five Lemma when our two rows 
 %--------------------------------------------------------------------------------
 \section{Quotient Modules}
 
+Hello there.
+
+%--------------------------------------------------------------------------------
+% Products and Coproducts
+%--------------------------------------------------------------------------------
+\section{Products and Coproducts}
+
+We can make a \textbf{direct product} of $R$-modules $\prod_{a}M_{\alpha}$ into an $R$-module itself by defining
+\begin{align*}
+	(x_{\alpha})_{\alpha} + (y_{\alpha})_{\alpha} &\doteq (x_{\alpha} + y_{\alpha})_{\alpha}, \\
+	\lambda (x_{\alpha})_{\alpha} &\doteq (\lambda x_{\alpha})_{\alpha}.
+\end{align*}
+If we add the restriction that only a finite number of the coordinates can be nonzero, then we get the \textbf{(external) direct sum} $\bigoplus_{\alpha} M_{\alpha}$. In this context, $\pi_{\alpha}$ denotes the canonical projection onto the $\alpha$-th coordinate, and $i_{\alpha}$ denotes the $\alpha$-th canonical injection
+\[
+	x \mapsto (\dots, 0, x, 0, \dots),
+\] where the single nonzero coordinate is the $\alpha$-th coordinate.
+
+Instead of worrying about individual elements, we can use the universal properties of the product and coproduct to characterize direct products and sums.
+
+\begin{note}[]
+I still use the notation $\pi_{\alpha}$ and $i_{\alpha}$ in the general categorical setting, but unless I'm specifically using them with a direct product or direct sum, they're just ordinary morphisms instead of special projections or injections.
+\end{note}
+
+
+\begin{defn}[]
+Fix a category $\cat{C}$ and objects $\left\{ M_{\alpha} \right\}_{\alpha}$. A \textbf{product} of $\left\{ M_{\alpha} \right\}_{\alpha}$ is an object $P$ with morphisms $\pi_{\alpha}:P\to M_{\alpha}$ such that for any other object $N$ and morphisms $f_{\alpha}:N\to M_{\alpha}$, there is a unique morphism $f:N\to P$ lifting each $f_{\alpha}$.
+\[
+\begin{tikzcd}
+	& P \dar{\pi_{\alpha}} \\
+	N \arrow[ur,dashed,"f"]\rar["f_{\alpha}"'] & M_{\alpha}
+\end{tikzcd}
+\] 
+Dually, a \textbf{coproduct} of $\left\{ M_{\alpha} \right\}_{\alpha}$ is an object $C$ with morphisms $i_{\alpha}:M_{\alpha}\to C$ such that for any other object object $N$ and morphisms $f_{\alpha}:M_{\alpha}\to N$, there is a unique morphism $f:C\to N$ extending each $f_{\alpha}$.
+\[
+\begin{tikzcd}
+	& C \arrow[dl,dashed,"f"'] \\
+	N & M_{\alpha} \lar{f_{\alpha}}\uar["i_{\alpha}"']
+\end{tikzcd}
+\] 
+\end{defn}
+
+\begin{prop}
+	If $(P, \left\{ \pi_{\alpha} \right\})$ is a product, then each $\pi_{\alpha}$ is epic. If $(C, \left\{ i_{\alpha} \right\})$ is a coproduct, then each $i_{\alpha}$ is monic.
+\end{prop}
+\begin{proof}
+	Fix $\alpha$, let $N=M_{\alpha}$, and let $f_{\alpha}$ be the identity. Then there are unique $f_{P}, f_{C}$ such that $\pi_{\alpha}f_{P}=1$ and $f_{C}i_{\alpha}=1$, i.e. $\pi_{\alpha}$ is epic and $i_{\alpha}$ is monic.
+\end{proof}
+
+\begin{thrm}[Uniqueness]
+	If $(P, \left\{ \pi_{\alpha} \right\})$ is a product, then $(Q, \left\{ \phi_{\alpha} \right\})$ is too $\iff$ there is a unique isomorphism $P \cong Q$ such that the first diagram commutes for all $\alpha$. Dually, if $(C, \left\{ i_{\alpha} \right\})$ is a coproduct, then $(D, \left\{ j_{\alpha} \right\})$ is too $\iff$ there is a unique isomorphism $C \cong D$ such that the second diagram commutes for all $\alpha$.
+	\[
+	\begin{tikzcd}
+		P \dar["\pi_{\alpha}"'] & Q \lar["\sim"']\arrow[dl,"\phi_{\alpha}"] & & C \rar{\sim} & D \\
+		M_{\alpha} & & & M_{\alpha} \uar{i_{\alpha}}\arrow[ur, "j_{\alpha}"']
+	\end{tikzcd}
+	\] 
+\end{thrm}
+\begin{proof}
+	We need only prove the case for products, since the coproduct case is dual. The forward direction is a straightforward consequence of setting $N=P$ and $f_{\alpha}=\pi_{\alpha}$, then $N=Q$ and $f_{\alpha}=\phi_{\alpha}$, and analyzing the unique maps that the universal property gives us in these cases. For the backward direction, the unique lift is given by $h^{-1} f$, where $h$ is the isomorphism $P \cong Q$ and $f$ is the unique lift gotten from $P$ being a product.
+\end{proof}
+
+\begin{thrm}[Existence]
+	$\left(\prod_{\alpha \in \mathcal{A}} M_{\alpha}, \left\{ \pi_{\alpha} \right\}\right)$ is a product of $\left\{ M_{\alpha} \right\}$.
+\end{thrm}
+\begin{proof}
+	Given $N$ and morphisms $f_{\alpha}:N\to M_{\alpha}$, we define $f$ in the obvious way by
+	\begin{align*}
+		%f: N &\to \prod_{\alpha}M_{\alpha} \\
+		x &\mapsto (f_{\alpha}(x))_{\alpha}.
+	\end{align*}
+	It's an $R$-morphism, it satisfies the universal property, and it clearly must be unique.
+\end{proof}
+
+\begin{note}[]
+	Thus up to (unique) isomorphism, every family of $R$-modules has a unique product and coproduct. We can then call the direct product (direct sum) \textit{the} product (coproduct).
+\end{note}
+
+
+A consequence of the uniqueness of the product and coproduct is that both $\prod$ and $\bigoplus$ are commutative and associative (no matter what order we do things in, we end up with a product/coproduct, which must be isomorphic to the product/coproduct we got with the original ordering).
+
+\warn{Do proof of associativity for practice.}
+
+\warn{Finish this section.}
+
 %+-------------------+
 %| +---------------+ |
 %| |    Chapter    | |
@@ -390,9 +509,7 @@ This last corollarly is just a special case of the Five Lemma when our two rows 
 %--------------------------------------------------------------------------------
 \section{Chain Conditions and Towers}
 
-\warn{What does being maximal look like if there are multiple towers? Can more than 1 thing be maximal?}
-
-Any modules can be broken down into some ascending or descending sequences of submodules. If we restrict our attention to only modules with finite such sequences, then we characterize these modules by defining the ``height" of their submodule chains, which we'll define later. It'll take a bit of work to get there, though. To begin, let's formalize the ascending/descending submodule sequence concept.
+Any modules can be broken down into some ascending or descending sequences of submodules. If we restrict our attention to only modules with finite such sequences, then we characterize them further.
 
 \begin{defn}[]
 An $R$-module $M$ is \textbf{Noetherian} if for all ascending submodule chains
@@ -406,15 +523,16 @@ M_0 \supseteq M_1 \supseteq M_2 \supseteq \cdots,
 
 We can also define similar concepts for unordered sets of submodules.
 \begin{defn}[]
-	An $R$-module $M$ has the \textbf{maximum (minimal) condition} if every nonempty collection of submodules of $M$ has some maximal (minimal) submodule w.r.t. set inclusion.
+	An $R$-module $M$ has the \textbf{maximal (minimal) condition} if every nonempty collection of submodules of $M$ has some maximal (minimal) submodule w.r.t. set inclusion.
 \end{defn}
 
-Although the chain conditions are for ordered chains and the max/min conditions are for unordered sets, they are actually equivalent.
+Note that we're using maximal/minimal, \textit{not} maximum/minimum. This is important.
+
 \begin{thrm}[]
 	TFAE:
 	\begin{enumerate}
 		\item $M$ is Noetherian.
-		\item $M$ satisfies the maximum condition.
+		\item $M$ satisfies the maximal condition.
 		\item Every submodule of $M$ is finitely generated.
 	\end{enumerate}
 \end{thrm}
@@ -423,9 +541,10 @@ Although the chain conditions are for ordered chains and the max/min conditions 
 TFAE:
 \begin{enumerate}
 	\item $M$ is Artinian.
-	\item $M$ satisfies the minimum condition.
+	\item $M$ satisfies the minimal condition.
 \end{enumerate}
 \end{thrm}
+\warn{Is there any similar thing about being finitely generated, or is that just a property of Noetherian modules?}
 
 A nice property of chain conditions is that they are passed onto submodules and quotient modules. The converse also holds.
 \begin{prop}
@@ -447,7 +566,7 @@ If $f:M\to N$ is a nonzero $R$-morphism, then:
 \end{enumerate}
 \end{prop}
 \begin{proof}
-	For (1), since $f \neq 0$ and $\ker f$ is a submodule, $\ker f = \left\{ 0 \right\}$. For (2), since $f \neq 0$ and $\im f$ is a submodule, $\im f = M$.
+	Since $f \neq 0$, this follows from $\ker f$ and $\im f$ being submodules of $M$.
 \end{proof}
 
 \begin{cor}[Schur]
@@ -477,6 +596,105 @@ If $f:M\to N$ is a nonzero $R$-morphism, then:
 
 Extra nice modules will be both Noetherian and Artinian, and its these modules that have that special height characterization.
 
+
+%--------------------------------------------------------------------------------
+% Free Modules
+%--------------------------------------------------------------------------------
+\section{Free Modules}
+
+Given a nonempty set $S$ and a unital ring $R$, we can fill in all the missing linear combinations of $S$ to get a module $\ang{S}$. This module is ``free" of any unnecessary relations between its elements: it contains every possible linear combination of terms, with nothing simplified via some other relation.
+
+\begin{defn}[]
+A \textbf{free $R$-module} on a set $S$ is an $R$-module $F$ with a map $i:S\to F$ such that for all $R$-modules $M$, every map $f:S\to M$ extends uniquely through $i$ to a morphism $F\to M$.
+\[
+\begin{tikzcd}
+	F \arrow[dr, dashed, "\exists! \; h"] \\
+	S \uar{i}\rar["f"'] & M
+\end{tikzcd}
+\] 
+We denote this by $(F, i)$ and say that $F$ is free on $S$.
+\end{defn}
+
+\begin{prop}
+	If $(F,i)$ is a free module, then $f$ is injective and $\ang{\im i}= F$.
+\end{prop}
+
+\begin{thrm}[Uniqueness]
+	\label{thrm:free-unique}
+	Suppose $(F,i)$ is free on $S$. Then so is $(G,j) \iff$ there is a unique isomorphism $F \cong G$ making the following diagram commute.
+	\[
+	\begin{tikzcd}
+		F \rar[dashed]{\exists!\;\sim} & G \\
+		S \uar{i}\arrow[ur,"j"']
+	\end{tikzcd}
+	\] 
+\end{thrm}
+\begin{proof}
+	To go forwards, plug $F$ into $G$'s universal property, then plug $G$ into $F$'s. The resulting two unique morphisms are isomorphisms that make the diagram commute. To go backwards, lift $i$'s unique extesion by the unique isomorphism $G\to F$ (the inverse of the one in the diagram) to get $j$'s unique extension.
+\end{proof}
+
+\begin{thrm}[Existence]
+	For every nonempty set $S$ and unital ring $R$, there is a free $R$-module on $S$.
+\end{thrm}
+\begin{proof}
+	Let $F = \bigoplus_{s \in S}Rs$ denote the set of all formal linear combinations of $S$, which has elements of the form $\sum_s r_s s$, where only finitely many of the $r_s$ are nonzero. There's a natural inclusion $i: S \inj F$. Given $M$ and $g$, define $h$ on $i(S)$ by $h(s) = g(s)$, then extend by linearity to all of $F$. It's necessarily a unique $R$-morphism that satisfies the universal property.
+\end{proof}
+
+\begin{note}[]
+	Thus up to (unique) isomorphism, every nonempty set $S$ has a unique free $R$-module. We can then call $\bigoplus_{s \in S}Rs$ \textit{the} free $R$-module on $S$.
+\end{note}
+
+Note that the map $s \mapsto \mathbf{e}_{s}$ shows $\bigoplus_{s}Rs \cong \bigoplus_{s}R$, so we can also describe the free $R$-module on $S$ as a direct sum of copies of $R$, indexed by $S$.
+
+So that we don't have to deal with the map $i$ when describing free modules, we say that a module $M$ is free if there is some free module $(F,i)$ and an isomorphism $M \cong F$. Then the ``inclusion" map for $M$ is $i$ extended by the isomorphism.
+
+%-------------------
+% Bases
+%-------------------
+\subsection{Bases}
+
+\begin{defn}[]
+A \textbf{basis} of an $R$-module $M$ is a linearly independent subset of $M$ that generates $M$.
+\end{defn}
+
+\begin{thrm}[]
+A nonempty subset $S \subseteq M$ is a basis of $M \iff$ each element of $M$ can be uniquely expressed as a linear combination of elements of $S$.
+\end{thrm}
+
+\begin{prop}
+	If $(F,i)$ is a free module, then $\im i$ is a basis of $F$.
+\end{prop}
+\begin{proof}
+	Suppose $(F,i)$ is free over some nonempty $S$, then we know $F \cong \bigoplus_{s}Rs$, and it's clear that $S$ is a basis of $\bigoplus_{s}Rs$. We can then translate this basis for $\bigoplus_{s}Rs$ into a basis for $F$ since the isomorphism necessarily commutes with both modules' inclusion maps by Theorem \ref{thrm:free-unique}.
+\end{proof}
+
+\begin{thrm}[]
+A module is free $\iff$ it has a basis.
+\end{thrm}
+\begin{proof}
+	If $F$ is free, then isomorphic to $\bigoplus_{s}Rs$, so its basis is the basis $S$ of $\bigoplus_{s}Rs$ mapped through the isomorphism. Conversely, if $S$ is a basis of $F$, then there is a natural inclusion $i:S \inj F$. Fix another module $M$ and a map $f:S\to M$, then the only way to get an $R$-morphism $h:F\to M$ is to define $h(s) \doteq g(s)$ and then extend by linearity, which is unique. Thus $F$ is free.
+\end{proof}
+
+\warn{Fill in other notes here.}
+
+\begin{thrm}[]
+The direct sum of free modules is free. Precisely, if $F_{\alpha}$ is free on $S_{\alpha}$ for all $\alpha$, then $\bigoplus_\alpha F_{\alpha}$ is free on $\bigsqcup_{\alpha}S_{\alpha}$.
+\end{thrm}
+\begin{proof}
+	This is essentially just using the universal properties of free modules and coproducts.Fix $\alpha$, and let $M$ and $f_{\alpha}:S_{\alpha}\to M$ be arbitrary.
+	\[
+		\begin{tikzcd}
+F_\alpha \arrow[r, "j_\alpha", hook]                                                                  & \bigoplus_\alpha F_\alpha \arrow[rdd, "\exists!\;\phi", dashed, bend left]                                                        &   & F_\alpha \arrow[rrdd, "\exists!\;f", dashed] &  &   \\
+S_\alpha \arrow[rrd, "f_\alpha"', bend right] \arrow[u, "i_\alpha", hook] \arrow[r, hook, shift left] & \bigsqcup_\alpha S_\alpha \arrow[u, "i", hook] \arrow[rd, "g" description, dotted] \arrow[l, "\pi_\alpha", two heads, shift left] &   &                                              &  &   \\
+                                                                                                      &                                                                                                                                   & M &                                              &  & M
+\end{tikzcd}
+	\] The diagram's got a lot going on, but it's straightforward. All four inclusions and the one projection are the natural ones. $f$ comes from the universal property of free modules, so $fi_{\alpha}=f_{\alpha}$. $\phi$ comes from the universal property of the coproduct, so $\phi j_{\alpha}=f$. We define $g$ by $g|_{S_{\alpha}} = f_\alpha \pi_{\alpha}$.
+
+	To show that $\bigoplus_{\alpha}F_{\alpha}$ is free, we have to show that $\phi$ extends $g$ through $i$. But for any $s \in S_{\alpha}$,
+	\[
+		(\phi i)(s) = (\phi j_{\alpha}i_{\alpha} \pi_{\alpha})(s) = (f i_{\alpha}\pi_{\alpha})(s) = (f_{\alpha}\pi_{\alpha})(s) = g(s),
+	\] so $\phi i=g$. Thus $\bigoplus_{\alpha}F_{\alpha}$ is free on $\bigsqcup_\alpha S_{\alpha}$.
+\end{proof}
 
 
 
