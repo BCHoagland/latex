@@ -197,8 +197,7 @@ Basic properties an $R$-morphism $f:M\to N$.
 	\item $f(-x)=-f(x)$.
 \end{enumerate}
 \end{prop}
-
-Because we like to be fancy, we'll use categorical language to describe specific variants of $R$-morphisms:
+Because we like to be fancy, we'll use categorical language to describe specific types of $R$-morphisms:
 \begin{align*}
 	R\text{-monomorphism}&: \quad\quad M \mono N,\\
 	R\text{-epimorphism}&: \quad\quad M \epi N.
@@ -354,7 +353,7 @@ The diagram commutes if the row is exact and $g\theta=0$.
 Note that if $Z = X / \im \theta$ and the $f$ is a projection map, then the row will always be exact.
 
 \begin{thrm}[Four Lemma]
-Suppose the following diagram of $R$-modules and $R$-morphisms commutes and has exact rows.
+Suppose the following diagram commutes and has exact rows.
 \[
 \begin{tikzcd}
 	A \rar\dar{\alpha} & B \rar\dar{\beta} & C\rar\dar{\gamma} & D\dar{\delta} \\
@@ -368,7 +367,7 @@ Suppose the following diagram of $R$-modules and $R$-morphisms commutes and has 
 \end{thrm}
 
 \begin{thrm}[Five Lemma]
-Suppose the following diagram of $R$-modules and $R$-morphisms commutes and has exact rows.
+Suppose the following diagram commutes and has exact rows.
 \[
 \begin{tikzcd}
 	A\rar\dar{\alpha_1} & B\rar\dar{\alpha_2} & C\rar\dar{\alpha_3} & D\rar\dar{\alpha_4} & E\dar{\alpha_5} \\
@@ -381,8 +380,8 @@ If $\alpha_1,\alpha_2,\alpha_4,\alpha_5$ are iso, then so is $\alpha_3$.
 	Apply the Four Lemma to the first three squares to show that $\alpha_3$ is monic, and to the last three squares to show that $\alpha_3$ is epic. Since it's an $R$-morphism, this is enough to show it's iso.
 \end{proof}
 
-\begin{cor}
-Suppose the following diagram of $R$-modules and $R$-morphisms commutes and has exact rows.
+\begin{cor}[Short Five Lemma]
+Suppose the following diagram commutes and has exact rows.
 \[
 \begin{tikzcd}
 	0\rar & A\rar\dar{\alpha} & B\rar\dar{\beta} & C\rar\dar{\gamma} & 0 \\
@@ -393,7 +392,7 @@ If $\alpha,\gamma$ are iso, then so is $\beta$.
 \end{cor}
 \warn{Check D\&F about the case "any two are iso".}
 
-This last corollarly is just a special case of the Five Lemma when our two rows are short exact sequences. \warn{If the D\&F case applies here, that would be very useful for determining when a map of SESs is iso.}
+This last corollary is just a special case of the Five Lemma when our two rows are short exact sequences. \warn{If the D\&F case applies here, that would be very useful for determining when a map of SESs is iso.}
 
 \warn{Are all epis split in the category of modules?}
 
@@ -411,7 +410,7 @@ This last corollarly is just a special case of the Five Lemma when our two rows 
 %--------------------------------------------------------------------------------
 \section{Quotient Modules}
 
-Hello there.
+\warn{Hello there.}
 
 %--------------------------------------------------------------------------------
 % Products and Coproducts
@@ -594,7 +593,7 @@ If $f:M\to N$ is a nonzero $R$-morphism, then:
 
 
 
-Extra nice modules will be both Noetherian and Artinian, and its these modules that have that special height characterization.
+Extra nice modules will be both Noetherian and Artinian, and its these modules that have a special ``height" characterization based on their submodule towers.
 
 
 %--------------------------------------------------------------------------------
@@ -681,20 +680,29 @@ A module is free $\iff$ it has a basis.
 The direct sum of free modules is free. Precisely, if $F_{\alpha}$ is free on $S_{\alpha}$ for all $\alpha$, then $\bigoplus_\alpha F_{\alpha}$ is free on $\bigsqcup_{\alpha}S_{\alpha}$.
 \end{thrm}
 \begin{proof}
-	This is essentially just using the universal properties of free modules and coproducts.Fix $\alpha$, and let $M$ and $f_{\alpha}:S_{\alpha}\to M$ be arbitrary.
+	This is essentially just using the universal properties of free modules and coproducts. Fix $\alpha$, and let $M$ and $g:\bigsqcup_\alpha S_{\alpha}\to M$ be arbitrary.
 	\[
 		\begin{tikzcd}
 F_\alpha \arrow[r, "j_\alpha", hook]                                                                  & \bigoplus_\alpha F_\alpha \arrow[rdd, "\exists!\;\phi", dashed, bend left]                                                        &   & F_\alpha \arrow[rrdd, "\exists!\;f", dashed] &  &   \\
-S_\alpha \arrow[rrd, "f_\alpha"', bend right] \arrow[u, "i_\alpha", hook] \arrow[r, hook, shift left] & \bigsqcup_\alpha S_\alpha \arrow[u, "i", hook] \arrow[rd, "g" description, dotted] \arrow[l, "\pi_\alpha", two heads, shift left] &   &                                              &  &   \\
+S_\alpha \arrow[rrd, "f_\alpha"', bend right] \arrow[u, "i_\alpha", hook] \arrow[r, hook, shift left] & \bigsqcup_\alpha S_\alpha \arrow[u, "i", hook] \arrow[rd, "g" description] \arrow[l, "\pi_\alpha", two heads, shift left] &   &                                              &  &   \\
                                                                                                       &                                                                                                                                   & M &                                              &  & M
 \end{tikzcd}
-	\] The diagram's got a lot going on, but it's straightforward. All four inclusions and the one projection are the natural ones. $f$ comes from the universal property of free modules, so $fi_{\alpha}=f_{\alpha}$. $\phi$ comes from the universal property of the coproduct, so $\phi j_{\alpha}=f$. We define $g$ by $g|_{S_{\alpha}} = f_\alpha \pi_{\alpha}$.
+	\] The diagram's got a lot going on, but it's straightforward. All four inclusions and the one projection are the natural ones. $f$ comes from the universal property of free modules, so $fi_{\alpha}=f_{\alpha}$. $\phi$ comes from the universal property of the coproduct, so $\phi j_{\alpha}=f$. The map $g$ induces $f_{\alpha}$ by $f_{\alpha}\pi_{\alpha}=g|_{S_{\alpha}}$.
 
 	To show that $\bigoplus_{\alpha}F_{\alpha}$ is free, we have to show that $\phi$ extends $g$ through $i$. But for any $s \in S_{\alpha}$,
 	\[
 		(\phi i)(s) = (\phi j_{\alpha}i_{\alpha} \pi_{\alpha})(s) = (f i_{\alpha}\pi_{\alpha})(s) = (f_{\alpha}\pi_{\alpha})(s) = g(s),
 	\] so $\phi i=g$. Thus $\bigoplus_{\alpha}F_{\alpha}$ is free on $\bigsqcup_\alpha S_{\alpha}$.
 \end{proof}
+
+\warn{Finish this section}
+
+%--------------------------------------------------------------------------------
+% Hom Sets and Split Sequences
+%--------------------------------------------------------------------------------
+\section{Hom Sets and Split Sequences}
+
+Given $R$-modules $M,N$, the set $\hom(M,N)$ is an abelian group under function addition, but the left action $(\lambda, f) \mapsto \lambda f$ doesn't necessarily make $\hom(M,N)$ into an $R$-module ($\lambda f$ might not be a morphism). This is only true if $R$ is commutative.
 
 
 
