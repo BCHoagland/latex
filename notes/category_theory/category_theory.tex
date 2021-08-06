@@ -212,7 +212,7 @@ The inclusion functor from $\cat{S}$ to $\cat{C}$ is always faithful, and it's f
 
 \section{Natural Transformations}
 
-Natural transformations change one functor into another in a way that respects the underlying structure of the categories involved.
+Natural transformations change one functor into another in a way that respects the underlying structure of the categories involved. It's kinda like a homotopy between $\mathcal{F}$ and $\mathcal{G}$ in the sense that for all $C \in \cat{C}$, it gives a morphism from $\mathcal{F}C$ to $\mathcal{G}C$.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=1]{fig/nat-trans.pdf}
@@ -232,6 +232,54 @@ Suppose $\mathcal{F},\mathcal{G}:\cat{C}\to \cat{D}$ are functors. Then a \textb
 \end{defn}
 If every $\eta_{X}$ is an isomorphism, then $\eta$ is a \textbf{natural isomorphism} and we write $\eta: \mathcal{F} \cong \mathcal{G}$.
 
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Universal Properties
+
+\chapter{Universal Properties}
+
+%--------------------------------------------------------------------------------
+% Common Examples
+%--------------------------------------------------------------------------------
+\section{Common Examples}
+
+\begin{defn}[]
+$(X, \left\{ \pi_{\alpha} \right\}_{\alpha})$ is a \textbf{product} of $\left\{ X_{\alpha} \right\}_{\alpha}$ if for all $Y$ and morphisms $f_{\alpha}:Y\to X_{\alpha}$, there is a unique morphism $f:Y\to X$ lifting each $f_{\alpha}$.
+\[
+\begin{tikzcd}
+	& X\dar{\pi_{\alpha}} \\
+	Y \arrow[ur,dashed,"\exists!\;f"]\rar["f_{\alpha}"'] & X_{\alpha}
+\end{tikzcd}
+\] 
+\end{defn}
+
+\begin{defn}[]
+	$(X,  \left\{ \pi_{\alpha} \right\}_{\alpha})$ is a \textbf{coproduct} of $\left\{ X_{\alpha} \right\}_{\alpha}$ if for all $Y$ and morphisms $f_{\alpha}:X_{\alpha}\to Y$, there is a unique morphism $f:X\to Y$ extending each $f_{\alpha}$.
+	\[
+	\begin{tikzcd}
+		& X\arrow[dl,dashed,"\exists!\;f"'] \\
+		Y & X_{\alpha}\lar{f_{\alpha}}\uar["i_{\alpha}"']
+	\end{tikzcd}
+	\] 
+\end{defn}
+
+\begin{prop}
+	If $(X,\left\{ \pi_{\alpha} \right\})$ is a product, then each $\pi_{\alpha}$ is epic. If $(X,\left\{ i_{\alpha} \right\})$ is a coproduct, then each $i_{\alpha}$ is monic.
+\end{prop}
+
+\begin{defn}[]
+	$(F, i)$ is free on the set $B$ if for all objects $X$ and maps $f:B\to X$, there is a unique morphism $F\to X$ extending $f$.
+	\[
+	\begin{tikzcd}
+		F \arrow[dr,dashed,"\exists!"] \\
+		B \uar{i}\rar["f"'] & X
+	\end{tikzcd}
+	\] 
+\end{defn}
 
 
 \end{document}

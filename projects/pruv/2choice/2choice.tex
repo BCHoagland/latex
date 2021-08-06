@@ -5,6 +5,7 @@
 \newcommand{\docTitle}{2-Choice Rules}
 \usepackage{/Users/bradenhoagland/latex/styles/common}
 \importStyles{modern}{rainbow}{boxy}
+%\importStyles{modern}{rainbow}{lined}
 
 %\renewcommand{\theenumi}{\alph{enumi}}
 
@@ -16,7 +17,7 @@
 %--------------------------------------------------------------------------------
 \section{Definitions}
 
-To begin, we'll need to define some basic functions that we'll use over and over again. If $x_i$ is a vertex, then we denote its cluster size by $\kappa_i$. Denote the probability that the minimum of $m$ i.i.d. sampled vertices is $s$ by
+To begin, we'll need to define some basic terms that we'll use over and over again. Let $S$ be the relative size of the dominating cluster as $n \to \infty$. If $x_i$ is a vertex, then we denote its absolute cluster size by $\kappa_i$. Denote the probability that the minimum of $m$ i.i.d. sampled vertices is $s$ by
 \[
 	Q_m(s) \doteq \mathbb{P}\left( \min\left\{ \kappa_1, \dots, \kappa_m \right\} = s \right) .
 \] 
@@ -35,22 +36,26 @@ Now for the main attraction. In these notes, we'll be discussing rules that add 
 \begin{defn}[]
 	Define a rule $\mathcal{R}$ as follows:
 	\begin{itemize}
-		\item Every $t=1/n$ units of time, choose two groups of vertices $\mathcal{V}_1$ and $\mathcal{V}_2$ by sampling vertices i.i.d. from the graph.
-		\item For both $i$, follow some rule $\mathcal{F}_{i}$ to choose a vertex $x_i$ with cluster size $\kappa_w$ from group $\mathcal{V}_i$, subject to the condition that $\mathcal{F}_i$ induces a function $\phi_i(s) = \mathbb{P}\left( \kappa_i=s \right) $.
+		\item Every $t=1/n$ units of time, choose $\ell$ groups of vertices $\mathcal{V}_1, \dots, \mathcal{V}_{\ell}$ (of potentially different sizes) by sampling vertices i.i.d. from the graph.
+		\item For each $i$, follow some rule $\mathcal{F}_{i}$ to choose a vertex $x_i$ with cluster size $\kappa_w$ from group $\mathcal{V}_i$, subject to the condition that $\mathcal{F}_i$ induces a function $\phi_i(s) = \mathbb{P}\left( \kappa_i=s \right) $ that is independent from all other $\phi_j$ for $j \neq i$.
 	\end{itemize}
-We call $\mathcal{R}$ a \textbf{2-choice rule}.
+We call $\mathcal{R}$ an \textbf{$\ell$-choice rule}.
 \end{defn}
+
 We'd like to restrict this vertex selection processes in each group as little as possible in order to get a more general theory, but in some cases we can perform much greater analysis if some information is known about them.
 
 \begin{defn}[]
-A 2-choice rule $\mathcal{R}$ is \textbf{minimizing} if $\phi_1 = Q_a$ and $\phi_2=Q_b$ for some $a,b$.
+	An $\ell$-choice rule is \textbf{minimizing} if $\phi_i = Q_{m_i}$ for each $i$. It is \textbf{symmetric} if each $\phi_i$ is the same.
 \end{defn}
-Such a rule exhibits ``explosive" behavior in the sense that the critical time is significantly delayed and the giant component emerges incredibly quickly. Under the assumption that $P$ exhibits scaling behavior, minimizing 2-choice rules can be analyzed in a straightforward manner.
+
+Minimizing rules exhibit ``explosive" behavior in the sense that the critical time is significantly delayed and the giant component emerges incredibly quickly. Under the assumption that $P$ exhibits scaling behavior, minimizing 2-choice rules in particular can be analyzed in a straightforward manner.
 
 %--------------------------------------------------------------------------------
 % The Scaling Assumption
 %--------------------------------------------------------------------------------
 \section{The Scaling Assumption}
+
+\warn{NEED TO REDO THIS SECTION BASED ON GENERAL THINGS INSTEAD, AND BE VERY CLEAR ABOUT WHAT ALL THE DIFFERENT COEFFICIENTS ARE.}
 
 Most of the results in these notes follow from the assumption that near the critical time $t_c$, $P$ has the form
 \[
@@ -83,15 +88,28 @@ Most of the results in these notes follow from the assumption that near the crit
 	So by our assumptions on $f$, we have $S \sim \delta^{\beta}$, where $\beta = (\tau-2)/\sigma$. \warn{Type up the rest of this.} \warn{Go over your concerns with the assumptions on $f$ and the relations between $f$ and $g$ in Appendex E of da Costa.}
 \end{proof}
 
+%-------------------
+% Induced Coefficent Maps
+%-------------------
+\subsection{Induced Coefficent Maps}
+
+\begin{defn}[]
+Suppose we have a function $\zeta(S)$, then this necessarily induces a map $F(\beta)$ by taking the exponent in the dominating (minimum order) terms of $\zeta(S)$ in its scaling form. This map $F$ is called the \textbf{induced coefficient map} of $\zeta$.
+\end{defn}
+
+\begin{ex}
+	Fix $a, b$, then let $\zeta(S) = S^{a} + S^{b}$. In scaling form, this is $\delta^{a \beta} + \delta^{b \beta}$. The induced coefficient map is $F(\beta) = \min{a,b} \cdot \beta$.
+\end{ex}
+
 %--------------------------------------------------------------------------------
 % Uniform Scaling Rules
 %--------------------------------------------------------------------------------
 \section{Uniform Scaling}
 
-It would be nice to express all these critical exponents in terms of just one (in our case, we'll express everything in terms of $\beta$). This has two main applications:
+It would be nice to express all these critical exponents in terms of just one (in our case, we'll express everything in terms of $\beta$). This has two main applications for $\ell$-choice rules:
 \begin{enumerate}
 	\item if we determine a single critical exponent, then we automatically know all others; and
-	\item \warn{we can determine the limiting behavior of the critical exponents} as $m\to \infty$ (which drives $\beta\to 0$).
+	\item we can determine the limiting behavior of the critical exponents as as the minimum group size goes to $\infty$ (which drives $\beta\to 0$).
 \end{enumerate}
 The following property will be critical in establishing systems of equations that we can use to solve for the critical exponents in terms of $\beta$. As we will see later on, it always holds for minimizing 2-choice rules, and a partial version of it holds for general 2-choice rules.
 
@@ -102,108 +120,9 @@ The following property will be critical in establishing systems of equations tha
 Note that since $\ang{s^{k}}_{m} \sim \delta^{-(\gamma_{m} + \frac{k-1}{\sigma})}$ differs from $\ang{s}_{m} \sim \delta^{-\gamma_{m}}$ by only an added constant, this property also applies to all $k$-th moments. Uniform scaling ends up giving us a systematic way of solving for all crtical exponents in terms of $\beta$ when we're working with minimizing 2-choice rules.
 
 %--------------------------------------------------------------------------------
-% Scaling Relations for Minimizing 2-Choice Rules
+% Scaling Relations for 2-Choice Rules
 %--------------------------------------------------------------------------------
-\section{Scaling Relations for Minimizing Rules}
-
-%-------------------
-% Uniform Scaling
-%-------------------
-\subsection{Uniform Scaling}
-
-To start, note that $\p_{t}{P(s)} $ for any minimizing 2-choice rule has the form
-\[
-	\p_{t}{P(s)} = s \sum_{u+v=s} Q_a(u) Q_b(v) - s Q_a(s) - s Q_b(s).
-\] As we've done in earlier notes, we can solve for $\p_{t}{S} $ and $\p_{t}{\ang{s}_{P}} $:
-\begin{align*}
-	\p_{t}{S} &= S^{b}\ang{s}_{a} + S^{a}\ang{s}_{b}, \tag{$\star$} \\
-	\p_{t}{\ang{s}_{P}} &= 2 \ang{s}_{a}\ang{s}_{b} - S^{b}\ang{s^{2}}_{a} - S^{a}\ang{s^{2}}_{b}. \tag{$\star\star$}
-\end{align*}
-Using these calculations, we can show that all minimizing 2-choice rules scale uniformly.
-\begin{prop}
-All minimizing 2-choice rules scale uniformly.
-\end{prop}
-\begin{proof}
-	The primary tool in this proof is the following identities that we proved earlier for rules with scaling behavior:
-	\begin{align*}
-		\beta &= \frac{\tau-2}{\sigma},\\
-		\gamma_{m} &= \frac{m(2-\tau)+1}{\sigma} .
-	\end{align*}
-	We'll start with $\p_{t}{S}$. The terms on the RHS of $(\star)$ have orders
-	\[
-	\beta b - \gamma_{a}, \quad\quad \beta a - \gamma_{b}.
-	\] But plugging in our identities for $\beta$ and $\gamma_{m}$ yields 
-	\[
-		\frac{(\tau-2)(a+b) - 1}{\sigma} 
-	\] in both cases. Now we have to check $\p_{t}{\ang{s}_{P}}$. The three terms on the RHS of $(\star\star)$ have orders
-	\[
-	-\gamma_{a}-\gamma_{b}, \quad\quad \beta b - \gamma_{a} - \frac{1}{\sigma} , \quad\quad \beta a - \gamma_{b} - \frac{1}{\sigma} .
-	\] As before, plugging in our identities for $\beta$ and $\gamma_{m}$ shows that all three of these are equal to
-	\[
-		\frac{(\tau-2)(a+b) - 2}{\sigma} .
-	\] Thus all 2-choice rules scale uniformly.
-\end{proof}
-
-%-------------------
-% Scaling Relations
-%-------------------
-\subsection{Scaling Relations}
-
-Now, given any minimizing 2-choice rule $\mathcal{R}$, we can follow the same systematic approach for expressing its critical exponents in terms of just $\beta$. Since $S \sim \delta^{\beta}$, $(\star)$ gives
-\[
-\beta-1 \quad=\quad \beta b-\gamma_{a} \quad=\quad \beta a-\gamma_{b},
-\] which gives us the two relations
-\begin{align}
-	\gamma_{a} &= 1+(b-1)\beta, \\
-	\gamma_{b} &= 1+(a-1)\beta.
-\end{align}
-Since $\ang{s}_{P} \sim \delta^{-\gamma_{P}}$, our expression $(\star\star)$ gives
-\[
--\gamma_p-1 \quad=\quad -\gamma_a-\gamma_b \quad=\quad \beta b-\frac{1}{\sigma} -\gamma_a \quad=\quad \beta a - \frac{1}{\sigma} -\gamma_b,
-\] which gives us the relations
-\begin{align}
-	\gamma_P &= \gamma_{a}+\gamma_{b}-1,\\
-	\gamma_{P} &= -\beta b + \frac{1}{\sigma} +\gamma_{a}-1,\\
-	\gamma_{P} &= -\beta a + \frac{1}{\sigma} +\gamma_{b}-1,\\
-	\gamma_{b} &= \frac{1}{\sigma} -\beta b,\\
-	\gamma_{a} &= \frac{1}{\sigma} -\beta a,\\
-	\gamma_{a}-\gamma_{b} &= \beta(b-a).
-\end{align}
-There's a bit of redundant information in this system, though, so we won't end up using all the relations. I'm including them all so I don't forget any of them, though. By (1), (2), and (3), we get
-\begin{equation}
-	\gamma_{P} = 1 + (a+b-2)\beta.
-\end{equation}
-By (1) and (7), or also by (2) and (6), we get
-\begin{equation}
-	\frac{1}{\sigma} = 1 + (a+b-1)\beta.
-\end{equation}
-And finally, by (10) and the relation $\beta = (\tau-2)/\sigma$, we get
-\begin{equation}
-	\tau = \frac{\beta}{1 + (a+b-1)\beta} +2.
-\end{equation}
-Formulas (1), (2), (9), (10), and (11) are our desired relations. As a sanity check, plugging in the values of $a$ and $b$ for our three understood rules gives the relations we previously derived for those.
-
-%-------------------
-% Observations
-%-------------------
-\subsection{Observations}
-
-Suppose that $a=1$, then $\gamma_b=1$, no matter what $b$ is. A symmetric statement holds if $b=1$ instead. This matches what we saw with the adjacent edge rule, and reveals a somewhat surprising (at least to me) relationship. Here are some more scattered thoughts:
-\begin{itemize}
-	\item Unless we're using \ER, $\gamma_{P}$ will always have a dependence on $\beta$.
-	\item $\sigma$ and $\tau$ will always depend on $\beta$.
-\end{itemize}
-So in summary, if neither of our groups has size 1, we can't know \textit{any} of the critical exponents until we've calculated $\beta$, which stinks.
-
-%--------------------------------------------------------------------------------
-% Scaling Relations for General 2-Choice Rules
-%--------------------------------------------------------------------------------
-\section{Scaling Relations for General 2-Choice Rules}
-
-%-------------------
-% Uniform Scaling
-%-------------------
-\subsection{Uniform Scaling}
+\section{Scaling Relations for 2-Choice Rules}
 
 General 2-choice rules have an ODE of the form
 	\[
@@ -217,38 +136,25 @@ This lets us calculate $\p_{t}{S} $.
 		\p_{t}{S} = \ang{s}_{\phi_1}\left( 1-\ang{1}_{\phi_2} \right) + \ang{s}_{\phi_2}\left( 1-\ang{1}_{\phi_1} \right).
 	\] 
 \end{prop}
-\begin{ex}[]
-	If our rule is minimizing, then $\phi_1=Q_a$ and $\phi_2=Q_b$. Then using the identity $\sum_s Q_m(s) = 1-S^m$, this reduces to
-	\[
-		\p_{t}{S} = \ang{s}_{a}S^{b} + \ang{s}_{b}S^{a}.
-	\] 
-\end{ex}
 
 \begin{lem}[]
-For any $\phi_i$, there is an associated function $\zeta_i$ such that
+For any $\phi_i$, there is an associated nonnegative function $\zeta_i$ such that
 \[
 	\ang{1}_{\phi_i} = 1 - \zeta_i(S).
 \] 
 \end{lem}
 \begin{proof}
-	\warn{Note that $\zeta$ should have some kind of non-negativity condition or something like that.}
-
-	\warn{I'd like to find a method for determining $\zeta_i$ explicitly.} The existence of such a $\zeta_i$ is straightforward. Since $\phi_i$ is a probability measure, we necessarily have $\sum_s \phi_i(s) \leq 1$. \warn{Seems like it has to be a function of $S$ since we're picking things from the space of finite clusters, but idk how to formalize that.}
+	$\zeta_i$ is just the probability that a vertex chosen from group $i$ belongs to a cluster of inifinite size, so it must be a nonnegative function of $S$. \warn{(Make more rigorous, perhaps making it explicit)}
 \end{proof}
 
-Note that $\zeta_i(S)$ induces another function $F_i:\beta \mapsto \alpha_i \beta$ that scales $\beta$ by the dominating (minimum) order $\alpha_i$ of $S$ in $\zeta_i(S)$.
+\warn{Need to establish scaling behavior of $\Ang{1}_{\phi}$ using this\^.}
 
-\begin{ex}[]
-	Consider the rule where in each of the 2 groups, we do the following:
-	\begin{enumerate}
-		\item Pick 3 verties $v_1, v_2, v_3$ i.i.d.
-		\item Of $v_1$ and $v_2$, choose the one with the smaller cluster size and label it $\tilde{v}$.
-		\item Choose between $\tilde{v}$ and $v_3$ randomly to get the vertex for the group.
-	\end{enumerate}
-	In terms of $\phi_i$, this rule is defined by $\phi_1=\phi_2=\frac{1}{2} (P+Q)$. A straightforward computation gives $\ang{1}_{\phi_i} = 1 - \frac{1}{2} (S+S^2)$, so $\zeta_i(S) = \frac{1}{2} (S+S^2)$. The minimum order of $S$ here is 1, so the induced map is $F_i:\beta\mapsto \beta$ for both $i$.
-\end{ex}
+\warn{Is $F_i(\beta)$ the scaling coefficient for $\ang{1}_{\phi_i}$?}
+
+{\color{blue}Could determine classes of rules based on the form of the induced coefficient maps $F_i$...}
 
 \begin{thrm}
+	\label{thrm:2-dom-terms}
 If $\mathcal{R}$ is a 2-choice rule, then it has two dominating terms with the same order.
 \end{thrm}
 \begin{proof}
@@ -256,13 +162,8 @@ If $\mathcal{R}$ is a 2-choice rule, then it has two dominating terms with the s
         \[
 	\p_{t}{S} = \ang{s}_{\phi_1}\zeta_{2}(S) + \ang{s}_{\phi_2} \zeta_{1}(S).
 	\]
-	Suppose $F_i(\beta)$ is induced from $\zeta_i(S)$ \warn{(Check to  make sure that the two terms this applies to actually dominate)}. Then there are two dominating terms, and both have order $(\alpha_1 + \alpha_2) \beta - 1/\sigma$.
+	Suppose $F_i(\beta)$ is the induced coefficient map of $\zeta_i(S)$ \warn{(Check to make sure that the two terms this applies to actually dominate)}. Then there are two dominating terms, and both have order $F_1(\beta) + F_2(\beta) - 1/\sigma$.
 \end{proof}
-
-Since we know $\p_{t}{S} \sim \delta^{\beta-1}$, this immediately implies
-\[
-	\frac{1}{\sigma} = (\alpha_1+\alpha_2-1)\beta+1,
-\] so we can always determine $\sigma$ in terms of $\beta$ if we know both the $\alpha_i$.
 
 \begin{cor}
 	If $\mathcal{R}$ is a 2-choice rule such that $\zeta_i(S)$ is a single term for both $i$, then $\mathcal{R}$ scales uniformly.
@@ -271,37 +172,9 @@ Since we know $\p_{t}{S} \sim \delta^{\beta-1}$, this immediately implies
 	If $\zeta_i(S)$ is a single term for both $i$, then $\p_{t}{S} $ has 2 total terms, which must necessarily have the same order.
 \end{proof}
 
-\begin{ex}[Uniform scaling]
-	For minimizing rules, $\zeta_1(S) = S^{a}$, which induces $F_1(\beta) = a\beta$. Similarly, $\zeta_2(S) = S^{b}$ and $F_2(\beta) = b\beta$. So the terms in $\p_{t}{S} $ have order
-	\[
-		(a+b)\beta - \frac{1}{\sigma} ,
-	\] which we can verify as true.
-\end{ex}
-
-\begin{ex}[Partial uniform scaling]
-	Recall from Example 2 the rule that was defined by $\phi_1 = \phi_2 = \frac{1}{2} (P+Q)$, and how the induced scaling map for both $i$ was $F_i:\beta\mapsto \beta$. This means $\alpha_i=1$ for both $i$, so
-	\[
-	\frac{1}{\sigma} = \beta+1.
-	\] Through the usual methods (just with a lot more algebra), we can derive
-	\[
-		\p_{t}{S} = \frac{1}{2} (S^2+2)(\ang{s}_{P}+\ang{s}_{Q}).
-	\]
-	Expanding this out and substituting in scaling forms gives
-	\[
-		\delta^{\beta-1} \sim \delta^{2\beta-\gamma_{P}}+\delta^{2\beta-\gamma_{Q}}+\delta^{\beta-\gamma_{P}}+\delta^{\beta-\gamma_{Q}}.
-	\] This clearly cannot scale uniformly, since that would imply that $\beta=0$, i.e. the giant component doesn't grow at all near criticality; however, our theory tells us that since this is a 2-choice rule, the two dominating terms have the same order. Thus we have
-	\[
-	\beta -1 \quad=\quad \beta-\gamma_{P} \quad=\quad \beta-\gamma_{Q}.
-\] This system implies
-	\[
-	\gamma_{P}=\gamma_{Q}=1.
-	\]
-\end{ex}
-
-With all this in place, we can give a simpler proof that all minimizing 2-choice rules scale uniformly.
-\begin{prop}
+\begin{cor}
 All minimizing 2-choice rules scale uniformly.
-\end{prop}
+\end{cor}
 \begin{proof}
 	For both $i$, $\phi_i = Q_m$ for some $m$. Then $\ang{1}_{\phi_i} = 1 - S^{m}$, so $\zeta_i(S) = S^{m}$. Since this is a single term, the rule must scale uniformly.
 \end{proof}
@@ -311,28 +184,25 @@ All minimizing 2-choice rules scale uniformly.
 %-------------------
 \subsection{Scaling Relations}
 
-We just saw that
+Since $\p_{t}{S} \sim \delta^{\beta-1}$, the proof of Theorem \ref{thrm:2-dom-terms} shows that
 \begin{equation}
-	\frac{1}{\sigma} = (\alpha_1+\alpha_2-1)\beta+1,
+	\frac{1}{\sigma} = F_1(\beta) + F_2(\beta) - \beta + 1,
 \end{equation}
 but we can derive other scaling relations for general 2-choice rules, too.
 
-Since $\ang{1}_{\phi_i} = 1 - \zeta_i(S)$, it will have scaling behavior based on $\beta$. \warn{I'd like to somehow show this formally with the integral stuff, but I'm having trouble.} Thus it makes sense to define $\gamma_{\phi_i}$ as the constant satisfying
+Since $\ang{1}_{\phi_i} = 1 - \zeta_i(S)$, it will have scaling behavior based on $\beta$ \warn{(right? see if you can derive this rigorously using a scaling form for $\phi$ similar to that of $P$)}. Thus it makes sense to define $\gamma_{\phi_i}$ as the constant satisfying
 \[
 \ang{s}_{\phi_i} \sim \delta^{-\gamma_{\phi_i}}.
 \] 
 Then since $\p_{t}{S} = \ang{s}_{\phi_1}\zeta_2(S) + \ang{s}_{\phi_2}\zeta_1(S)$, the two dominating terms near criticality give us the system
 \[
-\beta - 1 \quad=\quad -\gamma_{\phi_1} + \alpha_2 \beta \quad=\quad -\gamma_{\phi_2}+\alpha_1 \beta.
+	\beta -1 \quad=\quad -\gamma_{\phi_1} + F_2(\beta) \quad=\quad -\gamma_{\phi_2} + F_1(\beta).
 \] 
 This system implies
 \begin{align}
-	\gamma_{\phi_1} &= (\alpha_2-1)\beta + 1,\\
-	\gamma_{\phi_2} &= (\alpha_1-1)\beta + 1.
+	\gamma_{\phi_1} &= F_2(\beta) - \beta + 1,\\
+	\gamma_{\phi_2} &= F_1(\beta) - \beta + 1.
 \end{align}
-\begin{ex}[da Costa]
-	If $\phi_1=\phi_2=Q_m$, then $\gamma_{\phi_1}=\gamma_{\phi_2}=\gamma_{m}$. We know that for da Costa $\alpha=m$, so $\gamma_{m} = (m-1)\beta+1$.
-\end{ex}
 
 One last constant that we care about is $\gamma_{P}$, which tells us how the average finite cluster size changes. In order to determine it, we need to differentiate $\ang{s}_{P}$.
 
@@ -344,14 +214,13 @@ For 2-choice rules,
 \end{prop}
 
 \warn{Check that the three dominating terms scale uniformly... although they definitely should.}
-
 This gives us the system
 \[
--\gamma_{P}-1 \quad=\quad -\gamma_{\phi_1}-\frac{1}{\sigma} +\alpha_2\beta \quad=\quad -\gamma_{\phi_2}-\frac{1}{\sigma} +\alpha_1\beta \quad=\quad -\gamma_{\phi}-\gamma_{\phi_2}.
+	-\gamma_{P}-1 \quad=\quad -\gamma_{\phi_1}-\gamma_{\phi_2} \quad=\quad -\gamma_{\phi_1}-\frac{1}{\sigma} +F_2(\beta) \quad=\quad -\gamma_{\phi_2}-\frac{1}{\sigma} + F_1(\beta).
 \] 
-Using (12), this system gives us
+Using (12)-(14), this system gives us
 \begin{equation}
-	\gamma_{P} = (\alpha_1+\alpha_2-2)\beta+1.
+	\gamma_{P} = F_1(\beta)+F_2(\beta) - 2\beta + 1.
 \end{equation}
 Based on (12), we see
 \[
@@ -361,8 +230,136 @@ Based on (12), we see
 \warn{Is it possible to get similar statements for all $\gamma_{m}$?}
 
 \begin{ex}[da Costa]
-	Since $\alpha_i=m$, we have $\gamma_{P}=2(m-1)\beta+1$.
+	Since $F_1(\beta) = F_2(\beta) = \beta m$, we have $\gamma_{P}=2(m-1)\beta+1$.
 \end{ex}
+
+Finally, using the identity $\beta = (\tau-2)/\sigma$, we get
+\begin{equation}
+	\tau = \frac{\beta}{F_1(\beta)+F_2(\beta)-\beta+1} +2.
+\end{equation}
+
+%-------------------
+% Summary
+%-------------------
+\subsection{Summary}
+
+The important equations for general 2-choice rules are
+\begin{align*}
+	\p_{t}{P(s)} &= s \sum_{u+v=s} \phi_1(u) \phi_1(v) - s \phi_1(s) - s\phi_2(s),\\
+	\p_{t}{S} &= \ang{s}_{\phi_1}\left( 1-\ang{1}_{\phi_2} \right) + \ang{s}_{\phi_2}\left( 1-\ang{1}_{\phi_1} \right),\\
+	\p_{t}{\ang{s}_{P}} &= 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} - \ang{s^2}_{\phi_1}\zeta_2(S) - \ang{s^2}_{\phi_2}\zeta_1(S),
+\end{align*}
+and the scaling relations are
+\begin{align*}
+	\gamma_{\phi_1} &= F_2(\beta) - \beta+1,\\
+	\gamma_{\phi_2} &= F_1(\beta)-\beta+1,\\
+	\gamma_{P} &= F_1(\beta) + F_2(\beta)-2\beta+1,\\
+	\frac{1}{\sigma} &= F_1(\beta)+F_2(\beta)-\beta+1,\\
+	\tau &= \frac{\beta}{F_1(\beta)+F_2(\beta)-\beta+1} +2.
+\end{align*}
+
+%-------------------
+% Results for Minimizing 2-Choice Rules
+%-------------------
+\subsection{Results for Minimizing 2-Choice Rules}
+
+Suppose that $\phi_1 = Q$, $\phi_2 = b$. Then the scaling relations take on simpler forms. In particular, note that since $\ang{1}_{m} = 1 - S^{m}$, the induced coefficient map for $Q_m$ is $\beta \mapsto m \beta$. Thus the important equations for minimizing 2-choice rules are
+\begin{align*}
+        \p_{t}{P(s)} &= s \sum_{u+v=s} Q_a(u) Q_b(v) - s Q_a(s) - s Q_b(s),\\
+        \p_{t}{S} &= S^{b}\ang{s}_{a} + S^{a}\ang{s}_{b}\\        \p_{t}{\ang{s}_{P}} &= 2 \ang{s}_{a}\ang{s}_{b} - S^{b}\ang{s^{2}}_{a} - S^{a}\ang{s^{2}}_{b},
+\end{align*}
+and the scaling relations are
+\begin{align*}
+        \gamma_{a} &= 1 + (b-1)\beta,\\
+        \gamma_{b} &= 1+(a-1)\beta,\\
+        \gamma_{P} &= 1+(a+b-2)\beta,\\
+        \frac{1}{\sigma} &= 1+(a+b-1)\beta,\\
+        \tau &= \frac{\beta}{1+(a+b-1)\beta} +2.
+\end{align*}
+
+Suppose that $a=1$, then $\gamma_b=1$, no matter what $b$ is. A symmetric statement holds if $b=1$ instead. This matches what we saw with the adjacent edge rule, and reveals a somewhat surprising (at least to me) relationship. Here are some more scattered thoughts:
+\begin{itemize}
+        \item Unless we're using \ER, $\gamma_{P}$ will always have a dependence on $\beta$.
+        \item $\sigma$ and $\tau$ will always depend on $\beta$.
+\end{itemize}
+So in summary, if neither of our groups has size 1, we can't know \textit{any} of the critical exponents until we've calculated $\beta$, which stinks.
+
+%--------------------------------------------------------------------------------
+% Limiting Behavior of 2-Choice Rules
+%--------------------------------------------------------------------------------
+\section{Limiting Behavior of 2-Choice Rules}
+
+%-------------------
+% Symmetric Rules
+%-------------------
+\subsection{Symmetric Rules}
+
+Suppose $\mathcal{R}$ is a symmetric 2-choice rule with induced coefficient map $F$, then its scaling relations are
+\begin{align*}
+	\gamma_{\phi_1} = \gamma_{\phi_2} &= F(\beta)-\beta+1,\\
+	\gamma_{P} &= 2F(\beta) - 2\beta+1,\\
+	\frac{1}{\sigma}  &= 2F(\beta)-\beta+1,\\
+	\tau &= \frac{\beta}{2F(\beta)-\beta+1} +2.
+\end{align*}
+
+\begin{prop}[]
+	Suppose we have a symmetric 2-choice rule $\mathcal{R}$ with induced coefficient function $F$. If $F(\beta) \to 0$ as $a,b \to \infty$, then the scaling coefficients for $\mathcal{R}$ have limits
+	\begin{align*}
+		\gamma_{\phi_1} = \gamma_{\phi_2} = \gamma_{P} = \frac{1}{\sigma} &= 1,\\
+		\tau &= 2.
+	\end{align*}
+\end{prop}
+\begin{proof}
+	We already know $\beta \to 0$, so if $F(\beta)\to 0$ too, then the above limits are straightforward computations.
+\end{proof}
+
+\begin{thrm}[]
+	\label{thrm:m-beta-0}
+$a \beta, b \beta \to 0$, i.e. any minimizing 2-choice rule's scaling coefficients have the above limits.
+\end{thrm}
+\begin{proof}
+	\warn{Do this.}
+\end{proof}
+
+%--------------------------------------------------------------------------------
+% Variance
+%--------------------------------------------------------------------------------
+\section{Variance}
+
+The variance of the cluster size (at a fixed time) is $\var_i(s) = \ang{s^2}_{\phi_i} - \ang{s}^2_{\phi_i}$. For 2-choice rules, we can use our scaling relations to get that near criticality,
+\begin{align*}
+	\var_i(s) &= \delta^{-[\gamma_{\phi_i} + 1/\sigma]} - \delta^{-2\gamma_{\phi_i}} \\
+		  &= \delta^{-[F_1(\beta)+2F_2(\beta)-2\beta+2]} + \delta^{-[2F_2(\beta)-2\beta+2]}.
+\end{align*}
+Then if $F_1(\beta) \geq 0$ \warn{(which I think should be the case?)}, this is dominated by the first term. So near $t_c$, we have
+\[
+	\var_i(s) \approx \delta^{-[F_1(\beta)+2F_2(\beta)-2\beta+2]}.
+\] 
+
+\begin{ex}[]
+	Suppose we're working with a minimizing 2-choice rule, then $F_1(\beta) = a \beta$ and $F_2(\beta)=b \beta$. Then
+	\begin{align*}
+		\var_1(s) &= \delta^{(2-a-2b)\beta-2},\\
+		\var_2(s) &= \delta^{(2-2a-b)\beta-2}.
+	\end{align*}
+	By Theorem \ref{thrm:m-beta-0}, $\var_i(s) \to \delta^{-2}$ for both $i$. \warn{(I wonder if the exponent is actually $\tau$)}
+\end{ex}
+
+\warn{Central limit theorem for cluster size?}
+
+%--------------------------------------------------------------------------------
+% Ideas and Questions
+%--------------------------------------------------------------------------------
+\section{Ideas and Questions}
+
+\begin{itemize}
+	\item The edge weighting idea seems very cool. If we have a graph whose vertices lie in some metric space, then we can weight them proportional to their distance from some fixed basepoint to have a stochastic process that grows ``cracks" from that base point. This seems like it would slow down percolation since the farther nodes from the basepoint are less likely to have edges added to them.
+	\item Can $F_i$ ever negate $\beta$, or does any induced map of the form $\beta \mapsto A \beta$ need $A > 0$?
+	\item Can we reformulate $F(\beta)\to 0$ in terms of $\zeta(S)$?
+	\item I don't think it's necessary to have something of the form $1-\zeta(S)$ to get the 2 dominating terms to scale uniformly, at least as long as the two unknown scaling coefficients are non-positive.
+	\item This is more of just a fun thing. It could be cool to describe different group actions on these graphs that relate to adding edges, then describe some things algebraically.
+	\item Can we give a sequence of graphs a product/coproduct structure? If we can turn a sequence of graphs into a coproduct, then that means that whatever property we're tracking has to appear in finite time.
+\end{itemize}
 
 
 \end{document}
