@@ -65,6 +65,8 @@ An \textbf{isomorphism} is an invertible morphism.
 \] 
 \end{defn}
 Isomorphisms (isos) generalize bijective functions, which are both injective and surjective. Injective functions generalize to monomorphisms (monos), and surjective functions to epimorphisms (epis).
+
+\warn{Include split monos/epis.}
 \begin{defn}[]
 	A morphism $f$ is a \textbf{monomorphism} if for all parallel (between same objects) morphisms $g,h$ with the proper domains,
 	\[
@@ -205,6 +207,37 @@ Note that the fixed $A$ and $B$ above are important. The injective/surjective co
 \begin{ex}
 The inclusion functor from $\cat{S}$ to $\cat{C}$ is always faithful, and it's full if and only if $\cat{S}$ is a full subcategory.
 \end{ex}
+
+\begin{defn}[]
+The following definitions apply for a covariant functor $\mathcal{F}$ if, given any short exact $0\to A\to B\to C\to 0$, the given induced sequences are also exact.
+\begin{equation*}
+        \begin{aligned}[c]
+                \text{\textbf{exact}} \\
+                \text{\textbf{left exact}} \\
+                \text{\textbf{right exact}}
+        \end{aligned}
+        \qquad
+        \begin{aligned}[c]
+                0\to \mathcal{F}A\to &\mathcal{F}B\to \mathcal{F}C\to 0\\
+                0\to \mathcal{F}A\to &\mathcal{F}B\to \mathcal{F}C\\
+                \mathcal{F}A\to &\mathcal{F}B\to \mathcal{F}C\to 0
+        \end{aligned}
+\end{equation*}
+There are similar definitions for a contravariant functor $\mathcal{G}$.
+\begin{equation*}
+        \begin{aligned}[c]
+                \text{\textbf{exact}} \\
+                \text{\textbf{left exact}} \\
+                \text{\textbf{right exact}}
+        \end{aligned}
+        \qquad
+        \begin{aligned}[c]
+                0\to \mathcal{G}C\to &\mathcal{G}B\to \mathcal{G}A\to 0\\
+                0\to \mathcal{G}C\to &\mathcal{G}B\to \mathcal{G}A\\
+                \mathcal{G}C\to &\mathcal{G}B\to \mathcal{G}A\to 0
+        \end{aligned}
+\end{equation*}
+\end{defn}
 
 %%%%%%%%%%%%%%%%%%%%
 % Natural Transformations

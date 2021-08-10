@@ -102,7 +102,7 @@ $N$ is an submodule of $M$ if and only if
 Thus given any set $S \subseteq M$, we can form a submodule of $M$ by adding in all linear combinations of the elements of $S$ (remember that linear combinations are by definition finite sums, so the induction works). This could be a good enough definition of $\ang{S}$, but we have to make sure that we aren't adding in any unnecessary terms. The following definition ensures this is the case, the next proposition shows that the definition makes sense, and the following theorem shows that our definition is equivalent to the linear combination approach.
 
 \begin{defn}[]
-Given a set $S \subseteq M$, let $\ang{S}$ denote the intersection of all submodules of $M$ containing $S$.
+Given a set $S \subseteq M$, let the \textbf{generating set} $\ang{S}$ be the intersection of all submodules of $M$ containing $S$.
 \end{defn}
 
 \begin{prop}
@@ -201,33 +201,110 @@ These maps induce maps between the entire submodule lattices $L(M)$ and $L(N)$:
 	f^{\leftarrow}: Y &\mapsto f^{-1}(Y)
 	\end{aligned}
 \end{equation*}
-Note that $f^{\to }$ and $f^{\leftarrow}$ are inclusion-preserving. We can also show how they interact with each other.
-\begin{prop}
-	Let $f$ be an $R$-morphism $M\to N$. If $A \in L(M)$ and $B \in L(N)$, then
-	\begin{enumerate}
-		\item $f^{\to }\left( A \isct f^{\ot}(B) \right) = f^{\to }(A) \isct B$;
-		\item $f^{\ot}\left( B + f^{\to }(A) \right) = f^{\ot}(B) + A$.
-	\end{enumerate}
-\end{prop}
-\warn{Prove this.}
-\begin{cor}
-	If $A \in L(M)$ and $B \in L(N)$, then
-	\begin{enumerate}
-		\item $f^{\to }(f^{\ot}(B)) = B \isct \im f$;
-		\item $f^{\ot}(f^{\to }(A)) = A + \ker f$.
-	\end{enumerate}
-\end{cor}
-
 
 \warn{Is there a way to generalize this to something other than modules? If we have a morphism $f:X\to Y$, will $f(x)$ and $f^{-1}(y)$ have that proerty if $x$ and $y$ have the property, respectively?}
 
 \warn{Is the defn of $R$-morphism really just saying that it preserves module-ness by respecting linear combs?}
 
 {\color{blue}
-	$f$ inj: There is a map $g:B\to A$ such that $fg = 1_{A}$.
+	$f$ inj: There is a map $g:B\to A$ such that $gf = 1_{A}$.
 
-	$f$ surj: There is a map $g:B\to A$ such that $gf = 1_{B}$.
+	$f$ surj: There is a map $g:B\to A$ such that $fg = 1_{B}$.
 }
+
+%-------------------
+% Basic Commutative Diagrams
+%-------------------
+\subsection{Basic Commutative Diagrams}
+
+\begin{thrm}[Five Lemma]
+Suppose the following diagram commutes and has exact rows.
+\[
+\begin{tikzcd}
+	A\rar\dar{\alpha_1} & B\rar\dar{\alpha_2} & C\rar\dar{\alpha_3} & D\rar\dar{\alpha_4} & E\dar{\alpha_5} \\
+	A'\rar & B'\rar & C'\rar & D'\rar & E'
+\end{tikzcd}
+\] 
+If $\alpha_1,\alpha_2,\alpha_4,\alpha_5$ are iso, then so is $\alpha_3$.
+\end{thrm}
+\begin{proof}
+	Apply the Four Lemma to the first three squares to show that $\alpha_3$ is monic, and to the last three squares to show that $\alpha_3$ is epic. Since it's an $R$-morphism, this is enough to show it's iso.
+\end{proof}
+
+\begin{cor}[Short Five Lemma]
+Suppose the following diagram commutes and has exact rows.
+\[
+\begin{tikzcd}
+	0\rar & A\rar\dar{\alpha} & B\rar\dar{\beta} & C\rar\dar{\gamma} & 0 \\
+        0\rar & A'\rar & B'\rar & C'\rar & 0
+\end{tikzcd}
+\] 
+If $\alpha,\gamma$ are iso, then so is $\beta$.
+\end{cor}
+
+This last corollary is just a special case of the Five Lemma when our two rows are short exact sequences.
+
+\begin{thrm}[Four Lemma]
+Suppose the following diagram commutes and has exact rows.
+\[
+\begin{tikzcd}
+	A \rar\dar{\alpha} & B \rar\dar{\beta} & C\rar\dar{\gamma} & D\dar{\delta} \\
+	A'\rar & B'\rar & C'\rar & D'
+\end{tikzcd}
+\] Then the following hold:
+\begin{enumerate}
+	\item If $\alpha,\gamma$ are epic and $\delta$ is monic, then $\beta$ is epic.
+	\item If $\alpha$ is epic and $\beta,\gamma$ are monic, then $\gamma$ is monic.
+\end{enumerate}
+\end{thrm}
+
+%-------------------
+% Split sequences
+%-------------------
+\subsection{Split sequences}
+
+\begin{defn}[]
+A short exact sequence $0\to A\mono B\epi C\to 0$ \textbf{splits} if there is an isomorphism making the following diagram commute,
+\[
+	\begin{tikzcd}
+		0 \rar & A \rar[tail]\arrow[dr,hook,"i_A"'] & B \rar[two heads]\dar[dashed]{\sim} & C \rar & 0 \\
+		       & & A \oplus C \arrow[ur,two heads,"\pi_C"']
+	\end{tikzcd}
+\]
+where $i_A$ and $\pi_C$ are natural.
+\end{defn}
+
+An epi need not have a left morphism inverse, but if it does, it's called a \textbf{split epimorphism}. Similarly, a mono with a right morphism inverse is called a \textbf{split monomorphsm}.
+
+\begin{defn}[]
+The sequence $0 \to A \stackrel{f}{\to } B \stackrel{g}{\to } C\to 0$
+\begin{align*}
+	\text{\textbf{splits on the left}} &\qquad \text{if $f$ is a split mono;} \\
+	\text{\textbf{splits on the right}} &\qquad \text{if $g$ is a split epi.}
+\end{align*}
+\end{defn}
+
+\begin{note}[]
+To remember right vs. left inverse, note that the inverse gives the identity on the \textit{middle term} if we're working with a SES.
+\end{note}
+
+The use of the word ``split" here isn't a coincidence, as shown in the following theorem.
+
+\begin{thrm}[Splitting Lemma]
+Fix a sequence $0\to A \stackrel{f}{\to } B\stackrel{g}{\to } C\to 0$, then TFAE:
+\begin{enumerate}
+	\item it splits on the left;
+	\item it splits on the right;
+	\item it splits.
+\end{enumerate}
+\end{thrm}
+\begin{proof}
+	\textbf{1 implies 3:} $f$ has a left inverse $\tilde{f}$. Define a map $B\to A\oplus C$ by $b \mapsto (\tilde{f}(b),g(b))$, then its clearly a morphism that makes the diagram commute. It's an iso by the Short Five Lemma.
+
+	\textbf{2 implies 3:} $g$ has a right inverse $\tilde{g}$. Define a map $A\oplus C\to B$ by $(a,c)\mapsto f(a)+\tilde{g}(c)$. Similarly, this is an iso.
+
+	\textbf{3 implies 1,2:} Suppose the iso is $\phi$, then define $\tilde{f}=\pi_{A}\phi$ and $\tilde{g}=\phi^{-1} i_C$.
+\end{proof}
 
 %--------------------------------------------------------------------------------
 % Lifts and Extensions of $R$-Morphisms
@@ -296,7 +373,9 @@ We'll start out by noting some obvious characterizations of morphisms in terms o
 \end{enumerate}
 \end{prop}
 
-Now to prove that a bunch of diagrams commute if some exactness condition holds. I don't include any diagram chases, but luckily only the Four Lemma needs one. Also, everything below is implicitly assumed to be using $R$-modules and $R$-morphisms.
+\begin{note}[]
+	Everything below is implicitly assumed to be using $R$-modules and $R$-morphisms.
+\end{note}
 \begin{prop}
 The diagram commutes if the row is exact and $\theta g= 0$.
 \[
@@ -327,49 +406,7 @@ The diagram commutes if the row is exact and $g \theta=0$.
 
 Note that if $Z = X / \im \theta$ and the $f$ is a projection map, then the row will always be exact.
 
-\begin{thrm}[Four Lemma]
-Suppose the following diagram commutes and has exact rows.
-\[
-\begin{tikzcd}
-	A \rar\dar{\alpha} & B \rar\dar{\beta} & C\rar\dar{\gamma} & D\dar{\delta} \\
-	A'\rar & B'\rar & C'\rar & D'
-\end{tikzcd}
-\] Then the following hold:
-\begin{enumerate}
-	\item If $\alpha,\gamma$ are epic and $\delta$ is monic, then $\beta$ is epic.
-	\item If $\alpha$ is epic and $\beta,\gamma$ are monic, then $\gamma$ is monic.
-\end{enumerate}
-\end{thrm}
 
-\begin{thrm}[Five Lemma]
-Suppose the following diagram commutes and has exact rows.
-\[
-\begin{tikzcd}
-	A\rar\dar{\alpha_1} & B\rar\dar{\alpha_2} & C\rar\dar{\alpha_3} & D\rar\dar{\alpha_4} & E\dar{\alpha_5} \\
-	A'\rar & B'\rar & C'\rar & D'\rar & E'
-\end{tikzcd}
-\] 
-If $\alpha_1,\alpha_2,\alpha_4,\alpha_5$ are iso, then so is $\alpha_3$.
-\end{thrm}
-\begin{proof}
-	Apply the Four Lemma to the first three squares to show that $\alpha_3$ is monic, and to the last three squares to show that $\alpha_3$ is epic. Since it's an $R$-morphism, this is enough to show it's iso.
-\end{proof}
-
-\begin{cor}[Short Five Lemma]
-Suppose the following diagram commutes and has exact rows.
-\[
-\begin{tikzcd}
-	0\rar & A\rar\dar{\alpha} & B\rar\dar{\beta} & C\rar\dar{\gamma} & 0 \\
-        0\rar & A'\rar & B'\rar & C'\rar & 0
-\end{tikzcd}
-\] 
-If $\alpha,\gamma$ are iso, then so is $\beta$.
-\end{cor}
-\warn{Check D\&F about the case "any two are iso".}
-
-This last corollary is just a special case of the Five Lemma when our two rows are short exact sequences. \warn{If the D\&F case applies here, that would be very useful for determining when a map of SESs is iso.}
-
-\warn{Are all epis split in the category of modules?}
 
 %+-------------------+
 %| +---------------+ |
@@ -397,7 +434,7 @@ We can make a \textbf{direct product} of $R$-modules $\prod_{a}M_{\alpha}$ into 
 	(x_{\alpha})_{\alpha} + (y_{\alpha})_{\alpha} &\doteq (x_{\alpha} + y_{\alpha})_{\alpha}, \\
 	\lambda (x_{\alpha})_{\alpha} &\doteq (\lambda x_{\alpha})_{\alpha}.
 \end{align*}
-If we add the restriction that only a finite number of the coordinates can be nonzero, then we get the \textbf{(external) direct sum} $\bigoplus_{\alpha} M_{\alpha}$. In this context, $\pi_{\alpha}$ denotes the canonical projection onto the $\alpha$-th coordinate, and $i_{\alpha}$ denotes the $\alpha$-th canonical injection
+If we add the restriction that only a finite number of the coordinates can be nonzero, then we get the \textbf{direct sum} $\bigoplus_{\alpha} M_{\alpha}$. In this context, $\pi_{\alpha}$ denotes the canonical projection onto the $\alpha$-th coordinate, and $i_{\alpha}$ denotes the $\alpha$-th canonical injection
 \[
 	x \mapsto (\dots, 0, x, 0, \dots),
 \] where the single nonzero coordinate is the $\alpha$-th coordinate.
@@ -447,7 +484,7 @@ Dually, a \textbf{coproduct} of $\left\{ M_{\alpha} \right\}_{\alpha}$ is an obj
 \end{proof}
 
 \begin{thrm}[Existence]
-	$\left(\prod_{\alpha \in \mathcal{A}} M_{\alpha}, \left\{ \pi_{\alpha} \right\}\right)$ is a product of $\left\{ M_{\alpha} \right\}$.
+	$\left(\prod_{\alpha} M_{\alpha}, \left\{ \pi_{\alpha} \right\}\right)$ is a product of $\left\{ M_{\alpha} \right\}$.
 \end{thrm}
 \begin{proof}
 	Given $N$ and morphisms $f_{\alpha}:N\to M_{\alpha}$, we define $f$ in the obvious way by
@@ -476,11 +513,11 @@ A consequence of the uniqueness of the product and coproduct is that both $\prod
 
 
 \begin{note}[]
-Big idea: the tensor product of two modules is a space in which we can describe bilinear maps in terms of linear maps.
+Big idea: the tensor product is a space in which multilinear maps become linear maps.
 \end{note}
 
 \begin{defn}[]
-Suppose $M$ is a right $R$-module and $N$ is a left $R$-module. If $G$ is a $\mathbb{Z}$-module, then $F:M\times N\to G$ is \textbf{balanced} if
+	Suppose $M:(-,R)$ and $N:(R,-)$. If $G$ is a $\mathbb{Z}$-module, then $f:M\times N\to G$ is \textbf{balanced} if
 \begin{enumerate}
 	\item $f(m_1+m_2,n)=f(m_1,n)+f(m_2,n)$;
 	\item $f(m,n_1+n_2)=f(m,n_1)+f(m,n_2)$;
@@ -489,7 +526,7 @@ Suppose $M$ is a right $R$-module and $N$ is a left $R$-module. If $G$ is a $\ma
 \end{defn}
 
 \begin{defn}[]
-The \textbf{tensor product} of a right module $M$ and left module $N$ is a $\mathbb{Z}$-module $M \otimes N$ with a balanced \textbf{tensor map} $\otimes$ such that for all $\mathbb{Z}$-modules $G$ and balanced maps $f:M\times N\to G$, there is a unique $\mathbb{Z}$-morphism lifting $f$ through $\otimes$.
+The \textbf{tensor product} of a right module $M$ and left module $N$ is a $\mathbb{Z}$-module $M \otimes N$ with a balanced \textbf{tensor map} $\otimes$ such that for all $\mathbb{Z}$-modules $G$ and balanced maps $f:M\times N\to G$, there is a unique $\mathbb{Z}$-morphism extending $f$ through $\otimes$.
 \[
 \begin{tikzcd}
 	M\otimes N \arrow[dr,dashed,"\exists!\;\phi"] \\
@@ -517,7 +554,7 @@ If a $\mathbb{Z}$-morphism has an addition-respecting property on a single $m \o
 \end{proof}
 
 \begin{thrm}[Uniqueness]
-	The tensor product is unique up to (unique) isomorphism.
+	The tensor product is unique up to (unique) isomorphism:
 	\begin{equation*}
         \begin{aligned}[c]
 		M \tilde{\otimes} N \text{ is also a tensor product}
@@ -569,62 +606,79 @@ $M \otimes_{R}N$ is a tensor product of $M \times N$.
 \end{proof}
 
 \begin{note}[]
-	Thus up to (unique) isomorphism, there is a unique tensor product of $M \times N$. We'll then call $M \otimes_{R}N$ \textit{the} tensor product of $M \times N$, and we'll also denote $m \otimes_{R}n \doteq \otimes_{R}(m,n)$.
+	Thus up to (unique) isomorphism, there is a unique tensor product of $M \times N$. We'll call $M \otimes_{R}N$ \textit{the} tensor product of $M \times N$, and we'll also denote $m \otimes_{R}n \doteq \otimes_{R}(m,n)$.
 \end{note}
+
+\begin{prop}
+\begin{enumerate}
+	\item $\otimes_{}$ distributes over addition.
+	\item $m \lambda\otimes_{}n = m \otimes_{}\lambda n$.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+	$\otimes_{}$ is balanced by definition.
+\end{proof}
+
+\begin{cor}
+\begin{enumerate}
+	\item $0\otimes_{}n = m\otimes_{}0 = 0$.
+	\item For all integers $k$, we have $k(m\otimes_{}n)=km \otimes_{}n = m\otimes_{}kn$.
+\end{enumerate}
+\end{cor}
+
+\begin{ex}[Tensoring with $\mathbb{Q}$]
+	Let $M$ be a right $\mathbb{Z}$-module, then $M\otimes_{\mathbb{Z}}\mathbb{Q}$ is essentially a torsion-free version of $M$. Suppose $m \in M$ is a torsion element, i.e. there is an $n\in \mathbb{N}$ such that $n m = 0 $, then for all $q \in \mathbb{Q}$,
+	\[
+	m \otimes_{}q = m \otimes_{}\frac{n q}{n} = n m \otimes_{}\frac{q}{n} =0 \otimes_{}\frac{q}{n} =0.
+	\] 
+\end{ex}
 
 The tensor product preserves module-ness in a manner similar to how dimensions work with matrix multiplication. The bimodules need to align in the middle, and the bimodules on the outside determine the bimodules of the tensor product.
 
 \begin{prop}
 	\begin{align*}
-		M:(S,R), \quad N:(R,T) &\quad\implies\quad M\otimes_{R}N:(S,T) \\
+		M:(S,R), \quad N:(R,T) &\quad\implies\quad M\otimes_{R}N:(S,T)
 	\end{align*}
-\end{prop}
-\begin{proof}
-	The left $S$-action and right $T$-action are
+	with the actions
 	\begin{align*}
 		s \left( \sum_i m_i \otimes_{R}n_i \right) &\doteq \sum_i sm_i \otimes_{R}m_i, \\
 		\left( \sum_i m_i \otimes_{R}n_i \right) t &\doteq \sum_i m_i \otimes_{R}m_i t.
 	\end{align*}
-\end{proof}
-
-\begin{note}[]
-	If $M:(-,R)$ and $N:(R,-)$, then $M \otimes_{R}N$ is a $\mathbb{Z}$-module since every right $R$-module is also a $(\mathbb{Z},R)$-bimodule.
-\end{note}
+\end{prop}
 
 \begin{cor}
 If $R$ is commutative and $M,N$ are $R$-modules, then $M \otimes_{R}N$ is also an $R$-module.
 \end{cor}
 
+\begin{note}[]
+	If $M:(-,R)$ and $N:(R,-)$, then $M \otimes_{R}N$ is a $\mathbb{Z}$-module since every right $R$-module is also a $(\mathbb{Z},R)$-bimodule.
+\end{note}
+
 \begin{prop}
-	$\otimes_{}$ is associative: if $M:(-,R), N:(R,S), P:(S,-)$, then there is a unique $\mathbb{Z}$-iso
+	$\otimes_{}$ is associative:
 	\[
-		(M \otimes_{R}N)\otimes_{S}P \cong M\otimes_{R}(N\otimes_{S}P).
-	\] If $M:(T,R)$ too, then the iso is also a $T$-iso.
+		(M \otimes N)\otimes P \cong M\otimes(N\otimes P).
+	\] 
 \end{prop}
 
-\begin{cor}
-If $R$ is commutative and $M,N,P$ are $R$-modules, then there is a unique $R$-iso
-\[
-	(M\otimes_{}N)\otimes_{}P \cong M\otimes_{}(N\otimes_{}P).
-\]
-\end{cor}
 
+\newpage
 %-------------------
 % Multilinearity to Linearity
 %-------------------
 \subsection{Multilinearity to Linearity}
 
 \begin{defn}[]
-Suppose $R$ is commutative and unital and ${M}_1, \dots, {M}_{n}$ and $N$ are $R$-modules. We say that
+Suppose $R$ is commutative and ${M}_1, \dots, {M}_{n}$ and $N$ are $R$-modules. We say
 \[
 \phi:{M}_1 \times \dots \times {M}_{n} \to N
-\] is \textbf{$n$-multilinear} over $R$ if it's an $R$-morphism (i.e. $R$-linear) in each factor. We call 2-multilinear maps \textbf{bilinear} and 3-multilinear maps \textbf{trilinear}.
+\] is \textbf{$n$-multilinear} over $R$ if it's an $R$-morphism (i.e. $R$-linear) in each factor.
 \end{defn}
 
 Since $\otimes_{}$ is associative, the following theorem is unambiguous.
 
 \begin{thrm}[]
-Suppose $R$ is commutative and unital and ${M}_1, \dots, {M}_{n}$ and $N$ are $R$-modules. If $f:M_1\times \cdots \times M_n \to N$ is $n$-multilinear, then it extends uniquely through the tensor product to an $R$-morphism (i.e. an $R$-linear map).
+Suppose $R$ is commutative and ${M}_1, \dots, {M}_{n}$ and $N$ are $R$-modules. If $f:M_1\times \cdots \times M_n \to N$ is $n$-multilinear, then it extends uniquely through the tensor product to an $R$-morphism (i.e. an $R$-linear map).
 \[
 \begin{tikzcd}
 	M_1 \otimes_{}\cdots \otimes_{}M_n \arrow[dr,dashed,"\exists!\;\phi"] \\
@@ -745,7 +799,7 @@ Extra nice modules will be both Noetherian and Artinian, and its these modules t
 Big idea: free modules are modules with a basis.
 \end{note}
 
-Given a nonempty set $S$ and a unital ring $R$, we can fill in all the missing linear combinations of $S$ to get a module $\ang{S}$. This module is ``free" of any unnecessary relations between its elements: it contains every possible linear combination of terms, with nothing simplified via some other relation.
+Given a nonempty set $S$ and a ring $R$, we can fill in all the missing linear combinations of $S$ to get a module $\ang{S}$. This module is ``free" of any unnecessary relations between its elements: it contains every possible linear combination of terms, with nothing simplified via some other relation.
 
 \begin{defn}[]
 Fix a category, then a \textbf{free object} on a set $S$ is an object $F$ with a map $i:S\to F$ such that for all other objects $M$, every map $f:S\to M$ extends uniquely through $i$ to a morphism $F\to M$.
@@ -772,24 +826,34 @@ We denote this by $(F, i)$ and say that $F$ is free on $S$.
 	\end{tikzcd}
 	\] 
 \end{thrm}
-\begin{proof}
-	To go forwards, plug $F$ into $G$'s universal property, then plug $G$ into $F$'s. The resulting two unique morphisms are isomorphisms that make the diagram commute. To go backwards, lift $i$'s unique extesion by the unique isomorphism $G\to F$ (the inverse of the one in the diagram) to get $j$'s unique extension.
-\end{proof}
 
 \begin{thrm}[Existence]
-	For every nonempty set $S$ and unital ring $R$, there is a free $R$-module on $S$.
+	For every nonempty set $S$, there is a free $R$-module on $S$.
 \end{thrm}
 \begin{proof}
 	Let $F = \bigoplus_{s \in S}Rs$ denote the set of all formal linear combinations of $S$, which has elements of the form $\sum_s r_s s$, where only finitely many of the $r_s$ are nonzero. There's a natural inclusion $i: S \inj F$. Given $M$ and $g$, define $h$ on $i(S)$ by $h(s) = g(s)$, then extend by linearity to all of $F$. It's necessarily a unique $R$-morphism that satisfies the universal property.
 \end{proof}
 
 \begin{note}[]
-	Thus up to (unique) isomorphism, every nonempty set $S$ has a unique free $R$-module. We can then call $\bigoplus_{s \in S}Rs$ \textit{the} free $R$-module on $S$.
+	Thus up to (unique) isomorphism, every nonempty set $S$ has a unique free $R$-module. The map $s\to \mathbf{e}_{s}$ gives $\bigoplus_{s \in S}Rs \cong \bigoplus_{s \in S}R$, so we can use $\bigoplus_{s \in S}R$ or $\bigoplus_{s \in S}Rs$ as \textit{the} free $R$-module on $S$.
 \end{note}
 
-Note that the map $s \mapsto \mathbf{e}_{s}$ shows $\bigoplus_{s}Rs \cong \bigoplus_{s}R$, so we can also describe the free $R$-module on $S$ as a direct sum of copies of $R$, indexed by $S$.
+\begin{thrm}[]
+Every module is the quotient of a free module.
+\end{thrm}
+\begin{proof}
+	Fix a module $M$ with generating set $S$ (it certainly has \textit{some} generating set since $\ang{M}=M$), and let $F$ be free on $M$. The universal property of free modules gives a unique morphism $\phi:F\to M$ extending the natural inclusion $S \inj M$.
+	\[
+	\begin{tikzcd}
+		F \arrow[dr,dashed,"\phi"] \\
+		S \uar[hook] \rar[hook] & M
+	\end{tikzcd}
+	\] Since $\ang{S}=M$, $\phi$ must be epic, so the 1st iso theorem gives $M \cong F / \ker \phi$.
+\end{proof}
 
-So that we don't have to deal with the map $i$ when describing free modules, we say that a module $M$ is free if there is some free module $(F,i)$ and an isomorphism $M \cong F$. Then the ``inclusion" map for $M$ is $i$ extended by the isomorphism.
+\begin{cor}
+	Every finitely generated module is a quotient of a free module with a finite basis.
+\end{cor}
 
 %-------------------
 % Bases
@@ -815,7 +879,7 @@ A nonempty subset $S \subseteq M$ is a basis of $M \iff$ each element of $M$ can
 A module is free $\iff$ it has a basis.
 \end{thrm}
 \begin{proof}
-	If $F$ is free, then isomorphic to $\bigoplus_{s}Rs$, so its basis is the basis $S$ of $\bigoplus_{s}Rs$ mapped through the isomorphism. Conversely, if $S$ is a basis of $F$, then there is a natural inclusion $i:S \inj F$. Fix another module $M$ and a map $f:S\to M$, then the only way to get an $R$-morphism $h:F\to M$ is to define $h(s) \doteq g(s)$ and then extend by linearity, which is unique. Thus $F$ is free.
+	If $F$ is free, then $F\cong \bigoplus_{s}Rs$, so its basis is $S$ mapped through the isomorphism. Conversely, if $S$ is a basis of $F$, then there is a natural inclusion $i:S \inj F$. Fix another module $M$ and a map $f:S\to M$, then the only way to get an $R$-morphism $h:F\to M$ is to define $h(s) \doteq g(s)$ and then extend by linearity, which is unique. Thus $F$ is free.
 \end{proof}
 
 \warn{Fill in other notes here.}
@@ -857,10 +921,27 @@ Given $R$-modules $M,N$, the set $\hom(M,N)$ is an abelian group under function 
 An abelian group iso is the same thing as a $\mathbb{Z}$-iso.
 \end{note}
 
+\begin{prop}
+	If $M:(R,S)$ and $N:(R,T)$, then $\hom_R(M,N):(S,T)$ with actions
+	\begin{align*}
+		s\phi : m &\mapsto \phi(ms)\\
+		\phi t : m &\mapsto \phi(m)t.
+	\end{align*}
+	If $M:(S,R)$ and $N:(T,R)$, then $\hom_R(M,N):(T,S)$ with actions
+	\begin{align*}
+		t\phi : m &\mapsto t\phi(m)\\
+		\phi s : m &\mapsto \phi(sm).
+        \end{align*}
+\end{prop}
+
+\begin{cor}
+	If $R$ is commutative and $M,N$ are both $R$-modules, then so is $\hom_R(M,N)$.
+\end{cor}
+
 \begin{thrm}[]
 	The following are $\mathbb{Z}$-isos.
 \begin{enumerate}
-	\item $\hom\left(\coprod_{\alpha}M_{\alpha}, N\right) \cong \prod_{\alpha}\hom\left( M_{\alpha},N \right)$.
+	\item $\hom\left(\bigoplus_{\alpha}M_{\alpha}, N\right) \cong \prod_{\alpha}\hom\left( M_{\alpha},N \right)$.
 	\item $\hom\left( N, \prod_{\alpha}M_{\alpha} \right) \cong \prod_{\alpha}\hom(N, M_{\alpha})$.
 \end{enumerate}
 \end{thrm}
@@ -906,35 +987,6 @@ Fix a module $M$, then for any other module $A$, there are associated abelian gr
 	This says that $\hom(M,-)$ is a covariant functor, while $\hom(-,M)$ is contravariant.
 \end{note}
 
-\begin{defn}[]
-The following definitions apply for a covariant functor $\mathcal{F}$ if, given any short exact $0\to A\to B\to C\to 0$, the given induced sequences are also exact.
-\begin{equation*}
-	\begin{aligned}[c]
-		\text{\textbf{exact}}\qquad \\
-		\text{\textbf{left exact}}\qquad \\
-		\text{\textbf{right exact}}\qquad
-	\end{aligned}
-	\begin{aligned}[c]
-		0\to \mathcal{F}A\to &\mathcal{F}B\to \mathcal{F}C\to 0\\
-		0\to \mathcal{F}A\to &\mathcal{F}B\to \mathcal{F}C\\
-		\mathcal{F}A\to &\mathcal{F}B\to \mathcal{F}C\to 0
-	\end{aligned}
-\end{equation*}
-There are similar definitions for a contravariant functor $\mathcal{G}$.
-\begin{equation*}
-        \begin{aligned}[c]
-                \text{\textbf{exact}}\qquad \\
-                \text{\textbf{left exact}}\qquad \\
-                \text{\textbf{right exact}}\qquad
-        \end{aligned}
-        \begin{aligned}[c]
-                0\to \mathcal{G}C\to &\mathcal{G}B\to \mathcal{G}A\to 0\\
-                0\to \mathcal{G}C\to &\mathcal{G}B\to \mathcal{G}A\\
-                \mathcal{G}C\to &\mathcal{G}B\to \mathcal{G}A\to 0
-        \end{aligned}
-\end{equation*}
-\end{defn}
-
 \begin{thrm}[]
 	$\hom(M,-)$ and $\hom(-,M)$ are left exact. Explicitly, for all short exact
 \[
@@ -963,72 +1015,233 @@ There are similar definitions for a contravariant functor $\mathcal{G}$.
 	We only do this for the first induced sequence, as the second one is dual. Since the original SES splits, $g$ has a right inverse $\tilde{g}$. Then $g_{*}\tilde{g}_{*} = (g\tilde{g})_{*} = (1_{C})_{*}$, which is the identity on $\hom(M,C)$. Thus $g_{*}$ is epic and the sequence splits. By the previous theorem, the rest of the sequence is exact.
 \end{proof}
 
+\begin{note}[]
 In general, though, we can't guarantee that $g_{*}$ or $f^{*}$ is surjective. This motivates the definition of projective and injective modules.
+\end{note}
+
+\begin{thrm}[Tensor-hom adjunction]
+	The following are $\mathbb{Z}$-isos.
+\begin{equation*}
+	\begin{aligned}
+		A&:(-,R)\\
+		B&:(R,S)\\
+		C&:(-,S)
+	\end{aligned}
+	\qquad\qquad
+	\begin{aligned}
+		\hom_S(A\otimes_{R}B,C) \cong \hom_R(A,\hom_S(B,C))
+	\end{aligned}
+\end{equation*}
+
+\vspace{5mm}
+
+\begin{equation*}
+	\begin{aligned}
+		A&:(R,-)\\
+		B&:(S,R)\\
+		C&:(S,-)
+	\end{aligned}
+	\qquad\qquad
+	\begin{aligned}
+		\hom_S(B\otimes_{R}A,C) \cong \hom_R(A,\hom_S(B,C))
+	\end{aligned}
+\end{equation*}
+\end{thrm}
+\begin{proof}
+	\warn{Do this.}
+\end{proof}
 
 %--------------------------------------------------------------------------------
-% Projective Modules
+% Projective and Injective Modules
 %--------------------------------------------------------------------------------
-\section{Projective Modules}
+\section{Projective and Injective Modules}
 
 \begin{note}[]
-	Big idea: a projective module $P$ makes any SES $0\to A \to B \to P \to 0$ split.
+	Big idea: a projective module $P$ makes any short exact $0\to A \to B \to P \to 0$ split. An injective module $Q$ makes any short exact $0 \to I\to B\to C\to 0$ split. They make the hom functors exact.
 \end{note}
 
 \begin{defn}[]
-An $R$-module $M$ is \textbf{projective} if for all short exact sequences
-\[
-        \begin{tikzcd}
-                0 \rar & A \rar & B\rar{g} & C \rar & 0,
-        \end{tikzcd} 
-\] the following sequence is exact.
-\[
-	\begin{tikzcd}
-		\hom(M,B) \rar{g_{*}} & \hom(M,C) \rar & 0
-	\end{tikzcd}
-\] Equivalently, if $g$ is epic, then so is $g_{*}$.
+	The following special types of modules preserve exactness of the given induced sequences for any arbitrary short exact $0 \to A\stackrel{f}{\to } B\stackrel{g}{\to } C\to 0$.
+	\begin{equation*}
+		\begin{aligned}
+			P \text{ is \textbf{projective}} \\
+			Q \text{ is \textbf{injective}}
+		\end{aligned}
+		\qquad
+		\begin{aligned}
+			&\hom(P,B) \stackrel{g_{*}}{\to } \hom(P,C)\to 0 \\
+			0 \ot &\hom(A,Q) \stackrel{f^{*}}{\ot} \hom(B,Q)
+		\end{aligned}
+	\end{equation*}
+Equivalently,
+\begin{equation*}
+	\begin{aligned}
+		\text{\textbf{projective}}\\
+		\text{\textbf{injective}}\\
+	\end{aligned}
+	\qquad
+	\begin{aligned}
+		&\text{if $g$ is epic, then so is $g_{*}$}\\
+		&\text{if $f$ is monic, then $f^{*}$ is epic}
+	\end{aligned}
+\end{equation*}
+Equivalently, if $g$ is epic, then so is $g_{*}$.
 \end{defn}
 
 \begin{prop}
-	The functor $\hom(M,-)$ is exact $\iff M$ is projective.
+	Effect on the hom functors:
+	\begin{equation*}
+		\begin{aligned}
+			\hom(P,-) \text{ is exact } &\iff P \text{ is projective} \\
+			\hom(-,Q) \text{ is exact } &\iff Q \text{ is injective}
+		\end{aligned}
+	\end{equation*}
 \end{prop}
 
-\begin{prop}
-	$P$ is projective $\iff$ any morphism $P\to C$ can be lifted (not necessarily uniquely) through epis, i.e. whenever $B\to C\to 0$ is exact.
-\[
-\begin{tikzcd}
-	& P \arrow[dl, dashed, "\exists\;\phi"'] \dar \\
-	B \rar[two heads] & C \rar & 0
-\end{tikzcd}
-\] 
-\end{prop}
-
-\begin{thrm}[]
+\begin{thrm}[Characterizations of projective modules]
 	TFAE:
 	\begin{enumerate}
 		\item $P$ is a projective module.
-		\item Every SES $0\to L\to M\to P\to 0$ splits.
-		\item $P$ is a direct summand of a free module, i.e. there is some $Q$ such that $P \oplus Q$ is free.
+		\item Any morphism $P\to C$ can be lifted (not necessarily uniquely) through epis, i.e. whenever $B\to C\to 0$ is exact.
+			\[
+			\begin{tikzcd}
+				& P \arrow[dl, dashed, "\exists\;\phi"'] \dar \\
+				B \rar[two heads] & C \rar & 0
+			\end{tikzcd}
+			\]
+		\item Every short exact $0\to A\to B\to P\to 0$ splits.
+		\item $P$ is a direct summand of a free module, i.e. there is some $\tilde{P}$ such that $P \oplus \tilde{P}$ is free.
 	\end{enumerate}
 \end{thrm}
 
 \begin{cor}
-	Free modules are projective (the converse isn't true in general).
+	Free modules are projective.
 \end{cor}
 
+The converse of this isn't true in general, so the following is strict:
+\[
+	\left\{ \text{all free modules} \right\} \subset \left\{ \text{all projective modules} \right\}.
+\] 
 
 \begin{cor}
 Every module is the quotient of a projective module.
 \end{cor}
+
 \begin{proof}
 	Every module is the quotient of a free module, and free modules are projective.
 \end{proof}
 
-%-------------------
-% Results for Vector Spaces
-%-------------------
-\subsection{Results for Vector Spaces}
+\begin{thrm}[Characterizations of injective modules]
+	TFAE:
+	\begin{enumerate}
+		\item $Q$ is an injective module.
+		\item Any morphism $B\to Q$ can be extended (not necessarily uniquely) through monos, i.e. whenever $0\to B\to C$ is exact.
+			\[
+			\begin{tikzcd}
+				0 \rar & B \rar[tail]\dar & C \arrow[dl,dashed,"\exists\;\phi"] \\
+				       & Q
+			\end{tikzcd}
+			\] 
+		\item Every short exact $0\to Q\to B\to C\to 0$ splits.
+	\end{enumerate}
+\end{thrm}
 
-If we're working with vector spaces, then these results can tell us a lot about our spaces' dimensions.
+Since there's nothing really dual to free modules, there's no real dual notion of the free module characterization of projective modules. That's why we only have three characterizations for injective modules above instead of four.
+
+\begin{prop}
+$M \oplus N$ is projective/injective $\iff M$ and $N$ are both projective/injective.
+\end{prop}
+\warn{Generalize for arbitrary number of products.}
+
+\begin{prop}
+	Let $R$ be commutative. If $M,N$ are projective, then so is $M\otimes_{R}N$.
+\end{prop}
+\begin{proof}
+	Since $M,N$ are projective, $\hom(M,-)$ and $\hom(N,-)$ are exact, so their composition $\hom(M,-)\circ \hom(N,-)$ is too. But by the tensor-hom adjunction,
+	\[
+		\hom(M,-)\circ \hom(N,-) \cong \hom(M\otimes_{R}N,-),
+	\] so $M\otimes_{R}N$ is projective.
+\end{proof}
+
+%--------------------------------------------------------------------------------
+% Flat Modules
+%--------------------------------------------------------------------------------
+\section{Flat Modules}
+
+\begin{note}[]
+Big idea: a flat module $M$ makes the $M \otimes_{}-$ and $-\otimes_{}M$ functors exact.
+\end{note}
+
+Suppose $M:(-,R)$, then
+\begin{align*}
+	M \otimes_{R} - : \cat{Mod-R} &\to \cat{Ab} \\
+			N &\mapsto M \otimes_{R} N \\
+			f &\mapsto 1 \otimes_{}f
+		\end{align*} is a covariant functor. If $M:(S,R)$, then it's $\cat{Mod-R}\to \cat{S-Mod}$ instead.
+
+\begin{thrm}
+$M \otimes_{}-$ is right exact, i.e. if $0\to A\to B\to C\to 0$ is exact, then so is
+\[
+\begin{tikzcd}
+	M\otimes_{}A \rar & M\otimes_{}B \rar & M\otimes_{}C \rar & 0.
+\end{tikzcd}
+\] 
+\warn{The induced sequence above is exact for \textit{all} $M:(-,R) \iff A\to B\to C\to 0$ is exact.}
+\end{thrm}
+
+\begin{prop}
+If $0\to A\to B\to C\to 0$ is split exact, then so is $0\to M\otimes_{}A\to M\otimes_{}B\to M\otimes_{}C\to 0$.
+\end{prop}
+\begin{proof}
+	$M\otimes_{}B \cong M\otimes_{}(A \oplus C) \cong (M\otimes_{}A) \oplus (M\otimes_{}C)$.
+\end{proof}
+
+\begin{ex}[]
+Let $M=\mathbb{Z}_2$, then
+\begin{align*}
+	\mathbb{Z}_2 \otimes_{\mathbb{Z}} \mathbb{Z} &\cong \mathbb{Z}_2 \\
+	\mathbb{Z}_2 \otimes_{\mathbb{Z}} \mathbb{Q} &\cong 0
+\end{align*}
+(since each element of $\mathbb{Z}_2$ is a torsion element). Thus any morphism $\mathbb{Z}\to \mathbb{Q}$ induces the zero map. In particular, the natural inclusion $\mathbb{Z}\inj \mathbb{Q}$ (monic) induces the zero map (not monic). Thus $M \otimes_{}-$ is only right exact.
+\end{ex}
+
+\begin{defn}[]
+	$M$ is a \textbf{flat} module if $M \otimes_{R}-$ is exact. Equivalently, if $f$ is monic, then so is $1 \otimes_{}f$.
+\end{defn}
+
+\begin{prop}
+Free $\implies $ flat.
+\end{prop}
+\begin{proof}
+	Suppose $F \cong \bigoplus_{\alpha}R$ is free, then \warn{question about this proof...}
+\end{proof}
+
+\begin{cor}
+Projective $\implies $ flat.
+\end{cor}
+\begin{proof}
+	If $P$ is projective, then $P \oplus \tilde{P}$ is free for some $\tilde{P}$. Since this sum is free, it's flat: if $f:A\to B$ is monic, then so is
+	\[
+	\begin{tikzcd}
+		(P\oplus \tilde{P})\otimes_{}A \rar{1\otimes_{}f} \dar{\sim} & (P\oplus \tilde{P})\otimes_{}B \dar{\sim} \\
+		(P\otimes_{}A) \oplus (\tilde{P}\otimes_{}A) \uar & (P\otimes_{}B)\oplus (\tilde{P}\otimes_{}B) \uar
+	\end{tikzcd}
+	\] Thus $1\otimes_{}f:P\otimes_{}A\to P\otimes_{}B$ is monic.
+\end{proof}
+
+\begin{note}[]
+\[
+	\text{Free } \implies \text{ Projective } \implies \text{ Flat}.
+\] 
+\end{note}
+
+\warn{Everything here also applies to $- \otimes_{}M$.}
+
+
+%--------------------------------------------------------------------------------
+% Vector Spaces
+%--------------------------------------------------------------------------------
+\section{Vector Spaces}
 
 \begin{prop}
 Every SES of vector spaces splits.
