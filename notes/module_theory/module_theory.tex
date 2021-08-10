@@ -212,10 +212,42 @@ These maps induce maps between the entire submodule lattices $L(M)$ and $L(N)$:
 	$f$ surj: There is a map $g:B\to A$ such that $fg = 1_{B}$.
 }
 
+
 %-------------------
-% Basic Commutative Diagrams
+% Exact Sequences
 %-------------------
-\subsection{Basic Commutative Diagrams}
+\subsection{Exact Sequences}
+
+\begin{defn}[]
+The following definitions apply for a covariant functor $\mathcal{F}$ if, given any short exact $0\to A\to B\to C\to 0$, the given induced sequences are also exact.
+\begin{equation*}
+        \begin{aligned}[c]
+                \text{\textbf{exact}} \\
+                \text{\textbf{left exact}} \\
+                \text{\textbf{right exact}}
+        \end{aligned}
+        \qquad
+        \begin{aligned}[c]
+                0\to \mathcal{F}A\to &\mathcal{F}B\to \mathcal{F}C\to 0\\
+                0\to \mathcal{F}A\to &\mathcal{F}B\to \mathcal{F}C\\
+                \mathcal{F}A\to &\mathcal{F}B\to \mathcal{F}C\to 0
+        \end{aligned}
+\end{equation*}
+There are similar definitions for a contravariant functor $\mathcal{G}$.
+\begin{equation*}
+        \begin{aligned}[c]
+                \text{\textbf{exact}} \\
+                \text{\textbf{left exact}} \\
+                \text{\textbf{right exact}}
+        \end{aligned}
+        \qquad
+        \begin{aligned}[c]
+                0\to \mathcal{G}C\to &\mathcal{G}B\to \mathcal{G}A\to 0\\
+                0\to \mathcal{G}C\to &\mathcal{G}B\to \mathcal{G}A\\
+                \mathcal{G}C\to &\mathcal{G}B\to \mathcal{G}A\to 0
+        \end{aligned}
+\end{equation*}
+\end{defn}
 
 \begin{thrm}[Five Lemma]
 Suppose the following diagram commutes and has exact rows.
@@ -241,8 +273,6 @@ Suppose the following diagram commutes and has exact rows.
 \] 
 If $\alpha,\gamma$ are iso, then so is $\beta$.
 \end{cor}
-
-This last corollary is just a special case of the Five Lemma when our two rows are short exact sequences.
 
 \begin{thrm}[Four Lemma]
 Suppose the following diagram commutes and has exact rows.
@@ -288,15 +318,11 @@ The sequence $0 \to A \stackrel{f}{\to } B \stackrel{g}{\to } C\to 0$
 To remember right vs. left inverse, note that the inverse gives the identity on the \textit{middle term} if we're working with a SES.
 \end{note}
 
-The use of the word ``split" here isn't a coincidence, as shown in the following theorem.
-
 \begin{thrm}[Splitting Lemma]
-Fix a sequence $0\to A \stackrel{f}{\to } B\stackrel{g}{\to } C\to 0$, then TFAE:
-\begin{enumerate}
-	\item it splits on the left;
-	\item it splits on the right;
-	\item it splits.
-\end{enumerate}
+Fix a sequence $0\to A \stackrel{f}{\to } B\stackrel{g}{\to } C\to 0$, then
+\[
+	\text{it splits on the left } \iff \text{ it splits on the right } \iff \text{ it splits}.
+\] 
 \end{thrm}
 \begin{proof}
 	\textbf{1 implies 3:} $f$ has a left inverse $\tilde{f}$. Define a map $B\to A\oplus C$ by $b \mapsto (\tilde{f}(b),g(b))$, then its clearly a morphism that makes the diagram commute. It's an iso by the Short Five Lemma.
@@ -357,25 +383,6 @@ Suppose $f$ and $g$ are $R$-morphisms. If $\ker f \subseteq \ker g$, then
 	If $h$ is monic, then for $a \in \ker g$, we have $h(f(a)) = g(a)=0$. But since $f$ is monic, this implies $f(a)=0$, so $a \in \ker f$. Thus $\ker g \subseteq \ker f$, and we already know the opposite inclusion. Conversely, using the $b=f(a)$ fact, $h(b_1)=b(b_2)\implies g(a_1)=g(a_2)$, so $a_1-a_2 \in \ker g = \ker  f$, so $b_1=f(a_1) = f(a_2)=b_2$.
 \end{proof}
 
-
-%-------------------
-% Consequences of Exactness
-%-------------------
-\subsection{Consequences of Exactness}
-
-We'll start out by noting some obvious characterizations of morphisms in terms of exact sequences. Quick reminder if if a sequence is exact, the composition of any two subsequent morphisms is 0.
-\begin{prop}
-	Monos, epis, and isos in terms of exact sequences:
-\begin{enumerate}
-	\item $f$ is monic $\iff 0\to M \stackrel{f}{\to } N$ is exact.
-	\item $f$ is epic $\iff M \stackrel{f}{\to } N \to 0$ is exact.
-	\item $f$ is iso $\iff 0 \to M \stackrel{f}{\to } N \to 0$ is exact.
-\end{enumerate}
-\end{prop}
-
-\begin{note}[]
-	Everything below is implicitly assumed to be using $R$-modules and $R$-morphisms.
-\end{note}
 \begin{prop}
 The diagram commutes if the row is exact and $\theta g= 0$.
 \[
@@ -907,6 +914,13 @@ S_\alpha \arrow[rrd, "f_\alpha"', bend right] \arrow[u, "i_\alpha", hook] \arrow
 \begin{cor}
 	The direct sum of free $R$-modules is itself free.
 \end{cor}
+
+\begin{prop}
+	The tensor product of free $R$-modules is itself free.
+\end{prop}
+\begin{proof}
+	$(\bigoplus_{\alpha}R) \otimes_{R} (\bigoplus_{\beta}R) \quad\cong \quad \bigoplus_{\alpha,\beta}R \otimes_{R}R \quad\cong \quad \bigoplus_{\alpha,\beta}R$.
+\end{proof}
 
 \warn{Finish this section}
 
