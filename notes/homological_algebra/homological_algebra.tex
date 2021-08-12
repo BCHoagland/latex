@@ -1,41 +1,47 @@
-\documentclass[twoside,10pt]{article}
+\documentclass[twoside,10pt]{report}
 \usepackage{/Users/bradenhoagland/latex/styles/toggles}
 \toggletrue{sectionbreaks}
 %\toggletrue{sectionheaders}
 \newcommand{\docTitle}{Homological Algebra}
 \usepackage{/Users/bradenhoagland/latex/styles/common}
-\usepackage{/Users/bradenhoagland/latex/styles/colors}
+\importStyles{modern}{rainbow}{boxy}
 
 %\renewcommand{\theenumi}{\alph{enumi}}
 
 \begin{document}
 \tableofcontents
 
-%%%%%%%%%%%%%%%%%%%%
-% Chain Complexes
-%%%%%%%%%%%%%%%%%%%%
 
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Chain Complexes
+
+\chapter{Chain Complexes}
+
+%--------------------------------------------------------------------------------
+% Chain Complexes
+%--------------------------------------------------------------------------------
 \section{Chain Complexes}
 
 \begin{defn}[]
-	A \textbf{chain complex} is a sequence of abelian group homomorphisms
-\begin{center}
+	A \textbf{chain complex} $\mathcal{C}$ is a sequence of $R$-morphisms
+\[
 	\begin{tikzcd}
 	\cdots \arrow[r, "d_{i+2}"] & C_{i+1} \arrow[r, "d_{i+1}"]  & C_i \arrow[r, "d_i"]  & C_{i-1} \arrow[r, "d_{i-1}"]  & \cdots
 	\end{tikzcd}
-\end{center}
-such that $d_i \circ d_{i+1}=0$ for all $i$.
+\]
+such that $d^2=0$ for all $i$. \textbf{Cochain complexes} are the same, except the boundary maps take you up a level instead of down.
+\[
+	\begin{tikzcd}
+		\cdots \rar{d_{i-1}} & C^{i-1}\rar{d_{i}} & C^{i} \rar{d_{i+1}} & C^{i+1}\rar{d_{i+2}} & \cdots
+	\end{tikzcd}
+\] 
 \end{defn}
 
-We can also consider \textbf{cochain complexes}, which are the same except that the maps take you up a level instead of down.
-\begin{center}
-	\begin{tikzcd}
-	\cdots                      & C_{i+1} \arrow[l, "d_{i+1}"'] & C_i \arrow[l, "d_i"'] & C_{i-1} \arrow[l, "d_{i-1}"'] & \cdots \arrow[l, "d_{i-2}"']
-	\end{tikzcd}
-\end{center}
-
-The map $d_i$ is the \textbf{boundary operator}, as it is a generalization of the geometric concept of a boundary (note $d^2=0$). Thus an element in the image of $d$ is a \textbf{boundary}. Since usual geometric cycles have no boundary, we call the elements of the kernel of $d$ \textbf{cycles}.
-
+The map $d_i$ is the \textbf{boundary operator}, as it is a generalization of the geometric concept of a boundary (note $d^2=0$). Thus an element of $\im d$ is a \textbf{boundary}. Since usual geometric cycles have no boundary, we call the elements of $\ker d$ \textbf{cycles}.
 
 \begin{ex}[]
 	Chain complexes generalize the concept of boundaries to objects that don't necessarily have clear cyclic geometric properties. Let $\Omega_n(M)$ denote the space of differential $n$-forms on a manifold $M$, then we have a cochain complex
@@ -47,30 +53,295 @@ The map $d_i$ is the \textbf{boundary operator}, as it is a generalization of th
 where $d$ is the exterior derivative. From this we see that the cycles of $\Omega_0(M)$ (the space of differentiable functions on $M$) are the constant functions.
 \end{ex}
 
-A map $f:C\to D$ between chain complexes is a sequence of maps \[f_i:C_i\to D_i\] that respect the boundary operators. This means the following diagram commutes.
-\begin{center}
+A \textbf{morphism of complexes/chain morphism} $f:\mathcal{C}\to \mathcal{D}$ is a sequence of morphisms $f_i:C_i\to D_i$ respecting the boundary map, i.e. making the following diagram commute.
+\[
 	\begin{tikzcd}
-		C_i \arrow[d, "f_i"'] \arrow[r, "d_C"] & C_{i-1} \arrow[d, "f_{i-1}"] \\
-		D_i \arrow[r, "d_D"']                & D_{i-1}
+		C_i \arrow[d, "f_i"'] \arrow[r, "d_\mathcal{C}"] & C_{i-1} \arrow[d, "f_{i-1}"] \\
+		D_i \arrow[r, "d_\mathcal{D}"']                & D_{i-1}
+	\end{tikzcd}
+\]
+
+%--------------------------------------------------------------------------------
+% Chain Homotopies
+%--------------------------------------------------------------------------------
+
+\section{Chain Homotopies}
+
+\begin{defn}[]
+Given two chain complexes $\mathcal{A},\mathcal{B}$, two chain morphisms $f,g:\mathcal{A}\to \mathcal{B}$ are \textbf{(chain) homotopic}, written $f \simeq g$, if there are morphisms $s_i:A_i\to B_{i-1}$ such that
+\[
+	d's + sd = f-g.
+\]
+If $\mathcal{A}, \mathcal{B}$ are cochain complexes instead, then $s_i:A_{i}\to B_{i+1}$.
+\end{defn}
+\[
+\begin{tikzcd}
+	A_{i-1} \rar{d} & A_i \rar{d}\dar[shift right, "f_i"']\dar[shift left]{g_i}\arrow[dl,dashed,"s_i"'] & A_{i+1} \arrow[dl,dashed,"s_{i+1}"] \\
+	B_{i-1} \rar["d'"'] & B_i \rar["d'"'] & B_{i+1}
 \end{tikzcd}
-\end{center}
+\] 
+\warn{Motivation for this?}
+
+\begin{prop}
+	\label{functors-preserve-homotopy}
+Additive functors preserve homotopy equivalence.
+\end{prop}
+\begin{proof}
+	Let $f\simeq g$. If $\mathcal{F}$ is additive and covariant, then $d's+sd = f-g \implies \mathcal{F}(d')\mathcal{F}(s)+\mathcal{F}(s)\mathcal{F}(d) = \mathcal{F}f - \mathcal{F}g$. Thus $\mathcal{F}f \simeq \mathcal{F}g$. If $\mathcal{G}$ is additive and contravariant, then $\mathcal{G}(d)\mathcal{G}(s) = \mathcal{G}(s)\mathcal{G}(d') = \mathcal{G}f-\mathcal{G}g$. Since all the arrows are reversed, the LHS is the right form, so $\mathcal{G}f \simeq \mathcal{G}g$.
+\end{proof}
+
+
+%--------------------------------------------------------------------------------
+% Homology
+%--------------------------------------------------------------------------------
+\section{Homology}
 
 \begin{defn}[]
 The $n$-th \textbf{homology group} of a chain complex $\mathcal{C}$ is
 \[
 	H_{n}(\mathcal{C}) = \frac{\ker d_{n}}{\im d_{n+1}} .
+\] The $n$-th \textbf{cohomology group} is
+\[
+	H^{n}(\mathcal{C}) = \frac{\ker d_{n+1}}{\im d_{n}} .
 \] 
 \end{defn}
 
-Similarly, the $n$-th \textbf{cohomology group} is $H^{n}(C) = \ker d_{n+1}/\im d_{n}$. In both cases the quotient represents the $n$-th dimensional holes in the complex, as it is the cycles that do not arise as boundaries of higher dimensional objects.
 
-A chain complex $C$ is exact if and only if $H_{n}(C)$ is trivial for all $n$.
+\begin{prop}
+A chain/cochain complex is exact $\iff$ all its homology/cohomology groups are trivial.
+\end{prop}
 
-Given a map $f:C \to D$ of chain complexes, the commutativity of the above diagram shows that $f$ sends cycles to cycles and boundaries to boundaries, thus inducing a map $H_{n}(C) \to H_{n}(D)$.
+Thus the (co)homology groups of a (co)chain complex measure how much it fails to be exact.
+
+\begin{prop}
+	A morphism of complexes $f:\mathcal{A}\to \mathcal{B}$ induces group morphisms between the complexes' homology/cohomology groups given by $[a] \mapsto [f_{n}(a)]$.
+\[
+\begin{aligned}
+	\begin{tikzcd}
+		A^{n-1} \rar\dar & A^{n} \rar\dar & A^{n+1} \dar \\
+		B^{n-1} \rar & B^{n} \rar & B^{n+1}
+	\end{tikzcd}
+	\quad \leadsto \quad
+	\begin{tikzcd}
+		H^{n}(\mathcal{A}) \dar \\
+		H^{n}(\mathcal{B})
+	\end{tikzcd}
+\end{aligned}
+\] 
+\end{prop}
+\begin{proof}
+	This follows from the morphism of complexes respecting the boundary map and thus mapping the kernels and images of the first complex to the kernels and images of the second.
+\end{proof}
+
+\begin{prop}
+	If $f_{*}$ is the induced (co)homology map of $f$, then $(gf)_{*}=g_{*}f_{*}$.
+\end{prop}
 
 \begin{defn}[]
-	A \textbf{quasi-isomorphism} is a map $f:C\to D$ of chain complexes where the induced map $H_{n}(C)\to H_{n}(D)$ is an isomorphism.
+$0\to \mathcal{A}\to \mathcal{B}\to \mathcal{C}\to 0$ is a \textbf{short exact sequence of complexes} if each $0\to A^{n}\to B^{n}\to C^{n}\to 0$ is short exact.
 \end{defn}
+
+\warn{Maybe build up to this with snake lemma?}
+
+\begin{thrm}[Long Exact Sequence in Cohomology]
+If $0\to \mathcal{A}\to \mathcal{B}\to \mathcal{C}\to 0$ is a short exact sequence of complexes, then there is a long exact sequence of cohomologies
+\begin{align*}
+	0 &\to H^{0}(\mathcal{A})\to H^{0}(\mathcal{B})\to H^{0}(\mathcal{C}) \\
+	  &\to H^{1}(\mathcal{A})\to H^{1}(\mathcal{B})\to H^{1}(\mathcal{C}) \\
+	  &\to H^{2}(\mathcal{A})\to \cdots
+\end{align*}
+where the morphisms $H^{n}(\mathcal{C})\to H^{n+1}(\mathcal{A})$ are the \textbf{connecting morphisms}.
+\end{thrm}
+\begin{proof}
+	\warn{Construct connecting morphisms.}
+
+	\warn{Intuition?}
+\end{proof}
+
+\begin{cor}
+If $0\to \mathcal{A}\to \mathcal{B}\to \mathcal{C}\to 0$ is exact and any 2 of the complexes are exact themselves, then so is the third.
+\end{cor}
+\begin{proof}
+	The LES of cohomologies becomes all 0, except for each $H^{n}(\mathcal{X})$, where $\mathcal{X}$ is the third complex. Now $0\to H^{n}(\mathcal{X})\to 0$ exact $\implies H^{n}(\mathcal{X}) \cong 0$, so $\mathcal{X}$ is exact.
+\end{proof}
+
+\begin{defn}[]
+	A morphism of complexes is a \textbf{quasi-isomorphism} if the (co)homology maps it induces are all iso.
+\end{defn}
+
+\begin{lem}
+	If $f\simeq g$ then they induce the same (co)homology maps, i.e. $f_{*}=g_{*}$.
+\end{lem}
+\begin{proof}
+	Suppressing subscripts, suppose $f = d's + sd$, then the induced map is
+	\[
+		[a] \mapsto [f(a)] = [(d's)(a) + (sd)(a)] = [d'(s(a)) + s(0)] = [0].
+	\] Then if $f \simeq g$, we have $[f(a)] = [(g+d's+sd)(a)] = [g(a)]$.
+\end{proof}
+
+\begin{prop}
+	\label{homotopy-quasi}
+A homotopy equivalence is a quasi-iso.
+\end{prop}
+\begin{proof}
+	Suppose $f$ and $g$ are inverse chain homotopies, then by the lemma, $f_{*}g_{*} = (fg)_{*} = (1_{B})_{*} = 1_{H(\mathcal{B})}$ and, similarly, $g_{*}f_{*}=1_{H(\mathcal{A})}$. Thus $H^n(\mathcal{A}) \cong H^n(\mathcal{B})$ for all $n$.
+\end{proof}
+
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Derived Functors
+
+\chapter{Derived Functors}
+
+%--------------------------------------------------------------------------------
+% Resolutions
+%--------------------------------------------------------------------------------
+\section{Resolutions}
+
+\begin{defn}[]
+Suppose $A$ is an $R$-module, then a \textbf{projective resolution} over $A$ is an exact sequence of projective $R$-modules
+\[
+\begin{tikzcd}
+	\cdots \rar & P_{n}\rar{d_{n}} & P_{n-1}\rar{d_{n-1}} & \cdots \rar{d_1} & P_0 \rar{\varepsilon} & A \rar & 0
+\end{tikzcd}
+\] 
+and a \textbf{injective resolution} over $A$ is an exact sequence of injective $R$-modules
+\[
+\begin{tikzcd}
+	0 \rar & A \rar{\varepsilon} & I_{0} \rar{d_{1}} & \cdots \rar{d_{n-1}} & I_{n-1}\rar{d_{n}} & I_{n} \rar \rar & \cdots.
+\end{tikzcd}
+\] 
+\end{defn}
+
+\begin{thrm}[Existence]
+	Every $R$-module has a projective \warn{and injective} resolution.
+\end{thrm}
+\begin{proof}
+	Let $A$ be an $R$-module, and let $P_0$ be free on $A$. Then there's a unique $R$-morphism $\varepsilon:P_0\to A$ extending $1_{A}$. It's clearly epic, so $P_0 \stackrel{\varepsilon}{\to } A\to 0$ is exact. Now let $P_1$ be free on $\ker \varepsilon$, then there's a unique $R$-morphism $d_1:P_1\epi \ker \varepsilon$, so $P_1\stackrel{d_1}{\to } P_0\stackrel{\varepsilon}{\to } A$ is exact. Continue inductively, with $P_{n+1}$ free on $\ker d_{n}$. Since each $P_i$ is free, each is projective.
+\end{proof}
+
+\begin{prop}
+$R$-morphisms lift to morphisms of projective/injective resolutions that are unique up to chain homotopy.
+\[
+\begin{tikzcd}
+	\cdots \rar & P_1 \rar\dar[dashed]{f_1} & P_0 \rar\dar[dashed]{f_0} & A \rar\dar{f} & 0 \\
+	\cdots \rar & P_1' \rar & P_0' \rar & A' \rar & 0
+\end{tikzcd}
+\]
+\[
+	\begin{tikzcd}
+		0 \rar & A \rar\dar{g} & I_{0} \rar\dar[dashed]{g_0} & I_{1} \rar\dar[dashed]{g_1} & \cdots \\
+		0 \rar & A' \rar & I_{0}' \rar & I_1' \rar & \cdots
+\end{tikzcd}
+\] 
+\end{prop}
+\begin{proof}
+	Inductively use the fact that all the $P_i,P_i'$ are projective and $I_{i}, I_{i}'$ are injective to get each $f_n$ and $g_{n}$. \warn{Chain homotopy bit.}
+\end{proof}
+
+\begin{cor}
+	\label{resolutions-homotopy-equiv}
+Any two projective/injective resolutions of the same module are homotopy equivalent.
+\end{cor}
+\begin{proof}
+	Consider the following lifts to projective resolutions (the case of injective resolutions is similar).
+	\[
+		\begin{tikzcd}
+			\mathcal{P} \rar\dar[dashed]{f_{\bullet}} & A \rar\dar{1_A} & 0 \\
+			\mathcal{P}' \rar\dar[dashed]{g_{\bullet}} & A \rar\dar{1_{A}} & 0 \\
+			\mathcal{P} \rar & A \rar & 0
+		\end{tikzcd}
+	\] 
+	The identity map is a valid candidate for each $g_n f_n$, so $g_n f_n \simeq 1$. Now flip the diagram upside down and use the same $f_n$ and $g_n$ maps, yielding $f_n g_n \simeq 1$.
+\end{proof}
+
+\begin{cor}
+	Any two projective/injective resolutions have isomorphic (co)homology groups.
+\end{cor}
+\begin{proof}
+	They're homotopy equivalent, so they're quasi-isomorphic by \Cref{homotopy-quasi}.
+\end{proof}
+
+%--------------------------------------------------------------------------------
+% Derived Functors
+%--------------------------------------------------------------------------------
+\section{Derived Functors}
+
+Suppose we apply an additive functor $\mathcal{F}$ to some projective/injective resolution of a module $A$. The (co)homology groups of the resulting complex are unique up to isomorphism:
+\begin{itemize}
+	\item Let $\mathcal{X},\mathcal{Y}$ be projective/injective resolutions of $A$, then they're homotopy equivalent by \Cref{resolutions-homotopy-equiv}.
+	\item By \Cref{functors-preserve-homotopy}, additive functors preserve homotopy equivalence, so $\mathcal{F}\mathcal{X}$ and $\mathcal{F}\mathcal{Y}$ are also homotopy equivalent.
+	\item By \Cref{homotopy-quasi}, homotopy equivalent complexes have isomorphic (co)homology groups.
+\end{itemize}
+
+Thus we can define the (co)homology groups of the sequence gotten by applying an additive functor $\mathcal{F}$ to a projective/injective resolution of $A$ using \textit{any} resolution.
+
+\warn{Define left and right derived functors.}
+
+\warn{Make sure to include chopping off the first term.}
+
+\begin{prop}
+	\label{left-exact-right-derived}
+	If $\mathcal{F}$ is left exact, then $R_0\mathcal{F}=\mathcal{F}$.
+\end{prop}
+\begin{proof}
+	\textbf{Covariant:} If $0\to A\stackrel{f}{\mono } I_0 \stackrel{g}{\to } I_1$ is exact, then so is $0\to \mathcal{F}A\stackrel{\mathcal{F}f}{\mono } \mathcal{F}I_0\stackrel{\mathcal{F}g}{\to } \mathcal{F}I_1 $. Then $R^{0}\mathcal{F}(A) = \ker (\mathcal{F}g) = \im (\mathcal{F}f) \cong \mathcal{F}(A)$ (since $\mathcal{F}f$ monic).
+
+	\textbf{Contravariant:} Use a projective resolution instead. The process is the same.
+\end{proof}
+
+\warn{left exact -> right derived / right exact -> left derived????}
+
+\warn{When to use proj/inj resolutions?}
+
+\warn{LES of left/right derived functors}
+
+\warn{If $A$ projective, then can determine derived functors very easily with projective resolution $0\to A\to A\to 0$.}
+
+
+
+%--------------------------------------------------------------------------------
+% The Ext Functor
+%--------------------------------------------------------------------------------
+\section{The Ext Functor}
+
+\begin{note}[]
+Big idea: the hom functors are left exact, but we can use cohomology to measure how much they fail to be right exact.
+\end{note}
+
+\begin{defn}[]
+	The \textbf{Ext functors} are the (right) derived functors of the hom functors.
+\end{defn}
+
+Given an $R$-module $A$, there are two equivalent ways to construct them:
+\begin{enumerate}
+	\item \textbf{Using $\hom(-,M)$ (contravariant):} Take a projective resolution
+\[
+\begin{tikzcd}
+	\cdots \rar & P_{n}\rar{d_{n}} & P_{n-1}\rar{d_{n-1}} & \cdots \rar{d_1} & P_0 \rar{\varepsilon} & A \rar & 0
+\end{tikzcd}
+\] 
+and apply $\hom(-,M)$ to it. Removing $\hom(A,M)$ from the sequence gives
+\[
+	\begin{tikzcd}
+		0 \rar & \hom(P_0,M) \rar{d_1^{*}} & \hom(P_1,M)\rar{d_2^{*}} \rar & \cdots.
+	\end{tikzcd}
+\] 
+This is a cochain complex since for any map $f$, applying $d^{*}$ twice gives ${d^{*}}^2(f) = fd^2=0$. Then $\ext_{R}^{n}(A,M)$ is the $n$-th cohomology group of this complex.
+
+	\item \textbf{Using $\hom(M,-)$ (covariant):} Take an injective resolution, apply $\hom(M,-)$, remove $\hom(M,A)$, then take homology.
+\end{enumerate}
+
+\begin{prop}
+	$\ext_{R}^{0}(A,M)\cong \hom_{R}(A,M)$.
+\end{prop}
+\begin{proof}
+	The hom functors are left exact, so apply \Cref{left-exact-right-derived}.
+\end{proof}
 
 
 \end{document}

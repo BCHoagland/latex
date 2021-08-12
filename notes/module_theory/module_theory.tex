@@ -203,7 +203,6 @@ These maps induce maps between the entire submodule lattices $L(M)$ and $L(N)$:
 \end{equation*}
 
 \warn{Is there a way to generalize this to something other than modules? If we have a morphism $f:X\to Y$, will $f(x)$ and $f^{-1}(y)$ have that proerty if $x$ and $y$ have the property, respectively?}
-
 \warn{Is the defn of $R$-morphism really just saying that it preserves module-ness by respecting linear combs?}
 
 {\color{blue}
@@ -219,7 +218,7 @@ These maps induce maps between the entire submodule lattices $L(M)$ and $L(N)$:
 \subsection{Exact Sequences}
 
 \begin{defn}[]
-The following definitions apply for a covariant functor $\mathcal{F}$ if, given any short exact $0\to A\to B\to C\to 0$, the given induced sequences are also exact.
+	A covariant functor $\mathcal{F}$ is one of the below if it preserves exactness in the manner depicted.
 \begin{equation*}
         \begin{aligned}[c]
                 \text{\textbf{exact}} \\
@@ -228,12 +227,12 @@ The following definitions apply for a covariant functor $\mathcal{F}$ if, given 
         \end{aligned}
         \qquad
         \begin{aligned}[c]
-                0\to \mathcal{F}A\to &\mathcal{F}B\to \mathcal{F}C\to 0\\
-                0\to \mathcal{F}A\to &\mathcal{F}B\to \mathcal{F}C\\
-                \mathcal{F}A\to &\mathcal{F}B\to \mathcal{F}C\to 0
+		A\to B\to C \quad&\leadsto\quad 0\to \mathcal{F}A\to \mathcal{F}B\to \mathcal{F}C\to 0\\
+		0\to A\to B\to C \quad&\leadsto\quad 0\to \mathcal{F}A\to \mathcal{F}B\to \mathcal{F}C\\
+		A\to B\to C\to 0 \quad&\leadsto\quad \qquad \mathcal{F}A\to \mathcal{F}B\to \mathcal{F}C\to 0
         \end{aligned}
 \end{equation*}
-There are similar definitions for a contravariant functor $\mathcal{G}$.
+The following apply to a contravariant functor $\mathcal{G}$ instead.
 \begin{equation*}
         \begin{aligned}[c]
                 \text{\textbf{exact}} \\
@@ -242,9 +241,9 @@ There are similar definitions for a contravariant functor $\mathcal{G}$.
         \end{aligned}
         \qquad
         \begin{aligned}[c]
-                0\to \mathcal{G}C\to &\mathcal{G}B\to \mathcal{G}A\to 0\\
-                0\to \mathcal{G}C\to &\mathcal{G}B\to \mathcal{G}A\\
-                \mathcal{G}C\to &\mathcal{G}B\to \mathcal{G}A\to 0
+                A\to B\to C \quad&\leadsto\quad 0\to \mathcal{G}C\to \mathcal{G}B\to \mathcal{G}A\to 0\\
+                A\to B\to C\to 0 \quad&\leadsto\quad 0\to \mathcal{G}C\to \mathcal{G}B\to \mathcal{G}A\\
+                0\to A\to B\to C \quad&\leadsto\quad \qquad \mathcal{G}C\to \mathcal{G}B\to \mathcal{G}A\to 0
         \end{aligned}
 \end{equation*}
 \end{defn}
@@ -1070,6 +1069,8 @@ In general, though, we can't guarantee that $g_{*}$ or $f^{*}$ is surjective. Th
 %--------------------------------------------------------------------------------
 \section{Projective and Injective Modules}
 
+\warn{I don't think I understand \textit{intuitively} why projective/injective isn't always true.}
+
 \begin{note}[]
 	Big idea: a projective module $P$ makes any short exact $0\to A \to B \to P \to 0$ split. An injective module $Q$ makes any short exact $0 \to I\to B\to C\to 0$ split. They make the hom functors exact.
 \end{note}
@@ -1204,10 +1205,10 @@ $M \otimes_{}-$ is right exact, i.e. if $0\to A\to B\to C\to 0$ is exact, then s
 \end{thrm}
 
 \begin{prop}
-If $0\to A\to B\to C\to 0$ is split exact, then so is $0\to M\otimes_{}A\to M\otimes_{}B\to M\otimes_{}C\to 0$.
+	$M \otimes_{}-$ preserves split exactness.
 \end{prop}
 \begin{proof}
-	$M\otimes_{}B \cong M\otimes_{}(A \oplus C) \cong (M\otimes_{}A) \oplus (M\otimes_{}C)$.
+	If $0\to A\to B\to C\to 0$ is split exact, $M\otimes_{}B \cong M\otimes_{}(A \oplus C) \cong (M\otimes_{}A) \oplus (M\otimes_{}C)$.
 \end{proof}
 
 \begin{ex}[]
