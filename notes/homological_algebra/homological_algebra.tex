@@ -82,6 +82,15 @@ If $\mathcal{A}, \mathcal{B}$ are cochain complexes instead, then $s_i:A_{i}\to 
 \] 
 \warn{Motivation for this?}
 
+\begin{defn}[]
+	A chain morphism $f:\mathcal{A}\to \mathcal{B}$ is a \textbf{homotopy equivalence} if there's another chain morphism $g:\mathcal{B}\to \mathcal{A}$ such that $fg \simeq 1_{B}$ and $gf \simeq 1_{A}$.
+	\[
+	\begin{tikzcd}
+		\mathcal{A} \rar[bend left]{f} & \mathcal{B} \lar[bend left]{g}
+	\end{tikzcd}
+	\] 
+\end{defn}
+
 \begin{prop}
 	\label{functors-preserve-homotopy}
 Additive functors preserve homotopy equivalence.
@@ -97,15 +106,8 @@ Additive functors preserve homotopy equivalence.
 \section{Homology}
 
 \begin{defn}[]
-The $n$-th \textbf{homology group} of a chain complex $\mathcal{C}$ is
-\[
-	H_{n}(\mathcal{C}) = \frac{\ker d_{n}}{\im d_{n+1}} .
-\] The $n$-th \textbf{cohomology group} is
-\[
-	H^{n}(\mathcal{C}) = \frac{\ker d_{n+1}}{\im d_{n}} .
-\] 
+	The $n$-th \textbf{homology group} $H_{n}(\mathcal{C})$ of a chain complex $\mathcal{C}$ is the kernel of the map going out of $C_{n}$ quotiented by the image of the map coming into $C_{n}$. Cochain complexes have \textbf{cohomology groups} $H^{n}(\mathcal{C})$ instead.
 \end{defn}
-
 
 \begin{prop}
 A chain/cochain complex is exact $\iff$ all its homology/cohomology groups are trivial.
@@ -141,7 +143,19 @@ Thus the (co)homology groups of a (co)chain complex measure how much it fails to
 $0\to \mathcal{A}\to \mathcal{B}\to \mathcal{C}\to 0$ is a \textbf{short exact sequence of complexes} if each $0\to A^{n}\to B^{n}\to C^{n}\to 0$ is short exact.
 \end{defn}
 
-\warn{Maybe build up to this with snake lemma?}
+\begin{lem}[Snake Lemma]
+	If the following diagram has exact rows,
+	\[
+	\begin{tikzcd}
+		& A \rar\dar{\alpha} & B \rar[two heads]\dar{\beta} & C \rar\dar{\gamma} & 0 \\
+		0 \rar & A' \rar[tail] & B' \rar & C'
+	\end{tikzcd}
+	\] 
+	then there is an induced exact sequence
+	\[
+		\ker \alpha \to \ker \beta \to \ker \gamma \to \cok \alpha \to \cok \beta \to \cok \gamma.
+	\] 
+\end{lem}
 
 \begin{thrm}[Long Exact Sequence in Cohomology]
 If $0\to \mathcal{A}\to \mathcal{B}\to \mathcal{C}\to 0$ is a short exact sequence of complexes, then there is a long exact sequence of cohomologies
@@ -153,9 +167,8 @@ If $0\to \mathcal{A}\to \mathcal{B}\to \mathcal{C}\to 0$ is a short exact sequen
 where the morphisms $H^{n}(\mathcal{C})\to H^{n+1}(\mathcal{A})$ are the \textbf{connecting morphisms}.
 \end{thrm}
 \begin{proof}
-	\warn{Construct connecting morphisms.}
-
 	\warn{Intuition?}
+	\warn{Use snake lemma (have proof of this in spectral sequences paper).}
 \end{proof}
 
 \begin{cor}
@@ -170,7 +183,7 @@ If $0\to \mathcal{A}\to \mathcal{B}\to \mathcal{C}\to 0$ is exact and any 2 of t
 \end{defn}
 
 \begin{lem}
-	If $f\simeq g$ then they induce the same (co)homology maps, i.e. $f_{*}=g_{*}$.
+	If $f\simeq g$, then they induce the same (co)homology maps, i.e. $f_{*}=g_{*}$.
 \end{lem}
 \begin{proof}
 	Suppressing subscripts, suppose $f = d's + sd$, then the induced map is
@@ -280,27 +293,82 @@ Suppose we apply an additive functor $\mathcal{F}$ to some projective/injective 
 
 Thus we can define the (co)homology groups of the sequence gotten by applying an additive functor $\mathcal{F}$ to a projective/injective resolution of $A$ using \textit{any} resolution.
 
-\warn{Define left and right derived functors.}
+\begin{defn}[]
+Let $\mathcal{F}$ be a functor and $A$ an $R$-module, then choose a resolution of $A$ from the following chart based on $\mathcal{F}$.
+\begin{center}
+	\begin{tabular}{r l}
+		Left exact, covariant & \qquad injective \\
+		Left exact, contravariant & \qquad projective \\
+		Right exact, covariant & \qquad projective \\
+		Right exact, contravariant & \qquad injective
+	\end{tabular}
+\end{center}
+Apply $\mathcal{F}$ to the resolution, remove the $\mathcal{F}A$ term from it, then take (co)homologies. If $\mathcal{F}$ is left exact, the cohomologies $R^{i}\mathcal{F}$ are the \textbf{right derived functors} of $\mathcal{F}$. If $\mathcal{F}$ is right exact, the homologies $L_{i}\mathcal{F}$ are the \textbf{left derived functors} of $\mathcal{F}$.
+\end{defn}
 
-\warn{Make sure to include chopping off the first term.}
+\warn{I don't think the derived functors depend on $A$ at all, they can just be applied to $A$, etc. to get new objects...}
+
+With left exact functors, we end up with induced sequences of the form
+\[
+\begin{tikzcd}
+	0 \to \mathcal{F}X_0 \to \mathcal{F}X_1 \to \mathcal{F}X_2 \to \cdots,
+\end{tikzcd}
+\] thus why the derived functors are ``right". Similarly, for right exact functors, we end up with induced sequences of the form
+\[
+\begin{tikzcd}
+	\mathcal{F}X_2 \to \mathcal{F}X_1\to \mathcal{F}X_0\to 0,
+\end{tikzcd}
+\] thus why the derived functors are ``left". As examples, see the next two propositions.
+
+\warn{Can you get both sets of sequences at once if $\mathcal{F}$ is exact?}
+
+\warn{They're actually functors.... b/c (co)homology is a functor.}
+
+\warn{More detail about \textit{why} we choose inj or proj resolution.}
 
 \begin{prop}
-	\label{left-exact-right-derived}
-	If $\mathcal{F}$ is left exact, then $R_0\mathcal{F}=\mathcal{F}$.
+	\label{left-exact-right-0}
+	If $\mathcal{F}$ is left exact, then $R^0\mathcal{F}=\mathcal{F}$.
 \end{prop}
 \begin{proof}
-	\textbf{Covariant:} If $0\to A\stackrel{f}{\mono } I_0 \stackrel{g}{\to } I_1$ is exact, then so is $0\to \mathcal{F}A\stackrel{\mathcal{F}f}{\mono } \mathcal{F}I_0\stackrel{\mathcal{F}g}{\to } \mathcal{F}I_1 $. Then $R^{0}\mathcal{F}(A) = \ker (\mathcal{F}g) = \im (\mathcal{F}f) \cong \mathcal{F}(A)$ (since $\mathcal{F}f$ monic).
+	\textbf{Covariant:} If $0\to A\stackrel{f}{\mono } I_0 \stackrel{g}{\to } I_1$ is exact, then so is $0\to \mathcal{F}A\stackrel{\mathcal{F}f}{\mono } \mathcal{F}I_0\stackrel{\mathcal{F}g}{\to } \mathcal{F}I_1 $. Then $R^{0}\mathcal{F}(A) = \ker (\mathcal{F}g) = \im (\mathcal{F}f) \cong \mathcal{F}(A)$ (by the 1st iso theorem since $\mathcal{F}f$ monic).
 
 	\textbf{Contravariant:} Use a projective resolution instead. The process is the same.
 \end{proof}
 
-\warn{left exact -> right derived / right exact -> left derived????}
+\begin{prop}
+	\label{right-exact-left-0}
+	If $\mathcal{F}$ is right exact, then $L_0\mathcal{F} = \mathcal{F}$.
+\end{prop}
+\begin{proof}
+	\textbf{Covariant:} If $P_1\stackrel{f}{\to } P_0\stackrel{g }{\epi } A\to 0$ is exact, then so is $\mathcal{F}P_1\stackrel{\mathcal{F}f}{\to } \mathcal{F}P_0\stackrel{\mathcal{F}g}{\epi } \mathcal{F}A\to 0$. Then $L_0\mathcal{F}(A) = \frac{\mathcal{F}P_0}{\im \mathcal{F}f} = \frac{\mathcal{F}P_0}{\ker \mathcal{F}g} \cong \mathcal{F}A$ (by the 1st iso theorem since $\mathcal{F}g$ epic).
 
-\warn{When to use proj/inj resolutions?}
+	\textbf{Contravariant:} Use an injective resolution instead. The process is the same.
+\end{proof}
 
-\warn{LES of left/right derived functors}
+\warn{Does ``left derived functor of left exact functor" make sense? Are they all just trivial or something? To prove something like that, would you use a left exact variant of ``exact functors preserves LES's"?}
 
-\warn{If $A$ projective, then can determine derived functors very easily with projective resolution $0\to A\to A\to 0$.}
+\begin{thrm}[LES of derived functors]
+	\warn{Do this.}
+\end{thrm}
+
+If derived functors measure the extent to which a functor fails to be exact, then an exact functor should have trivial derived functors. This turns out to be true.
+
+\begin{prop}
+If $\mathcal{F}$ is exact, then $R^{i}\mathcal{F}=L_{i}\mathcal{F}=0$ for all $i>0$.
+\end{prop}
+\begin{proof}
+	\textbf{Covariant:} Exact functors preserve exactness, so $0\to A\mono I_0\to I_1\to \cdots$ exact implies $0\to \mathcal{F}A\to \mathcal{F}I_0\to \mathcal{F}I_1\to \cdots$ exact. Chopping off the $\mathcal{F}A$ term and taking cohomologies gives $L_{i}\mathcal{F} = 0$ when $i>0$. Now repeat the argument with a projective resolution for the $R^{i}$.
+
+	\textbf{Contravariant:} Similar argument.
+\end{proof}
+
+\begin{prop}
+	Fix a functor $\mathcal{F}$. If $A$ is projective/injective (depending on the type of $\mathcal{F})$, then $R^{i}\mathcal{F}(A)$ or $L_{i}\mathcal{F}(A)$ (whichever is correct for $\mathcal{F}$) is trivial when $i>0$.
+\end{prop}
+\begin{proof}
+	We consider the case when $\mathcal{F}$ is left exact and covariant, but the other three cases are similar. Suppose $A$ is injective, then $0\to A\stackrel{\text{id}}{\to }  A\to 0$ is an injective resolution of $A$. This induces the exact sequence $0\to \mathcal{F}A \stackrel{\text{id}}{\to }  \mathcal{F}A \to 0$. Chopping off the first $\mathcal{F}A$ term and taking cohomologies gives $R^{i}\mathcal{F}(A)=0$.
+\end{proof}
 
 
 
@@ -333,15 +401,17 @@ and apply $\hom(-,M)$ to it. Removing $\hom(A,M)$ from the sequence gives
 \] 
 This is a cochain complex since for any map $f$, applying $d^{*}$ twice gives ${d^{*}}^2(f) = fd^2=0$. Then $\ext_{R}^{n}(A,M)$ is the $n$-th cohomology group of this complex.
 
-	\item \textbf{Using $\hom(M,-)$ (covariant):} Take an injective resolution, apply $\hom(M,-)$, remove $\hom(M,A)$, then take homology.
+	\item \textbf{Using $\hom(M,-)$ (covariant):} Take an injective resolution, apply $\hom(M,-)$, remove $\hom(M,A)$, then take homology. \warn{Is this actually equivalent?}
 \end{enumerate}
 
 \begin{prop}
 	$\ext_{R}^{0}(A,M)\cong \hom_{R}(A,M)$.
 \end{prop}
 \begin{proof}
-	The hom functors are left exact, so apply \Cref{left-exact-right-derived}.
+	The hom functors are left exact, so apply \Cref{left-exact-right-0}.
 \end{proof}
+
+\warn{Ext(A,B) is contra in A, cov in B.}
 
 
 \end{document}
