@@ -1,0 +1,145 @@
+\documentclass[twoside,10pt]{article}
+\usepackage{/Users/bradenhoagland/latex/styles/toggles}
+\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{Topological Data Analysis}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\importStyles{modern}{rainbow}{boxy}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+%--------------------------------------------------------------------------------
+% Graphs
+%--------------------------------------------------------------------------------
+\section{Graphs}
+
+\begin{defn}[]
+	A \textbf{(simple undirected) graph} $G$ is a set of vertices $V$ and undirected edges $E$, where $E$ has no self-loops or duplicate edges.
+\end{defn}
+
+\begin{defn}[]
+	A \textbf{path} between vertices $x$ and $y$ is a sequences of vertices
+	\[
+	x=u_0, \quad u_1, \quad \dots, \quad u_m=y
+\] such that $[u_i,u_{i+1}]$ is an edge for all $i$.
+\end{defn}
+
+\begin{defn}[]
+A graph is \textbf{connected} if there is a path between every pair of vertices.
+\end{defn}
+
+A \textbf{separation} of $G$ is two nonempty subsets of $G$ with no edges going between them. We can then equivalently define a graph to be connected if it has no separation.
+
+\begin{prop}
+Let $x \sim_{p} y$ if there is a path from $x$ to $y$. Then $\sim_{p}$ is an equivalence relation.
+\end{prop}
+
+We call the equivalence classes of $\sim_{p}$ \textbf{connected components}. Since equivalence relations naturally form partitions, the connected components of a graph union to the entire graph.
+
+\begin{ex}[]
+	Let $V$ be a vector space with subspace $N$, then $x \sim y \iff x - y \in N$ is an equivalence relation (since $N$ has 0 and is closed under addition and additive inverse). The quotient $V/N$ can then be defined as the equivalence classes of $\sim$, which is also a vector space with the operations $\alpha[x] = [\alpha x]$ and $[x]+[y] = [x+y]$.
+\end{ex}
+
+%--------------------------------------------------------------------------------
+% Simplicial Homology
+%--------------------------------------------------------------------------------
+\section{Simplicial Homology}
+
+\begin{defn}[]
+	Suppose $X$ is a simplicial complex, then let $C_{n}(X)$ be the \warn{vector space over $\mathbb{Z}_{2}$} with basis the $n$-simplices in $X$. Elements of $C_{n}(X)$ are called \textbf{$n$-chains}.
+\end{defn}
+
+\begin{itemize}
+	\item $C_{0}$: vertices
+	\item $C_{1}$: edges
+	\item $C_{2}$: triangles
+\end{itemize}
+
+\begin{defn}[]
+The \textbf{boundary map} $\p_n$ is the linear map
+\begin{align*}
+	C_n(X) &\to C_{n-1}(X) \\
+	[v_0,\dots,v_n] &\mapsto \sum_{i} \; [v_0, \dots, \hat{v}_{i}, \dots, v_{n}],
+\end{align*}
+where $\hat{v_{i}}$ indicates that $v_{i}$ has been removed from the simplex.
+\end{defn}
+
+\begin{prop}
+$\p^2 = 0$.
+\end{prop}
+\begin{proof}
+	Applying the defintion of $\p$ gives
+	\begin{align*}
+		\p^2([v_0, \dots, v_{n}]) &= \sum_{i} \p([v_0, \dots, \hat{v}_{i}, \dots, v_{n}]) \\
+					  &= \sum_{j<i} [v_0, \dots, \hat{v}_{j}, \dots, \hat{v}_{i}, \dots, v_{n}] + \sum_{i < j} [v_0, \dots, \hat{v}_{i}, \dots, \hat{v}_{j}, \dots, v_{n}].
+					  \intertext{Now we can swap the roles of $i$ and $j$ in the second sum to get a sum identical to the first. This gives}
+					  &= 2 \sum_{j<i} [v_0, \dots, \hat{v}_{j}, \dots, \hat{v}_{i}, \dots, v_{n}] \\
+					  &= 0
+	\end{align*}
+	since we're working over $\mathbb{Z}_2$.
+\end{proof}
+
+This result shows that
+\[
+\begin{tikzcd}
+	\cdots \rar & C_2(X) \rar{\p_2} & C_1(X) \rar{\p_1} & C_0(X) \rar{\p_0} & 0
+\end{tikzcd}
+\] is a chain complex. Thus we call $Z_k(X) \doteq \ker \p_k$ the space of \textbf{$k$-cycles} and $B_{k}(X) \doteq \im \p_{k+1}$ the space of \textbf{$k$-boundaries}.
+
+\begin{defn}[]
+	The \textbf{$k$-th homology} of $X$ is $H_{k}(X) \doteq Z_k(X) / B_k(X)$, and its dimension $\beta_{k}$ is the \textbf{$k$-th Betti number}.
+\end{defn}
+
+\begin{prop}
+	$\beta_0$ is the number of connected components of $X$. \warn{Infinite case?}
+\end{prop}
+\begin{proof}
+	Suppose $X$ has connected components $X_1, \dots, X_{\ell}$. Then since the homology functor commutes with direct sums,
+	\[
+		H_{0}(X) = H_{0}\left( \bigoplus_{i=1}^{\ell}X_{i} \right) = \bigoplus_{i=1}^{\ell}H_{0}(X_{i}).
+	\] 
+	{\color{blue}Show that $\beta_0=1$ when $X$ is connected.}
+	Then since $\beta_0$ of a connected complex is 1,
+	\[
+		\beta_0 = \dim \left( \bigoplus_{i=1}^{\ell}H_{0}(X_i) \right) = \sum_{i=1}^{\ell} \dim H_0(X_{i}) = \sum_{i=1}^{\ell}1 = \ell.
+	\] 
+\end{proof}
+
+%--------------------------------------------------------------------------------
+% Persistent Homology
+%--------------------------------------------------------------------------------
+\section{Persistent Homology}
+
+Given a function $f:G\to \mathbb{R}$, we can think of $f(x)$ as the time at which $x$ appears.
+
+\begin{defn}[]
+	$F:G\to \mathbb{R}$ is \textbf{monotonic} if $f(v) \leq f(e)$ whenever $e$ is an edge containing vertex $v$. \warn{gen to complexes...}
+\end{defn}
+
+Thus for monotonic functions, no edge will appear until both its vertices have also appeared.
+
+\warn{0 dim Persistent Homology stuff...}
+
+Note that every birth-death pair is an element of
+\[
+	\overline{\mathbb{R}}_{<}^2 \doteq \left\{ (x,y) \;|\; x \in \mathbb{R}, \; y \in \mathbb{R} \uni \left\{ \infty \right\} \right\}.
+\] 
+\warn{Figure.}
+
+\begin{defn}[]
+A \textbf{partial mapping} between {\color{red}multisets} $P,Q \subset \overline{\mathbb{R}}_{<}^2$ is a bijection $\eta: P_0 \to Q_0$, where $P_0 \subset P$ and $Q_0 \subset Q$. We denote it
+\[
+\eta: P\bij Q.
+\] 
+\end{defn}
+
+We define the cost of a partial matching $\eta:P\bij Q$ \warn{finish...}
+
+
+
+
+
+\end{document}

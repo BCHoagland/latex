@@ -29,7 +29,6 @@
 % ========
 % ABSTRACT
 % ========
-\vspace{10mm}
 %\subheader{Abstract}
 \begin{abstract}
 Although widely used as a simple method for optimization, traditional gradient descent is not optimal on general metric spaces. An extension of this method, natural gradient descent, empirically exhibits better convergence rates by modifying the gradient of a function to point in the steepest descent direction of the metric space of the particular problem. This generalization is of particular use in the field of reinforcement learning, where the modification of the gradient reduces to a left-multiplication by the inverse of the Fisher information matrix. The inclusion of this matrix in policy gradient methods empirically speeds up policy improvement, and an efficient calculation of the matrix-gradient product using the conjugate gradient can be employed to scale this method to larger problems.
@@ -149,6 +148,8 @@ With these notation decisions in place, we can formally summarize the natural gr
 \vspace{7mm}
 
 This general formulation is not practical, however, since $G$ is unknown for an arbitrary metric space. To implement this algorithm, we need to know what space we're working in and derive an expression for $G$. Doing so for probability space is useful, as it will allow us to optimize probabilistic models.
+
+\newpage
 
 % ======================================
 % NATURAL GRADIENT ON PROBABILITY SPACES

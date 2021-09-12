@@ -18,14 +18,16 @@
         \end{center}
 	\iftoggle{separateTitlePage}{
 		\newpage
-	}{}
+	}{
+		\vspace{10mm}
+	}
 }
 
 %--------------------------------------------------------------------------------
 % Sections
 %--------------------------------------------------------------------------------
 \titleformat{\section}{\center\small\bfseries\MakeUppercase}{\thesection}{1em}{}
-\titleformat{\subsection}{\center\footnotesize\MakeUppercase}{\thesubsection}{1em}{}
+\titleformat{\subsection}{\vspace{3mm}\center\footnotesize\MakeUppercase}{\thesubsection}{1em}{\vspace{1mm}}
 
 %--------------------------------------------------------------------------------
 % Header and Footer

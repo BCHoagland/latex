@@ -64,7 +64,7 @@ If $R$ is a division ring, then we also have
 
 When $R$ is commutative, any left $R$-module can be given the structure of a right $R$-module (and vice versa) by defining $x \lambda \doteq \lambda x$. Thus left and right $R$-modules are the same thing in this case. If $F$ is a field, then an $F$-module is the same thing as an $F$-vector space.
 
-The definition of modules gives us addition and scalar multiplication, but we still don't have a way of multiplying module elements together. Providing this is exactly the role of an algebra, which adds a ring structure to a module. \warn{It seems like there isn't much of a difference between a ring and an algebra, so you should ask someone about this...}
+The definition of modules gives us addition and scalar multiplication, but we still don't have a way of multiplying module elements together. Providing this is exactly the role of an algebra, which adds a ring structure to a module.
 
 \begin{defn}[]
 Let $R$ be a commutative unital ring. An $R$-\textbf{algebra} is an $R$-module $M$ along with a ``multiplication" map
@@ -77,7 +77,7 @@ This map distributes over addition and satisfies
 	\lambda(xy) = (\lambda x)y = x (\lambda y).
 \] 
 \end{defn}
-\warn{Why is $R$ commutative?}
+
 We can form more specific types of algebras by putting restrictions on the multiplication map. \textbf{Associative and commutative algebras} have associative and commutative multiplication maps, respectively. A \textbf{unital} algebra has a multiplicative identity. A \textbf{division algebra} is a unital associative algebra in which every nonzero element has a multiplicative inverse.
 
 %--------------------------------------------------------------------------------
@@ -141,13 +141,6 @@ This motivates the notation
 \] 
 and the terminology ``sum of the family $\left\{ M_{\alpha} \right\}_{\alpha}$."
 
-\begin{thrm}[Modular Law]
-Let $M$ be an $R$-module, and let $A,B,C$ be submodules of $M$ with $C \subseteq A$. Then
-\[
-	A \uni (B+C) = (A\uni B) + C.
-\] 
-\end{thrm}
-\warn{I have no idea why the book introduced this now.}
 
 %--------------------------------------------------------------------------------
 % Morphisms

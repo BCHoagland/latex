@@ -1,0 +1,168 @@
+\documentclass[twoside,10pt]{article}
+\usepackage{/Users/bradenhoagland/latex/styles/toggles}
+%\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{A Brief Introduction to Geometric Algebra}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\importStyles{formal}{rainbow}{plain}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+\formalTitle{\docTitle}{Braden Hoagland}{Math 323S: Geometry}
+\formalHeader{Braden Hoagland}{Geometric Algebra}
+
+%--------------------------------------------------------------------------------
+% Introduction
+%--------------------------------------------------------------------------------
+\section{Introduction}
+
+\warn{\lipsum[0-3]}
+
+%--------------------------------------------------------------------------------
+% Definitions
+%--------------------------------------------------------------------------------
+\section{Definitions}
+
+Although the intuition is straightforward, actually defining a geometric algebra is less so. Several axioms are necessary to ensure that the algebra behaves in a proper manner, and a few of the axioms depend on definitions that in turn depend on previous axioms. As such, the definition of a geometric given below will be somewhat lengthy and frequently interrupted by other necessary definitions.
+
+Without further ado, a \textbf{geometric algebra} is an associative unital algebra $\mathbb{G}$ whose multiplication operation is called the \textbf{geometric product}. An element of $\mathbb{G}$ is called a \textbf{multivector}. It is subject to the following axioms.
+
+\begin{axiom}
+	$\mathbb{G}$ contains a characteristic zero field $\mathbb{G}_0$ of \textbf{scalars}, whose additive and multiplicative identities coincide with those of $\mathbb{G}$.
+\end{axiom}
+
+\begin{axiom}
+	$\mathbb{G}$ contains a vector space $\mathbb{G}_{1}$ over $\mathbb{G}_{0}$. Perhaps unsurprisingly, we call the elements of $\mathbb{G}_{1}$ \textbf{vectors}.
+\end{axiom}
+
+\begin{axiom}
+	The square of any vector is a scalar.
+\end{axiom}
+
+At this point we arrive at our first promised interruption of the definition. Consider the following expression, which is true because of the previous axiom:
+\[
+	uv = \frac{1}{2} (uv+vu) + \frac{1}{2} (uv-vu).
+\] 
+If we define
+\begin{align*}
+	u \cdot v &\doteq \frac{1}{2} (uv+vu), \\
+	u \wedge v &\doteq \frac{1}{2} (uv-vu),
+\end{align*}
+then we can clearly decompose the geometric product of vectors into
+\[
+uv = u \cdot v + u \wedge v.
+\] 
+The first operation $\cdot$ is the \textbf{inner product}, and the second operation $\wedge$ is the \textbf{outer product}. Although this decomposition seems rather arbitrary at first glance, it is in fact incredibly useful. As we will see later, the inner product generalizes the dot product in $\mathbb{R}^{n}$, and the outer product generalizes the cross product of $\mathbb{R}^{3}$.
+
+With this in mind, we say that two vectors $u$ and $v$ are \textbf{orthogonal} if their inner product is 0, which is true if and only if they anticommute. Thus when $u$ and $v$ are orthogonal, $uv = u \wedge v$. Also note that $u \wedge v = -v \wedge u$ for all $u$ and $v$. In a similar vein, since every vector $u$ necessarily commutes with itself, we have $uu = u \cdot u$. These two special cases will prove very handy in cleaning up otherwise messy algebraic expressions later on.
+
+The wedge product is actually an important tool in constructing higher-dimensional vectors. An \textbf{$r$-blade} is the wedge product of $r$ orthogonal vectors, and an \textbf{$r$-vector} is a finite sum of $r$-blades. Although this definition is presently pretty opaque, these are precisely the higher-dimensional geometric objects that we will study. We denote the space of all $r$-vectors by $\mathbb{G}_{r}$.
+
+Note that since $\mathbb{G}_{1}$ is closed under scalar multiplication and since each $\mathbb{G}_{r}$ is built up from vectors, each $\mathbb{G}_{r}$ is necessarily also closed under scalar multiplication. In particular, let the scalar be 0, then we see that $0$ is an $r$-vector for all $r$. With all this in mind, the following axioms should actually make sense.
+
+\begin{axiom}
+	The only vector orthogonal to all other vectors is 0.
+\end{axiom}
+
+\begin{axiom}
+	If $\mathbb{G}_1 = \mathbb{G}_0$, then $\mathbb{G} = \mathbb{G}_{0}$. Otherwise, $\mathbb{G} = \bigoplus_{r}\mathbb{G}_{r}$.
+\end{axiom}
+
+This final axiom implies an incredibly important aspect of the structure of a geometric algebra. Suppose that $\{ {e}_{1}, {e}_{3}\}$ is an orthonomal basis for $\mathbb{G}_{0}$, then we have a \textbf{canonical basis} for $\mathbb{G}$ given by
+\[
+	\begin{gathered}
+	1 \\
+	e_1, \quad e_2,\quad e_3 \\
+	e_1e_2, \quad e_1e_3,\quad e_2e_3 \\
+	e_1e_2e_3.
+	\end{gathered}
+\]
+The extension to when $\mathbb{G}_{0}$ is $n$-dimensional is straightforward. In general, this basis will have $2^{n}$ elements, so $\mathbb{G}$ is $2^{n}$-dimensional. The $n$-th row of the above basis is itself a basis for the space of $n$-vectors.
+
+\begin{prop}
+The canonical basis for $\mathbb{G}$ is in fact a basis.
+\end{prop}
+\begin{proof}
+	\warn{Do this.}
+\end{proof}
+
+\begin{prop}
+	$\left\{ e_{i_1}\dots e_{i_n} \;|\; i_j < i_k \text{ when } j<k \right\}$ is a basis for the space of $n$-vectors.
+\end{prop}
+\begin{proof}
+	\warn{Do this.}
+\end{proof}
+
+\warn{Show existence of GA.}
+
+\warn{Everything in GA is coordinate free (unless working with a specific example, ofc).}
+
+\warn{norm of blade.}
+
+%--------------------------------------------------------------------------------
+% The Inner and Outer Product
+%--------------------------------------------------------------------------------
+\section{The Inner and Outer Product}
+
+\warn{$r$-blade is outer product of arbitrary vectors.}
+
+\begin{ex}[The outer product generalizes the cross product]
+Suppose we have two vectors $\mathbf{a} = a_1e_1 + a_2e_2+a_3e_3$ and $\mathbf{b} = b_1e_1+b_2e_2+b_3e_3$, then
+\begin{align*}
+	\mathbf{a} \wedge \mathbf{b} &= (a_2b_3-a_3b_2)e_2e_3 + (a_1b_3-a_3b_1)e_1e_3 + (a_1b_2-a_2b_1)e_1e_2, \\
+	\mathbf{a} \times \mathbf{b} &= (a_2b_3-a_3b_2)\hat{\mathbf{i}} - (a_1b_3-a_3b_1)\hat{\mathbf{j}} + (a_1b_2-a_2b_1)\hat{\mathbf{k}}.
+\end{align*}
+Thus when working with vectors in particular, the wedge product is in one-to-one correspondence with the cross product. Also note that the norm of both expressions is the same, so they represent geometric objects with the same area.
+
+\end{ex}
+
+\warn{OP changes sign when pair is swapped (b/c it's associative). It's also linear.}
+
+
+%--------------------------------------------------------------------------------
+% Geometric Interpretations
+%--------------------------------------------------------------------------------
+\section{Geometric Interpretations}
+
+%-------------------
+% The Inner Product
+%-------------------
+\subsection{The Inner Product}
+
+\warn{Do this section.}
+
+%-------------------
+% The Outer Product
+%-------------------
+\subsection{The Outer Product}
+
+We begin by interpreting the outerproduct in terms of geometric subspaces of $\mathbb{R}^{n}$. The simplest subspaces are represented by nonzero $r$-blades. This is formalized in the next proposition.
+
+\begin{prop}
+	\label{OP-zero}
+$a_1 \wedge \dots \wedge a_r = 0$ if and only if $\left\{ a_1, \dots, a_r \right\}$ is linearly dependent.
+\end{prop}
+\begin{proof}
+	 \warn{Do forward direction. See Thrm 25 in $\mathcal{G}$ paper.} Conversely, if $\left\{ a_1, \dots, a_n \right\}$ is linearly dependent, then some factor is repeated in $a_1 \wedge \dots \wedge a_n$. Then since the outer product is antisymmetric, this forces the outer product to be 0.
+\end{proof}
+
+\begin{cor}
+	Suppose $\mathbf{A}$ is a nonzero $r$-blade, then a vector $a$ lies in the span of the factors of $\mathbf{A}$ if and only if $a \wedge \mathbf{A}=0$. \qed
+\end{cor}
+
+This is enough for us to finally get a geometric interpretation of the outer product. Although it is a generalization of the cross product, with arbitrary blades, it actually represents the direct sum.
+
+\warn{Notation $\mathbf{A}_r$ below.}
+\begin{thrm}[]
+$\mathbf{A}_{r} \wedge \mathbf{B}_{s} = 0$ if and only if $\mathbf{A}_{r}$ and $\mathbf{B}_{s}$ share a nonzero vector. If the outer product is nonzero, it represents the direct sum of the subspaces represented by $\mathbf{A}_r$ and $\mathbf{B}_s$.
+\end{thrm}
+\begin{proof}
+	By a clear extension of \Cref{OP-zero}, $\mathbf{A}_r \wedge \mathbf{B}_s \iff$ they form a linearly dependent set $\iff$ they share a nonzero vector. Now suppose the outer product is nonzero, then $\mathbf{A}_r$ and $\mathbf{B}_s$ only coincide at 0. \warn{If $v$ is any vector, $v \wedge \mathbf{A}_r \wedge \mathbf{B}_s = 0 \iff v$ is a linear combination of the factors of $\mathbf{A}_r$ and $\mathbf{B}_s$.} Thus $\mathbf{A}_r \wedge \mathbf{B}_s$ represents the direct sum.
+\end{proof}
+
+
+
+\end{document}

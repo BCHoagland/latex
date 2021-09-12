@@ -11,7 +11,6 @@
 \begin{document}
 \tableofcontents
 
-
 %+-------------------+
 %| +---------------+ |
 %| |    Chapter    | |
@@ -25,6 +24,8 @@
 % Chain Complexes
 %--------------------------------------------------------------------------------
 \section{Chain Complexes}
+
+\warn{Want a more intuitive view of left/right exact functors, maybe in terms of lifts/ extensions.}
 
 \begin{defn}[]
 	A \textbf{chain complex} $\mathcal{C}$ is a sequence of $R$-morphisms
@@ -105,6 +106,10 @@ Additive functors preserve homotopy equivalence.
 %--------------------------------------------------------------------------------
 \section{Homology}
 
+\begin{note}[]
+	Big idea: given some module, we always have a way of getting a chain complex (take a resolution). Chain complexes by themselves aren't nice, though: they might be unwieldy or unnatural, similar objects might have dissimilar complexes, etc. Passing to homology makes these problems go away, though, giving us access to nice algebraic invariants.
+\end{note}
+
 \begin{defn}[]
 	The $n$-th \textbf{homology group} $H_{n}(\mathcal{C})$ of a chain complex $\mathcal{C}$ is the kernel of the map going out of $C_{n}$ quotiented by the image of the map coming into $C_{n}$. Cochain complexes have \textbf{cohomology groups} $H^{n}(\mathcal{C})$ instead.
 \end{defn}
@@ -142,6 +147,8 @@ Thus the (co)homology groups of a (co)chain complex measure how much it fails to
 \begin{defn}[]
 $0\to \mathcal{A}\to \mathcal{B}\to \mathcal{C}\to 0$ is a \textbf{short exact sequence of complexes} if each $0\to A^{n}\to B^{n}\to C^{n}\to 0$ is short exact.
 \end{defn}
+
+\newpage
 
 \begin{lem}[Snake Lemma]
 	If the following diagram has exact rows,
@@ -279,10 +286,16 @@ Any two projective/injective resolutions of the same module are homotopy equival
 	They're homotopy equivalent, so they're quasi-isomorphic by \Cref{homotopy-quasi}.
 \end{proof}
 
+\warn{Maybe start this section more generally, with left and right resolutions...}
+
 %--------------------------------------------------------------------------------
 % Derived Functors
 %--------------------------------------------------------------------------------
 \section{Derived Functors}
+
+\begin{note}[]
+Big idea: a left exact covariant functor $\mathcal{F}$ can turn a SES into a short left exact sequence, but there is only one canonical way to extend this to a LES, and that's with right derived functors. Left derived functors do the same for right exact functors. \warn{Why do we want a LES, though?}
+\end{note}
 
 Suppose we apply an additive functor $\mathcal{F}$ to some projective/injective resolution of a module $A$. The (co)homology groups of the resulting complex are unique up to isomorphism:
 \begin{itemize}
@@ -358,6 +371,7 @@ If derived functors measure the extent to which a functor fails to be exact, the
 If $\mathcal{F}$ is exact, then $R^{i}\mathcal{F}=L_{i}\mathcal{F}=0$ for all $i>0$.
 \end{prop}
 \begin{proof}
+	\warn{This uses the fact that exact functors preserves LES's... prove this.}
 	\textbf{Covariant:} Exact functors preserve exactness, so $0\to A\mono I_0\to I_1\to \cdots$ exact implies $0\to \mathcal{F}A\to \mathcal{F}I_0\to \mathcal{F}I_1\to \cdots$ exact. Chopping off the $\mathcal{F}A$ term and taking cohomologies gives $L_{i}\mathcal{F} = 0$ when $i>0$. Now repeat the argument with a projective resolution for the $R^{i}$.
 
 	\textbf{Contravariant:} Similar argument.
