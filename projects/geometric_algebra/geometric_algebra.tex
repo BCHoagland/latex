@@ -8,6 +8,11 @@
 
 %\renewcommand{\theenumi}{\alph{enumi}}
 
+\usepackage[
+        backend=biber,
+]{biblatex}
+\addbibresource{bib.bib}
+
 \begin{document}
 %\tableofcontents
 
@@ -19,14 +24,28 @@
 %--------------------------------------------------------------------------------
 \section{Introduction}
 
-\warn{\lipsum[0-3]}
+The development of geometric algebra (also called Clifford algebra) finds its roots in Willliam Rowan Hamilton's theory of quaternions. Hamilton proposed three orthogonal imaginary dimensions $\hat{\mathbf{i}},\hat{\mathbf{j}},$ and $\hat{\mathbf{k}}$, where the product of any two unit vectors gave the third. To make sure his notion of multiplication was well-defined, he need to introduce a final scalar dimension, so any quaternion would be of the form $a + b\hat{\mathbf{i}}+c\hat{\mathbf{j}}+d\hat{\mathbf{k}}$. Although this generalization of imaginary numbers was adept at describing general rotations, it was not as useful for building up higher-dimensional spaces from vectors.
+
+Another mathematician, though, Hermann Grassmann, tackled this exact problem in his development of the exterior algebra. He defined the outer product $u \wedge v$ of two vectors to be the oriented area of those two vectors. In particular, the orientation assures that this product is ansymmetric.
+
+Then in the late nineteenth century, William Kingdon Clifford took both these theories and combined them with a generalization of the inner (dot) product to create his geometric algebra. His algebra consisted of various grades of ``multivectors", related via the inner and outer products combined into a single operation called the ``geometric product". The inner product was used to go down grades, and the outer product to go up grades. Thus multivectors could be built up into higher dimensional objects or decomposed into lower dimensional ones.
+
+It is natural to ask \textit{why} Clifford developed this theory in the first place. Traditional vector algebra is certainly a highly functional branch of mathematics, after all. It has a few unfortunate flaws, though, such as a lack of generalizability and a seeming reliance on arbitrary choices.
+
+We start with the cross product, which determine a plane spanned by two non-parallel vectors by giving the unique (up to sign) vector orthogonal to the plane. Although the cross product works fine in 3 dimensions, this is the only dimension in which it is defined. It is also inherently unsatisfying: the plane is being represented by a vector that intersects it at only a single point, and we must choose an arbitrary orientation using the ``right hand rule". The outer product, on the other hand, actually gives the plane itself, comes with an orientation, and is clearly generalizable to higher dimensions.
+
+Vector algebra is also highly dependent on a choice of coordinates; vectors themselves make no sense without a defined basis. By taking a wholly algebraic approach, Clifford constructed a theory that does not depend on coordinates (although they certainly can - and are - used to shed light on particular geometric situations).
+
+One particular use of coordinates in geometric algebra is the development of generalized imaginary numbers. As we will later see, given some orthonormal basis $\left\{ e_1,e_2,e_3 \right\}$ of the field of scalars in a geometric algebra, their geometric product $ \mathbf{I} \doteq e_1e_2e_3$ represents a rotation of $90\degree$ in all three dimensions, and as such $\mathbf{I}^2 = -1$. Unlike in a traditional treatment of imaginary numbers, the reason why $\mathbf{I}$ squares to -1 is geometrically clear: a rotation of $180\degree$ reverses the orientation of an object.
+
+With these motivating examples in mind, we can dive into the actual theory of geometric algebra. We begin in Section 2 with the various definitions we will need. Section 3 is then devoted to a geometric interpretation of the inner and outer products and their role in the geometric product. Finally, applications to other areas of math and physics, as well as directions for further personal study, are detailed briefly in Section 4.
 
 %--------------------------------------------------------------------------------
 % Definitions
 %--------------------------------------------------------------------------------
 \section{Definitions}
 
-Although the intuition is straightforward, actually defining a geometric algebra is less so. Several axioms are necessary to ensure that the algebra behaves in a proper manner, and a few of the axioms depend on definitions that in turn depend on previous axioms. As such, the definition of a geometric given below will be somewhat lengthy and frequently interrupted by other necessary definitions.
+Although the intuition is straightforward, actually defining a geometric algebra is less so. Several axioms are necessary to ensure that the algebra behaves in a proper manner, and a few of the axioms depend on definitions that in turn depend on previous axioms. As such, the definition of a geometric algebra given below will be somewhat lengthy and interrupted by other necessary definitions. We will not show that an object satisfying all the axioms exists; for a construction, see \cite{construction}.
 
 Without further ado, a \textbf{geometric algebra} is an associative unital algebra $\mathbb{G}$ whose multiplication operation is called the \textbf{geometric product}. An element of $\mathbb{G}$ is called a \textbf{multivector}. It is subject to the following axioms.
 
@@ -42,7 +61,7 @@ Without further ado, a \textbf{geometric algebra} is an associative unital algeb
 	The square of any vector is a scalar.
 \end{axiom}
 
-At this point we arrive at our first promised interruption of the definition. Consider the following expression, which is true because of the previous axiom:
+At this point we arrive at our promised interruption of the definition. Consider the following expression, which is true because of the previous axiom:
 \[
 	uv = \frac{1}{2} (uv+vu) + \frac{1}{2} (uv-vu).
 \] 
@@ -55,11 +74,32 @@ then we can clearly decompose the geometric product of vectors into
 \[
 uv = u \cdot v + u \wedge v.
 \] 
-The first operation $\cdot$ is the \textbf{inner product}, and the second operation $\wedge$ is the \textbf{outer product}. Although this decomposition seems rather arbitrary at first glance, it is in fact incredibly useful. As we will see later, the inner product generalizes the dot product in $\mathbb{R}^{n}$, and the outer product generalizes the cross product of $\mathbb{R}^{3}$.
+The first operation $\cdot$ is the \textbf{inner product}, and the second operation $\wedge$ is the \textbf{outer product}. Although this decomposition seems rather arbitrary at first glance, it is in fact incredibly useful. As we will see very soon, the inner product generalizes the dot product in $\mathbb{R}^{n}$, and the outer product generalizes the cross product of $\mathbb{R}^{3}$.
 
-With this in mind, we say that two vectors $u$ and $v$ are \textbf{orthogonal} if their inner product is 0, which is true if and only if they anticommute. Thus when $u$ and $v$ are orthogonal, $uv = u \wedge v$. Also note that $u \wedge v = -v \wedge u$ for all $u$ and $v$. In a similar vein, since every vector $u$ necessarily commutes with itself, we have $uu = u \cdot u$. These two special cases will prove very handy in cleaning up otherwise messy algebraic expressions later on.
+With this in mind, we say that two vectors $u$ and $v$ are \textbf{orthogonal} if their inner product is 0, which is true if and only if they anticommute. Thus when $u$ and $v$ are orthogonal, $uv = u \wedge v$. Also note that $u \wedge v = -v \wedge u$ for all $u$ and $v$. In a similar vein, since every vector $u$ necessarily commutes with itself, we have $uu = u \cdot u$. We then define the \textbf{norm} of a vector $v$ to be $|v| = v^2 = v\cdot v$. With these definitions, it's clear that all vectors have a multiplicative inverse: let $v^{-1} \doteq v/|v|^2$, then
+\[
+v v^{-1} = \frac{v\cdot v + v \wedge v}{|v|^2} = \frac{|v|^2 + 0}{|v|^2} =1
+\] and, similarly, $v^{-1}v=1$.
 
-The wedge product is actually an important tool in constructing higher-dimensional vectors. An \textbf{$r$-blade} is the wedge product of $r$ orthogonal vectors, and an \textbf{$r$-vector} is a finite sum of $r$-blades. Although this definition is presently pretty opaque, these are precisely the higher-dimensional geometric objects that we will study. We denote the space of all $r$-vectors by $\mathbb{G}_{r}$.
+\begin{ex}[The inner product generalizes the dot product]
+Suppose we have two vectors $\mathbf{a} = \sum_i a_i e_i$ and $\mathbf{b} = \sum_j b_j e_j$, then their inner product is
+\[
+	\mathbf{a} \cdot \mathbf{b} = \sum_{i,j} (a_i b_j) e_i \cdot e_j = \sum_i a_i b_i,
+\]
+which is the same as the dot product.
+\end{ex}
+
+The outer product is actually an important tool in constructing higher-dimensional vectors. An \textbf{$r$-blade} is the outer product of $r$ vectors, and an \textbf{$r$-vector} is a finite sum of $r$-blades. We define the \textbf{norm} of an $r$-blade $\mathbf{B} = v_1 \wedge \dots \wedge v_r$ to be $|\mathbf{B}| = |v_1| \cdots |v_n|$. We will also frequently use the notation $\mathbf{B}_r$ to denote that $\mathbf{B}$ is an $r$-blade. Although this definition is presently pretty opaque, these are precisely the higher-dimensional geometric objects that we will study. We denote the space of all $r$-vectors by $\mathbb{G}_{r}$.
+
+\begin{ex}[The outer product generalizes the cross product]
+Suppose we have two vectors $\mathbf{a} = a_1e_1 + a_2e_2+a_3e_3$ and $\mathbf{b} = b_1e_1+b_2e_2+b_3e_3$, then
+\begin{align*}
+	\mathbf{a} \wedge \mathbf{b} &= (a_2b_3-a_3b_2)e_2e_3 + (a_1b_3-a_3b_1)e_1e_3 + (a_1b_2-a_2b_1)e_1e_2, \\
+	\mathbf{a} \times \mathbf{b} &= (a_2b_3-a_3b_2)\hat{\mathbf{i}} - (a_1b_3-a_3b_1)\hat{\mathbf{j}} + (a_1b_2-a_2b_1)\hat{\mathbf{k}}.
+\end{align*}
+Thus when working with vectors in particular, the outer product is in one-to-one correspondence with the cross product. Also note that the norm of both expressions is the same, so they represent geometric objects with the same area.
+\end{ex}
+
 
 Note that since $\mathbb{G}_{1}$ is closed under scalar multiplication and since each $\mathbb{G}_{r}$ is built up from vectors, each $\mathbb{G}_{r}$ is necessarily also closed under scalar multiplication. In particular, let the scalar be 0, then we see that $0$ is an $r$-vector for all $r$. With all this in mind, the following axioms should actually make sense.
 
@@ -71,7 +111,7 @@ Note that since $\mathbb{G}_{1}$ is closed under scalar multiplication and since
 	If $\mathbb{G}_1 = \mathbb{G}_0$, then $\mathbb{G} = \mathbb{G}_{0}$. Otherwise, $\mathbb{G} = \bigoplus_{r}\mathbb{G}_{r}$.
 \end{axiom}
 
-This final axiom implies an incredibly important aspect of the structure of a geometric algebra. Suppose that $\{ {e}_{1}, {e}_{3}\}$ is an orthonomal basis for $\mathbb{G}_{0}$, then we have a \textbf{canonical basis} for $\mathbb{G}$ given by
+This final axiom implies an incredibly important aspect of the structure of a geometric algebra. Suppose that $\{ e_1, e_2, e_3 \}$ is an orthonormal basis for $\mathbb{G}_{1}$, then we have a \textbf{canonical basis} for $\mathbb{G}$ given by
 \[
 	\begin{gathered}
 	1 \\
@@ -80,89 +120,123 @@ This final axiom implies an incredibly important aspect of the structure of a ge
 	e_1e_2e_3.
 	\end{gathered}
 \]
-The extension to when $\mathbb{G}_{0}$ is $n$-dimensional is straightforward. In general, this basis will have $2^{n}$ elements, so $\mathbb{G}$ is $2^{n}$-dimensional. The $n$-th row of the above basis is itself a basis for the space of $n$-vectors.
+The extension to when $\mathbb{G}_{0}$ is $n$-dimensional is straightforward. In general, this basis will have $2^{n}$ elements, so $\mathbb{G}$ is $2^{n}$-dimensional. The $n$-th row of the above canonical basis is itself a basis for the space of $n$-vectors.
 
-\begin{prop}
-The canonical basis for $\mathbb{G}$ is in fact a basis.
-\end{prop}
-\begin{proof}
-	\warn{Do this.}
-\end{proof}
+Note that
+\[
+e_i e_j =
+\begin{cases}
+	1 & i=j, \\
+	e_i \wedge e_j & i \neq j.
+\end{cases}
+\]
+This is a result of the $\{e_i\}$ necessarily being orthogonal. Thus our canonical basis is composed of unit $n$-blades.
 
-\begin{prop}
-	$\left\{ e_{i_1}\dots e_{i_n} \;|\; i_j < i_k \text{ when } j<k \right\}$ is a basis for the space of $n$-vectors.
-\end{prop}
-\begin{proof}
-	\warn{Do this.}
-\end{proof}
-
-\warn{Show existence of GA.}
-
-\warn{Everything in GA is coordinate free (unless working with a specific example, ofc).}
-
-\warn{norm of blade.}
-
-%--------------------------------------------------------------------------------
-% The Inner and Outer Product
-%--------------------------------------------------------------------------------
-\section{The Inner and Outer Product}
-
-\warn{$r$-blade is outer product of arbitrary vectors.}
-
-\begin{ex}[The outer product generalizes the cross product]
-Suppose we have two vectors $\mathbf{a} = a_1e_1 + a_2e_2+a_3e_3$ and $\mathbf{b} = b_1e_1+b_2e_2+b_3e_3$, then
-\begin{align*}
-	\mathbf{a} \wedge \mathbf{b} &= (a_2b_3-a_3b_2)e_2e_3 + (a_1b_3-a_3b_1)e_1e_3 + (a_1b_2-a_2b_1)e_1e_2, \\
-	\mathbf{a} \times \mathbf{b} &= (a_2b_3-a_3b_2)\hat{\mathbf{i}} - (a_1b_3-a_3b_1)\hat{\mathbf{j}} + (a_1b_2-a_2b_1)\hat{\mathbf{k}}.
-\end{align*}
-Thus when working with vectors in particular, the wedge product is in one-to-one correspondence with the cross product. Also note that the norm of both expressions is the same, so they represent geometric objects with the same area.
-
-\end{ex}
-
-\warn{OP changes sign when pair is swapped (b/c it's associative). It's also linear.}
-
+Before further exploring the geometric product, it is important to state that even though the canonical basis exists, everything in geometric algebra is still inherently coordinate free. This is emphasized by the fact that we introduced a basis for $\mathbb{G}$ only after we had defined everything else. Although the canonical basis can be used to highlight certain important concepts, no central theory is particularly dependent on it.
 
 %--------------------------------------------------------------------------------
 % Geometric Interpretations
 %--------------------------------------------------------------------------------
 \section{Geometric Interpretations}
 
+This section is an amalgamation of various enlightening geometric interpretations of the geometric product and its component parts. We start by giving geometric meaning to the inner and outer products, then describe the geometric product in terms of rotations, with the notion of imaginary numbers falling out naturally from this discussion.
+
+As a final note, we will make use of inner and outer products of \textit{arbitrary} multivectors in this section. Although we have presently only defined these products for vectors, their extension to arbitrary multivectors is straightforward since all multivectors are constructed from vectors. For more details, see section 4 of \cite{chisolm}.
+
 %-------------------
 % The Inner Product
 %-------------------
 \subsection{The Inner Product}
 
-\warn{Do this section.}
+The inner product will end up having a strong connection with the \textbf{orthogonal complement} of a subspace. Given a subspace $X$, its orthogonal complement is the space of all vectors orthogonal to all vectors in $X$.
+
+\begin{prop}
+	Suppose $\mathbf{A}_r$ is a nonzero $r$-blade, then a vector $a$ is orthogonal to $\mathbf{A}_r$ if and only if $a \cdot \mathbf{A}_r=0$.
+\end{prop}
+\begin{proof}
+	Suppose $\mathbf{A}_r = a_1 \wedge \cdots \wedge a_r$. If $a$ is orthogonal to $\mathbf{A}_r$, then it's orthogonal to each $a_i$ in particular, so $\mathbf{A}_r =0$. Conversely, if $a$ is \textit{not} orthogonal to $\mathbf{A}_r$, then $a \cdot \mathbf{A}_r$ is necessarily nonzero.
+\end{proof}
+
+This proposition generalizes to show that the inner product of two blades is the orthogonal complement of the subspaces they represent.
+
+\begin{thrm}[]
+	Let $r, s \geq 1$. Then $\mathbf{A}_r \cdot \mathbf{B}_s = 0 $ if and only if $\mathbf{A}_r$'s subspace has a nonzero vector orthogonal to $\mathbf{B}_s$. If $\mathbf{A}_r \cdot \mathbf{B}_s$ is nonzero, then it represents the orthogonal complement of $\mathbf{A}_r$ in $\mathbf{B}_s$. \qed
+\end{thrm}
 
 %-------------------
 % The Outer Product
 %-------------------
 \subsection{The Outer Product}
 
-We begin by interpreting the outerproduct in terms of geometric subspaces of $\mathbb{R}^{n}$. The simplest subspaces are represented by nonzero $r$-blades. This is formalized in the next proposition.
+The simplest subspaces are represented by nonzero $r$-blades, which are themselves composed of outer products of vectors. This is formalized in the next proposition.
 
 \begin{prop}
 	\label{OP-zero}
 $a_1 \wedge \dots \wedge a_r = 0$ if and only if $\left\{ a_1, \dots, a_r \right\}$ is linearly dependent.
 \end{prop}
 \begin{proof}
-	 \warn{Do forward direction. See Thrm 25 in $\mathcal{G}$ paper.} Conversely, if $\left\{ a_1, \dots, a_n \right\}$ is linearly dependent, then some factor is repeated in $a_1 \wedge \dots \wedge a_n$. Then since the outer product is antisymmetric, this forces the outer product to be 0.
+	For the forward direction, see Theorem 25 in \cite{chisolm}. For the backward direction, if $\left\{ a_1, \dots, a_n \right\}$ is linearly dependent, then some factor is repeated in $a_1 \wedge \dots \wedge a_n$. Then since the outer product is antisymmetric, this forces the outer product to be 0.
 \end{proof}
 
 \begin{cor}
-	Suppose $\mathbf{A}$ is a nonzero $r$-blade, then a vector $a$ lies in the span of the factors of $\mathbf{A}$ if and only if $a \wedge \mathbf{A}=0$. \qed
+	\label{wedge-lin-dep}
+	Suppose $\mathbf{A}_r$ is a nonzero $r$-blade, then a vector $a$ lies in the span of the factors of $\mathbf{A}_r$ if and only if $a \wedge \mathbf{A}_r=0$. \qed
 \end{cor}
 
-This is enough for us to finally get a geometric interpretation of the outer product. Although it is a generalization of the cross product, with arbitrary blades, it actually represents the direct sum.
+Thus nonzero $r$-blades represent subspaces of $\mathbb{R}^{n}$ spanned by $r$ linearly independent vectors. This is enough for us to finally get a geometric interpretation of the outer product. Although it is a generalization of the cross product, with arbitrary blades, it actually represents the direct sum.
 
-\warn{Notation $\mathbf{A}_r$ below.}
 \begin{thrm}[]
 $\mathbf{A}_{r} \wedge \mathbf{B}_{s} = 0$ if and only if $\mathbf{A}_{r}$ and $\mathbf{B}_{s}$ share a nonzero vector. If the outer product is nonzero, it represents the direct sum of the subspaces represented by $\mathbf{A}_r$ and $\mathbf{B}_s$.
 \end{thrm}
 \begin{proof}
-	By a clear extension of \Cref{OP-zero}, $\mathbf{A}_r \wedge \mathbf{B}_s \iff$ they form a linearly dependent set $\iff$ they share a nonzero vector. Now suppose the outer product is nonzero, then $\mathbf{A}_r$ and $\mathbf{B}_s$ only coincide at 0. \warn{If $v$ is any vector, $v \wedge \mathbf{A}_r \wedge \mathbf{B}_s = 0 \iff v$ is a linear combination of the factors of $\mathbf{A}_r$ and $\mathbf{B}_s$.} Thus $\mathbf{A}_r \wedge \mathbf{B}_s$ represents the direct sum.
+	By a clear extension of \Cref{OP-zero}, $\mathbf{A}_r \wedge \mathbf{B}_s \iff$ they form a linearly dependent set $\iff$ they share a nonzero vector. Now suppose the outer product is nonzero, then $\mathbf{A}_r$ and $\mathbf{B}_s$ only coincide at 0. If $v$ is any vector, $v \wedge \mathbf{A}_r \wedge \mathbf{B}_s = 0 \iff v$ is a linear combination of the factors of $\mathbf{A}_r$ and $\mathbf{B}_s$. Thus by \Cref{wedge-lin-dep}, $\mathbf{A}_r \wedge \mathbf{B}_s$ represents the direct sum.
 \end{proof}
 
+%-------------------
+% Generalized Imaginary Numbers
+%-------------------
+\subsection{Generalized Imaginary Numbers}
 
+Suppose $\mathbb{G}$ is $2^{n}$-dimensional, then the $n$-vectors are called \textbf{pseudoscalars}. The $n$-vector $e_1 \cdots e_n$ is called the \textbf{unit pseudoscalar}.
+
+\begin{prop}
+	\label{pseudo-1}
+	If $n = 4m + 2$ or $4m+3$ for some $m \in \mathbb{N}_0$, then $\mathbf{I}^2 = -1$. Otherwise $\mathbf{I}^2 = 1$.
+\end{prop}
+\begin{proof}
+	This is certainly true for $m=0$, as straightforward computations show $(e_1)^2=1$ and $(e_1e_2)^2 = (e_1e_2e_3)^2=-1$. We now proceed by induction. Suppose the result holds for some $m-1$. For $n=4m$, we have
+	\begin{align*}
+		(e_1 \cdots e_{4m})^2 &= -e_1 \cdots e_{4m-1} e_1 \cdots e_{4m-1} e_{4m} e_{4m} \\
+					&= -(e_1 \cdots e_{4m})^2,
+					\intertext{where the first step results in a sign change since $4m-1$ swaps are performed. Now $4m-1 = 4(m-1)+3$, so this becomes}
+					&= -(-1) = 1.
+	\end{align*}
+	The arguments for $4m+1, 4m+2,$ and $4m+3$ are similar.
+\end{proof}
+
+This property allows us to interpret many algebraic actions as reflections. For example, consider $e_1 e_2 e_1$. This evaluates to
+\[
+e_1 e_2 e_1 = - e_2 e_1 e_1 = -e_2,
+\] so it represents the reflection of $e_2$ through $e_1$. More generally, we can use \Cref{pseudo-1} to show that the reflection of a vector $v$ through an arbitrary $k$-blade $\mathbf{B}$ is $(-1)^{k+1}\mathbf{B} v \mathbf{B}^{-1}$ (see 1.5.14 in \cite{survey}).
+
+The unit pseudoscalar then has a clear geometric interpretation: it rotates vectors by $90\degree$. The reason it squares to -1 is because two $90\degree$ rotations is simply just a reflection.
+
+%--------------------------------------------------------------------------------
+% Conclusion
+%--------------------------------------------------------------------------------
+\section{Conclusion}
+
+Although the setup is somewhat involved, geometric algebra provides an intuitive framework through which geometric problems can be solved purely algebraically. The geometric product combines the inner and outer products into a single operation with clear geometric interpretations, leading to a more general and interpretable theory.
+
+Its applications are also far-reaching. It has become more popular in recent years in part due to the work of theoretical physicist David Hestenes, but physics is by far not the only subject to which it can be applied. It can be used to prove classical geometric theorems like Menelaus' and Ceva's Theorems (see Theorems 3.8.11 and 3.8.12 in \cite{geo}) and Desargues' Theorem (see section 4.2.4 in \cite{survey}), but it can also be employed in the study of exotic geometries not presiding in $\mathbb{R}^{n}$.
+
+Of particular interest to me is the spacetime algebra (see section 4 of \cite{survey}), an extension of $\mathbb{G}_{3}$. Although I didn't have the time to both learn the fundamentals of geometric algebra \textit{and} also learn how to apply it to study spacetime, further study of this topic is certainly a reasonable goal.
+
+%--------------------------------------------------------------------------------
+% Bibliography
+%--------------------------------------------------------------------------------
+\nocite{hestenes}
+
+\printbibliography
 
 \end{document}

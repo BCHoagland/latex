@@ -1,69 +1,85 @@
 \headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
 \headcommand {\beamer@framepages {1}{1}}
-\headcommand {\slideentry {0}{0}{2}{2/2}{}{0}}
+\headcommand {\beamer@sectionpages {1}{1}}
+\headcommand {\beamer@subsectionpages {1}{1}}
+\headcommand {\sectionentry {1}{Background}{2}{Background}{0}}
+\headcommand {\slideentry {1}{0}{1}{2/2}{}{0}}
 \headcommand {\beamer@framepages {2}{2}}
-\headcommand {\beamer@sectionpages {1}{2}}
-\headcommand {\beamer@subsectionpages {1}{2}}
-\headcommand {\sectionentry {1}{Background}{3}{Background}{0}}
-\headcommand {\slideentry {1}{0}{1}{3/3}{}{0}}
+\headcommand {\slideentry {1}{0}{2}{3/3}{}{0}}
 \headcommand {\beamer@framepages {3}{3}}
-\headcommand {\beamer@subsectionpages {3}{3}}
-\headcommand {\beamer@subsectionentry {0}{1}{1}{4}{Dynamically Grown Graphs}}
-\headcommand {\slideentry {1}{1}{1}{4/5}{Dynamically Grown Graphs}{0}}
-\headcommand {\beamer@framepages {4}{5}}
-\headcommand {\beamer@subsectionpages {4}{5}}
-\headcommand {\beamer@subsectionentry {0}{1}{2}{6}{Percolation}}
-\headcommand {\slideentry {1}{2}{1}{6/6}{Percolation}{0}}
+\headcommand {\slideentry {1}{0}{3}{4/4}{}{0}}
+\headcommand {\beamer@framepages {4}{4}}
+\headcommand {\slideentry {1}{0}{4}{5/5}{}{0}}
+\headcommand {\beamer@framepages {5}{5}}
+\headcommand {\slideentry {1}{0}{5}{6/6}{}{0}}
 \headcommand {\beamer@framepages {6}{6}}
-\headcommand {\slideentry {1}{2}{2}{7/7}{Percolation}{0}}
+\headcommand {\slideentry {1}{0}{6}{7/7}{}{0}}
 \headcommand {\beamer@framepages {7}{7}}
-\headcommand {\beamer@sectionpages {3}{7}}
-\headcommand {\beamer@subsectionpages {6}{7}}
-\headcommand {\sectionentry {2}{Basic Results}{8}{Basic Results}{0}}
-\headcommand {\slideentry {2}{0}{1}{8/8}{}{0}}
-\headcommand {\beamer@framepages {8}{8}}
-\headcommand {\beamer@subsectionpages {8}{8}}
-\headcommand {\beamer@subsectionentry {0}{2}{1}{9}{Continuity of the Phase Transition}}
-\headcommand {\slideentry {2}{1}{1}{9/10}{Continuity of the Phase Transition}{0}}
-\headcommand {\beamer@framepages {9}{10}}
-\headcommand {\beamer@subsectionpages {9}{10}}
-\headcommand {\beamer@subsectionentry {0}{2}{2}{11}{Scaling Behavior}}
-\headcommand {\slideentry {2}{2}{1}{11/12}{Scaling Behavior}{0}}
-\headcommand {\beamer@framepages {11}{12}}
-\headcommand {\slideentry {2}{2}{2}{13/13}{Scaling Behavior}{0}}
-\headcommand {\beamer@framepages {13}{13}}
-\headcommand {\slideentry {2}{2}{3}{14/15}{Scaling Behavior}{0}}
-\headcommand {\beamer@framepages {14}{15}}
-\headcommand {\beamer@sectionpages {8}{15}}
-\headcommand {\beamer@subsectionpages {11}{15}}
-\headcommand {\sectionentry {3}{2-Choice Rules}{16}{2-Choice Rules}{0}}
-\headcommand {\slideentry {3}{0}{1}{16/16}{}{0}}
-\headcommand {\beamer@framepages {16}{16}}
-\headcommand {\slideentry {3}{0}{2}{17/17}{}{0}}
+\headcommand {\slideentry {1}{0}{7}{8/9}{}{0}}
+\headcommand {\beamer@framepages {8}{9}}
+\headcommand {\beamer@subsectionpages {2}{9}}
+\headcommand {\beamer@subsectionentry {0}{1}{1}{10}{Percolation}}
+\headcommand {\slideentry {1}{1}{1}{10/10}{Percolation}{0}}
+\headcommand {\beamer@framepages {10}{10}}
+\headcommand {\slideentry {1}{1}{2}{11/11}{Percolation}{0}}
+\headcommand {\beamer@framepages {11}{11}}
+\headcommand {\beamer@sectionpages {2}{11}}
+\headcommand {\beamer@subsectionpages {10}{11}}
+\headcommand {\sectionentry {2}{Basic Results}{12}{Basic Results}{0}}
+\headcommand {\slideentry {2}{0}{1}{12/12}{}{0}}
+\headcommand {\beamer@framepages {12}{12}}
+\headcommand {\beamer@subsectionpages {12}{12}}
+\headcommand {\beamer@subsectionentry {0}{2}{1}{13}{Continuity of the Phase Transition}}
+\headcommand {\slideentry {2}{1}{1}{13/14}{Continuity of the Phase Transition}{0}}
+\headcommand {\beamer@framepages {13}{14}}
+\headcommand {\beamer@subsectionpages {13}{14}}
+\headcommand {\beamer@subsectionentry {0}{2}{2}{15}{Scaling Behavior}}
+\headcommand {\slideentry {2}{2}{1}{15/16}{Scaling Behavior}{0}}
+\headcommand {\beamer@framepages {15}{16}}
+\headcommand {\slideentry {2}{2}{2}{17/17}{Scaling Behavior}{0}}
 \headcommand {\beamer@framepages {17}{17}}
-\headcommand {\beamer@subsectionpages {16}{17}}
-\headcommand {\beamer@subsectionentry {0}{3}{1}{18}{Examples}}
-\headcommand {\slideentry {3}{1}{1}{18/19}{Examples}{0}}
+\headcommand {\slideentry {2}{2}{3}{18/19}{Scaling Behavior}{0}}
 \headcommand {\beamer@framepages {18}{19}}
-\headcommand {\slideentry {3}{1}{2}{20/20}{Examples}{0}}
+\headcommand {\beamer@sectionpages {12}{19}}
+\headcommand {\beamer@subsectionpages {15}{19}}
+\headcommand {\sectionentry {3}{2-Choice Rules}{20}{2-Choice Rules}{0}}
+\headcommand {\slideentry {3}{0}{1}{20/20}{}{0}}
 \headcommand {\beamer@framepages {20}{20}}
-\headcommand {\beamer@subsectionpages {18}{20}}
-\headcommand {\beamer@subsectionentry {0}{3}{2}{21}{Uniform Scaling}}
-\headcommand {\slideentry {3}{2}{1}{21/22}{Uniform Scaling}{0}}
-\headcommand {\beamer@framepages {21}{22}}
-\headcommand {\slideentry {3}{2}{2}{23/23}{Uniform Scaling}{0}}
+\headcommand {\slideentry {3}{0}{2}{21/21}{}{0}}
+\headcommand {\beamer@framepages {21}{21}}
+\headcommand {\slideentry {3}{0}{3}{22/22}{}{0}}
+\headcommand {\beamer@framepages {22}{22}}
+\headcommand {\slideentry {3}{0}{4}{23/23}{}{0}}
 \headcommand {\beamer@framepages {23}{23}}
-\headcommand {\slideentry {3}{2}{3}{24/24}{Uniform Scaling}{0}}
-\headcommand {\beamer@framepages {24}{24}}
-\headcommand {\beamer@sectionpages {16}{24}}
-\headcommand {\beamer@subsectionpages {21}{24}}
-\headcommand {\sectionentry {4}{Future Directions}{25}{Future Directions}{0}}
-\headcommand {\slideentry {4}{0}{1}{25/25}{}{0}}
-\headcommand {\beamer@framepages {25}{25}}
-\headcommand {\slideentry {4}{0}{2}{26/26}{}{0}}
+\headcommand {\slideentry {3}{0}{5}{24/25}{}{0}}
+\headcommand {\beamer@framepages {24}{25}}
+\headcommand {\slideentry {3}{0}{6}{26/26}{}{0}}
 \headcommand {\beamer@framepages {26}{26}}
-\headcommand {\beamer@partpages {1}{26}}
-\headcommand {\beamer@subsectionpages {25}{26}}
-\headcommand {\beamer@sectionpages {25}{26}}
-\headcommand {\beamer@documentpages {26}}
-\headcommand {\gdef \inserttotalframenumber {20}}
+\headcommand {\slideentry {3}{0}{7}{27/27}{}{0}}
+\headcommand {\beamer@framepages {27}{27}}
+\headcommand {\slideentry {3}{0}{8}{28/28}{}{0}}
+\headcommand {\beamer@framepages {28}{28}}
+\headcommand {\slideentry {3}{0}{9}{29/29}{}{0}}
+\headcommand {\beamer@framepages {29}{29}}
+\headcommand {\beamer@subsectionpages {20}{29}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{30}{Preliminary Results}}
+\headcommand {\slideentry {3}{1}{1}{30/30}{Preliminary Results}{0}}
+\headcommand {\beamer@framepages {30}{30}}
+\headcommand {\slideentry {3}{1}{2}{31/32}{Preliminary Results}{0}}
+\headcommand {\beamer@framepages {31}{32}}
+\headcommand {\slideentry {3}{1}{3}{33/33}{Preliminary Results}{0}}
+\headcommand {\beamer@framepages {33}{33}}
+\headcommand {\slideentry {3}{1}{4}{34/36}{Preliminary Results}{0}}
+\headcommand {\beamer@framepages {34}{36}}
+\headcommand {\beamer@sectionpages {20}{36}}
+\headcommand {\beamer@subsectionpages {30}{36}}
+\headcommand {\sectionentry {4}{Future Directions}{37}{Future Directions}{0}}
+\headcommand {\slideentry {4}{0}{1}{37/37}{}{0}}
+\headcommand {\beamer@framepages {37}{37}}
+\headcommand {\slideentry {4}{0}{2}{38/38}{}{0}}
+\headcommand {\beamer@framepages {38}{38}}
+\headcommand {\beamer@partpages {1}{38}}
+\headcommand {\beamer@subsectionpages {37}{38}}
+\headcommand {\beamer@sectionpages {37}{38}}
+\headcommand {\beamer@documentpages {38}}
+\headcommand {\gdef \inserttotalframenumber {30}}

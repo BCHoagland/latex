@@ -5,7 +5,7 @@
 \usepackage{amsmath,amssymb,tikz-cd}
 \usepackage{xcolor, xspace}
 
-\usefonttheme[onlymath]{serif}
+%\usefonttheme[onlymath]{serif}
 %\usetheme{Warsaw}
 
 \definecolor{darkblue}{HTML}{12335F}
@@ -59,14 +59,10 @@
 
 	\vspace*{\fill}
 	{\color{white}
-		\small July 8, 2021
+		\small September 17, 2021
 	}
 \end{frame}
 }
-
-\begin{frame}
-	\tableofcontents
-\end{frame}
 
 %--------------------------------------------------------------------------------
 % Background
@@ -88,16 +84,47 @@
 \end{frame}
 }
 
-%-------------------
-% Dynamically Grown Graphs
-%-------------------
-\subsection{Dynamically Grown Graphs}
+\begin{frame}{Dynamically Grown Graphs}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=1]{fig/graph-1.pdf}
+		%\caption{}
+	\end{figure}
+\end{frame}
+\begin{frame}{Dynamically Grown Graphs}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=1]{fig/graph-2.pdf}
+                %\caption{}
+        \end{figure}
+\end{frame}
+\begin{frame}{Dynamically Grown Graphs}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=1]{fig/graph-3.pdf}
+                %\caption{}
+        \end{figure}
+\end{frame}
+\begin{frame}{Dynamically Grown Graphs}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=1]{fig/graph-4.pdf}
+                %\caption{}
+        \end{figure}
+\end{frame}
+\begin{frame}{Dynamically Grown Graphs}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=1]{fig/graph-5.pdf}
+                %\caption{}
+        \end{figure}
+\end{frame}
 
 \begin{frame}{Dynamically Grown Graphs}
-	Start with a graph with $n$ vertices and no edges.
+	Every $t=1/n$ units of time, sample $m$ vertices.
 	\vspace{5mm}
 
-	Every $t=1/n$ units of time, add edges to the graph by sampling $m$ vertices i.i.d. and following some fixed rule.
+	Can only add edges between these $m$ vertices.
 	\vspace{5mm}
 
 	\pause
@@ -110,22 +137,22 @@
 \subsection{Percolation}
 
 \begin{frame}{Percolation}
-	A \textit{giant component} is a cluster comprising a finite fraction $\varepsilon n$ of the graph.
+	A \textit{giant component}: finite fraction of graph.
 	\vspace{5mm}
 
 	Percolation is the emergence of a giant component.
 	\vspace{5mm}
 
-	Percolation can have lots of different qualitative behaviors.
+	Lots of different behaviors.
 \end{frame}
 
 \begin{frame}
 	\frametitle{Explosive Percolation}
 
-	For simple rules, the giant component might emerge is a predictable, linear manner.
+	Simple rules: linear.
 	\vspace{5mm}
 
-	If a rule prioritizes adding together smaller clusters, the giant component's emergence is delayed and happens very quickly (seemingly discontinuous). This is called \textit{explosive percolation}.
+	Prioritize merging smaller clusters: \textit{explosive percolation}.
 \end{frame}
 
 %--------------------------------------------------------------------------------
@@ -159,11 +186,11 @@
 	\textit{$\ell$-vertex rule}: choose $\ell$ vertices i.i.d., and you're only required to add an edge if all $\ell$ of them are in distinct clusters.
 	\vspace{5mm}
 
-	Riordan, R., and Warnke, L. (2012): all $\ell$-vertex rules have a continuous phase transition. We just can't see it in simulation because the coefficients are insanely small.
+	Riordan, R., and Warnke, L. (2012): continuous phase transition.
 	\vspace{5mm}
 
 	\pause
-	Their proof is by contradiction, so it doesn't give us much quantitative information about the clusters' behavior.
+	Proof by contradiction...
 \end{frame}
 
 %-------------------
@@ -180,7 +207,7 @@
 	Let $\delta = t-t_c$ and let $P(s, t)$ be the probability that a randomly chosen vertex has cluster size $s$ at time $t$. Then near $t_c$, there are constants $\tau$ and $\sigma$ such that
 	\[
 		P(s) = s^{1-\tau}f(s \delta^{1/\sigma}).
-	\] Scaling behavior lets us express several important quantities as powers of $\delta$.
+	\]
 	\vspace{5mm}
 
 	\pause
@@ -188,7 +215,7 @@
 \end{frame}
 
 \begin{frame}{Scaling Behavior}
-	Let $S$ be the size of the giant component, and let
+	Let $S$ be the relative size of the giant component, and let
 	\[
 		\chi_k(t) = \sum_s s^{k} P(s, t).
 	\] Then
@@ -234,19 +261,26 @@
 }
 
 \begin{frame}{2-Choice Rules}
-	Pick two groups of vertices i.i.d.
-	\vspace{5mm}
-
-	Select one vertex from each and add an edge between them.
-	\vspace{5mm}
-
-	$\phi_i(s) = \mathbb{P}\left( \text{vertex chosen from group } i \text{ has cluster size } s \right) $.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.8]{fig/2choice-1.pdf}
+		%\caption{}
+	\end{figure}
 \end{frame}
-
-%-------------------
-% Examples
-%-------------------
-\subsection{Examples}
+\begin{frame}{2-Choice Rules}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.8]{fig/2choice-2.pdf}
+		%\caption{}
+	\end{figure}
+\end{frame}
+\begin{frame}{2-Choice Rules}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.8]{fig/2choice-3.pdf}
+                %\caption{}
+        \end{figure}
+\end{frame}
 
 \begin{frame}{\ER}
 	Pick two random vertices and add an edge between them.
@@ -259,11 +293,35 @@
 	$\beta=1$, so $S$ grows linearly near $t_c$.
 \end{frame}
 
+\begin{frame}{Minimizing Rules}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.7]{fig/minimizing-1.pdf}
+		%\caption{}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Minimizing Rules}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.7]{fig/minimizing-2.pdf}
+		%\caption{}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Minimizing Rules}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.7]{fig/minimizing-3.pdf}
+                %\caption{}
+        \end{figure}
+\end{frame}
+
 \begin{frame}{da Costa}
-	Introduced by da Costa to disprove Achlioptas' discontinuity conjecture.
+	Minimizing rule with equal size groups.
 	\vspace{5mm}
 
-	Pick two groups of vertices, both of size $m$. Pick the vertex with the smallest cluster size from the two groups and add an edge between them.
+	Originally introduced to disprove Achlioptas' discontinuity conjecture.
 	\vspace{5mm}
 
 	Same as \ER when $m=1$. As $m\to \infty$,
@@ -275,35 +333,58 @@
 %-------------------
 % Uniform Scaling
 %-------------------
-\subsection{Uniform Scaling}
+\subsection{Preliminary Results}
 
-\begin{frame}{Uniform Scaling}
+\begin{frame}{Finding the Critical Exponents}
 	For any 2-choice rule, the quantity $\partial_{t}{S} $ has a simple form that can be explicitly calculated.
 	\vspace{5mm}
 
-	Near $t_c$, $\partial_t S$ will look like
+	Near $t_c$, it will look like
 	\[
 	\delta^{a}+\delta^{b}+\delta^{c}+\cdots
 	\] 
-	We say that a rule \textit{scales uniformly} if $a=b=c=\cdots$
-	\vspace{5mm}
-	
-	\pause
-	All 2-choice rules \textbf{almost} scale uniformly.
 \end{frame}
 
-\begin{frame}{Uniform Scaling}
+\begin{frame}{Finding the Critical Exponents}
 	\begin{theorem}
-		For any 2-choice rule, there will be two dominating terms of $\partial_t S$ with the same order. If some extra technical conditions hold, then the rule scales uniformly.
+		For any 2-choice rule, there will be two dominating terms of $\partial_t S$ with the same order.
 	\end{theorem}
+
+	\pause
+	\vspace{5mm}
+	For all 2-choice rules, we can solve for all critical exponents in terms of $\beta$.
+	
+	\vspace{5mm}
+	We also get the growth rate of the average cluster size.
 \end{frame}
 
-\begin{frame}{Uniform Scaling}
-	Consequences:
-	\begin{itemize}
-		\item For all 2-choice rules, we can solve for all critical exponents, as well as the growth rate of the average cluster size, in terms of $\beta$.
-		\item For a large family of 2-choice rules, we can do this algorithmically.
-	\end{itemize}
+\begin{frame}{Minimizing Rules}
+	\begin{align*}
+		\gamma_a &= 1+(b-1)\beta, \\
+		\gamma_b &= 1+(a-1)\beta, \\
+		\gamma_{P} &= 1+(a+b-2)\beta, \\
+		\frac{1}{\sigma} &= 1+(a+b-1)\beta, \\
+		\tau &= \frac{\beta}{1+(a+b-1)\beta} +2.
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Asymptotics for Minimizing Rules}
+	$\beta\to 0$ as $a,b \to \infty$.
+
+	\vspace{5mm}
+	\begin{theorem}
+		$a \beta, b\beta\to 0$ as $a,b \to \infty$.
+	\end{theorem}
+
+	\pause
+	\begin{align*}
+		\gamma_{a}=\gamma_{b}=\gamma_{P}=\frac{1}{\sigma} &= 1, \\
+		\tau &= 2.
+	\end{align*}
+
+	\vspace{5mm}
+	\pause
+	$\text{Var}(s) \to \delta^{-2}$.
 \end{frame}
 
 %--------------------------------------------------------------------------------
@@ -323,9 +404,17 @@
 
 \begin{frame}{Future Directions}
 	\begin{itemize}
-		\item Interaction between the groups?
+		\item \ER is nice. Can we relate other rules to it?
+			\begin{itemize}
+				\item bounded size rules
+				\item Universality classes
+			\end{itemize}
+		\item When is $t_c$?
+			\begin{itemize}
+				\item Bohman-Frieze variant
+			\end{itemize}
+		\item How fast is convergence to the asymptotic case?
 		\item When does scaling behavior actually occur?
-		\item What about $n$-choice rules?
 	\end{itemize}
 \end{frame}
 
