@@ -1,5 +1,10 @@
 \documentclass[twoside,10pt]{article}
-\usepackage{structure}
+\usepackage{/Users/bradenhoagland/latex/styles/toggles}
+%\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{Spectral Sequences}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\importStyles{formal}{rainbow}{plain}
 
 \usepackage[
 	backend=biber,
@@ -12,16 +17,7 @@
 
 \begin{document}
 
-\begin{center}
-        {\huge \sffamily \MakeUppercase{Spectral Sequences}}\\
-	\vspace{3mm}
-        {\large \sffamily \spacedsc{Braden Hoagland}}\\
-        \vspace{3mm}
-        {Math 502: Algebraic Structures II}
-        \vspace{5mm}
-\end{center}
-
-\thispagestyle{empty}
+\formalTitle{\docTitle}{Braden Hoagland}{Math 502: Algebraic Structures II}
 
 %--------------------------------------------------------------------------------
 % The Actual Document
@@ -327,7 +323,7 @@ To show that filtered complexes give rise to spectral sequences, we construct an
 \[
 	\cdots \to H_{n}(F_{p-1}C) \stackrel{i}{\to }  H_{n}(F_{p}C) \stackrel{j}{\to }  H_{n}(E_{p}^{0}C) \stackrel{k}{\to }  H_{n-1}(F_{p-1}C) \to \cdots.
 \] 
-Letting $D_{p,q} \doteq H_{p+q}(F_{p}C)$ and $E_{p,q} \doteq H_{p+q}(E_{p}^{0}C)$, we can form an exact couple $(D, E, i, j, k)$. For $p+q=n$, the above long exact sequence can be written
+Then letting $D_{p,q} \doteq H_{p+q}(F_{p}C)$ and $E_{p,q} \doteq H_{p+q}(E_{p}^{0}C)$, we can form an exact couple $(D, E, i, j, k)$. For $p+q=n$, the above long exact sequence can be written
 \[
 	\cdots \to D_{p-1,q+1} \stackrel{i}{\to } D_{p,q} \stackrel{j}{\to } E_{p,q} \stackrel{k}{\to } D_{p-1,q} \to \cdots
 \] which shows that $i,j,k$ have the bidegrees from Theorem \ref{thrm:ec2ss}. This means that our exact couple determines a spectral sequence, so we can always build a spectral sequence from any filtered complex.
