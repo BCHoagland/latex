@@ -1,4 +1,4 @@
-\documentclass[twoside,10pt]{article}
+\documentclass[twoside,10pt]{report}
 \usepackage{/Users/bradenhoagland/latex/styles/toggles}
 \toggletrue{sectionbreaks}
 %\toggletrue{sectionheaders}
@@ -9,7 +9,16 @@
 %\renewcommand{\theenumi}{\alph{enumi}}
 
 \begin{document}
-%\tableofcontents
+\tableofcontents
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Simplicial Homology
+
+\chapter{Simplicial Homology}
 
 %--------------------------------------------------------------------------------
 % Graphs
@@ -44,12 +53,29 @@ We call the equivalence classes of $\sim_{p}$ \textbf{connected components}. Sin
 \end{ex}
 
 %--------------------------------------------------------------------------------
+% Simplicial Complexes
+%--------------------------------------------------------------------------------
+\section{Simplicial Complexes}
+
+\begin{defn}[]
+	An \textbf{abstract simplicial complex} is a collection $K$ of nonempty subsets of a finite set $V$ such that
+	\begin{enumerate}
+		\item If $\left\{ v \right\} \in K$, then $v \in V$;
+		\item If $\sigma \in K$ and $\tau \subset \sigma$ is nonempty, then $\tau \in K$.
+	\end{enumerate}
+\end{defn}
+
+In this setting, each singleton $\left\{ v \right\}$ represents a vertex, and $V$ represents all the vertices in the complex. Then for a simplex $\sigma$, any subset $\tau \subset \sigma$ is one of its \textbf{faces}. Note that a face need not be 1 dimension lower (e.g. a vertex is a face of a tetrahedron).
+
+We say that the \textbf{dimension} of a complex $\sigma \in K$ is $\dim \sigma = |\sigma|-1$. The dimension of the whole simplex $K$ is then $\max_{\sigma\in K}\left\{ \dim \sigma \right\}$. We need the $-1$ in the definition to make edges 1-dimensional, triangles 2-dimensional, etc.
+
+%--------------------------------------------------------------------------------
 % Simplicial Homology
 %--------------------------------------------------------------------------------
 \section{Simplicial Homology}
 
 \begin{defn}[]
-	Suppose $X$ is a simplicial complex, then let $C_{n}(X)$ be the \warn{vector space over $\mathbb{Z}_{2}$} with basis the $n$-simplices in $X$. Elements of $C_{n}(X)$ are called \textbf{$n$-chains}.
+	Suppose $X$ is a simplicial complex, then let $C_{n}(X)$ be the vector space over $\mathbb{Z}_{2}$ with basis the $n$-simplices in $X$. Elements of $C_{n}(X)$ are called \textbf{$n$-chains}.
 \end{defn}
 
 \begin{itemize}
@@ -57,6 +83,10 @@ We call the equivalence classes of $\sim_{p}$ \textbf{connected components}. Sin
 	\item $C_{1}$: edges
 	\item $C_{2}$: triangles
 \end{itemize}
+
+\begin{note}[]
+	The choice to do this over $\mathbb{Z}_2$ was pretty arbitrary. It makes lots of things nicer from a computation viewpoint, and it simplifies a few things later on since $-1=1$, but we can also get more information by taking homology with coefficients in more complicated rings. In general, $C_{n}$ will be some module. Then if they're over $\mathbb{Z}$, they're abelian groups.
+\end{note}
 
 \begin{defn}[]
 The \textbf{boundary map} $\p_n$ is the linear map
@@ -108,10 +138,104 @@ This result shows that
 	\] 
 \end{proof}
 
+
 %--------------------------------------------------------------------------------
+% Functoriality of Simplicial Homology
+%--------------------------------------------------------------------------------
+\section{Functoriality of Simplicial Homology}
+
+\warn{I think I can build in the chain map-ness of all the functors better.}
+
+Suppose $K$ and $L$ are simplicial complexes, then we can turn morphisms between them into morphisms between homologies. This boils down to defining two covariant functors, then composing them.
+
+\begin{defn}[]
+Let $K,L$ be simplicial complexes. We say $f:K\to L$ is a \textbf{simplicial map} if
+\begin{enumerate}
+	\item $f:V(K)\to V(L)$;
+	\item it's determined by where it sends vertices: $f([x_0, \dots, x_p]) = [f(x_0), \dots, f(x_{p})]$;
+	\item $f(\sigma) \in L$ when $\sigma \in K$.
+\end{enumerate}
+\end{defn}
+
+\begin{thrm}[]
+	Fix $p \in \mathbb{N}_{0}$, then taking $p$-th chain groups is a functor. It sends simplicial maps $f:K\to L$ to the morphism $f_{\#}:C_{p}(K)\to C_{p}(L)$ uniquely determined by
+	\[
+		\sigma \mapsto 
+		\begin{cases}
+			f(\sigma) & \text{ if } |f(\sigma)|=|\sigma|, \\
+			0 & \text{ else}.
+		\end{cases}
+\]
+\end{thrm}
+\begin{proof}
+	\warn{Do this.}
+\end{proof}
+
+\begin{prop}
+	$f_{\#}$ respects $\p$, i.e. the following diagram commutes.
+	\[
+	\begin{tikzcd}
+		C_{p}(K) \rar{\p}\dar{f_{\#}} & C_{p-1}(K) \dar{f_{\#}} \\
+		C_{p}(L) \rar{\p} & C_{p-1}(L)
+	\end{tikzcd}
+	\] 
+\end{prop}
+\begin{proof}
+	\warn{Do this.}
+\end{proof}
+
+\begin{thrm}[]
+	Taking $p$-th homology is a functor. It sends $f_{\#}:C_{p}(K)\to C_{p}(L)$ to the morphism $f_{*}:H_{p}(K) \to H_{p}(L)$ uniquely determined by
+	\[
+		[x] \mapsto [f_{\#}(x)].
+	\] 
+\end{thrm}
+
+\warn{Want a similar commutative diagram prop.}
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
 % Persistent Homology
+
+\chapter{Persistent Homology}
+
 %--------------------------------------------------------------------------------
-\section{Persistent Homology}
+% Persistence Modules
+%--------------------------------------------------------------------------------
+\section{Persistence Modules}
+
+The following definition of a persistence module is restricted, but it's all we'll need for our purposes (in general, you can define it to be a functor from a specific poset to the category of $R$-modules). \warn{You should read more about this.}
+
+\begin{defn}[]
+A \textbf{persistence module} $V$ is a collection of vector spaces $\left\{ V_{r} \right\}_{r \in \mathbb{R}}$ over $\mathbb{Z}_2$ with functorial maps $v_{i}^{j}:V_{i}\to V_{j}$ whenever $i \leq j$. \warn{Covariant functor from $\mathbb{R}$ to Vector spaces over $\mathbb{Z}_2$...}
+\end{defn}
+The functoriality condition means
+\begin{enumerate}
+	\item $v_{i}^{i} = \id$;
+	\item $v_{i}^{k} = v_{j}^{k} v_{i}^{j}$ whenver $i \leq j \leq k$.
+\end{enumerate}
+Suppose we're indexing our vectors spaces via $\mathbb{Z}$ instead of $\mathbb{R}$, then the situation looks as follows.
+\[
+\begin{tikzcd}
+	\cdots \rar & V_{i-1} \rar{v_{i-1}^{i}} \arrow[rr, bend right, "v_{i-1}^{i+1}"'] & V_{i} \rar{v_{i}^{i+1}} & V_{i+1} \rar & \cdots
+\end{tikzcd}
+\] 
+
+%--------------------------------------------------------------------------------
+% Interval Decomposition
+%--------------------------------------------------------------------------------
+\section{Interval Decomposition}
+
+
+
+
+%--------------------------------------------------------------------------------
+% Idk where to put this stuff
+%--------------------------------------------------------------------------------
+\section{Idk where to put this stuff}
 
 Given a function $f:G\to \mathbb{R}$, we can think of $f(x)$ as the time at which $x$ appears.
 

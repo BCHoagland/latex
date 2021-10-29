@@ -1,0 +1,114 @@
+\documentclass[twoside,10pt]{article}
+\usepackage{/Users/bradenhoagland/latex/styles/toggles}
+%\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{Bounded Size Rules}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\importStyles{modern}{rainbow}{boxy}
+
+\newcommand{\BF}{Bohman-Frieze\xspace}
+
+
+\begin{document}
+%\tableofcontents
+
+%--------------------------------------------------------------------------------
+% Introduction
+%--------------------------------------------------------------------------------
+\section{Introduction}
+
+Bounded size rules are a very general category of rule that eventually start acting like the \ER rule in the following sense: fix a constant $K \in \mathbb{N}$, then $\mathcal{R}$ is a bouded size rule if it treats all sampled points with $\kappa_i > K$ identically.
+
+\warn{This stuff has already been proven by Riordan and Warnke, albeit in a very complicated manner.}
+
+Intuitively, it makes sense that a bounded size rule eventually ``becomes" \ER. Eventually the number of clusters of size $\leq K$ will be so small that it won't have much of an effect on the growth of the giant component. The key to noticing the complexity here is actually twofold:
+\begin{enumerate}
+	\item for any $k \leq K$, the number of clusters of size $k$ will be \textit{nonzero} at percolation; \warn{(can I prove this for more than just BF?)}
+	\item after all clusters of size $\leq K$ have stopped having a real effect on the giant component, we're in a position much different than that of \ER. Instead of lots of isolated nodes, we have lots of finite size clusters.
+\end{enumerate}
+
+We can use a simple bounded size rule to examine these problems, which we do using a variant of the well known \BF rule.
+
+%--------------------------------------------------------------------------------
+% Bohman-Frieze
+%--------------------------------------------------------------------------------
+\section{Bohman-Frieze}
+
+The original \BF rule is as follows:
+\begin{enumerate}
+	\item At each step, pick two edges $e_i = \left\{ u_i, v_i \right\}$.
+	\item If both $u_1$ and $v_1$ are isolated, pick $e_1$.
+	\item Otherwise, pick $e_2$.
+\end{enumerate}
+Although well understood, this rule does not fit nicely into our frameworks. We can instead work with a slight variant (and also generalization) that makes this into a bona fide bounded size 2-choice rule:
+\begin{enumerate}
+	\item At each step, pick $m$ vertices. These are the group 1 vertices.
+	\item If any of the $m$ vertices are isolated, pick the first such one as the group 1 representative. If not, sample one more random vertex and pick it no matter what.
+	\item Repeat this for group 2, and connect the 2 group representatives with an edge.
+\end{enumerate}
+
+We can explicitly write out the probability $\phi(s)$ that a group representative cluster size is $s$:
+\[
+	\phi(s)=
+	\begin{cases}
+		1 - (1-P_1)^{m+1} & s = 1, \\
+		(1-P_1)^{m}P_s & s > 1.
+	\end{cases}
+\] 
+All our 2-choice analysis was based on the quantities $\ang{1}_{\phi}$ and $\ang{s}_{\phi}$, so we should compute those.
+
+\begin{align*}
+	\ang{1}_{\phi} &= \phi(1) + \sum_{s > 1} \phi(s) \\
+		       &= 1 - (1-P_1)^{m+1} + \sum_{s>1}(1-P_1)^{m}P_s \\
+		       &= 1 - (1-P_1)^{m} \left[ 1 - P_1 - \sum_{s>1}P_s \right] \\
+		       &= 1 - (1-P_1)^{m} (1-\ang{1}_{P}) \\
+		       &= 1 - (1-P_1)^{m} S.
+\end{align*}
+Since $t \mapsto (1-P_1)^{m}$ is continuous at $t_c$, this has the same critical exponents as $\ang{1}_{P} = 1-S$. Similarly,
+\begin{align*}
+	\ang{s}_{\phi} &= \phi_1(1) + \sum_{s>1}s \phi(s) \\
+		       &= 1 - (1-P_1)^{m+1} + \sum_{s>1} s(1-P_1)^{m}P_s \\
+		       &= 1 - (1-P_1)^{m}\left[ 1-P_1-\sum_{s>1}sP_s \right] \\
+		       &= 1 - (1-P_1)^{m}\left[ 1 - \sum_s sP_s \right] \\
+		       &= 1 - (1-P_1)^{m}(1-\ang{s}_{P}).
+\end{align*}
+For the same reason, this also has the same critical exponents as $\ang{s}_{P}$. The upshot of these two calculations is that our analysis of 2-choice rules relied only on the critical values of $\ang{1}_{\phi}$ and $\ang{s}_{\phi}$, so this \BF variant has all the same critical exponents as \ER.
+
+For this particular rule, we can also explicitly track how the number of isolated clusters is changing through time, which will highlight problem 1 from the introduction. Let $m=1$, then the Smoluchowski equation gives
+\begin{align*}
+	\p_{t}{P_1} &= -2 \phi(1) \\
+		    &= -2 + 2(1-P_1)^{m+1} \\
+		    &= -2 + 2(1-P_1)^{2} \\
+		    &= 2P_1^{2} - 4P_1.
+\end{align*}
+Solving this differential equation and using the initial condition $P_1(0)=1$ gives us the solution
+\[
+	P_1(t) = \frac{2}{e^{4t}+1} .
+\] 
+We know that percolation occurs at $t=1$ at the very latest. But plugging in $t=1$ gives $P_1(1) = \frac{2}{e^{4}+1} \approx 0.024$, so at criticality, a strictly positive proportion of our nodes are still isolated.
+
+%--------------------------------------------------------------------------------
+% Greedy Bounded Size Rules
+%--------------------------------------------------------------------------------
+\section{Greedy Bounded Size Rules}
+
+We can generalize our \BF variant, and consequently get closer to the case of a general bounded size rule. Let's still sample $m$ points for each group, but now we'll take the first one whose cluster size is $\leq K$. If each of the $m$ cluster sizes are greater than $K$, we'll sample a new random vertex and choose it no matter what.
+
+Calculating $\phi(s)$ for $s \leq K$ would be pretty messy, but we definitely know
+\[
+	\sum_{s \leq K} \phi(s) = 1 - (1-P_{\leq K})^{m+1}
+\] and
+\[
+	\phi(s) = (1-P_{\leq K})^{m}P_{s} \qquad \text{ when } s>K.
+\] This is enough to mimic the earlier calculation of $\ang{1}_{\phi}$ for the \BF rule:
+\begin{align*}
+	\ang{1}_{\phi} &= \sum_{s \leq K}\phi(s) + \sum_{s > K}\phi(s) \\
+		       &= 1 - (1-P_{\leq K})^{m+1} + \sum_{s>K}(1-P_{\leq K})^{m}P_s \\
+		       &= 1 - (1-P_{\leq K})^{m} \left[ 1 - P_{\leq K}-\sum_{s>K}P_s \right] \\
+		       &= 1 - (1-P_{\leq K})^{m} \left[ 1 - \sum_s P_s \right] \\
+		       &= 1 - (1-P_{\leq K})^{m} S.
+\end{align*}
+And since $t \mapsto (1-P_{\leq K})^{m}$ is continuous at $t_c$, this has the same critical exponents as $\ang{1}_{P} = 1-S$. {\color{blue}Where I'm currently stuck is calculating $\ang{s}_{\phi}$. It seems like I'll need to come up with an expression for $\phi(s)$ when $s \leq K$, or at least for $\sum_{s \leq K}s \phi(s)$.}
+
+
+\end{document}

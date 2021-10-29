@@ -1,0 +1,197 @@
+\documentclass[twoside,10pt]{article}
+\usepackage{/Users/bradenhoagland/latex/styles/toggles}
+%\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{Stokes' Theorem on Manifolds}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\importStyles{formal}{rainbow}{boxy}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+\formalTitle{\docTitle}{Braden Hoagland}{Math 323: Geometry}
+\formalHeader{Braden Hoagland}{Stokes' Theorem}
+
+%--------------------------------------------------------------------------------
+% Introduction
+%--------------------------------------------------------------------------------
+\section{Introduction}
+
+%--------------------------------------------------------------------------------
+% Manifolds
+%--------------------------------------------------------------------------------
+\section{Manifolds}
+
+%--------------------------------------------------------------------------------
+% Tensors
+%--------------------------------------------------------------------------------
+\section{Tensors}
+
+Although it might seem like a serious digression from the geometry, we'll need to build up the idea of tensors and tensor products: in the next section, we'll use tensor products to define the wedge product of differential forms.
+
+Suppose we have a $k$-multilinear map $f:V \times \cdots \times V\to W$; we call $f$ a \textbf{$k$-tensor} on $V$. If $f$ had been linear, we would be able to analyze it easily using any of the theorems of linear algebra. Luckily for us, it is possible to find a space in which $f$ actually \textit{is} linear -- this space is called the \textit{tensor product} $V \otimes_{} \cdots \otimes_{}V$. We give a slightly more general definition below.
+
+\begin{defn}[]
+The \textbf{tensor product} of $V_1 \times \cdots \times V_k$ is a vector space $V_1 \otimes_{}\cdots \otimes_{}V_{k}$ with a $k$-multilinear map $\otimes_{}$ such that the following diagram commutes for all $k$-multilinear maps $f$ and vector spaces $W$.
+\[
+	\begin{tikzcd}
+		V_1 \otimes_{}\cdots \otimes_{}V_{k} \rar{\exists!\;\phi} & W \\
+		V_1 \times \cdots \times V_{k} \uar{\otimes_{}} \arrow[ur, "f"']
+	\end{tikzcd}
+\] 
+\end{defn}
+
+As it turns out, tensor products are unique up to isomorphism, and thus it makes sense to call $V_1 \otimes_{}\cdots \otimes_{}V_{k}$ \textit{the} tensor product of $V_1 \times \cdots \times V_{k}$. There is also no ambiguity in our notation $V_1 \otimes_{}\cdots \otimes_{}V_{k}$, as the taking the tensor product is an associative operation.
+
+\begin{thrm}[]
+	The tensor product is unique up to (unique) isomorphism. In particular, for all vector spaces $ V$ and $ W$, there is a tensor product $V \otimes_{}W$, and
+	\begin{equation*}
+        \begin{aligned}[c]
+                V \tilde{\otimes} W \text{ is also a tensor product}
+        \end{aligned}
+        \qquad\iff\qquad
+        \begin{aligned}[c]
+                \begin{tikzcd}
+                        V \otimes W \rar[dashed]{\exists!\;\sim} & V \tilde{\otimes} W \\
+                        V\times W \uar{\otimes}\arrow[ur,"\tilde{\otimes}"']
+                \end{tikzcd}
+        \end{aligned}
+        \end{equation*}
+	Furthermore, for any vector spaces $A,B,C$, we have $(A \otimes_{}B)\otimes_{}C \cong A \otimes_{}(B \otimes_{}C)$.
+\end{thrm}
+\begin{proof}
+	We will not prove existence here, as the construction is complicated. Instead, see Theorem 8 in \href{https://bhoagsbargrill.com/latex/notes/module_theory/module_theory.pdf}{these notes}.
+
+	\textbf{Uniqueness:} Suppose $V \tilde{\otimes_{}} W$ is also a tensor product, then the universal property gives the following commutative diagram.
+	\[
+	\begin{tikzcd}
+		V \otimes_{}W \rar[shift left,dashed]{\exists!\;\phi} & V \tilde{\otimes_{}} W \lar[shift left,dashed]{\exists!\;\psi} \\
+		V \times W \uar{\otimes_{}} \arrow[ur,"\tilde{\otimes_{}}"']
+	\end{tikzcd}
+	\] 
+But this means we can form the following commutative diagram.
+\[
+\begin{tikzcd}
+	V \otimes_{}W \rar{\psi \phi} & V \otimes_{}W \\
+	V\times W \uar{\otimes_{}} \arrow[ur,"\otimes_{}"']
+\end{tikzcd}
+\] We know from the universal property that the extension of $\otimes_{}$ must be unique, and $\id_{}$ is certainly an extension, so $\psi \phi = \id_{}$. Similarly, we can show $\phi \psi=\id_{}$. Thus $\phi$ and $\psi$ are isomorphisms, i.e. $V \otimes_{}W \cong V \tilde{\otimes_{}} W$.
+
+Conversely, suppose the diagram from the statement of the theorem commutes, then the following diagram must also commute for any vector space $X$ and bilinear $f:V \times W \to X$.
+\[
+\begin{tikzcd}
+	V \tilde{\otimes_{}} W \rar[dashed]{\exists!\;\sim} & V \otimes_{}W \rar[dashed]{\exists!\;\psi} & X \\
+	V \times W \uar{\tilde{\otimes_{}}} \arrow[ur,"\otimes_{}"] \arrow[urr,"f"']
+\end{tikzcd}
+\] 
+The composition along the top is then our desired linear map satisfying the universal property of the tensor product, so $V \tilde{\otimes_{}} W$ is a tensor product.
+
+\textbf{Associativity:} Consider the map
+\begin{align*}
+	f: A \times (B \otimes_{}C) &\to (A \otimes_{}B)\otimes_{}C \\
+	(a, b \otimes_{} c) &\mapsto (a \otimes_{}b)\otimes_{}c.
+\end{align*}
+This is bilinear since it's the same as $(a,b \otimes_{}c) \mapsto \phi_a(b,c)$, where $\phi_a$ is the map from the universal property extending the bilinear map $f_a: (b,c) \mapsto (a \otimes_{}b)\otimes_{}c$. But then by the universal property, the following diagram commutes.
+\[
+\begin{tikzcd}
+	A \otimes_{}(B\otimes_{}C) \rar[dashed]{\exists!\;\phi} & (A \otimes_{}B)\otimes_{}C \\
+		A \times (B\otimes_{}C) \uar{\otimes_{}} \arrow[ur,"f"']
+\end{tikzcd}
+\] 
+We can similarly construct a map $\psi: (A\otimes_{}B)\otimes_{}C \to A \otimes_{}(B\otimes_{}C)$, and these maps are mutually inverse. Thus $(A\otimes_{}B)\otimes_{}C \cong  A \otimes_{}(B\otimes_{}C)$.
+
+\end{proof}
+
+Note that we can induct on this result, so this applies to any product of $k$ vector spaces. The existence and uniqueness of the tensor product allow us to perform many useful algebraic constructions, but for our purposes, we will need only one. Consider two multilinear maps
+\[
+V \stackrel{\phi}{\to } V', \qquad W \stackrel{\psi}{\to } W',
+\] where both pairs $(V,W)$ and $(V',W')$ of vector spaces have the same base field. Then we can uniquely extend these two linear maps to a single linear map on $V \otimes_{}W$.
+
+\begin{prop}
+	Given multilinear maps $\phi:V\to V'$ and $\psi:W\to W'$, there is a unique linear map $V \otimes_{}W \to V' \otimes_{}W'$ mapping
+	\[
+		v \otimes_{}w \mapsto \phi(v) \otimes_{} \psi(w).
+	\] 
+\end{prop}
+\begin{proof}
+	Consider the multilinear map $V \times W \to V \otimes_{}W$ given by $(v,w) \mapsto \phi(v) \otimes_{}\psi(w)$. By the universal property of the tensor product, this extends uniquely to a map $v \otimes_{}w \mapsto \phi(v) \otimes_{}\psi(w)$.
+\end{proof}
+
+This construction reduces quite nicely when working with tensors. Suppose $S$ is a $k$-tensor on $V$ and $T$ is an $\ell$-tensor on $V$. Then since $\R \otimes_{\R}\R \cong \R$ with $r \otimes_{}s = rs$, we can apply the previous proposition to get a single linear map
+\begin{align*}
+	\bigotimes_{i=i}^{k+\ell} V &\to \R \\
+	v_1 \otimes_{} \dots \otimes_{} v_{k+\ell} &\mapsto S(v_1,\dots,v_{k}) \; T(v_{k+1},\dots,v_{k+\ell}).
+\end{align*}
+Pre-composing this with the tensor inclusion $\otimes_{}$ then gives a multilinear map
+\begin{align*}
+	S \otimes_{}T: \prod_{i=1}^{k+\ell} V &\to \R \\
+	(v_1,\dots,v_{k+\ell}) &\mapsto S(v_1,\dots,v_{k}) \; T(v_{k+1},\dots,v_{k+\ell}).
+\end{align*}
+Thus given a $k$-tensor and an $\ell$-tensor on the same vector space, we can produce a $(k+\ell)$-tensor through this process. In the next section, we will use this product of tensors to define the wedge product of differential forms, which will be the last bit of theoretical foundation necessary to state and prove the generalized Stokes' Theorem.
+
+%--------------------------------------------------------------------------------
+% Differential Forms
+%--------------------------------------------------------------------------------
+\section{Differential Forms}
+
+%--------------------------------------------------------------------------------
+% Stokes' Theorem
+%--------------------------------------------------------------------------------
+\section{Stokes' Theorem}
+
+With the theory of manifolds and differential forms built up, we can finally state and prove the generalized Stokes' Theorem.
+
+\begin{thrm}[Stokes' Theorem]
+	Let $M$ be an oriented $n$-manifold with boundary, and let $\omega$ be an $(n-1)$-form with compact support on $M$. Then
+	\[
+	\int_{M} d\omega = \int_{\p M}\omega.
+	\] 
+\end{thrm}
+\begin{proof}
+	We will first prove the theorem when $M = \mathbb{H}^{n}$, the $n$-dimensional upper half-plane. Then we will extend the result to when $M$ is a general manifold with boundary, i.e. every point in $M$ has a neighborhood homeomorphic to $\mathbb{H}^{n}$.
+
+	Since $\omega$ has compact support on $M$, we can find $R > 0$ such that $A:= [-R,R] \times \cdots \times [-R,R] \times [0,R]$ contains $\text{supp}(\omega)$ (strictly so in the first $n-1$ dimensions). Additionally, since $\omega$ is an $(n-1)$-form, we can write $\omega$ locally on any patch $U \subset M$ with coordinates $(x_1, \dots, x_n)$ as
+	\[
+		\omega = \sum_{i=1}^{n} \omega_i \; dx_1\cdots \widehat{dx}_i \cdots dx_n
+	\] for some maps $\left\{ \omega_i : U \to \R \right\}_{i=1}^{n}$. Its exterior derivative is then
+	\begin{align*}
+		d\omega &= \sum_{i=1}^{n} d\omega_i \; dx_1\cdots \widehat{dx}_i \cdots dx_n \\
+			&= \sum_{i,j=1}^{n} \frac{\p \omega_i}{\p x_j} \; dx_j \; dx_1 \widehat{dx}_i \cdots dx_n.
+			\intertext{If $i \neq j$, then there are two copies of $dx_j$ in the expression above, so it becomes 0. Thus the only nonzero terms in the sum are those where $i=j$. This then becomes}
+			&= \sum_{i=1}^{n} \frac{\p \omega_i}{\p x_i} \; dx_i \; dx_1\cdots \widehat{dx}_i \cdots dx_n \\
+			&= \sum_{i=1}^{n} (-1)^{(i-1)} \frac{\p \omega_i}{\p x_i} dx_1\cdots dx_n.
+	\end{align*}
+	Since $\omega$ is identically 0 on $\mathbb{H}^{n}-A$, we know $d\omega = 0$ on $\mathbb{H}^{n} - A$. Thus integrating $d\omega$ over $\mathbb{H}^{n}$ gives
+	\begin{align*}
+		\int_{\mathbb{H}^{n}} d\omega &= \int_{\mathbb{H}^{n}} \sum_{i=1}^{n} (-1)^{(i-1)} \frac{\p \omega_i}{\p x_i} \; dx_1 \cdots dx_n \\
+					      &= \sum_{i=1}^{n} (-1)^{(i-1)} \int_{A} \frac{\p \omega_i}{\p x_i} \; dx_1 \cdots dx_n \\
+					      &= \sum_{i=1}^{n} (-1)^{(i-1)} \int_{0}^{R} \int_{-R}^{R} \cdots \int_{-R}^{R} \frac{\p \omega_i}{\p x_i} \; dx_1 \cdots dx_n.
+	\end{align*}
+	\warn{When can you exchange $\sum$ and $\int$?}
+	We can simplify this expression further, though. Since the first $n-1$ dimensions of $\text{supp}(\omega)$ are strictly contained in $A$, we have $\omega_i(x)=0$ whenever any coordinate of $x$ has absolute value at least $R$. Thus
+	\begin{align*}
+		\int_{0}^{R} \int_{-R}^{R} \cdots \int_{-R}^{R} \frac{\p \omega_i}{\p x_i} \; dx_1 \cdots dx_n &= \int_{0}^{R} \int_{-R}^{R} \cdots \int_{-R}^{R} \big[\omega_i\big]_{x_i=-R}^{x_i=R} \; dx_1 \cdots dx_{n-1} \\
+													       &= \int_{0}^{R} \int_{-R}^{R} \cdots \int_{-R}^{R} 0 \; dx_1 \cdots dx_{n-1} \\
+								&= 0.
+	\end{align*}
+	We can then simplify $\int_{\mathbb{H}^{n}} d\omega$ to
+	\begin{align*}
+		\int_{\mathbb{H}^{n}} d\omega &= (-1)^{(n-1)} \int_{-R}^{R} \cdots \int_{-R}^{R} \big[ \omega_n(x) \big]_{x_n=0}^{x_n=R} \; dx_1 \cdots dx_{n-1} \\
+					      &= (-1)^{n} \int_{-R}^{R} \cdots \int_{-R}^{R} \omega_n(x_1, \dots, x_{n-1}, 0) \; dx_1 \cdots dx_{n-1}.
+	\end{align*}
+	This is the most we can simplify, so we can begin calculating $\int_{\p \mathbb{H}^{n}} \omega$ to see if it matches this. We have
+	\begin{align*}
+		\int_{\p \mathbb{H}^{n}} \omega &= \sum_{i=1}^{n} \int_{A \isct \p \mathbb{H}^{n}} \omega_i \; dx_1 \cdots \widehat{dx_i} \cdots dx_n.
+		\intertext{Now on $\p \mathbb{H}^{n}$, the $n$-th coordinate $x_{n}$ is identically 0, so $dx_n=0$. Thus the only nonzero term in the above sum is when $i=n$. This then becomes}
+						&= \int_{A \isct \p \mathbb{H}^{n}} \omega_n(x_1, \dots, x_{n-1}, 0) \; dx_1 \cdots dx_{n-1} \\
+						&= {\color{red}(-1)^{n}} \int_{-R}^{R} \cdots \int_{-R}^{R} \omega_n(x_1, \dots, x_{n-1}, 0) \; dx_1 \cdots dx_{n-1} \\
+						&= \int_{\mathbb{H}^{n}} d\omega.
+	\end{align*}
+	Thus Stokes' Theorem holds in the special case $M = \mathbb{H}^{n}$. \warn{Now we must extend to general oriented $n$-manifolds with boundary.}
+\end{proof}
+
+
+
+\end{document}
