@@ -1,0 +1,213 @@
+\documentclass[twoside,10pt]{article}
+\usepackage{/Users/bradenhoagland/latex/styles/toggles}
+%\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{Nash's Existence Theorem}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\importStyles{formal}{rainbow}{boxy}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+\formalTitle{\docTitle}{Braden Hoagland}{Math 323: Geometry}
+\formalHeader{Braden Hoagland}{Nash's Existence Theorem}
+
+%--------------------------------------------------------------------------------
+% Introduction
+%--------------------------------------------------------------------------------
+\section{Introduction}
+
+Although the concept of a game is ubiquitous, rigorously defining what it means to be a game and determining how to play it optimally are difficult tasks underpinning all of game theory. In this paper, we will consider a significant theoretical result in the field: the guaranteed existence of Nash equilibria in finite games. To build up to this result, we'll need a handful of definitions to make some intuitive ideas about a specific subset of games precise.
+
+A \textbf{game} is composed of a collection of players $\mathcal{P} = \left\{ P_1, P_2, \dots \right\}$, where the $k$-th player has a collection of \textbf{strategies} $\mathcal{S}_{k} = \left\{ 1, 2, \dots \right\}$ to employ during the game (in this paper, we will almost exclusively consider 2-player games to keep the technical details simpler). In some fashion, each player selects a strategy to employ for the rest of the game. Since a strategy in complex games like chess is most likely impossible to actually write down, we abstract them into just a number that indexes the set of all possible strategies. In this way, we can view a game as a one-step process: each player selects a strategy, then the game is carried out according to those strategies and each player receives a certain payoff based on the rules of the game.
+
+A \textbf{pure strategy} is simply an element of $\mathcal{S}_k$; before the game begins, you have already settled on a single strategy to employ. A \textbf{mixed strategy} infuses this with stochasticity: it is a probability distribution on $\mathcal{S}_{k}$. Before the game begins, you assign probabilities to each of your possible pure strategies; then when the game starts, you randomly choose one of them to use for the remainder of the game. If a player has $n$ pure strategies, we can explicitly describe their resulting space of mixed strategies as
+\[
+        \mathcal{M} := \left\{ p \in \R^{n} \;\Bigg|\; \sum_i p_i = 1 \text{ and } p_i \geq 0 \text{ for all } i \right\}.
+\] 
+Strictly speaking, we should be defining $\mathcal{M}$ explicitly in terms of its related $\mathcal{S}_{k}$ and its number of strategies $n$, but this should be clear from context. Note that $\mathcal{S}_k$ injects into $\mathcal{M}$ under the map sending $i$ to the $i$-th standard basis element of $\R^{n}$, so unless otherwise specified, strategies are assumed to be mixed.
+
+A \textbf{non-cooperative} game is one in which none of the players can make binding agreements toward a common goal (although \textit{non}-binding agreements with the possibility of subterfuge would certainly be allowed). Throughout this paper, we will be assuming that all games are non-cooperative.
+
+We will also work under the assumption that every player's goal is to maximize their own expected payoff. For example, if a certain strategy gives you a payoff of 10 and your opponent a payoff of 9, you would prefer it over a strategy that gives you a payoff of 9 and your opponent a payoff of 0.
+
+We can actually define a game entirely by associating payoffs with certain strategy combinations. Suppose we have an $2$-person game, then we can define a maps
+\[
+	u_k: \mathcal{S}_{1}\times \mathcal{S}_{2} \to \R
+\]
+that map pairs of pure strategies to the payoff that player $k$ receives if both players use these respective pure strategies. For examples, the value $u_2(3, 5)$ is the payoff player 2 receives if player 1 uses the pure strategy 3 and player 2 uses the pure strategy 5. We can extend these payoff maps to work with mixed strategies as well by having them return the \textit{expected} payoff instead. Overloading notation, we can define
+\[
+	u_{k}(p,q) := \sum_{i,j} \mathbb{P}\left( \text{player 1 chooses } i \text{ and player 2 chooses } j \right) u_{k}(i,j).
+\] 
+Our assumption that the game is non-cooperative essentially means that strategy selection is independent among the players, so this reduces nicely to the following:
+\begin{align}
+u_{k}(p,q) &= \sum_{i,j} \mathbb{P}\left( \text{player 1 chooses } i\right) \mathbb{P}\left( \text{player 2 chooses } j \right) u_{k}(i,j) \nonumber\\
+	   &= \sum_{i, j} p_i q_j \; u_k(i, j).
+\end{align}
+For 2-player games, we can express these ideas more concisely using matrices. Define two matrices $A$ and $B$ by
+\[
+	A_{ij} := u_1(i,j) \qquad\text{and}\qquad B_{ij} := u_2(i,j),
+\] so $A$ is all the payoffs that player 1 could receive and $B$ is all the payoffs that player 2 could receive. Then our game is completely defined by $A$ and $B$, and we can express the expected payoffs of the pair of mixed strategies $(p,q)$ by
+\begin{equation}
+	u_1(p,q) = p \cdot Aq \qquad\text{and}\qquad u_2(p,q) = p \cdot Bq.
+\end{equation}
+Note that these both match up with $(1)$.
+
+%-------------------
+% Nash Equilibria
+%-------------------
+\subsection{Nash Equilibria}
+
+Suppose you're playing a game and all your opponents' strategies are fixed, then you should choose a strategy whose expected payoff is greater than or equal to that of any other possible strategy. In other words, you gain nothing by unilaterally changing your strategy. If \textit{none} of the players in this game can gain any additional payoff by unilaterally changing their respective strategy, then the current arrangement of strategies is a \textbf{Nash equilibrium}. For 2-player games, we can write this in terms our matrices $A$ and $B$ using $(2)$.
+
+\begin{defn}[]
+	For a 2-player game, the pair $(p,q)$ of (mixed) strategies is a \textbf{Nash equilibrium} if
+	\[
+		p' \cdot Aq \leq p \cdot Aq \quad \text{for all other } p'
+	\] 
+	and
+	\[
+                p \cdot Bq' \leq p \cdot Bq \quad \text{for all other } q'.
+        \]
+\end{defn}
+
+\warn{Other stuff here... talk about lack of uniqueness and why they need not exist without mixed strategies.}
+
+However, if mixed strategies \textit{are} allowed, then it turns out that at least one Nash equilibrium exists for any game with a finite number of players, each with a finite number of pure strategies. This is exactly the statement of Nash's existence theorem.
+
+\begin{thrm}[Nash's Existence Theorem]
+	Suppose a game has a finite number of players, each with a finite number of pure strategies. If mixed strategies are allowed, then this game has a (potentially non-unique) Nash equilibrium.
+\end{thrm}
+
+We will not prove this version of the theorem; instead, we will prove it for 2-player games. All the same concepts are in play, and the high-level proof strategy is in fact the same; however, since we can use matrices to describe expected payoff for 2-player games, this special case of the theorem will be much easier to prove rigorously without having to develop and use unwieldy notation.
+
+
+%--------------------------------------------------------------------------------
+% Brouwer's Fixed Point Theorem
+%--------------------------------------------------------------------------------
+\section{Brouwer's Fixed Point Theorem}
+
+Underlying Nash's existence theorem is the famous Brouwer fixed point theorem. We will state and prove this theorem now, then describe it's connection with Nash's theorem. We assume several topological facts for this proof, namely that passing to the $k$-th homology group is a covariant functor, the homology of the $n$-sphere $S^{n}$ is
+\[
+	H_{k}(S^{n}) =
+	\begin{cases}
+		\mathbb{Z} & k=0,n \\
+		0 & \text{otherwise},
+	\end{cases}
+\] 
+the homology of a point is
+\[
+	H_{k}(\text{pt}) =
+	\begin{cases}
+		\mathbb{Z} & k=0,\\
+		0 & \text{otherwise},
+	\end{cases}
+\] and the fact that homology is homotopy invariant. This last fact means that any contractible space has the same homology as a point.
+
+\begin{lem}
+	\label{no-retraction}
+There is no retraction $r:D^{n}\to \p D^{n} = S^{n-1}$ for $n \geq 1$.
+\end{lem}
+\begin{proof}
+	Suppose there is such a retraction $r$, then we have the following commutative diagram, where $i$ is the natural inclusion.
+	\[
+		\begin{tikzcd}
+			S^{n-1} \rar[hook]{i} \arrow[rr, bend right, "\id"'] & D^{n} \rar[two heads]{r} & S^{n-1}
+		\end{tikzcd}
+	\] 
+	Since $D^{n}$ is contractible and $n \geq 1$, applying the $H_{n-1}$ functor gives the following commutative diagram.
+	\[
+		\begin{tikzcd}
+			\mathbb{Z} \rar{i_{*}} \arrow[rr, bend right, "\id"'] & 0 \rar{r_{*}} & \mathbb{Z}
+		\end{tikzcd}
+	\] 
+	But the identity map cannot factor through 0, so by contradiction, $r$ cannot exist.
+\end{proof}
+
+\begin{thrm}[Brouwer's Fixed Point Theorem]
+	Suppose $X \cong D^{n}$ for $n \geq 1$, then any continuous map $f:X\to X$ has a fixed point.
+\end{thrm}
+\begin{proof}
+	We will first treat the case when $X = D^{n}$ for some $n \geq 1$. Suppose that there is some continuous map $f:X\to X$ that doesn't have any fixed points. Then we can define a retraction $r:X\to \p X$ as follows: take the ray starting at $f(x)$ and passing through $x$, then $r(x)$ is the point at which this ray intersects $\p X$. But by lemma \Cref{no-retraction}, no such retraction can exist. Thus by contradiction, $f$ cannot have a fixed point.
+
+	Now we will extend this result to the case $X \cong D^{n}$ via some isomorphism $\phi$. Suppose $f:X\to X$ is continuous, then consider the following composition of maps.
+	\[
+	\begin{tikzcd}
+		D^{n} \rar{\phi^{-1}} & X \rar{f} & X \rar{\phi} & D^{n}
+	\end{tikzcd}
+\] By our previous work, this composition has a fixed point, i.e. there is some $x \in D^{n}$ such that $(\phi^{-1}f \phi)(x) = x$. But applying $\phi$ to both sides gives $(f\phi)(x) = \phi(x)$, so $\phi(x)$ is a fixed point of $f$. Thus any space homeomorphic to $D^{n}$ has a fixed point.
+\end{proof}
+
+%-------------------
+% Connection with Mixed Strategies
+%-------------------
+\subsection{Connection with Mixed Strategies}
+
+We've now stated and proven the fixed point theorem that will be central to our proof of Nash's existence theorem, but it is presently unclear how to actually use it to study strategies in a 2-person game. As a first step towards this, we will see how we can apply Brouwer's fixed point theorem to \textit{some} endomorphism on the space of a player's mixed strategies. In the next section, we will explicitly define an endomorphism whose fixed point gives a Nash equilibrium.
+
+To begin, recall that the space of all mixed strategies for a player with pure strategies $1, \dots, n$ is
+\[
+	\mathcal{M} = \left\{ p \in \R^{n} \;\big|\; \sum_i p_i = 1 \text{ and } p_i \geq 0 \text{ for all } i \right\}.
+\] 
+From a geometric perspective, this is exactly the standard $(n-1)$-simplex $\Delta^{n-1}$, so every mixed strategy can be thought of as a point on a standard simplex. An important consequence of this is that we can apply Brouwer's fixed point theorem to any endomorphism on $\mathcal{M}$, as formalized by the following lemma.
+
+\begin{lem}
+	\label{mixed-strat-fixed-pt}
+	Any continuous map $\mathcal{M}\to \mathcal{M}$ has a fixed point.
+\end{lem}
+\begin{proof}
+	It is a well known fact that $\Delta^{k}\cong D^{k}$ for all $k$. Then since $\mathcal{M}=\Delta^{n-1}$, we can simply apply Brouwer's fixed point theorem.
+\end{proof}
+
+%--------------------------------------------------------------------------------
+% Nash's Existence Theorem for 2-Player Games
+%--------------------------------------------------------------------------------
+\section{Nash's Existence Theorem for 2-Player Games}
+
+We now have all the necessary machinery to prove Nash's existence theorem for 2-player games. The idea is quite straightforward:
+\begin{itemize}
+	\item First, we define an endomorphism on $\mathcal{M}$ that aims to increase the expected payoff a given strategy when the opponent's strategy is fixed.
+	\item We then apply \Cref{mixed-strat-fixed-pt} to obtain a maximally optimized strategy.
+	\item We do this for both players, obtaining two strategies that we can check form a Nash equilibrium.
+\end{itemize}
+Before beginning the proof, it should be clear how to expand this general concept to the case of any finite number of players. As should become obvious in the proof of the 2-player case, the only thing that really changes in the argument is how unwieldy the notation is.
+
+\begin{thrm}[Nash's Existence Theorem for 2-Player Games]
+	Any finite 2-player game has a Nash equilibrium if mixed strategies are allowed.
+\end{thrm}
+\begin{proof}
+	Suppose player 1 has pure strategies $\left\{ 1, \dots, m \right\}$ and player 2 has pure strategies $\left\{ 1, \dots, n \right\}$. We will first determine a way to iteratively improve player 1's strategy. Consider the function
+	\[
+		c_i(p,q) := \max\left\{ i\cdot A q - p\cdot Aq, 0 \right\}.
+	\] This is player 1's expected gain (if any) of using the pure strategy $i$ over the strategy $p$. How does this help us improve on $p$? If a more optimal strategy weights $i$ more heavily than $p$ does, we expect there to be some gain from using $i$ all the time. To actually use this value to update $p$, we can simply add it to $p_i$ and then normalize to ensure that the output is still in $\mathcal{M}=\Delta^{m-1}$. Define
+	\[
+		f_{i}(p,q) := \frac{p_i + c_i(p,q)}{1 + \sum_{k}c_{k}(p,q)} ,
+	\] then the map $f := (f_1, \dots f_{m})$ is our desired update map. Note that $f:\mathcal{M} \to \mathcal{M}$:
+	\[
+		\sum_{i} f_{i}(p,q) = \frac{\sum_{i} p_i + \sum_i c_i(p,q)}{1 + \sum_{k}c_{k}(p,q)} = \frac{1 + \sum_i c_i(p,q)}{1 + \sum_{k}c_{k}(p,q)} = 1,
+	\] so $f(p,q) \in \Delta^{m-1}=\mathcal{M}$. All the operations composing $f$ are continuous, so $f$ itself is continuous. Then by \Cref{mixed-strat-fixed-pt}, $f$ has a fixed point $p^{*}$. Similarly, we can define player 2's expected gain (if any) of using the pure strategy $j$ over the strategy $q$ by
+	\[
+		d_{i}(p,q) := \max \left\{ p\cdot Bj - p\cdot Bq, 0 \right\}.
+	\] Our update map for player 2's strategy is then $g := (g_1, \dots, g_{n})$, where
+	\[
+		g_{i}(p,q) := \frac{q_i + d_{i}(p,q)}{1 + \sum_{k} d_{k}(p,q)} .
+	\] This similarly has a fixed point $q^{*}$. We claim that $(p^{*},q^{*})$ is a Nash equilibrium. Note that since $p^{*}$ is a fixed point,
+	\[
+		c_i(p^{*},q^{*}) = 0
+	\] necessarily for all $i$. By the definition of $c_i$, this means
+	\[
+	i\cdot Aq^{*} \leq p^{*}\cdot Aq^{*}
+	\] for all $i$. Then for all $p \neq p^{*}$,
+	\[
+		p\cdot Aq^{*} = \sum_i p_i (i \cdot Aq^{*}) \leq \sum_i p_i (p^{*}\cdot Aq^{*}) = \left( \sum_i p_i \right)\left( p^{*}\cdot Aq^{*} \right) = p^{*}\cdot Aq^{*}.
+	\] We can similarly derive
+	\[
+	p^{*}\cdot Bq \leq p^{*}\cdot Bq^{*}
+	\] for any $q \neq q^{*}$, so the pair $(p^{*},q^{*})$ is a Nash equilibrium.
+\end{proof}
+
+\warn{bibliography}
+
+\end{document}

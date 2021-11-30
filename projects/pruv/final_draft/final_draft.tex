@@ -1,0 +1,273 @@
+\documentclass[twoside,10pt]{article}
+\usepackage{/Users/bradenhoagland/latex/styles/toggles}
+%\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{Percolation Processes on Dynamically Grown Graphs}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\importStyles{formal}{rainbow}{boxy}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+\formalTitle{\docTitle}{Braden Hoagland}{Math 493: Research Independent Study}
+\formalHeader{Braden Hoagland}{Dynamic Percolation Processes}
+
+\warn{
+\begin{enumerate}
+	\item intro
+		\begin{enumerate}
+			\item intro to random graphs
+			\item percolation
+			\item history of explosive percolation
+			\item scaling assumption
+			\item critical exponents
+			\item induced coefficient maps
+		\end{enumerate}
+	\item 2-choice rules
+		\begin{enumerate}
+			\item basic definitions
+			\item scaling relations (include examples here and compare different rules)
+			\item limiting behavior
+			\item cluster size variance
+		\end{enumerate}
+	\item \ER
+		\begin{enumerate}
+			\item scaling relations and $\beta=1$ 
+			\item results from Rick
+			\item size of ``scaling window"
+			\item bounded size rules and how they relate to \ER
+		\end{enumerate}
+\end{enumerate}
+}
+
+\begin{abstract}
+	\lipsum[0-1]
+\end{abstract}
+
+%--------------------------------------------------------------------------------
+% Introduction
+%--------------------------------------------------------------------------------
+\section{Introduction}
+
+\warn{Intro to random graphs}
+
+%-------------------
+% Percolation
+%-------------------
+\subsection{Percolation}
+
+\warn{General percolation}
+
+\warn{History of explosive percolation}
+
+%-------------------
+% The Scaling Assumption
+%-------------------
+\subsection{The Scaling Assumption}
+
+\warn{scaling assumption}
+
+\warn{critical exponents}
+
+\warn{induced coefficient maps}
+
+%--------------------------------------------------------------------------------
+% 2-Choice Rules
+%--------------------------------------------------------------------------------
+\section{2-Choice Rules}
+
+To begin, we will need to define some basic terms that will be used over and over again. Let $S$ be the relative size of the dominating cluster as $n \to \infty$. If $x_i$ is a vertex, then we denote its absolute cluster size by $\kappa_i$. Denote the probability that the minimum of $m$ i.i.d. sampled vertices is $s$ by
+\[
+        Q_m(s) := \mathbb{P}\left( \min\left\{ \kappa_1, \dots, \kappa_m \right\} = s \right) .
+\]
+Consider the sum $\ang{1}_{m} := \sum_{s} Q_{m}(s)$, where $s$ implicitly ranges over only finite values. Since $S$ is the probability that a randomly chosen vertex belongs to an infinite cluster, we can write this sum as $\ang{1}_{m} = 1-S^{m}$. Since they frequently show up in common examples, we give $m=1$ and $m=2$ shorthands:
+\[
+        P := Q_1, \quad\quad Q := Q_2.
+\]
+We also define
+\[
+        \ang{s^{k}}_{m} := \sum_{s=1}^{\infty} s^{k} Q_m(s).
+\]
+We will use $\Ang{\;\cdot\;}_{P}$ and $\ang{\;\cdot\;}_{Q}$ instead of $\Ang{\;\cdot\;}_{1}$ and $\ang{\;\cdot\;}_{2}$, respectively.
+
+With these definitions in hand, we can turn our attention to the main attraction. We will be discussing rules that add a single edge every $t=1/n$ units of time, gotten by randomly sampling two groups of vertices i.i.d. from the graph, then choosing an endpoint vertex from each group. The following definition is a straightforward generalization of this idea, but we will only concern ourselves in this work with the case $\ell=2$.
+
+\begin{defn}[]
+        Define a rule $\mathcal{R}$ as follows:
+        \begin{itemize}
+                \item Every $t=1/n$ units of time, choose $\ell$ groups of vertices $\mathcal{V}_1, \dots, \mathcal{V}_{\ell}$ (of potentially different sizes) by sampling vertices i.i.d. from the graph.
+                \item For each $i$, follow some rule $\mathcal{F}_{i}$ to choose a vertex $x_i$ with cluster size $\kappa_w$ from group $\mathcal{V}_i$, subject to the condition that $\mathcal{F}_i$ induces a function $\phi_i(s) = \mathbb{P}\left( \kappa_i=s \right) $ that does not depend on any other $\phi_j$ for $j \neq i$.
+        \end{itemize}
+We call $\mathcal{R}$ an \textbf{$\ell$-choice rule}.
+\end{defn}
+
+If $\phi_{i}=Q_{m_i}$ for each $i$, then $\mathcal{R}$ is \textbf{minimizing}. We can similarly define \textbf{maximizing} rules. If each $\phi_i$ is the same, $\mathcal{R}$ is \textbf{symmetric}. We would like to restrict the vertex selection processes in each group as little as possible in order to get a more general theory, but for the aforementioned special rules, we can conduct more illuminating analysis.
+
+In the following sections, we will derive scaling relations for general 2-choice rules, then use these to analyze minimizing rules and several other commonly studied rules. \warn{make sure I talk about scaling assumption before this and say that I'm assuming it everywhere...}
+
+%-------------------
+% Scaling Relations
+%-------------------
+\subsection{Scaling Relations}
+
+Suppose $\mathcal{R}$ is some general 2-choice rule, then, since none of the $\phi_i$ depend on each other, it satisfies the Smoluchowski equation
+        \[
+                \p_{t}{P(s)} = s \sum_{u+v=s} \phi_1(u) \phi_2(v) - s \phi_1(s) - s\phi_2(s).
+        \]
+The summation term represents two components merging into a new component of size $s$, and the last two terms each represent a component of size $s$ joining with another component. We can use this to calculate the growth rate of the giant component, which allows us to prove an important computational theorem.
+
+\begin{lem}
+        \label{2c-sdelS}
+        For any 2-choice rule $\mathcal{R}$, the relative size of the giant component $S$ satisfies
+	\[
+		\p_{t}{S} = \ang{s}_{\phi_1}\left( 1-\ang{1}_{\phi_2} \right) + \ang{s}_{\phi_2}\left( 1-\ang{1}_{\phi_1} \right).
+	\] 
+\end{lem}
+\begin{proof}
+        Using the identity $\sum_s P(s) = 1-S$, we calculate
+        \begin{align*}
+                \p_{t}{S} &= - \sum_s \p_{t}{P(s)} \\
+                          &= - \sum_s s \sum_{u+v=s}\phi_1(u)\phi_2(v) + \sum_s s \phi_1(s) \sum_s + s \phi_2(s) \\
+                          &= - \sum_u \sum_v (u+v) \phi_1(u)\phi_2(v) + \ang{s}_{\phi_1} + \ang{s}_{\phi_2} \\
+                          &= -\sum_{u}u \phi_1(u) \sum_{v} \phi_2(v) - \sum_{u}\phi_1(u)\sum_{v}v \phi_2(v) + \ang{s}_{\phi_1} + \ang{s}_{\phi_2} \\
+                          &= -\ang{s}_{\phi_1}\ang{1}_{\phi_2} - \ang{1}_{\phi_1}\ang{s}_{\phi_2} + \ang{s}_{\phi_1}+\ang{s}_{\phi_2} \\
+                          &= \ang{s}_{\phi_1}\left( 1-\ang{1}_{\phi_2} \right) + \ang{s}_{\phi_2}\left( 1-\ang{1}_{\phi_1} \right).
+        \end{align*}
+\end{proof}
+
+\begin{thrm}
+	\label{2c-same-order}
+	For any 2-choice rule $\mathcal{R}$, there are nonnegative functions $\zeta_1$ and $\zeta_2$ such that
+	\[
+		\p_{t}{S} = \ang{s}_{\phi_1}\zeta_2(S) + \ang{s}_{\phi_2}\zeta_1(S).
+	\] 
+	Furthermore, the two terms above have the same order $F_1(\beta) + F_2(\beta) - \beta+1$ when the expression is put into scaling form.
+\end{thrm}
+\begin{proof}
+	\warn{use previous lemma.}
+
+	Now for both $i$, consider the probability $\zeta_i(S)$ that a vertex chosen from group $i$ belongs to an infinite cluster. This satisfies the relation $\ang{1}_{\phi_i} = 1-\zeta_i(S)$, which allows us to recover the desired form of $\p_{t}{S} $.
+
+	\warn{Same order.}
+\end{proof}
+
+To determine scaling relations for 2-choice rules, we'll need one last result, a consequence of \Cref{2c-same-order}.
+
+\begin{cor}
+	For any 2-choice rule $\mathcal{R}$, the average cluster size $\ang{s}_{P}$ satisfies
+\[
+        \p_{t}{\ang{s}_{P}} = 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} - \ang{s^2}_{\phi_1}\zeta_2(S) - \ang{s^2}_{\phi_2}\zeta_1(S),
+\]
+where $\zeta_1$ and $\zeta_2$ are the functions from \Cref{2c-same-order}.
+\end{cor}
+\begin{proof}
+	Recall from the proof of \Cref{2c-same-order} that there are functions $\zeta_1$ and $\zeta_2$ satisfying the relation $\ang{1}_{\phi_i} = 1-\zeta_i(S)$. We can then explicitly compute $\p_{t}{\ang{s}_{P}} $.
+        \begin{align*}
+                \p_{t}{\ang{s}_{P}} &= \sum_s s \p_{t}{P(s)} \\
+                                    &= \sum_s s^2 \sum_{u+v=s}\phi_1(u)\phi_2(v) - \sum_s s^2 \phi_1(s) - \sum_s s^2 \phi_2(s) \\
+                                    &= \sum_{u}\sum_{v} (u+v)^2\phi_1(u) \phi_2(v) - \ang{s^2}_{\phi_1}-\ang{s^2}_{\phi_2} \\
+                                    &= \ang{s^2}_{\phi_1}\ang{1}_{\phi_2} + 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} + \ang{1}_{\phi_1}\ang{s^2}_{\phi_2}- \ang{s^2}_{\phi_1}-\ang{s^2}_{\phi_2} \\
+                                    &= 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} + \ang{s^2}_{\phi_1}(\ang{1}_{\phi_2} - 1) + \ang{s^2}_{\phi_2}(\ang{1}_{\phi_1}-1) \\
+                                    &= 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} - \ang{s^2}_{\phi_1}\zeta_2(S) - \ang{s^2}_{\phi_2}\zeta_1(S).
+        \end{align*}
+\end{proof}
+
+\begin{thrm}[]
+	\label{2c-scaling-relations}
+	\warn{summarize scaling relations in theorem, then show them. Redo the calculations to figure out the best way to present them.}
+\end{thrm}
+
+Suppose we are instead working with a minimizing 2-choice rule, i.e. $\phi_1=Q_{a}$ and $\phi_2=Q_{b}$ for two positive integers $a$ and $b$. In this case, we have simpler forms for the scaling relations.
+
+\begin{cor}
+	\label{2c-minimizing-scaling-relations}
+	For minimizing 2-choice rules, the scaling relations from \Cref{2c-scaling-relations} become
+\begin{align*}
+        \gamma_{a} &= 1 + (b-1)\beta,\\
+        \gamma_{b} &= 1+(a-1)\beta,\\
+        \gamma_{P} &= 1+(a+b-2)\beta,\\
+        \frac{1}{\sigma} &= 1+(a+b-1)\beta,\\
+        \tau &= \frac{\beta}{1+(a+b-1)\beta} +2.
+\end{align*}
+\end{cor}
+\begin{proof}
+	The relation $\ang{1}_{m} = 1 - S^{m}$ holds for all $m$, so the induced coefficient map for $Q_{m}$ is $\beta \mapsto m \beta$. The result then follows from \Cref{2c-scaling-relations}.
+\end{proof}
+
+\warn{Include examples here and compare different rules}
+
+%-------------------
+% Limiting Behavior
+%-------------------
+\subsection{Limiting Behavior}
+
+%-------------------
+% Cluster Size Variance
+%-------------------
+\subsection{Cluster Size Variance}
+
+%--------------------------------------------------------------------------------
+% \ER
+%--------------------------------------------------------------------------------
+\section{\ER}
+
+The \ER rule is the simplest of all the 2-choice rules. For each group, simply pick one vertex at random to be the group representative. Thus an equivalent way of defining the \ER rule is to add one of the $\binom{n}{2}$ possible edges in the graph at random at each time step.
+
+It is clear that \ER is both minimizing and symmetric, so plugging in $a=b=1$ into the scaling relations from \Cref{2c-minimizing-scaling-relations} gives
+\begin{align*}
+        \gamma_{P} &= 1,\\
+        \frac{1}{\sigma} &= 1 + \beta,\\
+        \tau &= \frac{\beta}{1+\beta} +2.
+\end{align*}
+With such a simple rule, we can in fact determine much more.
+\warn{talk about $\beta=1$.}
+
+Thus the scaling relations for \ER are
+\begin{align*}
+        \gamma_{P} &= 1,\\
+        \frac{1}{\sigma} &= 2,\\
+        \tau &= 5/2.
+\end{align*}
+A critical assumption of this work was the scaling assumption, and for \ER, we can find an explicit bound on the size of the \textit{scaling window}, the region where the scaling assumption is accurate.
+
+\begin{thrm}[]
+        In the limit as $s\to \infty$, \warn{finish...}
+\end{thrm}
+\begin{proof}
+We use the following two relationships, which hold for symmetric minimizing 2-choice rules when $t < t_c$ and $s$ is large: \warn{where did they come from?}
+\begin{itemize}
+        \item $P(x) = \delta^{(\tau-1)/\sigma} \tilde{f}(x \delta^{1/\sigma})$;
+        \item $\tilde{f}(x) \propto x^{\lambda} \exp\left( -Cx^{1 + \log_2 m} \right)$, where $\lambda = (1+\log_2 m)\left( 1 + \frac{1}{4m-2}  \right)-\frac{2m}{2m-1} $;
+\end{itemize}
+where $m$ is the group size. In the case of \ER, we know $m=1$, $\tau=5/2$, and $1/\sigma = 2$, so these reduce to
+\[
+        P(x) = \tilde{C} \delta^{2} x^{-1/2} \exp\left( -Cx \delta^{2} \right),
+\]
+where $ \tilde{C}$ is the constant of propotionality from $\tilde{f}$. To clean up notation, we use the shorthand $\mathcal{E}_x := \exp\left( -C x \delta^{2} \right)$. Also note that $\delta = t_c-t$ when $t < t_c$, so $\p_{t}{\delta} =-1$. With these observations, we can begin the computation. When $s$ is large, we know $P$ satisfies the ODE \warn{(switching over to integrals...)}
+\begin{align*}
+        \p_{t}{P}(s) &= \frac{s}{2} \int_{0}^{s} P(u)P(s-u)\;du - sP(s) \\
+        \p_{t}\left\{ \tilde{C} \delta^{2}s^{-1/2}\mathcal{E}_{s} \right\} &= \frac{s}{2} \int_{0}^{s} \tilde{C}^{2}\delta^{4}(su-u^2)^{-1/2} \mathcal{E}_{u}\mathcal{E}_{s-u} \; du \quad-\quad \tilde{C}\delta^{2}s^{1/2}\mathcal{E}_{s} \\
+        \tilde{C} \left[ 2\delta^{3}Cs^{1/2} \mathcal{E}_s - 2\delta s^{-1/2} \mathcal{E}_{s} \right] &= \frac{s}{2} \int_{0}^{s} \tilde{C}^{2}\delta^{4}(su-u^2)^{-1/2} \mathcal{E}_{s} \; du \quad-\quad \tilde{C}\delta^{2}s^{1/2}\mathcal{E}_{s} \\
+        2\delta^{2}Cs^{1/2} - 2s^{-1/2} &= \frac{1}{2} s \tilde{C} \delta^{3} \int_{0}^{s} (su-u^{2})^{-1/2}\;du \quad-\quad \delta s^{1/2}.
+        \intertext{\warn{integral goes to $\pi$ as $s\to \infty$.} Thus in the limit as $s\to \infty$, this becomes}
+        2\delta^{2}Cs^{1/2} - 2s^{-1/2} &= \frac{1}{2} s \tilde{C} \delta^{3} \pi - \delta s^{1/2}.
+        \intertext{Note that the two terms on the left hand side also go to zero in the limit as $s\to \infty$, so this is really}
+        \frac{1}{2} s \tilde{C} \delta^{3} \pi &= \delta s^{1/2} \\
+        \delta^{2} &= \frac{2}{s^{-1/2} \tilde{C} \pi} \\
+        \delta &= \Theta( s^{-1/4} ).
+\end{align*}
+\end{proof}
+
+\warn{Should I turn this into a ``various result" subsection? I'll have to add some of Rick's other results anyway...}
+
+%-------------------
+% Bounded Size Rules
+%-------------------
+\subsection{Bounded Size Rules}
+
+\warn{bounded size rules and how they relate to \ER}
+
+
+\end{document}

@@ -2,51 +2,77 @@
 \usepackage{/Users/bradenhoagland/latex/styles/toggles}
 %\toggletrue{sectionbreaks}
 %\toggletrue{sectionheaders}
-\newcommand{\docTitle}{2-Choice Rules}
+\newcommand{\docTitle}{Percolation Processes on Dynamically Grown Graphs}
 \usepackage{/Users/bradenhoagland/latex/styles/common}
-\importStyles{modern}{rainbow}{boxy}
-%\importStyles{modern}{rainbow}{lined}
+\importStyles{formal}{rainbow}{boxy}
+
+\usepackage[
+        backend=biber,
+	autocite=superscript
+]{biblatex}
+\addbibresource{bib.bib}
 
 %\renewcommand{\theenumi}{\alph{enumi}}
 
 \begin{document}
-\tableofcontents
+
+\formalTitle{\docTitle}{Braden Hoagland}{PRUV Research Project}
+\formalHeader{Braden Hoagland}{Dynamic Percolation Processes}
 
 %--------------------------------------------------------------------------------
-% Definitions
+% Introduction
 %--------------------------------------------------------------------------------
-\section{Definitions}
+\section{Introduction}
 
-To begin, we'll need to define some basic terms that we'll use over and over again. Let $S$ be the relative size of the dominating cluster as $n \to \infty$. If $x_i$ is a vertex, then we denote its absolute cluster size by $\kappa_i$. Denote the probability that the minimum of $m$ i.i.d. sampled vertices is $s$ by
+Suppose we have an empty graph on $n$ vertices, and at each step we add one edge chosen at random. If each step corresponds to time $1/n$, then as $n\to \infty$ the graph at time $t$ converges to an \ER graph in which the connection probability between any two edges is $2t/n$. Then by basic results on \ER graphs,\autocite{ER} there is a critical time $t_{c}=1/2$ at which point a giant component with order $n$ points emerges, which is referred to as ``percolation".
+
+The properties of the \ER model are well understood, so it serves as a natural reference point when studying other models. For example, if $\theta(t)$ is the fraction of vertices in the giant component (after we have let $n\to \infty$), then $\theta(t)\to 0$ as $t\searrow t_{c}$. This shows that the phase transition is continuous. Additionally, $\theta(t) \sim (t-t_{c})^{\beta}$, where $\beta=1$. This gives us a ``critical exponent" $\beta$ that describes the behavior of the process near $t_{c}$.
+
+It is then natural to ask which generalizations of \ER graphs also have these properties. At a Fields Institute workshop in 2000, Dmitris Achlioptas suggested a class of variants of the \ER model, now dubbed ``Achlioptas processes". One starts with an empty graph, and at each step two edges $(v_1,v_2)$ and $(v_3,v_4)$ are randomly chosen from the set of all possible edges. Only one of them is added to the graph, though, according to some rule that depends on the cluster sizes of the current graph.
+
+If $\kappa_i$ is the cluster size of $v_{i}$, then two possible rules are the sum rule and product rule. In the sum rule, the first edge is added if $\kappa_1+\kappa_2 < \kappa_3+\kappa_4$, and the second edge is added otherwise. In the product rule, the first edge is added if $\kappa_1 \kappa_2 < \kappa_3 \kappa_4$, and the second edge is added otherwise.
+
+These rules are just two of many rules desgined to delay the growth of clusters and, by extension, the eventual emergence of the giant component. In 2001, Bohman and Frieze were the first to describe an Achlioptas process that delayed percolation.\autocite{BF} At each step, the first edge is added if both $v_1$ and $v_2$ were isolated vertices, and the second edge is added otherwise. They showed that there was a constant $c_0>0.535$ such that the largest component at time $c_0$ has size bounded by $(\log n)^{O(1)}$.
+
+In 2013, Bhamidi, Budhirja, and Wang showed that the behavior of the Bohman-Frieze process near the critical point was the same as in the \ER case.\autocite{coal} Explicitly, they showed that at time $t_c + r/n^{1/3}$ for $-\infty<r<\infty$, the system converges to the ``multiplicative coalesent", in which clusters of size $x$ and $y$ merge at rate $xy$. Aldous showed a corresponding result for \ER graphs.\autocite{Aldous} Through far from trivial, this result should not be surprising. After some time there will be very few isolated vertices, so the process will start to add edges almost uniformly at random.
+
+The Bohman-Frieze rule is an example of a ``bounded size rule", in which all components of size greater than or equal to some constant $K$ are treated the same. In 2011, Riordan and Warnke showed that the phase transition at criticality is continuous for all $\ell$-vertex rules,\autocite{RW-cont} which are a generalization of Achlioptas processes. Then in 2017, Riordan and Warnke showed that all bounded size Achlioptas processes share (in a strong sense) all the features of the \ER phase transition.\autocite{RW-bounded} 
+
+One unfortunate consequence of working in such generality is that Riordan and Warnke's work is largely based on contradiction, and thus it does not provide much quantitative information about the sizes of the graph clusters near criticality. Under the additional assumption of ``scaling behavior" that is supported by numerical evidence (see da Costa et al.\autocite{daCosta}), though, it is possible to calculate further critical exponents for these processes.
+
+The focus of this work will then be to generalize existing methods of calculating critical exponents, determining the classes of rules for which this is possible, and studying the limiting behavior of the critical exponents as their corresponding rules' parameters tend to extreme values.
+
+%--------------------------------------------------------------------------------
+% $\ell$-Choice Rules
+%--------------------------------------------------------------------------------
+\section{\texorpdfstring{$\ell$}{l}-Choice Rules}
+
+To begin, we will need to define some basic terms that will be used over and over again. Let $S$ be the relative size of the dominating cluster as $n \to \infty$. If $x_i$ is a vertex, then we denote its absolute cluster size by $\kappa_i$. Denote the probability that the minimum of $m$ i.i.d. sampled vertices is $s$ by
 \[
-	Q_m(s) \doteq \mathbb{P}\left( \min\left\{ \kappa_1, \dots, \kappa_m \right\} = s \right) .
-\] 
+	Q_m(s) := \mathbb{P}\left( \min\left\{ \kappa_1, \dots, \kappa_m \right\} = s \right) .
+\]
 Note that $Q_m$ satisfies the identity $\sum_{s=1}^{\infty} Q_m(s) = 1-S^{m}$. Since they frequently show up in common examples, we give $m=1$ and $m=2$ shorthands:
 \[
-	P \doteq Q_1, \quad\quad Q \doteq Q_2.
+	P := Q_1, \quad\quad Q := Q_2.
 \]
 We also define
 \[
-	\ang{s^{k}}_{m} \doteq \sum_{s=1}^{\infty} s^{k} Q_m(s).
-\] 
-I'll use $\Ang{\;\cdot\;}_{P}$ and $\ang{\;\cdot\;}_{Q}$ instead of $\Ang{\;\cdot\;}_{1}$ and $\ang{\;\cdot\;}_{2}$, respectively.
+	\ang{s^{k}}_{m} := \sum_{s=1}^{\infty} s^{k} Q_m(s).
+\]
+We will use $\Ang{\;\cdot\;}_{P}$ and $\ang{\;\cdot\;}_{Q}$ instead of $\Ang{\;\cdot\;}_{1}$ and $\ang{\;\cdot\;}_{2}$, respectively.
 
-Now for the main attraction. In these notes, we'll be discussing rules that add a single edge every $t=1/n$ units of time, gotten by selecting two vertices total from two separate groups of vertices that are sampled i.i.d. from the graph.
+With these definitions in hand, we can turn our attention to the main attraction. We will be discussing rules that add a single edge every $t=1/n$ units of time, gotten by randomly sampling two groups of vertices i.i.d. from the graph, then choosing an endpoint vertex from each group.
 
 \begin{defn}[]
 	Define a rule $\mathcal{R}$ as follows:
 	\begin{itemize}
 		\item Every $t=1/n$ units of time, choose $\ell$ groups of vertices $\mathcal{V}_1, \dots, \mathcal{V}_{\ell}$ (of potentially different sizes) by sampling vertices i.i.d. from the graph.
-		\item For each $i$, follow some rule $\mathcal{F}_{i}$ to choose a vertex $x_i$ with cluster size $\kappa_w$ from group $\mathcal{V}_i$, subject to the condition that $\mathcal{F}_i$ induces a function $\phi_i(s) = \mathbb{P}\left( \kappa_i=s \right) $ that is independent from all other $\phi_j$ for $j \neq i$.
+		\item For each $i$, follow some rule $\mathcal{F}_{i}$ to choose a vertex $x_i$ with cluster size $\kappa_w$ from group $\mathcal{V}_i$, subject to the condition that $\mathcal{F}_i$ induces a function $\phi_i(s) = \mathbb{P}\left( \kappa_i=s \right) $ that does not depend on any other $\phi_j$ for $j \neq i$.
 	\end{itemize}
 We call $\mathcal{R}$ an \textbf{$\ell$-choice rule}.
 \end{defn}
 
-We'd like to restrict this vertex selection processes in each group as little as possible in order to get a more general theory, but in some cases we can perform much greater analysis if some information is known about them.
-
-\begin{defn}[]
-	An $\ell$-choice rule is \textbf{minimizing} if $\phi_i = Q_{m_i}$ for each $i$. It is \textbf{symmetric} if each $\phi_i$ is the same.
-\end{defn}
+If $\phi_{i}=Q_{m_i}$ for each $i$, then $\mathcal{R}$ is \textbf{minimizing}. We can similarly define \textbf{maximizing} rules. If each $\phi_i$ is the same, $\mathcal{R}$ is \textbf{symmetric}. We would like to restrict the vertex selection processes in each group as little as possible in order to get a more general theory, but for the aforementioned special rules, we can perform much greater analysis. 
 
 Minimizing rules exhibit ``explosive" behavior in the sense that the critical time is significantly delayed and the giant component emerges incredibly quickly. Under the assumption that $P$ exhibits scaling behavior, minimizing 2-choice rules in particular can be analyzed in a straightforward manner.
 
@@ -55,15 +81,15 @@ Minimizing rules exhibit ``explosive" behavior in the sense that the critical ti
 %--------------------------------------------------------------------------------
 \section{The Scaling Assumption}
 
-\warn{NEED TO REDO THIS SECTION BASED ON GENERAL THINGS INSTEAD, AND BE VERY CLEAR ABOUT WHAT ALL THE DIFFERENT COEFFICIENTS ARE.}
+\warn{REDO THIS SECTION}
 
-Most of the results in these notes follow from the assumption that near the critical time $t_c$, $P$ has the form
+Most of the results in this work follow from the assumption that near the critical time $t_c$, the function $P$ is of the form
 \[
 	P(s) = s^{1-\tau}f(s \delta^{1/\sigma})
-\] for constants $\tau,\sigma$ and scaling function $f$. \warn{Motivation for this.} The following theorem gives relations between these constants if some regularity conditions hold for the scaling function $f$.
+\] for constants $\tau,\sigma$ and scaling function $f$. The following theorem gives relations between these constants if some regularity conditions hold for the scaling function $f$.
 
 \begin{thrm}
-	\label{thrm:crit-exp}
+	\label{crit-exp}
         Suppose a rule $\mathcal{R}$ has a scaling function $f$ such that
 	\begin{enumerate}
 		\item $\lim_{x \to \infty} x^{2-\tau}f(x) = 0$; and
@@ -85,98 +111,71 @@ Most of the results in these notes follow from the assumption that near the crit
                 \intertext{Integrating by parts gives}
                 &= \frac{\delta^{(\tau-2)/\sigma}}{\tau-2} \left[ \left[ -x^{2-\tau} (f(0) - f(x)) \right]^{x=\infty}_{x=0} - \int_{0}^{\infty} x^{2-\tau} f'(x) \;dx \right].
         \end{align*}
-	So by our assumptions on $f$, we have $S \sim \delta^{\beta}$, where $\beta = (\tau-2)/\sigma$. \warn{Type up the rest of this.} \warn{Go over your concerns with the assumptions on $f$ and the relations between $f$ and $g$ in Appendex E of da Costa.}
+	So by our assumptions on $f$, we have $S \sim \delta^{\beta}$, where $\beta = (\tau-2)/\sigma$. The derivation of $\gamma_{m}$ is similar.
 \end{proof}
 
-%-------------------
-% Induced Coefficent Maps
-%-------------------
-\subsection{Induced Coefficent Maps}
-
-\begin{defn}[]
-Suppose we have a function $\zeta(S)$, then this necessarily induces a map $F(\beta)$ by taking the exponent in the dominating (minimum order) terms of $\zeta(S)$ in its scaling form. This map $F$ is called the \textbf{induced coefficient map} of $\zeta$.
-\end{defn}
+Suppose we have a function $\zeta(S)$, then this induces a map $F$ taking $\beta$ to the exponent in the dominating (minimum order) terms of $\zeta(S)$ in its scaling form. This map $F$ is called the \textbf{induced coefficient map} of $\zeta$. \warn{Need a better defn for this...}
 
 \begin{ex}
-	Fix $a, b$, then let $\zeta(S) = S^{a} + S^{b}$. In scaling form, this is $\delta^{a \beta} + \delta^{b \beta}$. The induced coefficient map is $F(\beta) = \min{a,b} \cdot \beta$.
+	Fix $a, b$, then let $\zeta(S) = S^{a} + S^{b}$. In scaling form, this is $\delta^{a \beta} + \delta^{b \beta}$. The induced coefficient map is then $F(\beta) = \min\{a,b\} \cdot \beta$.
 \end{ex}
-
-%--------------------------------------------------------------------------------
-% Uniform Scaling Rules
-%--------------------------------------------------------------------------------
-\section{Uniform Scaling}
-
-It would be nice to express all these critical exponents in terms of just one (in our case, we'll express everything in terms of $\beta$). This has two main applications for $\ell$-choice rules:
-\begin{enumerate}
-	\item if we determine a single critical exponent, then we automatically know all others; and
-	\item we can determine the limiting behavior of the critical exponents as as the minimum group size goes to $\infty$ (which drives $\beta\to 0$).
-\end{enumerate}
-The following property will be critical in establishing systems of equations that we can use to solve for the critical exponents in terms of $\beta$. As we will see later on, it always holds for minimizing 2-choice rules, and a partial version of it holds for general 2-choice rules.
-
-\begin{defn}[]
-	We say that a rule $\mathcal{R}$ that exhibits scaling behavior \textbf{scales uniformly} if for $S$ and all $\ang{s}_{m}$, every $\delta$ term comprising it has the same order. \warn{Can I fix this so that it's more formal, i.e. is the result of one thing that's more readily definable?}
-\end{defn}
-
-Note that since $\ang{s^{k}}_{m} \sim \delta^{-(\gamma_{m} + \frac{k-1}{\sigma})}$ differs from $\ang{s}_{m} \sim \delta^{-\gamma_{m}}$ by only an added constant, this property also applies to all $k$-th moments. Uniform scaling ends up giving us a systematic way of solving for all crtical exponents in terms of $\beta$ when we're working with minimizing 2-choice rules.
 
 %--------------------------------------------------------------------------------
 % Scaling Relations for 2-Choice Rules
 %--------------------------------------------------------------------------------
 \section{Scaling Relations for 2-Choice Rules}
 
-General 2-choice rules have an ODE of the form
+It would be nice to express all the critical exponents in terms of just one (in our case, we will express everything in terms of $\beta$). This has two main applications for $\ell$-choice rules:
+\begin{enumerate}
+	\item if we determine a single critical exponent, then we automatically know all others; and
+	\item we can determine the limiting behavior of the critical exponents as as the minimum group size goes to $\infty$ (which drives $\beta\to 0$).
+\end{enumerate}
+
+This ends up being possible for a large class of 2-choice rules. Suppose $\mathcal{R}$ is some general 2-choice rule, then, since none of the $\phi_i$ depend on each other, it satisfies the differential equation
 	\[
-		\p_{t}{P(s)} = s \sum_{u+v=s} \phi_1(u) \phi_1(v) - s \phi_1(s) - s\phi_2(s).
-	\] 
-This lets us calculate $\p_{t}{S} $.
+		\p_{t}{P(s)} = s \sum_{u+v=s} \phi_1(u) \phi_2(v) - s \phi_1(s) - s\phi_2(s).
+	\]
+The summation term represents two components merging into a new component of size $s$, and the last two terms each represent a component of size $s$ joining with another component. We can use this to calculate the growth rate of the giant component.
 \begin{prop}
-	\label{prop:2c-sdelS}
+	\label{2c-sdelS}
 	For 2-choice rules,
 	\[
 		\p_{t}{S} = \ang{s}_{\phi_1}\left( 1-\ang{1}_{\phi_2} \right) + \ang{s}_{\phi_2}\left( 1-\ang{1}_{\phi_1} \right).
-	\] 
+	\]
 \end{prop}
+\begin{proof}
+	Using the identity $\sum_s P(s) = 1-S$, we calculate
+	\begin{align*}
+		\p_{t}{S} &= - \sum_s \p_{t}{P(s)} \\
+			  &= - \sum_s s \sum_{u+v=s}\phi_1(u)\phi_2(v) + \sum_s s \phi_1(s) \sum_s + s \phi_2(s) \\
+			  &= - \sum_u \sum_v (u+v) \phi_1(u)\phi_2(v) + \ang{s}_{\phi_1} + \ang{s}_{\phi_2} \\
+			  &= -\sum_{u}u \phi_1(u) \sum_{v} \phi_2(v) - \sum_{u}\phi_1(u)\sum_{v}v \phi_2(v) + \ang{s}_{\phi_1} + \ang{s}_{\phi_2} \\
+			  &= -\ang{s}_{\phi_1}\ang{1}_{\phi_2} - \ang{1}_{\phi_1}\ang{s}_{\phi_2} + \ang{s}_{\phi_1}+\ang{s}_{\phi_2} \\
+			  &= \ang{s}_{\phi_1}\left( 1-\ang{1}_{\phi_2} \right) + \ang{s}_{\phi_2}\left( 1-\ang{1}_{\phi_1} \right).
+	\end{align*}
+\end{proof}
 
 \begin{lem}[]
+	\label{zeta}
 For any $\phi_i$, there is an associated nonnegative function $\zeta_i$ such that
 \[
 	\ang{1}_{\phi_i} = 1 - \zeta_i(S).
-\] 
+\]
 \end{lem}
 \begin{proof}
-	$\zeta_i$ is just the probability that a vertex chosen from group $i$ belongs to a cluster of inifinite size, so it must be a nonnegative function of $S$. \warn{(Make more rigorous, perhaps making it explicit)}
+	$\zeta_i$ is just the probability that a vertex chosen from group $i$ belongs to a cluster of inifinite size, so it must be a nonnegative function of $S$.
 \end{proof}
 
-\warn{Need to establish scaling behavior of $\Ang{1}_{\phi}$ using this\^.}
-
-\warn{Is $F_i(\beta)$ the scaling coefficient for $\ang{1}_{\phi_i}$?}
-
-{\color{blue}Could determine classes of rules based on the form of the induced coefficient maps $F_i$...}
-
 \begin{thrm}
-	\label{thrm:2-dom-terms}
-If $\mathcal{R}$ is a 2-choice rule, then it has two dominating terms with the same order.
+	\label{2-dom-terms}
+If $\mathcal{R}$ is a 2-choice rule, then $\p_{t}{S} $ has two dominating terms of the same order.
 \end{thrm}
 \begin{proof}
-	By Proposition \ref{prop:2c-sdelS} and the preceding lemma,
+	By \Cref{2c-sdelS} and \Cref{zeta},
         \[
 	\p_{t}{S} = \ang{s}_{\phi_1}\zeta_{2}(S) + \ang{s}_{\phi_2} \zeta_{1}(S).
 	\]
-	Suppose $F_i(\beta)$ is the induced coefficient map of $\zeta_i(S)$ \warn{(Check to make sure that the two terms this applies to actually dominate)}. Then there are two dominating terms, and both have order $F_1(\beta) + F_2(\beta) - 1/\sigma$.
-\end{proof}
-
-\begin{cor}
-	If $\mathcal{R}$ is a 2-choice rule such that $\zeta_i(S)$ is a single term for both $i$, then $\mathcal{R}$ scales uniformly.
-\end{cor}
-\begin{proof}
-	If $\zeta_i(S)$ is a single term for both $i$, then $\p_{t}{S} $ has 2 total terms, which must necessarily have the same order.
-\end{proof}
-
-\begin{cor}
-All minimizing 2-choice rules scale uniformly.
-\end{cor}
-\begin{proof}
-	For both $i$, $\phi_i = Q_m$ for some $m$. Then $\ang{1}_{\phi_i} = 1 - S^{m}$, so $\zeta_i(S) = S^{m}$. Since this is a single term, the rule must scale uniformly.
+	Suppose $F_i(\beta)$ is the induced coefficient map of $\zeta_i(S)$. Then there are two dominating terms, and both have order $F_1(\beta) + F_2(\beta) - 1/\sigma$.
 \end{proof}
 
 %-------------------
@@ -184,20 +183,20 @@ All minimizing 2-choice rules scale uniformly.
 %-------------------
 \subsection{Scaling Relations}
 
-Since $\p_{t}{S} \sim \delta^{\beta-1}$, the proof of Theorem \ref{thrm:2-dom-terms} shows that
+Since $\p_{t}{S} \sim \delta^{\beta-1}$, the proof of \Cref{2-dom-terms} shows that
 \begin{equation}
 	\frac{1}{\sigma} = F_1(\beta) + F_2(\beta) - \beta + 1,
 \end{equation}
 but we can derive other scaling relations for general 2-choice rules, too.
 
-Since $\ang{1}_{\phi_i} = 1 - \zeta_i(S)$, it will have scaling behavior based on $\beta$ \warn{(right? see if you can derive this rigorously using a scaling form for $\phi$ similar to that of $P$)}. Thus it makes sense to define $\gamma_{\phi_i}$ as the constant satisfying
+Since $\ang{1}_{\phi_i} = 1 - \zeta_i(S)$, it will have scaling behavior based on $\beta$. Thus it makes sense to define $\gamma_{\phi_i}$ as the constant satisfying
 \[
 \ang{s}_{\phi_i} \sim \delta^{-\gamma_{\phi_i}}.
-\] 
+\]
 Then since $\p_{t}{S} = \ang{s}_{\phi_1}\zeta_2(S) + \ang{s}_{\phi_2}\zeta_1(S)$, the two dominating terms near criticality give us the system
 \[
 	\beta -1 \quad=\quad -\gamma_{\phi_1} + F_2(\beta) \quad=\quad -\gamma_{\phi_2} + F_1(\beta).
-\] 
+\]
 This system implies
 \begin{align}
 	\gamma_{\phi_1} &= F_2(\beta) - \beta + 1,\\
@@ -210,17 +209,24 @@ One last constant that we care about is $\gamma_{P}$, which tells us how the ave
 For 2-choice rules,
 \[
 	\p_{t}{\ang{s}_{P}} = 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} - \ang{s^2}_{\phi_1}\zeta_2(S) - \ang{s^2}_{\phi_2}\zeta_1(S).
-\] 
+\]
 \end{prop}
 \begin{proof}
-	\warn{Generalize this?}
+	This follows from our expression for $\p_{t}{P(s)} $ and from \Cref{zeta}.
+	\begin{align*}
+		\p_{t}{\ang{s}_{P}} &= \sum_s s \p_{t}{P(s)} \\
+				    &= \sum_s s^2 \sum_{u+v=s}\phi_1(u)\phi_2(v) - \sum_s s^2 \phi_1(s) - \sum_s s^2 \phi_2(s) \\
+				    &= \sum_{u}\sum_{v} (u+v)^2\phi_1(u) \phi_2(v) - \ang{s^2}_{\phi_1}-\ang{s^2}_{\phi_2} \\
+				    &= \ang{s^2}_{\phi_1}\ang{1}_{\phi_2} + 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} + \ang{1}_{\phi_1}\ang{s^2}_{\phi_2}- \ang{s^2}_{\phi_1}-\ang{s^2}_{\phi_2} \\
+				    &= 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} + \ang{s^2}_{\phi_1}(\ang{1}_{\phi_2} - 1) + \ang{s^2}_{\phi_2}(\ang{1}_{\phi_1}-1) \\
+				    &= 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} - \ang{s^2}_{\phi_1}\zeta_2(S) - \ang{s^2}_{\phi_2}\zeta_1(S).
+	\end{align*}
 \end{proof}
 
-\warn{Check that the three dominating terms scale uniformly... although they definitely should.}
-This gives us the system
+Now the three terms in this expression for $\p_{t}{\ang{s}_{P}} $ all have order $F_1(\beta)+F_2(\beta) - 2/\sigma$. This gives us the system
 \[
 	-\gamma_{P}-1 \quad=\quad -\gamma_{\phi_1}-\gamma_{\phi_2} \quad=\quad -\gamma_{\phi_1}-\frac{1}{\sigma} +F_2(\beta) \quad=\quad -\gamma_{\phi_2}-\frac{1}{\sigma} + F_1(\beta).
-\] 
+\]
 Using (12)-(14), this system gives us
 \begin{equation}
 	\gamma_{P} = F_1(\beta)+F_2(\beta) - 2\beta + 1.
@@ -228,38 +234,10 @@ Using (12)-(14), this system gives us
 Based on (12), we see
 \[
 \gamma_{P} = \frac{1}{\sigma} -\beta,
-\] which coincidentally agrees with (6) and (7) (with $a=b=1$).
-
-\warn{Is it possible to get similar statements for all $\gamma_{m}$?}
-
-\begin{ex}[da Costa]
-	Since $F_1(\beta) = F_2(\beta) = \beta m$, we have $\gamma_{P}=2(m-1)\beta+1$.
-\end{ex}
-
-Finally, using the identity $\beta = (\tau-2)/\sigma$, we get
+\] which coincidentally agrees with (6) and (7) (with $a=b=1$). Finally, using the identity $\beta = (\tau-2)/\sigma$, we get
 \begin{equation}
 	\tau = \frac{\beta}{F_1(\beta)+F_2(\beta)-\beta+1} +2.
 \end{equation}
-
-%-------------------
-% Summary
-%-------------------
-\subsection{Summary}
-
-The important equations for general 2-choice rules are
-\begin{align*}
-	\p_{t}{P(s)} &= s \sum_{u+v=s} \phi_1(u) \phi_1(v) - s \phi_1(s) - s\phi_2(s),\\
-	\p_{t}{S} &= \ang{s}_{\phi_1}\left( 1-\ang{1}_{\phi_2} \right) + \ang{s}_{\phi_2}\left( 1-\ang{1}_{\phi_1} \right),\\
-	\p_{t}{\ang{s}_{P}} &= 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} - \ang{s^2}_{\phi_1}\zeta_2(S) - \ang{s^2}_{\phi_2}\zeta_1(S),
-\end{align*}
-and the scaling relations are
-\begin{align*}
-	\gamma_{\phi_1} &= F_2(\beta) - \beta+1,\\
-	\gamma_{\phi_2} &= F_1(\beta)-\beta+1,\\
-	\gamma_{P} &= F_1(\beta) + F_2(\beta)-2\beta+1,\\
-	\frac{1}{\sigma} &= F_1(\beta)+F_2(\beta)-\beta+1,\\
-	\tau &= \frac{\beta}{F_1(\beta)+F_2(\beta)-\beta+1} +2.
-\end{align*}
 
 %-------------------
 % Results for Minimizing 2-Choice Rules
@@ -280,24 +258,66 @@ and the scaling relations are
         \tau &= \frac{\beta}{1+(a+b-1)\beta} +2.
 \end{align*}
 
-Suppose that $a=1$, then $\gamma_b=1$, no matter what $b$ is. A symmetric statement holds if $b=1$ instead. This matches what we saw with the adjacent edge rule, and reveals a somewhat surprising (at least to me) relationship. Here are some more scattered thoughts:
+Suppose that $a=1$, then $\gamma_b=1$, no matter what $b$ is. A symmetric statement holds if $b=1$ instead. We also see that unless we are using the \ER rule, $\gamma_{P}$ will always have a dependence on $\beta$. Finally, $\sigma$ and $\tau$ will always depend on $\beta$, no matter the $a$ and $b$.
+
+%--------------------------------------------------------------------------------
+% \ER
+%--------------------------------------------------------------------------------
+\section{\ER}
+
+The \ER rule is the simplest of all the 2-choice rules. For each group, simply pick one vertex at random to be the group representative. Thus an equivalent way of defining the \ER rule is to add one of the $\binom{n}{2}$ possible edges in the graph at random at each time step.
+
+It is clear that \ER is both minimizing and symmetric, so plugging in $a=b=1$ into the scaling relations from the previous section gives
+\begin{align*}
+	\gamma_{P} &= 1,\\
+	\frac{1}{\sigma} &= 1 + \beta,\\
+	\tau &= \frac{\beta}{1+\beta} +2.
+\end{align*}
+With such a simple rule, we can in fact determine much more.
+\warn{talk about $\beta=1$.}
+
+Thus the scaling relations for \ER are
+\begin{align*}
+	\gamma_{P} &= 1,\\
+	\frac{1}{\sigma} &= 2,\\
+	\tau &= 5/2.
+\end{align*}
+A critical assumption of this work was the scaling assumption, and for \ER, we can find an explicit bound on the size of the \textit{scaling window}, the region where the scaling assumption is accurate.
+
+\begin{thrm}[]
+	In the limit as $s\to \infty$, \warn{finish...}
+\end{thrm}
+\begin{proof}
+We use the following two relationships, which hold for symmetric minimizing 2-choice rules when $t < t_c$ and $s$ is large: \warn{where did they come from?}
 \begin{itemize}
-        \item Unless we're using \ER, $\gamma_{P}$ will always have a dependence on $\beta$.
-        \item $\sigma$ and $\tau$ will always depend on $\beta$.
+        \item $P(x) = \delta^{(\tau-1)/\sigma} \tilde{f}(x \delta^{1/\sigma})$;
+	\item $\tilde{f}(x) \propto x^{\lambda} \exp\left( -Cx^{1 + \log_2 m} \right)$, where $\lambda = (1+\log_2 m)\left( 1 + \frac{1}{4m-2}  \right)-\frac{2m}{2m-1} $;
 \end{itemize}
-So in summary, if neither of our groups has size 1, we can't know \textit{any} of the critical exponents until we've calculated $\beta$, which stinks.
+where $m$ is the group size. In the case of \ER, we know $m=1$, $\tau=5/2$, and $1/\sigma = 2$, so these reduce to
+\[
+	P(x) = \tilde{C} \delta^{2} x^{-1/2} \exp\left( -Cx \delta^{2} \right),
+\] 
+where $ \tilde{C}$ is the constant of propotionality from $\tilde{f}$. To clean up notation, we use the shorthand $\mathcal{E}_x := \exp\left( -C x \delta^{2} \right)$. Also note that $\delta = t_c-t$ when $t < t_c$, so $\p_{t}{\delta} =-1$. With these observations, we can begin the computation. When $s$ is large, we know $P$ satisfies the ODE \warn{(switching over to integrals...)}
+\begin{align*}
+        \p_{t}{P}(s) &= \frac{s}{2} \int_{0}^{s} P(u)P(s-u)\;du - sP(s) \\
+	\p_{t}\left\{ \tilde{C} \delta^{2}s^{-1/2}\mathcal{E}_{s} \right\} &= \frac{s}{2} \int_{0}^{s} \tilde{C}^{2}\delta^{4}(su-u^2)^{-1/2} \mathcal{E}_{u}\mathcal{E}_{s-u} \; du \quad-\quad \tilde{C}\delta^{2}s^{1/2}\mathcal{E}_{s} \\
+	\tilde{C} \left[ 2\delta^{3}Cs^{1/2} \mathcal{E}_s - 2\delta s^{-1/2} \mathcal{E}_{s} \right] &= \frac{s}{2} \int_{0}^{s} \tilde{C}^{2}\delta^{4}(su-u^2)^{-1/2} \mathcal{E}_{s} \; du \quad-\quad \tilde{C}\delta^{2}s^{1/2}\mathcal{E}_{s} \\
+	2\delta^{2}Cs^{1/2} - 2s^{-1/2} &= \frac{1}{2} s \tilde{C} \delta^{3} \int_{0}^{s} (su-u^{2})^{-1/2}\;du \quad-\quad \delta s^{1/2}.
+	\intertext{\warn{integral goes to $\pi$ as $s\to \infty$.} Thus in the limit as $s\to \infty$, this becomes}
+	2\delta^{2}Cs^{1/2} - 2s^{-1/2} &= \frac{1}{2} s \tilde{C} \delta^{3} \pi - \delta s^{1/2}.
+	\intertext{Note that the two terms on the left hand side also go to zero in the limit as $s\to \infty$, so this is really}
+	\frac{1}{2} s \tilde{C} \delta^{3} \pi &= \delta s^{1/2} \\
+	\delta^{2} &= \frac{2}{s^{-1/2} \tilde{C} \pi} \\
+	\delta &= \Theta( s^{-1/4} ).
+\end{align*}
+\end{proof}
 
 %--------------------------------------------------------------------------------
 % Limiting Behavior of 2-Choice Rules
 %--------------------------------------------------------------------------------
 \section{Limiting Behavior of 2-Choice Rules}
 
-%-------------------
-% Symmetric Rules
-%-------------------
-\subsection{Symmetric Rules}
-
-Suppose $\mathcal{R}$ is a symmetric 2-choice rule with induced coefficient map $F$, then its scaling relations are
+We now briefly discuss the behavior of the critical exponents in the limit as $a$ and $b$ grow very large. Suppose $\mathcal{R}$ is a symmetric 2-choice rule with induced coefficient map $F$, then its scaling relations are
 \begin{align*}
 	\gamma_{\phi_1} = \gamma_{\phi_2} &= F(\beta)-\beta+1,\\
 	\gamma_{P} &= 2F(\beta) - 2\beta+1,\\
@@ -306,6 +326,7 @@ Suppose $\mathcal{R}$ is a symmetric 2-choice rule with induced coefficient map 
 \end{align*}
 
 \begin{prop}[]
+	\label{symm-limits}
 	Suppose we have a symmetric 2-choice rule $\mathcal{R}$ with induced coefficient function $F$. If $F(\beta) \to 0$ as $a,b \to \infty$, then the scaling coefficients for $\mathcal{R}$ have limits
 	\begin{align*}
 		\gamma_{\phi_1} = \gamma_{\phi_2} = \gamma_{P} = \frac{1}{\sigma} &= 1,\\
@@ -317,52 +338,64 @@ Suppose $\mathcal{R}$ is a symmetric 2-choice rule with induced coefficient map 
 \end{proof}
 
 \begin{thrm}[]
-	\label{thrm:m-beta-0}
-$a \beta, b \beta \to 0$, i.e. any minimizing 2-choice rule's scaling coefficients have the above limits.
+	\label{m-beta-0}
+	Suppose $\mathcal{R}$ is a minimizing 2-choice rule with group sizes $a$ and $b$. Then $a\beta \to 0$ and $b\beta\to 0$, i.e. the limits in \Cref{symm-limits} apply.
 \end{thrm}
 \begin{proof}
-	\warn{Do this.}
+	\warn{do this.}
 \end{proof}
 
 %--------------------------------------------------------------------------------
-% Variance
+% Cluster Size Variance
 %--------------------------------------------------------------------------------
-\section{Variance}
+\section{Cluster Size Variance}
 
-The variance of the cluster size (at a fixed time) is $\var_i(s) = \ang{s^2}_{\phi_i} - \ang{s}^2_{\phi_i}$. For 2-choice rules, we can use our scaling relations to get that near criticality,
+The variance of the cluster size (at a fixed time) is, by definition, $\var_i(s) = \ang{s^2}_{\phi_i} - \ang{s}^2_{\phi_i}$. For 2-choice rules, we can use our scaling relations to put this solely in terms of $\beta$ and the induced coefficient maps, at least near criticality.
 \begin{align*}
-	\var_i(s) &= \delta^{-[\gamma_{\phi_i} + 1/\sigma]} - \delta^{-2\gamma_{\phi_i}} \\
+	\var_1(s) &= \delta^{-[\gamma_{\phi_1} + 1/\sigma]} - \delta^{-2\gamma_{\phi_1}} \\
 		  &= \delta^{-[F_1(\beta)+2F_2(\beta)-2\beta+2]} + \delta^{-[2F_2(\beta)-2\beta+2]}.
 \end{align*}
-Then if $F_1(\beta) \geq 0$ \warn{(which I think should be the case?)}, this is dominated by the first term. So near $t_c$, we have
+Similarly,
 \[
-	\var_i(s) \approx \delta^{-[F_1(\beta)+2F_2(\beta)-2\beta+2]}.
-\] 
+        \var_2(s) = \delta^{-[2F_1(\beta)+F_2(\beta)-2\beta+2]} + \delta^{-[2F_1(\beta)-2\beta+2]}.
+\]
+Then if $F_i(\beta) \geq 0$ for both $i$, this is dominated by the first term. So near $t_c$, we have
+\begin{align*}
+	\var_1(s) &\approx \delta^{-[F_1(\beta)+2F_2(\beta)-2\beta+2]}, \\
+	\var_2(s) &\approx \delta^{-[2F_1(\beta)+F_2(\beta)-2\beta+2]}.
+\end{align*}
+If $F_{i}(\beta)\to 0$ for both $i$, then we get the asymptotic behavior $\var_i(s) \to \delta^{-2}$. If $F_{i}(\beta) \leq 0$ for either $i$, then a similar argument with more cases gives the same limit.
 
 \begin{ex}[]
-	Suppose we're working with a minimizing 2-choice rule, then $F_1(\beta) = a \beta$ and $F_2(\beta)=b \beta$. Then
+	If $\mathcal{R}$ is a minimizing 2-choice rule, then $F_1(\beta) = a \beta$ and $F_2(\beta)=b \beta$. Then
 	\begin{align*}
 		\var_1(s) &= \delta^{(2-a-2b)\beta-2},\\
 		\var_2(s) &= \delta^{(2-2a-b)\beta-2}.
 	\end{align*}
-	By Theorem \ref{thrm:m-beta-0}, $\var_i(s) \to \delta^{-2}$ for both $i$. \warn{(I wonder if the exponent is actually $\tau$)}
+	By \Cref{m-beta-0}, $\var_i(s) \to \delta^{-2}$ for both $i$.
 \end{ex}
 
-\warn{Central limit theorem for cluster size?}
+\warn{For \ER, this comes out ot $\var(s) = \delta^{-3}$ without taking any limits, since we know $\beta=1$.}
 
 %--------------------------------------------------------------------------------
-% Ideas and Questions
+% Future Directions
 %--------------------------------------------------------------------------------
-\section{Ideas and Questions}
+\section{Future Directions}
 
 \begin{itemize}
-	\item The edge weighting idea seems very cool. If we have a graph whose vertices lie in some metric space, then we can weight them proportional to their distance from some fixed basepoint to have a stochastic process that grows ``cracks" from that base point. This seems like it would slow down percolation since the farther nodes from the basepoint are less likely to have edges added to them.
-	\item Can $F_i$ ever negate $\beta$, or does any induced map of the form $\beta \mapsto A \beta$ need $A > 0$?
-	\item Can we reformulate $F(\beta)\to 0$ in terms of $\zeta(S)$?
-	\item I don't think it's necessary to have something of the form $1-\zeta(S)$ to get the 2 dominating terms to scale uniformly, at least as long as the two unknown scaling coefficients are non-positive.
-	\item This is more of just a fun thing. It could be cool to describe different group actions on these graphs that relate to adding edges, then describe some things algebraically.
-	\item Can we give a sequence of graphs a product/coproduct structure? If we can turn a sequence of graphs into a coproduct, then that means that whatever property we're tracking has to appear in finite time.
+	\item Limiting behavior (decay rate of $\beta$, what affects the limit of $t_{c}$, etc).
+	\item Same induced coefficient maps means same sclaing behavior... how similar do two $1-\sum_s \phi(s)$'s have to be to have the same induced map?
+		\begin{itemize}
+			\item In particular, when will $1-\sum_s \phi(s) = 1-S$ (the same as \ER)?
+		\end{itemize}
+	\item If we have a graph whose vertices lie in some metric space, we can weight them proportional to their distance from some fixed basepoint to have a stochastic process that grows ``cracks" from that basepoint. This seems like it would slow down percolation since the farther nodes from the basepoint are less likely to have edges added to them.
+	\item Scaling assumption.
 \end{itemize}
+
+%--------------------------------------------------------------------------------
+% bibliography
+%--------------------------------------------------------------------------------
+\printbibliography
 
 
 \end{document}

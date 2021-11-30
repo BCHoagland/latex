@@ -4,9 +4,14 @@
 %\toggletrue{sectionheaders}
 \newcommand{\docTitle}{Stokes' Theorem on Manifolds}
 \usepackage{/Users/bradenhoagland/latex/styles/common}
-\importStyles{formal}{rainbow}{boxy}
+\importStyles{formal}{rainbow}{plain}
 
 %\renewcommand{\theenumi}{\alph{enumi}}
+
+\usepackage[
+        backend=biber,
+]{biblatex}
+\addbibresource{bib.bib}
 
 \begin{document}
 %\tableofcontents
@@ -19,10 +24,29 @@
 %--------------------------------------------------------------------------------
 \section{Introduction}
 
+In any introductory course on multivariable calculus, one will encounter standard theorems like Green's and Stokes' Theorems. Although the notation for each of these theorems is somewhat intimidating upon first glance, the general concept is the same in both: just as in the fundamental theorem of calculus, to find out how small changes in a function build up over an area, it's actually enough to analyze how the function acts on the boundary of that area.
+
+In the 1-dimensional case (the fundamental theorem of calculus), this means $f(b)-f(a)$ can be found by integrating $df$ over $[a,b]$. Note here that $\{-a,b\}$ is the oriented boundary of the interval $[a,b]$, so we can rewrite this theorem as
+\[
+	\int_{[a,b]} df = \int_{\p [a,b]} f.
+\] The situation in higher dimensions is similar, except we have to work with different notions of the derivative that take into account how much $f$ curls around each point. In 2 dimensions, this is known as Green's Theorem, and in 3 dimensions, it's the classical Stokes' Theorem. In fact, this relationship generalizes to arbitrary orientable manifolds. In the following sections, we will build up the theory of manifolds, tensors, and differential forms necessary to rigorously understand the fully generalized Stokes' Theorem.
+
 %--------------------------------------------------------------------------------
 % Manifolds
 %--------------------------------------------------------------------------------
 \section{Manifolds}
+
+To generalize Stokes' Theorem to manifolds, we'll first have to define what a manifold is. Informally speaking, a manifold is any space that looks Euclidean if you zoom in far enough, with a few extra technical conditions that make them nicer to work with.
+
+\begin{defn}[]
+	A topological space $M$ is an $n$-dimensional \textbf{manifold} if it is second countable, Hausdorff, and locally homeomorphic to $\R^{n}$. It is a \textbf{manifold with boundary} if some points have neighborhoods homeomorphic to the $n$-dimensional upper half plane $\mathbb{H}^{n} := \R^{n-1} \times \R_{\geq 0}$.
+\end{defn}
+
+We can then represent a manifold $M$ as a collection of \textbf{charts} $\left\{ (U_i, \phi_i) \right\}$, where each $U_i$ is an open subset of $M$ and each $\phi_i$ is a homeomorphism from $U$ to an open subset of either $\R^{n}$ or $\mathbb{H}^{n}$.
+
+Since we want to generalize the notion of the derivative, we'll also need to define when maps between manifolds are smooth. We say a map $f:U\to V$ between open subsets of $\R^{n}$ and $\R^{m}$ is \textbf{smooth} if each of the component functions of $f$ is infinitely differentiable. To extend this to manifolds, suppose $(U,\phi)\subset M$ and $(V,\psi) \subset N$ are charts of manifolds. Then we say that a map $g:U\to V$ is smooth if $\psi \circ g \circ \phi^{-1}$ is smooth in the Euclidean sense.
+
+One final condition we need to ensure that our maps are well-defined is for the smooth structures induced by overlapping maps to be compatible. We say that two charts $(U,\phi)$ and $(V,\psi)$ are \textbf{smoothly compatible} if either $U \isct V = \varnothing$ or $\psi \circ \phi^{-1}: \phi(U\isct V) \to \psi(U \isct V)$ is a diffeomorphism.
 
 %--------------------------------------------------------------------------------
 % Tensors
@@ -136,6 +160,92 @@ Thus given a $k$-tensor and an $\ell$-tensor on the same vector space, we can pr
 %--------------------------------------------------------------------------------
 \section{Differential Forms}
 
+A tensor is \textbf{alternating} if swapping any two inputs negates the output. A differential form is then a way of assigning an alternating tensor to each point on a manifold. To start, we'll need a way of making any tensor alternating.
+
+\begin{prop}
+Given a $k$-tensor $T$, the tensor
+\[
+	\text{Alt}(T) := \frac{1}{k!} \sum_{\sigma \in S_{k}} (\text{sign } \sigma) T(v_{\sigma(1)}, \dots, v_{\sigma(k)})
+\] is alternating.
+\end{prop}
+
+\begin{defn}[]
+A \textbf{differential $k$-form} on a manifold $M$ associates to each $p \in M$ an alternating $k$-tensor
+\[
+	\omega_p : \bigoplus_{i=1}^{k} T_{p}(M) \to \R.
+\] 
+\end{defn}
+
+Suppose we're working on a chart $U \subset M$ with coordinates $(x_1, \dots, x_n)$, then the differentials $dx_1, \dots, dx_n$ are all 1-forms. In fact, we can combine these to form a basis for all differential forms on $U$ up to degree $n$. This combination process is formalized by the wedge product.
+
+\begin{defn}[]
+	Suppose $S$ is a $k$-tensor and $T$ is an $\ell$-tensor, then their \textbf{wedge product} is the $(k+\ell)$-tensor
+\[
+	S \wedge T := \frac{(k+\ell)!}{k! \; \ell!}  \text{Alt}(S \otimes_{}T).
+\] 
+\end{defn}
+The wedge product satisfies several basic properties that are useful in computations. We list them here without proof:
+\begin{itemize}
+	\item Associativity: $(R \wedge S)\wedge T = R \wedge (S\wedge T)$;
+	\item Anticommutativity: $S \wedge T = - T \wedge S$, which implies $T \wedge T = 0$;
+	\item Homogeneity: $(\lambda S)\wedge T = S \wedge (\lambda T) = \lambda(S \wedge T)$; and
+	\item Distributivity: $(R+S)\wedge T = (R\wedge T) + (S\wedge T)$.
+\end{itemize}
+As promised, the wedge product allows us to construct any differential form on a local coordinate chart.
+\begin{thrm}[]
+	On a chart with coordinates $(x_1, \dots, x_n)$, any $k$-form $\omega$ (for $k \leq n$) can be written uniquely as
+	\[
+		\omega = \sum_{i_1 < i_2 < \cdots < i_k} \omega_{i_1, \dots, i_k} \; dx_{i_1} \wedge \cdots \wedge dx_{i_k},
+	\] where each $\omega_{i_1, \dots, i_k}$ is a scalar function.
+\end{thrm}
+It is common to see statements like the one above written in \textit{multi-index notation}, in which case it reads
+\[
+\omega = \sum_{I} \omega_I \; dx_I.
+\] 
+
+Additionally, we will usually suppress the $\wedge$ when working with $dx_i$, since it should be clear from context that we are taking their wedge product.
+
+To differentiate forms, we need a generalization of the derivative called the \textbf{exterior derivative}.
+
+\begin{defn}[]
+Suppose we have a $k$-form $\omega = \sum_{I} \omega_I \; dx_I$, then its \textbf{exterior derivative} is the $k+1$-form
+\[
+	d\omega := \sum_{I} d\omega_I \wedge dx_I,
+\] where
+\[
+d\omega_I = \sum_i \frac{\p \omega_I}{\p x_i} dx_i
+\] is the usual differential of a scalar function.
+\end{defn}
+
+The exterior derivative has the following useful properties:
+\begin{itemize}
+	\item $d(\omega_1+\omega_2) = d\omega_1 + d\omega_2$;
+	\item if $\omega_1$ is a $k$-form, then $d(\omega_1\wedge \omega_2) = d\omega_1 \wedge \omega_2 + (-1)^{k}\omega_1 \wedge d\omega_2$; and
+	\item $d^2 = 0$.
+\end{itemize}
+
+Finally, we need a notion of integration of forms. To do this, we'll need to define partitions of unity.
+
+\begin{defn}[]
+A \textbf{partition of unity} on $M$ is a collection $\left\{ \phi_i \right\}_{i}$ of continuous maps $\phi_i : M \to \R$ such that
+\begin{enumerate}
+	\item $\phi_i \geq 0$ for all $i$;
+	\item every $p \in M$ has a neighborhood on which all but finitely many of the $\phi_i$ are 0;
+	\item Each $\phi_i$ is 0 except on some closed set contained in one of the charts $U$ of $M$; and
+	\item For all $p \in M$, we have $\sum_i \phi_i (p) = 1$.
+\end{enumerate}
+\end{defn}
+
+Given a partition of unity of $M$, we can define what it means to integrate a differential form $\omega$ over $M$.
+
+\begin{defn}[]
+Suppose $M$ is a manifold with charts $(U_i, \phi_i)$, then take a partition of unity $\{\psi_i\}_i$. We define the intergral of $\omega$ over $M$ as
+\[
+\int_{M} \omega := \sum_i \int_{M} \psi_i \omega.
+\] 
+\end{defn}
+Importantly, this integral does not depend on the choice of charts or the choice of the partition of unity.
+
 %--------------------------------------------------------------------------------
 % Stokes' Theorem
 %--------------------------------------------------------------------------------
@@ -144,13 +254,13 @@ Thus given a $k$-tensor and an $\ell$-tensor on the same vector space, we can pr
 With the theory of manifolds and differential forms built up, we can finally state and prove the generalized Stokes' Theorem.
 
 \begin{thrm}[Stokes' Theorem]
-	Let $M$ be an oriented $n$-manifold with boundary, and let $\omega$ be an $(n-1)$-form with compact support on $M$. Then
+	Let $M$ be an oriented $n$-manifold, and let $\omega$ be an $(n-1)$-form with compact support on $M$. Then
 	\[
 	\int_{M} d\omega = \int_{\p M}\omega.
 	\] 
 \end{thrm}
 \begin{proof}
-	We will first prove the theorem when $M = \mathbb{H}^{n}$, the $n$-dimensional upper half-plane. Then we will extend the result to when $M$ is a general manifold with boundary, i.e. every point in $M$ has a neighborhood homeomorphic to $\mathbb{H}^{n}$.
+	We will first prove the theorem when $M = \mathbb{H}^{n}$, the $n$-dimensional upper half-plane. Then we will extend the result to when $M$ is a general manifold (potentially with boundary).
 
 	Since $\omega$ has compact support on $M$, we can find $R > 0$ such that $A:= [-R,R] \times \cdots \times [-R,R] \times [0,R]$ contains $\text{supp}(\omega)$ (strictly so in the first $n-1$ dimensions). Additionally, since $\omega$ is an $(n-1)$-form, we can write $\omega$ locally on any patch $U \subset M$ with coordinates $(x_1, \dots, x_n)$ as
 	\[
@@ -165,16 +275,14 @@ With the theory of manifolds and differential forms built up, we can finally sta
 	\end{align*}
 	Since $\omega$ is identically 0 on $\mathbb{H}^{n}-A$, we know $d\omega = 0$ on $\mathbb{H}^{n} - A$. Thus integrating $d\omega$ over $\mathbb{H}^{n}$ gives
 	\begin{align*}
-		\int_{\mathbb{H}^{n}} d\omega &= \int_{\mathbb{H}^{n}} \sum_{i=1}^{n} (-1)^{(i-1)} \frac{\p \omega_i}{\p x_i} \; dx_1 \cdots dx_n \\
-					      &= \sum_{i=1}^{n} (-1)^{(i-1)} \int_{A} \frac{\p \omega_i}{\p x_i} \; dx_1 \cdots dx_n \\
+		\int_{\mathbb{H}^{n}} d\omega &= \sum_{i=1}^{n} (-1)^{(i-1)} \int_{A} \frac{\p \omega_i}{\p x_i} \; dx_1 \cdots dx_n \\
 					      &= \sum_{i=1}^{n} (-1)^{(i-1)} \int_{0}^{R} \int_{-R}^{R} \cdots \int_{-R}^{R} \frac{\p \omega_i}{\p x_i} \; dx_1 \cdots dx_n.
 	\end{align*}
-	\warn{When can you exchange $\sum$ and $\int$?}
 	We can simplify this expression further, though. Since the first $n-1$ dimensions of $\text{supp}(\omega)$ are strictly contained in $A$, we have $\omega_i(x)=0$ whenever any coordinate of $x$ has absolute value at least $R$. Thus
 	\begin{align*}
 		\int_{0}^{R} \int_{-R}^{R} \cdots \int_{-R}^{R} \frac{\p \omega_i}{\p x_i} \; dx_1 \cdots dx_n &= \int_{0}^{R} \int_{-R}^{R} \cdots \int_{-R}^{R} \big[\omega_i\big]_{x_i=-R}^{x_i=R} \; dx_1 \cdots dx_{n-1} \\
-													       &= \int_{0}^{R} \int_{-R}^{R} \cdots \int_{-R}^{R} 0 \; dx_1 \cdots dx_{n-1} \\
-								&= 0.
+		&= \int_{0}^{R} \int_{-R}^{R} \cdots \int_{-R}^{R} 0 \; dx_1 \cdots dx_{n-1} \\
+		&= 0. \tag{$\star$}
 	\end{align*}
 	We can then simplify $\int_{\mathbb{H}^{n}} d\omega$ to
 	\begin{align*}
@@ -186,12 +294,37 @@ With the theory of manifolds and differential forms built up, we can finally sta
 		\int_{\p \mathbb{H}^{n}} \omega &= \sum_{i=1}^{n} \int_{A \isct \p \mathbb{H}^{n}} \omega_i \; dx_1 \cdots \widehat{dx_i} \cdots dx_n.
 		\intertext{Now on $\p \mathbb{H}^{n}$, the $n$-th coordinate $x_{n}$ is identically 0, so $dx_n=0$. Thus the only nonzero term in the above sum is when $i=n$. This then becomes}
 						&= \int_{A \isct \p \mathbb{H}^{n}} \omega_n(x_1, \dots, x_{n-1}, 0) \; dx_1 \cdots dx_{n-1} \\
-						&= {\color{red}(-1)^{n}} \int_{-R}^{R} \cdots \int_{-R}^{R} \omega_n(x_1, \dots, x_{n-1}, 0) \; dx_1 \cdots dx_{n-1} \\
+						&= (-1)^{n} \int_{-R}^{R} \cdots \int_{-R}^{R} \omega_n(x_1, \dots, x_{n-1}, 0) \; dx_1 \cdots dx_{n-1} \\
 						&= \int_{\mathbb{H}^{n}} d\omega.
 	\end{align*}
-	Thus Stokes' Theorem holds in the special case $M = \mathbb{H}^{n}$. \warn{Now we must extend to general oriented $n$-manifolds with boundary.}
+	Thus Stokes' Theorem holds in the special case $M = \mathbb{H}^{n}$. Now suppose $M = \R^{n}$. This case is much simpler, as we've already done most of the work. Recall the argument used in the $(\star)$ computation. We used a covering $[-R,R] \times \cdots \times [-R,R] \times [0,R]$ then, but since we're working in $\R^{n}$ now, we can use a covering of the form $[-R,R] \times \cdots \times [-R,R]$. Then the argument in $(\star)$ applies to all $i$, so
+	\[
+		\int_{\R^{n}} d\omega \quad=\quad \sum_{i=1}^{n} (-1)^{(i-1)} \int_{-R}^{R} \cdots \int_{-R}^{R} \frac{\p \omega_i}{\p x_i} \; dx_1 \cdots dx_n \quad=\quad 0.
+	\]
+	And since $\R^{n}$ has no boundary, $\int_{\p \R^{n}} \omega = 0 = \int_{\R^{n}} d\omega$. These past two special cases show that the theorem holds for any neighborhood of any manifold. Now we must extend these results to the entirety of any manifold.
+
+	Since $\text{supp}(\omega)$ is compact, we can find a finite open cover $\left\{ (U_i,\phi_i) \right\}_{i}$ of it. Now take a partition of unity $\left\{ \psi_i \right\}_i$. Then since we know the theorem holds on any neighborhood of $M$, we have
+	\begin{align*}
+		\int_{\p M} \omega &= \sum_i \int_{\p M} \psi_i \omega \\
+				   &= \sum_i \int_{M} d(\psi_i \omega) \\
+				   &= \sum_i \int_{M} \left( d\psi_i \wedge \omega + \psi_i \; d\omega \right).
+				   \intertext{By the linearity of $d$ and using the fact that $\sum_i \psi_i = 1$, this becomes}
+				   &= \int_{M} d\left( \sum_i \psi_i \right) \wedge \omega + \int_{M} \left( \sum_i \psi_i \right) \;d\omega \\
+				   &= \int_{M} 0 \wedge \omega + \int_{M} d\omega \\
+				   &= \int_{M} d\omega.
+	\end{align*}
+	Thus Stokes' Theorem holds for any orientable manifold.
 \end{proof}
 
+%--------------------------------------------------------------------------------
+% Bibliography
+%--------------------------------------------------------------------------------
+\nocite{weller}
+\nocite{lecture}
+\nocite{presman}
+\nocite{unity}
+\nocite{tao}
 
+\printbibliography
 
 \end{document}
