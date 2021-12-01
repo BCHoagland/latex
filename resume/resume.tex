@@ -1,0 +1,167 @@
+\documentclass[10pt]{article}
+
+\usepackage[
+        letterpaper,
+        left=0.5in,right=0.5in,top=0.1in,bottom=0.1in,
+        includehead,includefoot
+]{geometry}
+\usepackage{fontspec}
+\usepackage{float}
+\usepackage{xcolor, xspace}
+\usepackage{hyperref}
+%\usepackage{showframe}
+\usepackage{paralist}
+
+%--------------------------------------------------------------------------------
+% Links
+%--------------------------------------------------------------------------------
+\hypersetup{
+    colorlinks,
+    citecolor={blue!50!black},
+    filecolor=black,
+    linkcolor=black,
+    urlcolor={blue!80!black}
+}
+
+%--------------------------------------------------------------------------------
+% Commands
+%--------------------------------------------------------------------------------
+\renewcommand{\v}{\vspace{2mm}}
+\newcommand{\warn}[1]{{\color{red}#1}}
+
+\DeclareRobustCommand{\se}[1]{%
+	\vspace{5mm}{\fontspec{Baskerville}\addfontfeature{LetterSpace=10.0}\large\MakeUppercase{\textbf{#1}}\vspace{2mm}}
+}
+\DeclareRobustCommand{\subse}[1]{%
+	\vspace{3mm}{\fontspec{Baskerville}\addfontfeature{LetterSpace=10.0}\large\textit{#1}\vspace{2mm}}
+}
+
+%--------------------------------------------------------------------------------
+% Styling
+%--------------------------------------------------------------------------------
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+%--------------------------------------------------------------------------------
+% THE ACTUAL DOCUMENT
+%--------------------------------------------------------------------------------
+\begin{document}
+
+\begin{center}
+	{\huge\textbf{Braden Hoagland}} \\
+	\vspace{3mm}
+	Email: \url{braden.hoagland@duke.edu} \qquad\qquad GitHub: \url{https://github.com/BCHoagland}
+\end{center}
+
+\rule{\textwidth}{0.8pt}			% default width = 0.4pt
+
+%--------------------------------------------------------------------------------
+% Education
+%--------------------------------------------------------------------------------
+\se{Education}
+
+\textbf{Duke University (expected May 2022)}
+
+GPA: 3.98/4.0, B.S. Mathematics with Distinction
+
+\v
+\textbf{Undergraduate courses:} Advanced Probability, Data Structures and Algorithms, Dynamic Graph Percolation (Indepenent Research Study), Differential Geometry, Geometry, Mathematical Numerical Analysis, Mathematical Disease Modeling, Topology, Topological Data Analysis
+
+\v
+\textbf{Graduate courses:} Algebraic Structures, Algebraic Topology, Real Analysis, Theory and Algorithms for Machine Learning
+
+%--------------------------------------------------------------------------------
+% Work Experience
+%--------------------------------------------------------------------------------
+\se{Work Experience}
+
+% --------------------
+\v
+\textbf{Duke Program for Research for Undergraduates (PRUV)} \hfill \textit{Summer 2021}
+
+\textit{Paid Student Researcher}
+\begin{compactitem}
+	\item Collaborated with Professor Rick Durrett, using \href{https://bhoagsbargrill.com/latex/public/ppdg.pdf}{scaling theory} to determine percolation behavior of graphs in which edges are added stochastically.
+	\item Computed explicit quantities and variance estimates for a general class of edge selection processes called two-choice rules.
+\end{compactitem}
+
+% --------------------
+\v
+\textbf{MKGCS, Inc.} \hfill \textit{Summer 2020 - Spring 2021}
+
+\textit{Data Analyst} 
+\begin{compactitem}
+	\item Created a predictive Markov model of U.S. Army Reserve retention, promotion, and relocation in order to forecast personnel changes and mission readiness status.
+	\item Used model to consult the U.S. Army G-3 about future batallion deployments.
+\end{compactitem}
+
+% --------------------
+\v
+\textbf{Decipher Technology Studios} \hfill \textit{Summer 2018 - Summer 2019}
+
+\textit{Machine Learning Intern}
+\begin{compactitem}
+	\item Developed a reinforcement learning pipeline to predict and manage cloud microservice performance.
+\end{compactitem}
+
+%--------------------------------------------------------------------------------
+% Projects
+%--------------------------------------------------------------------------------
+\se{Projects}
+
+\vspace{-3mm}
+
+%-------------------
+% Mathematics
+%-------------------
+\subse{Mathematics}
+
+\textbf{Spectral Sequences:}
+\begin{compactitem}
+\item \href{https://bhoagsbargrill.com/latex/public/ss.pdf}{Constructed} spectral sequences from exact couples and filtered complexes of modules.
+	\item Derived convergence results for the case of filtered complexes and applied them to the calculation of homology groups.
+\end{compactitem}
+
+\v
+\textbf{The Natural Gradient and Reinforcement Learning:}
+\begin{compactitem}
+\item \href{https://bhoagsbargrill.com/latex/public/ng.pdf}{Derived} the natural gradient for metric spaces, realizing it as the Fisher Information Matrix in probability space.
+	\item Applied the natural gradient to policy improvement in reinforcement learning, empirically showing greater efficiency.
+\end{compactitem}
+
+%-------------------
+% Machine Learning
+%-------------------
+\subse{Machine Learning}
+
+\textbf{ChaRLes:}
+\begin{compactitem}
+	\item Created a reinforcement learning library for both discrete and continuous simulated environments.
+	\item Implemented deep Q-networks, policy gradients, advantage actor-critic, proximal policy optimization, (twin dueling) deep deterministic policy gradient, and soft actor-critic.
+\end{compactitem}
+
+%--------------------
+\v
+\textbf{Gandalf:}
+\begin{compactitem}
+	\item Designed various generative adversarial network schemes to create generative models for custom datasets.
+\end{compactitem}
+
+%--------------------
+\v
+\textbf{Glados:}
+\begin{compactitem}
+	\item Formulated a deep recurrent neural network to generate artificial extensions of sample text.
+\end{compactitem}
+
+%--------------------------------------------------------------------------------
+% Skills
+%--------------------------------------------------------------------------------
+\se{Skills}
+
+\textbf{Mathematical:} Category theory, homological algebra, probabilistic modeling and analysis, topology and geometry
+
+\textbf{Programming:} Git, HTML, Javascript, MATLAB, Python, React.js
+
+
+\end{document}

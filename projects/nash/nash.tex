@@ -4,9 +4,14 @@
 %\toggletrue{sectionheaders}
 \newcommand{\docTitle}{Nash's Existence Theorem}
 \usepackage{/Users/bradenhoagland/latex/styles/common}
-\importStyles{formal}{rainbow}{boxy}
+\importStyles{formal}{rainbow}{plain}
 
 %\renewcommand{\theenumi}{\alph{enumi}}
+
+\usepackage[
+        backend=biber,
+]{biblatex}
+\addbibresource{bib.bib}
 
 \begin{document}
 %\tableofcontents
@@ -27,7 +32,7 @@ A \textbf{pure strategy} is simply an element of $\mathcal{S}_k$; before the gam
 \[
         \mathcal{M} := \left\{ p \in \R^{n} \;\Bigg|\; \sum_i p_i = 1 \text{ and } p_i \geq 0 \text{ for all } i \right\}.
 \] 
-Strictly speaking, we should be defining $\mathcal{M}$ explicitly in terms of its related $\mathcal{S}_{k}$ and its number of strategies $n$, but this should be clear from context. Note that $\mathcal{S}_k$ injects into $\mathcal{M}$ under the map sending $i$ to the $i$-th standard basis element of $\R^{n}$, so unless otherwise specified, strategies are assumed to be mixed.
+Strictly speaking, we should be defining $\mathcal{M}$ explicitly in terms of its related $\mathcal{S}_{k}$ and its number of strategies $n$, but this should usually be clear from context. If it's important, I'll use the notation $\mathcal{M}_{k}$ to denote the mixed strategy space of the $k$-th player. Note that $\mathcal{S}_k$ injects into $\mathcal{M}$ under the map sending $i$ to the $i$-th standard basis element of $\R^{n}$, so unless otherwise specified, strategies are assumed to be mixed.
 
 A \textbf{non-cooperative} game is one in which none of the players can make binding agreements toward a common goal (although \textit{non}-binding agreements with the possibility of subterfuge would certainly be allowed). Throughout this paper, we will be assuming that all games are non-cooperative.
 
@@ -73,9 +78,25 @@ Suppose you're playing a game and all your opponents' strategies are fixed, then
         \]
 \end{defn}
 
-\warn{Other stuff here... talk about lack of uniqueness and why they need not exist without mixed strategies.}
+Nash equilibria, if they exist, need not be unique. To see this, consider the 2-player game given by the following payoff matrices
+\[
+A=
+\begin{pmatrix}
+	10&0\\
+	0&20
+\end{pmatrix}
+\qquad\text{and}\qquad
+B=
+\begin{pmatrix}
+	10&0\\
+	0&20
+\end{pmatrix}.
+\] 
+For this game, the pairs of pure strategies $(1,1)$ and $(2,2)$ are both Nash equilibria. Thus a Nash equilibrium is more like a local optimum rather than a global one.
 
-However, if mixed strategies \textit{are} allowed, then it turns out that at least one Nash equilibrium exists for any game with a finite number of players, each with a finite number of pure strategies. This is exactly the statement of Nash's existence theorem.
+Additionally, to see why we care about mixed strategies in the first place, we can consider the classic game Rock, Paper, Scissors. Suppose player 2 has chosen the ``rock" strategy, the only strategy that player 1 could possibly pick to form a Nash equilibrium is the ``paper" strategy, as the other two strategies underperform it. But then if player 1 has fixed the ``paper" strategy, player 2 could only possibly pick the ``scissors" strategy to form a Nash equilibrium, which wasn't what they started with! By similar logic for the other cases, we see that there is no possible Nash equilibrium of pure strategies for this game.
+
+However, if mixed strategies are allowed, then it turns out that at least one Nash equilibrium exists for any game with a finite number of players, each with a finite number of pure strategies. This is exactly the statement of Nash's existence theorem.
 
 \begin{thrm}[Nash's Existence Theorem]
 	Suppose a game has a finite number of players, each with a finite number of pure strategies. If mixed strategies are allowed, then this game has a (potentially non-unique) Nash equilibrium.
@@ -106,6 +127,8 @@ the homology of a point is
 	\end{cases}
 \] and the fact that homology is homotopy invariant. This last fact means that any contractible space has the same homology as a point.
 
+\pagebreak
+
 \begin{lem}
 	\label{no-retraction}
 There is no retraction $r:D^{n}\to \p D^{n} = S^{n-1}$ for $n \geq 1$.
@@ -130,7 +153,7 @@ There is no retraction $r:D^{n}\to \p D^{n} = S^{n-1}$ for $n \geq 1$.
 	Suppose $X \cong D^{n}$ for $n \geq 1$, then any continuous map $f:X\to X$ has a fixed point.
 \end{thrm}
 \begin{proof}
-	We will first treat the case when $X = D^{n}$ for some $n \geq 1$. Suppose that there is some continuous map $f:X\to X$ that doesn't have any fixed points. Then we can define a retraction $r:X\to \p X$ as follows: take the ray starting at $f(x)$ and passing through $x$, then $r(x)$ is the point at which this ray intersects $\p X$. But by lemma \Cref{no-retraction}, no such retraction can exist. Thus by contradiction, $f$ cannot have a fixed point.
+	We will first treat the case when $X = D^{n}$ for some $n \geq 1$. Suppose that there is some continuous map $f:D^{n}\to D^{n}$ that doesn't have any fixed points. Then we can define a retraction $r:D^{n}\to \p D^{n}$ as follows: take the ray starting at $f(x)$ and passing through $x$, then $r(x)$ is the point at which this ray intersects $\p D^{n}$. But by lemma \Cref{no-retraction}, no such retraction can exist. Thus by contradiction, $f$ cannot have a fixed point.
 
 	Now we will extend this result to the case $X \cong D^{n}$ via some isomorphism $\phi$. Suppose $f:X\to X$ is continuous, then consider the following composition of maps.
 	\[
@@ -151,14 +174,14 @@ To begin, recall that the space of all mixed strategies for a player with pure s
 \[
 	\mathcal{M} = \left\{ p \in \R^{n} \;\big|\; \sum_i p_i = 1 \text{ and } p_i \geq 0 \text{ for all } i \right\}.
 \] 
-From a geometric perspective, this is exactly the standard $(n-1)$-simplex $\Delta^{n-1}$, so every mixed strategy can be thought of as a point on a standard simplex. An important consequence of this is that we can apply Brouwer's fixed point theorem to any endomorphism on $\mathcal{M}$, as formalized by the following lemma.
+From a geometric perspective, this is exactly the standard $(n-1)$-simplex $\Delta^{n-1}$, so every mixed strategy can be thought of as a point on a standard simplex. An important consequence of this is that we can apply Brouwer's fixed point theorem to any endomorphism on $\mathcal{M}$. In fact, we can actually apply it to any finite product of mixed strategy spaces.
 
 \begin{lem}
 	\label{mixed-strat-fixed-pt}
-	Any continuous map $\mathcal{M}\to \mathcal{M}$ has a fixed point.
+	Any continuous map $\prod_{k=1}^{\ell}\mathcal{M}_k \to \prod_{k=1}^{\ell}\mathcal{M}_k$ has a fixed point.
 \end{lem}
 \begin{proof}
-	It is a well known fact that $\Delta^{k}\cong D^{k}$ for all $k$. Then since $\mathcal{M}=\Delta^{n-1}$, we can simply apply Brouwer's fixed point theorem.
+	Since each $\mathcal{M}_{k}$ is a standard simplex, the proof of Corollary 22 in \cite{tutorial} shows that $\prod_{k=1}^{\ell}\mathcal{M}_{k}$ is itself homeomorphic to a standard simplex. It is well known that $\Delta^{n} \cong D^{n}$ for all $n$, so we can simply apply Brouwer's fixed point theorem.
 \end{proof}
 
 %--------------------------------------------------------------------------------
@@ -168,9 +191,9 @@ From a geometric perspective, this is exactly the standard $(n-1)$-simplex $\Del
 
 We now have all the necessary machinery to prove Nash's existence theorem for 2-player games. The idea is quite straightforward:
 \begin{itemize}
-	\item First, we define an endomorphism on $\mathcal{M}$ that aims to increase the expected payoff a given strategy when the opponent's strategy is fixed.
-	\item We then apply \Cref{mixed-strat-fixed-pt} to obtain a maximally optimized strategy.
-	\item We do this for both players, obtaining two strategies that we can check form a Nash equilibrium.
+	\item First, we define an endomorphism on $\mathcal{M}_1 \times \mathcal{M}_2$ that aims to simultaneously improve both players' strategies (assuming the other stays fixed).
+	\item We then apply \Cref{mixed-strat-fixed-pt} to obtain a pair of maximally optimized strategies.
+	\item We then check that this pair of strategies forms a Nash equilibrium.
 \end{itemize}
 Before beginning the proof, it should be clear how to expand this general concept to the case of any finite number of players. As should become obvious in the proof of the 2-player case, the only thing that really changes in the argument is how unwieldy the notation is.
 
@@ -178,22 +201,22 @@ Before beginning the proof, it should be clear how to expand this general concep
 	Any finite 2-player game has a Nash equilibrium if mixed strategies are allowed.
 \end{thrm}
 \begin{proof}
-	Suppose player 1 has pure strategies $\left\{ 1, \dots, m \right\}$ and player 2 has pure strategies $\left\{ 1, \dots, n \right\}$. We will first determine a way to iteratively improve player 1's strategy. Consider the function
+	Suppose player 1 has pure strategies $\left\{ 1, \dots, m \right\}$ and player 2 has pure strategies $\left\{ 1, \dots, n \right\}$. We will first determine a way to improve player 1's strategy while keeping player 2's strategy fixed. Consider the function
 	\[
 		c_i(p,q) := \max\left\{ i\cdot A q - p\cdot Aq, 0 \right\}.
-	\] This is player 1's expected gain (if any) of using the pure strategy $i$ over the strategy $p$. How does this help us improve on $p$? If a more optimal strategy weights $i$ more heavily than $p$ does, we expect there to be some gain from using $i$ all the time. To actually use this value to update $p$, we can simply add it to $p_i$ and then normalize to ensure that the output is still in $\mathcal{M}=\Delta^{m-1}$. Define
+	\] This is player 1's expected gain (if any) of using the pure strategy $i$ over the strategy $p$. How does this help us improve $p$? If a more optimal strategy weights $i$ more heavily than $p$ does, we expect there to be some gain from using $i$ all the time. To actually use this value to update $p$, we can simply add it to $p_i$ and then normalize to ensure that the output is still in $\mathcal{M}_1=\Delta^{m-1}$. Define
 	\[
 		f_{i}(p,q) := \frac{p_i + c_i(p,q)}{1 + \sum_{k}c_{k}(p,q)} ,
 	\] then the map $f := (f_1, \dots f_{m})$ is our desired update map. Note that $f:\mathcal{M} \to \mathcal{M}$:
 	\[
 		\sum_{i} f_{i}(p,q) = \frac{\sum_{i} p_i + \sum_i c_i(p,q)}{1 + \sum_{k}c_{k}(p,q)} = \frac{1 + \sum_i c_i(p,q)}{1 + \sum_{k}c_{k}(p,q)} = 1,
-	\] so $f(p,q) \in \Delta^{m-1}=\mathcal{M}$. All the operations composing $f$ are continuous, so $f$ itself is continuous. Then by \Cref{mixed-strat-fixed-pt}, $f$ has a fixed point $p^{*}$. Similarly, we can define player 2's expected gain (if any) of using the pure strategy $j$ over the strategy $q$ by
+	\] so $f(p,q) \in \Delta^{m-1}=\mathcal{M}_1$. Similarly, we can define player 2's expected gain (if any) of using the pure strategy $j$ over the strategy $q$ by
 	\[
 		d_{i}(p,q) := \max \left\{ p\cdot Bj - p\cdot Bq, 0 \right\}.
 	\] Our update map for player 2's strategy is then $g := (g_1, \dots, g_{n})$, where
 	\[
 		g_{i}(p,q) := \frac{q_i + d_{i}(p,q)}{1 + \sum_{k} d_{k}(p,q)} .
-	\] This similarly has a fixed point $q^{*}$. We claim that $(p^{*},q^{*})$ is a Nash equilibrium. Note that since $p^{*}$ is a fixed point,
+	\] Now consider the map $\mathcal{M}_1 \times \mathcal{M}_2 \to \mathcal{M}_1 \times \mathcal{M}_2$ given by $(p,q) \mapsto (f(p), g(q))$. All the operations composing $f$ and $g$ are continuous, so this map is itself continuous. Then by \Cref{mixed-strat-fixed-pt}, this map has a fixed point $(p^{*},q^{*})$. We claim that $(p^{*},q^{*})$ is a Nash equilibrium. Note that since $p^{*}$ is in particular a fixed point of $f$,
 	\[
 		c_i(p^{*},q^{*}) = 0
 	\] necessarily for all $i$. By the definition of $c_i$, this means
@@ -208,6 +231,16 @@ Before beginning the proof, it should be clear how to expand this general concep
 	\] for any $q \neq q^{*}$, so the pair $(p^{*},q^{*})$ is a Nash equilibrium.
 \end{proof}
 
-\warn{bibliography}
+%--------------------------------------------------------------------------------
+% Bibliography
+%--------------------------------------------------------------------------------
+
+\nocite{tutorial}
+\nocite{kakutani}
+\nocite{algo}
+\nocite{reu}
+\nocite{chicago}
+
+\printbibliography
 
 \end{document}
