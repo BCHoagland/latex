@@ -1,0 +1,152 @@
+\documentclass[10pt]{amsart}
+\usepackage{latexsym}
+\usepackage{amscd,amsthm,amssymb,amsfonts,amsmath}
+\usepackage{xcolor}
+\usepackage[matrix,tips,graph,curve]{xy}
+
+\newcommand{\mnote}[1]{${}^*$\marginpar{\footnotesize ${}^*$#1}}
+\linespread{1.065}
+\setlength{\parskip}{0.5em}
+
+\makeatletter
+
+\setlength\@tempdima  {5.5in}
+\addtolength\@tempdima {-\textwidth}
+\addtolength\hoffset{-0.5\@tempdima}
+\setlength{\textwidth}{5.5in}
+\setlength{\textheight}{8.75in}
+\addtolength\voffset{-0.625in}
+
+\newtheorem{manualtheoreminner}{}
+\newenvironment{exercise}[1]{%
+	\vspace{10mm}
+	\renewcommand\themanualtheoreminner{#1}%
+  \manualtheoreminner
+}\hrulefill{\endmanualtheoreminner}
+
+\newcommand{\p}{\partial}
+
+\begin{document}
+\title{Math 531 Homework 6}
+\author{Braden Hoagland}
+\date{\today}
+\maketitle
+
+\begin{exercise}{Scalar Multiplication}
+	Prove scalar multiplication is a continuous function from $\mathbb{R}\times \mathcal{V}\to\mathcal{V}$, for $\mathcal{V}$ a normed vector space and $\mathbb{R}\times\mathcal{V}$ equipped with the product metric space structure.
+\end{exercise}
+
+Given open $U \subset \mathcal{V}$, we must show that ${\cdot}^{-1}(U)$ is open. Let $(k,v) \in {\cdot}^{-1}(U)$, i.e. $kv \in U$, then there is an $\varepsilon>0$ such that $D(kv,\varepsilon) \subset U$. If we find $\delta$ such that $\cdot(D( (k,v), \delta)) \subset D(kv,\varepsilon)$, then we are done. Since $\mathbb{R}\times\mathcal{V}$ is equipped with the product metric, if $(k',v') \in D( (k,v), \delta)$, then \[d_1( (k,v), (k',v') ) = |k-k'| + \Vert{v-v'}\Vert < \delta.\] Since both of these terms are nonnegative, this implies $|k-k'| < \delta$ and $\Vert{v-v'}\Vert<\delta$. Then by the triangle inequality,
+\begin{align*}
+	d_2(kv, k'v') &= \Vert{kv-k'v'}\Vert \\
+		      &= \Vert{kn-k'v +k'v - k'v'}\Vert \\
+		      &\leq \Vert{v}\Vert |k-k'| + |k'| \Vert{v-v'}\Vert.
+		      \intertext{Since $|k'| = |k'-k+k| \leq \delta+|k|$, this becomes}
+	d_2(kv, k'v') &< \Vert{v}\Vert \delta + (\delta+|k|) \delta.
+\end{align*}
+Surely we can let $\delta\leq 1$, since $\delta$ need not be ``optimal" in any sense. Then we have
+\[
+d_2(kv, k'v') < \Vert{v}\Vert + |k| + \delta.
+\] 
+So if we take $\delta = \min\{1, \varepsilon - \Vert{v}\Vert-|k|\}$, then $\cdot(D( (k,v), \delta)) \subset D(kv,\varepsilon)$, which implies that ${\cdot}^{-1}(U)$ is open. Thus scalar multiplication is a continuous function on a normed vector space.
+
+%====================
+\begin{exercise}{Page 182, 4.1.3}
+	Let $f:\mathbb{R}^2\to \mathbb{R}$ be continuous. Show $A = \left\{ (x,y) \in \mathbb{R}^2 \;|\; 0 \leq f(x,y) \leq 1 \right\}$ is closed.
+\end{exercise}
+
+Since $f$ is continuous, we know that for any closed set $F \subset \mathbb{R}$, $f^{-1}(F)$ is closed in $\mathbb{R}^2$. Thus it suffices to find a closed set $B \subset \mathbb{R}$ such that $f^{-1}(B) = A$.
+
+Let $B = \left\{ z \in \mathbb{R} \;|\; 0 \leq z \leq 1 \right\}$, then we claim that $B$ is closed in $\mathbb{R}$ and that $f^{-1}(B) = A$. Since $B^c = \left\{ z < 0 \right\} \cup \left\{ z > 1 \right\}$ is clearly open (it is the finite intersection of open sets), $B$ is closed by definition. Also by definition, $f^{-1}(B)=\left\{ (x,y) \;|\; f(x,y) \in B \right\}=\left\{ (x,y) \;|\; 0 \leq f(x,y) \leq 1 \right\}=A$.
+
+\pagebreak
+%====================
+\begin{exercise}{Page 184, 4.2.4}
+	Let $A,B \subset \mathbb{R}$, and suppose $A \times B \subset \mathbb{R}^2$ is connected.
+	\begin{enumerate}
+		\item Prove that $A$ is connected.
+		\item Generalize to metric spaces.
+	\end{enumerate}
+\end{exercise}
+
+\begin{enumerate}
+	\item Define $f:A\times B \to A$ by $f( (a,b))=a$. We claim that $f$ is continuous. Let $U \subset A$ be open, then we must show $f^{-1}(U)=\left\{ (a,b) \;|\; a \in U \right\}$ is also open. Let $(a,b) \in f^{-1}(U)$, and let $D(a,\varepsilon) \subset U$ (we know this ball exists for some $\varepsilon>0$ since $U$ is open). We now claim that $D( (a,b), \varepsilon) \subset f^{-1}(U)$.
+
+		If $(a',b') \in D( (a,b), \varepsilon)$, then since $A\times B$ is equipped with the product metric, $|a-a'|^2\leq|a-a'|^2+|b-b'|^2 <\varepsilon^2$ This implies $a' \in D(a,\varepsilon) \subset U$, so $(a',b') \in f^{-1}(U)$. Thus $f^{-1}(U)$ is open and, subsequently, $f$ is continuous. Since the image of a connected set under a continuous map is itself continuous, we have that $A$ is continuous.
+
+	\item To generalize this to metric spaces, note that the proof only uses a property of $\mathbb{R}^n$ when defining the $\varepsilon$-balls around $a$ and $(a,b)$. Let $A \times B$ be equipped with the product metric, $d_A$ be the metric for $A$, and $d_B$ be the metric for $B$. Then instead of
+		\[
+		|a-a'|^2\leq|a-a'|^2+|b-b'|^2 <\varepsilon^2,
+		\] we write
+		\[
+			d_A(a,a') \leq d_A(a,a') + d_B(b,b') < \varepsilon.
+		\] 
+		The rest of the proof is valid without any changes, so the result holds for general metric spaces.
+\end{enumerate}
+
+%====================
+\begin{exercise}{Page 184, 4.2.5}
+	Let $A,B \subset \mathbb{R}$, and suppose $A \times B \subset \mathbb{R}^2$ is open. Must $A$ be open?
+\end{exercise}
+
+Yes. Let $a \in A$ and $b \in B$, then there is an $\varepsilon>0$ such that $D( (a,b),\varepsilon) \subset A \times B$. Consider $D(a,\varepsilon)$. For $a' \in D(a,\varepsilon)$, we have $|a'-a|+|b-b| = |a'-a| < \varepsilon$, which implies $(a',b) \in D( (a,b), \varepsilon) \subset A \times B$. Thus $a' \in A$, so $D(a,\varepsilon) \subset A$, so $A$ is open.
+
+%====================
+\begin{exercise}{Page 191, 4.4.3}
+	Let $f:K\subset \mathbb{R}^n\to\mathbb{R}$ be continuous on a compact set $K$ and let $M=\left\{ x\in K \;|\; f(x) \text{ is the maximum of } f \text{ on } K\right\}$. Show that $M$ is a compact set.
+\end{exercise}
+
+Since $K$ is compact and $f$ is continuous, $K$ contains all $x'$ such that $f(x') = \sup_x f(x)$. Thus $M = f^{-1}(\left\{ \sup f(x) \right\})$. The set $\left\{ \sup f(x) \right\}$ is a single point in $\mathbb{R}$, so it is closed. Since $f$ is continuous, $M$ must then be closed too. Furthermore, $M \subset K$ and $K$ is bounded (since it is compact), so $M$ must also be bounded. Then by the Heine-Borel theorem, $M$ is compact in $\mathbb{R}^n$.
+
+%====================
+\begin{exercise}{Page 193, 4.5.1}
+	What happens when you apply the method used in Example 4.5.4 to quadratic polynomials? To quintic polynomials?
+\end{exercise}
+
+Let $f(x) = x^2 + 10$ be a quadratic polynomial. It is clear that $f(x)$ is always positive, so it need not have a real root. Thus the method from the example fails.
+
+Let $f(x) = a_1x^5 + a_2x^4 + a_3x^3 + a_4x^2 + a_5x + a_6$ for $a_1>0$. Then we can rewrite this as
+\[
+	f(x) = a_1x^5 \left( 1+ \frac{a_2}{a_1x} + \frac{a_3}{a_1x^2} +\frac{a_4}{a_1x^3} +\frac{a_5}{a_1x^4} +\frac{a_6}{a_1x^5}  \right).
+\] The sum in parentheses tends to 1 as $x \to \infty$, so $f(x)>0$ for some large and positive $x$. Similarly, $f(x) < 0$ for some large and negative $x$. Since $\mathbb{R}$ is connected and $f$ is continuous, by the intermediate value theorem we know that $f$ has a real root.
+
+In general, the largest exponent in a polynomial being odd guarantees that we can find points satisfying $f(x) < 0$ and $f(x) > 0$, in which case the method from the example is valid. As seen with the quadratic example, when the largest exponent is even, this is not always possible.
+
+%====================
+\begin{exercise}{Page 193, 4.5.2}
+	Let $f:\mathbb{R}^n\to \mathbb{R}^m$ be continuous. Let $\Gamma = \left\{ (x,f(x)) \;|\; x \in \mathbb{R}^n \right\}$ be the graph of $f$ in $\mathbb{R}^n \times \mathbb{R}^m$. Prove that $\Gamma$ is closed and connected. Generalize your result to metric spaces.
+\end{exercise}
+
+$\Gamma$ is the image of the map $g:\mathbb{R}^n \to \mathbb{R}^n \times \mathbb{R}^m$ defined by $g(x) = (x,f(x))$. We claim that $g$ is continuous. Fix $x \in \mathbb{R}^n$ and $\varepsilon>0$, then we wish to show that the preimage of $D( (x,f(x)), \varepsilon)$ under $g$ is open. Since $f$ is continuous, for any $\varepsilon>0$ we can find $\delta$ such that $|x-y|<\delta$ implies $|f(x)-f(y)|<\varepsilon/2$. Let $\delta'= \min\{\varepsilon/2, \delta\}$, then for any $y \in D(x,\delta')$ we have
+\[
+        |x-y| + |f(x) -f(y)| < \varepsilon/2 + \varepsilon/2 = \varepsilon.
+\] Since $\mathbb{R}^n \times \mathbb{R}^m$ is equipped with the product metric, this shows that $D(x,\delta')$ is a subset of $g^{-1}\left(D( (x,f(x)), \varepsilon) \right)$. Thus $g$ is continuous. Since $g$ is continuous and $\mathbb{R}^n$ is connected, $\Gamma$ must also be connected.
+
+Now we show that $\Gamma$ is closed. Let $\left\{ (x_n,f(x_n) \right\}_{n=1}^\infty$ converge, i.e. $(x_n, f(x_n)) \to (x,y)$ for some $x \in \mathbb{R}^n$, $y \in \mathbb{R}^m$. The map $f$ is given to be continuous, so $\lim_{n \to \infty} f(x_n) = f(x)$. Since by assumption, $\lim_{n \to \infty} f(x_n)=y$, this implies $f(x) = y$. Thus our sequence converges to $(x,f(x))$, which clearly lies in $\Gamma$. This shows that $\Gamma$ is closed.
+
+The proof of connectedness relied on $\mathbb{R}^n$ being connected. If we replace $\mathbb{R}^n$ with any connected metric space, the result still holds. The proof of closedness did not rely on the structure of $\mathbb{R}^n$ at all, so this result holds in any metric space. This gives us a more general proposition:
+
+Let $X$ and $Y$ be metric spaces, and let $f:X \to X \times Y$ be continuous. Then $\Gamma = \left\{ (x,f(x)) \;|\; x \in X \right\}$ is closed. If $X$ is connected, then $\Gamma$ is connected.
+
+%====================
+\begin{exercise}{Page 193, 4.5.3}
+	Let $f:[0,1]\to[0,1]$ be continuous. Prove that $f$ has a fixed point.
+\end{exercise}
+
+Since $[0,1]$ is connected and $f$ is continuous, the intermediate value theorem holds. Define another continuous function $g:[0,1] \to [-1,1]$ by $g(x) = f(x) - x$, then note that $g(0) = f(0) \geq 0$ and $g(1) = f(1) - 1 \leq 0$. If $g(0)=0$, then $f(0)=0$ and we have a fixed point. Similarly, if $g(1)=0$, then $f(1)=1$ and we have a fixed point. So assuming that these trivial cases are false, we have $g(0) < 0 < g(1)$. Then by the intermediate value theorem, there is some $z \in [0,1]$ such that $g(z) = f(z) - z = 0$, which implies $f(z) = z$, so we have a fixed point.
+
+%====================
+\begin{exercise}{Page 194, 4.5.4}
+	Let $f:[a,b]\to\mathbb{R}$ be continuous. Show that the range of $f$ is a bounded closed interval.
+\end{exercise}
+
+The interval $[a,b]$ is compact, so $f([a,b])$ contains its minimum and maximum, denoted by $f(c)$ and $f(d)$, respectively. Then since $[a,b]$ is also connected, by the intermediate value theorem, the image also contains all points between $f(c)$ and $f(d)$. Thus the image is $f([a,b]) = [f(c), f(d)]$, a closed and bounded interval in $\mathbb{R}$.
+
+%====================
+\begin{exercise}{Page 194, 4.5.5}
+	Prove that there is no continuous map taking $[0,1]$ \textit{onto} $(0,1)$.
+\end{exercise}
+
+Let $f: [0,1] \to (0,1)$ be continuous. Then since $[0,1]$ is compact, so is $f([0,1]) \subset (0,1)$, i.e. $f([0,1]) = [a,b]$ for some $a>0$, $b<0$. But since $a > 0$, this means $a/2$, which is in $(0,1)$, is not in $f([a,b])$. Thus $f$ is not onto.
+
+\end{document}

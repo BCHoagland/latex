@@ -1,0 +1,111 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper, total={6.5in, 9in}]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr, float}
+\usepackage{amsmath, amsthm, amsfonts, amssymb, mathrsfs}
+\usepackage{xcolor, graphicx}
+\usepackage{subfig}
+
+\lhead{Braden Hoagland}
+\chead{MATH 490 - HW 7}
+\rhead{\today}
+
+\pagestyle{fancy}
+\setlength{\parskip}{0.5em}
+
+\renewcommand{\labelenumii}{(\roman{enumii})}
+\newcommand{\rr}{\mathscr{R}_0}
+
+\begin{document}
+
+\begin{enumerate}
+	\item 
+		The completed matrix $M$ is
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{c|c|c|c|c}
+				& $I^h$ & $I^u$ & $I_{c}^e$ & $I_{c}^i$ \\
+				\hline
+				$I^h$ & $\beta S T_h (1-\phi) \rho$ & $\beta S T_h (1-\phi) (1-\rho)$ & $\beta S T_h \phi p_e$ & $\beta S T_h \phi (1-p_e)$ \\
+				\hline
+				$I^u$ & $\beta S T_u \rho$ & $\beta S T_u (1-\rho)$ & $0$ & $0$ \\
+				\hline
+				$I_{c}^e$ & $\beta_m S T_m (1-\phi) \rho$ & $\beta_m S T_m (1-\phi) (1-\rho)$ & $\beta_m S T_m \phi p_e$ & $\beta_m S T_m \phi (1-p_e)$ \\
+				\hline
+				$I_{c}^i$ & $\beta S T_i (1-\phi) \rho$ & $\beta S T_i (1-\phi) (1-\rho)$ & $\beta S T_i \phi p_e$ & $\beta S T_i \phi (1-p_e)$
+			\end{tabular}
+		\end{table}
+	
+	\item 
+		If $p_e = 1$, then $M$ becomes
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{c|c|c|c|c}
+			&  $I^h$ & $I^u$ & $I_{c}^e$ & $I_{c}^i$ \\
+                                \hline
+                                $I^h$ & $\beta S T_h (1-\phi) \rho$ & $\beta S T_h (1-\phi) (1-\rho)$ & $\beta S T_h \phi$ & $0$ \\
+                                \hline 
+                                $I^u$ & $\beta S T_u \rho$ & $\beta S T_u (1-\rho)$ & $0$ & $0$ \\
+                                \hline
+                                $I_{c}^e$ & $\beta_m S T_m (1-\phi) \rho$ & $\beta_m S T_m (1-\phi) (1-\rho)$ & $\beta_m S T_m \phi$ & $0$ \\
+                                \hline                                $I_{c}^i$ & $\beta S T_i (1-\phi) \rho$ & $\beta S T_i (1-\phi) (1-\rho)$ & $\beta S T_i \phi$ & $0$
+			\end{tabular}
+		\end{table}
+		which satisfies the $M_{j,4}=0$ for $j=1,2,3$. Inductively, let $M^n$ be of the form $M^n = (N, \mathbf{0})$, where $N \in \mathbb{R}^{4 \times 3}$ has arbitrary elements and $0 \in \mathbb{R}^{4}$. Then
+		\begin{align*}
+			(M^{n+1})_{j,4} &= (j\text{-th row of } M^{n}) \cdot (4\text{th column of } M^{n}) \\
+			&= (j\text{-th row of } M^{n}) \cdot \mathbf{0} \\
+			&= 0.
+		\end{align*}
+		So $(M^{n})_{j,4}=0$ for $j = 1,2,3$ for all $n \in \mathbb{N}$.
+
+	\item 
+		If $p_e = 1$ and $\beta_m = 0$, then $M$ becomes
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{c|c|c|c|c}
+			&  $I^h$ & $I^u$ & $I_{c}^e$ & $I_{c}^i$ \\
+                                \hline
+                                $I^h$ & $\beta S T_h (1-\phi) \rho$ & $\beta S T_h (1-\phi) (1-\rho)$ & $\beta S T_h \phi$ & $0$ \\
+                                \hline 
+                                $I^u$ & $\beta S T_u \rho$ & $\beta S T_u (1-\rho)$ & $0$ & $0$ \\
+                                \hline
+				$I_{c}^e$ & $0$ & $0$ & $0$ & $0$ \\
+                                \hline
+				$I_{c}^i$ & $\beta S T_i (1-\phi) \rho$ & $\beta S T_i (1-\phi) (1-\rho)$ & $\beta S T_i \phi$ & $0$
+			\end{tabular}
+		\end{table}
+		To find the eigenvalues of $M$, we can find the determinant of this $M-\lambda I$ and set it equal to $0$, then solve for $\lambda$. We have
+		\begin{align*}
+			\det(M-\lambda I) &= -\lambda \det
+			\begin{pmatrix}
+				\beta S T_h (1-\phi) \rho - \lambda & \beta S T_h (1-\phi) (1-\rho) & 0 \\
+				\beta S T_u \rho & \beta S T_u (1-\rho) -\lambda & 0 \\
+				\beta S T_i (1-\phi) \rho & \beta S T_i (1-\phi) (1-\rho) & -\lambda
+			\end{pmatrix} \\
+				  &= -\lambda^2 \det
+			  \begin{pmatrix}
+				\beta S T_h (1-\phi) \rho - \lambda & \beta S T_h (1-\phi) (1-\rho) \\
+				\beta S T_u \rho & \beta S T_u (1-\rho) -\lambda
+			  \end{pmatrix} \\
+				  &= -\lambda^2 \left[ \left( \beta S T_h (1-\phi) \rho -\lambda \right) \left( \beta S T_u (1-\rho) - \lambda \right) - \beta^2 S^2 T_h T_u (1-\phi) (1-\rho) \rho \right].
+		\end{align*}
+		Since we want $\det(M-\lambda I) = 0$, this implies that either $\lambda = 0$ or the rest of the expression is $0$. Assuming $\lambda \neq 0$, we can solve for the latter case.
+		\begin{align*}
+			\left( \beta S T_h (1-\phi) \rho -\lambda \right) \left( \beta S T_u (1-\rho) - \lambda \right) - \beta^2 S^2 T_h T_u (1-\phi) (1-\rho) \rho &= 0 \\
+			\beta^2 S^2 T_h T_u (1-\phi) (1-\rho) \rho - \lambda \left[ \beta S T_h (1-\phi) \rho + \beta S T_u (1-\rho) \right] + \lambda^2 - \beta^2 S^2 T_h T_u (1-\phi) (1-\rho) \rho &= 0.
+		\end{align*}
+		The first and last terms on the LHS cancel out, leaving
+		\begin{align*}
+			- \lambda \left[ \beta S T_h (1-\phi) \rho + \beta S T_u (1-\rho) \right] + \lambda^2 &= 0 \\
+			\beta S T_h (1-\phi) \rho + \beta S T_u (1-\rho) &= \lambda \\
+			\beta S T_u \left[ \rho \frac{T_h}{T_u} (1-\phi) + 1 - \rho \right] &= \lambda.
+		\end{align*}
+		Since $S = S_0$ and the paper defined $\mathscr{R}_0$ to be $\beta S_0 T_u$, this becomes
+		\[
+			\lambda = \rr \left[ \rho \frac{T_h}{T_u} (1-\phi) + 1 - \rho \right],
+		\] which matches the expression for $\mathscr{R}_e$ in the paper.
+
+\end{enumerate}
+
+\end{document}

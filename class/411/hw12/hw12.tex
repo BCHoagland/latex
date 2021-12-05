@@ -1,0 +1,111 @@
+\documentclass[twoside,10pt]{report}
+\newcommand{\docTitle}{Hw 12}
+\usepackage{/Users/bradenhoagland/latex/math2}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+{\color{blue}Exercises completed: All.}
+
+\begin{exer}[]
+Suppose $X$ is path connected. Prove that the following are equivalent:
+\begin{enumerate}
+	\item $\pi_1(X,x_0)$ is abelian.
+	\item For paths $h_1,h_2$ in $X$ from $x_0$ to $x_1$, $\beta_{h_1}=\beta_{h_2}$, where $\beta$ is the change-of-basepoint homomorphism $\beta_{h}([\alpha])=[h\cdot\alpha\cdot\overline{h}]$ from $\pi_1(X,x_1)$ to $\pi_1(X,x_0)$.
+\end{enumerate}
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+\textbf{Forward:} Suppose that for all $[a],[b] \in \pi_1(X,x_0)$, we have $[a][b]=[b][a]$, then
+\[
+	\beta_{h_1}([\alpha]) = [h_1\cdot \alpha\cdot \overline{h}_1]=[h_1\cdot \alpha\cdot\overline{h_2}][h_2\cdot \overline{h_1}]= [h_2\cdot \overline{h_1}][h_1\cdot \alpha \cdot\overline{h_2}] = [h_2\cdot \alpha\cdot \overline{h_2}]=\beta_{h_2}([\alpha]).
+\] Thus $\beta_{h_1}=\beta_{h_2}$.
+
+\textbf{Backward:} Suppose $\alpha,\beta$ are loops at $x_0$. Since $X$ is path connected, we can find a path $h$ from $x_0$ to $x_1$. Then $\alpha h, h$ are both paths from $x_0$ to $x_1$ and $\overline{h}\beta\alpha h$ is a loop at $x_1$. Note that $\overline{\alpha h}=\overline{h}\overline{\alpha}$.
+\[
+\begin{tikzcd}
+	x_0 \arrow[r, "h", bend left] \arrow["\beta"', loop, distance=2em, in=305, out=235] \arrow["\alpha"', loop, distance=2em, in=125, out=55] & x_1 \arrow[l, "\overline{h}", bend left]
+\end{tikzcd}
+\] 
+By assumption $\beta_{\alpha h}([\overline{h}\beta\alpha h]) = \beta_{h}([\overline{h}\beta\alpha h])$, and
+\begin{align*}
+	\beta_{\alpha h}([\overline{h}\beta\alpha h]) &= [\alpha h \overline{h} \beta\alpha h \overline{h}\overline{\alpha}] = [\alpha \beta], \\
+	\beta_{h}([\overline{h}\beta\alpha h]) &= [h \overline{h}\beta\alpha h \overline{h}]=[\beta\alpha].
+\end{align*}
+Thus $[\alpha][\beta]=[\beta][\alpha]$ for all loops $\alpha,\beta$ at $x_0$.
+
+\newpage
+\begin{exer}[]
+Using the fact that $\mathbb{R}^{2}-\left\{ 0 \right\}$ is homeomorphic to $S^{1}\times \mathbb{R}$, prove that $\mathbb{R}^{2}-\left\{ 0 \right\}$ is not homeomorphic to the torus.
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+\textit{Since all spaces here are path connected, I drop the basepoint of each fundamental group.}
+\vspace{5mm}
+
+We'll use two facts for this:
+\begin{enumerate}
+	\item If $X \cong Y$, then $\pi_1(X) \cong \pi_1(Y)$.
+	\item $\pi_1(X \times Y) \cong \pi_1(X) \times \pi_1(Y)$.
+\end{enumerate}
+Suppose $\mathbb{R}^{2}-\left\{ 0 \right\}$ is homeomorphic to the torus $S^{1}\times S^{1}$. Then
+\[
+	\pi_1(\mathbb{R}^{2}-\left\{ 0 \right\})\cong \pi_1(S^{1}\times S^{1})\cong \pi_1(S^{1})\times \pi_1(S^{1}) \cong \mathbb{Z}\times \mathbb{Z}.
+\] 
+But by assumption, $\mathbb{R}^{2}-\left\{ 0 \right\}$ being homeomorphic to $S^{1}\times \mathbb{R}$ and $\mathbb{R}$ being simply connected gives
+\[
+	\pi_1(\mathbb{R}^{2}-\left\{ 0 \right\})\cong \pi_1(S^{1}\times \mathbb{R}) \cong \pi_1(S^{1})\times \pi_1(\mathbb{R}) \cong \mathbb{Z}\times \left\{ e \right\} \cong \mathbb{Z}.
+\] 
+But $\mathbb{Z} \times \mathbb{Z}$ is not isomorphic to $\mathbb{Z}$, so by contradiction, $\mathbb{R}^{2}-\left\{ 0 \right\}$ cannot be homeomorphic to the torus.
+
+\newpage
+\begin{exer}[Munkres \S 55 \#1]
+	Show that if $A$ is a retract of $B^{2}$, then every continuous map $f:A\to A$ has a fixed point.
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+If $A$ is a retract of $B^{2}$, then there is some continuous map $r:B^{2}\to A$ that fixes $A$. Then if $f:A\to A$ is any continuous function, consider the map $g = ifr$. Since $g$ is the composition of continuous functions, it is continuous. Then since it's a map from $B^{2}$ to $B^{2}$, it has a fixed point $x$ by the Brouwer fixed point theorem. Then $r(x)$ is a fixed point of $f$, since
+\[
+	f(r(x)) = (rifr)(x) = r(g(x)) = r(x).
+\] 
+
+\newpage
+\begin{exer}[Munkres \S 55 \#2]
+	Show that if $h:S^{1}\to S^{1}$ is nulhomotopic, then $h$ has a fixed point and $h$ maps some point $x$ to its antipode $-x$.
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+By Lemma 55.3, $h$ extends to a continuous function $k:B^{2}\to S^{1}$, i.e. $h = ki$, where $i$ is the standard inclusion $i: S^{1}\hookrightarrow B^{2}$. Then the composition
+\[
+\begin{tikzcd}
+	\tilde{k}:B^{2}\rar{k}&S^{1}\arrow[r,hook,"i"]&B^{2}
+\end{tikzcd}
+\] 
+is a continuous map $B^{2}\to B^{2}$. Then by the Brouwer fixed point theorem, there is some $y \in B^{2}$ such that $\tilde{k}(y) = (ik)(y)=y$. Note that since $y \in i(S^{1})$, then $i^{-1}(y)$ is well-defined. This is in fact the fixed point of $h$, since
+
+\[
+	h(i^{-1}(y)) = (i^{-1}ikii^{-1})(y) = (i^{-1}\tilde{k})(y) = i^{-1}(y).
+\] 
+
+Consider $-h$, which is also a continuous function $S^{1}\to S^{1}$. We now know that $-h$ has a fixed point, i.e. there is some $x \in S^{1}$ such that $-h(x)=x$. But this implies $h(x)=-x$, so $h$ must map some point to its antipode.
+
+\newpage
+\begin{exer}[]
+Show that if $A$ is a nonsingular 3 by 3 matrix having nonnegative entries, then $A$ has a positive real eigenvalue.
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+Consider the intersection of $S^{2}$ and the first octant of $R^{3}$, and denote it by $X$. Then $x \in X$ has all nonnegative components and at least 1 positive component. Since $A$ has all nonnegative entries, this means $Ax$ has all nonnegative components. We claim that $Ax$ is in fact nonzero.
+
+Suppose $Ax=0$, then since $A$ is nonsingular (and thus invertible), $A^{-1}Ax=A^{-1}0$, which implies $x=0$. But $0 \not\in X$, so this is impossible. Thus $Ax \neq 0$ for all $x$.
+
+This means that $x \mapsto Ax/{\Vert{Ax}\Vert}$ is a well-defined map from $X$ to $X$. Then since $X \cong B^{2}$, the Brouwer fixed point theorem says that it has a fixed point, i.e. there is some $x$ such that
+\[
+\frac{Ax}{{\Vert{Ax}\Vert}} =x.
+\] 
+But this implies $Ax = {\Vert{Ax}\Vert}x$, so ${\Vert{Ax}\Vert}$ is an eigenvalue of $A$. Since $Ax\neq 0$, we know this eigenvalue is strictly positive.
+
+
+\end{document}

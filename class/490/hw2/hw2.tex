@@ -1,0 +1,145 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, total={6.5in, 9in}]{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath, amsthm, amsfonts, mathrsfs}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\renewcommand{\labelenumii}{(\roman{enumii})}
+
+% \renewcommand{\headrulewidth}{0pt}
+\newtheorem{defn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{thrm}{Theorem}
+\newtheorem{corr}{Corollary}
+
+\newcommand{\rr}{\mathscr{R}_0}
+
+\setlength{\headsep}{4em}
+\pagestyle{fancy}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1em}
+
+% ASSIGNMENT INFORMATION
+\newcommand{\class}{MATH 490}
+\newcommand{\hwnumber}{1}
+
+\lhead{Braden Hoagland (bch29)}
+\chead{{\class} - HW {\hwnumber}}
+\rhead{\today}
+
+\begin{document}
+
+\begin{enumerate}
+	% 1 %%%%%%%%%%%%%%%%%%%%
+	\item
+		\begin{enumerate}
+			% 1a %%%%%%%%%%
+			\item The $j$-th point in the sequence $\left\{ S+I \right\}_j$ is $S_j + I_j = S_{j-1} + \sigma I_{j-1}$. We can then define the difference between subsequent points in the sequence to be $\Delta (S+I)_j = (S_j + I_j) + (S_{j-1} + I_{j-1}) = (\sigma -1) I_{j-1}$. Since $\sigma = e^{-\alpha}$, it is always true that $0 < \sigma < 1$ when $\alpha < 0$. Since $I$ is always non-negative, this implies that $\Delta(S+I)_j \leq 0$ at all points in time. This makes intuitive sense, as this model does not allow for indidivduals to leave the recovered/removed state.
+
+			Since $\left\{ S+I \right\}_j$ is bounded below by 0 and was just shown to be monotone non-increasing, it must converge to a limit $S_\infty+I_\infty \geq 0$.
+
+			% 1b %%%%%%%%%%
+		\item Since $(S+I)_j$ converges to some limit, it must be the case that $\Delta (S+I)_j$ converges to 0. Since $\Delta (S+I)_j = (\sigma - 1) I_{j-1}$ and $\sigma - 1$ is strictly nonzero for $\alpha>0$, this implies $I_j \to 0$.
+
+			% 1c %%%%%%%%%%
+			\item We start by noting that $S_{j+1} = S_j G_j = S_j e^{-\beta I_j/N}$, so $\frac{S_{j+1}}{S_j} = e^{-\beta I_j/N}$ and its logarithm is $\log \frac{S_{j+1}}{S_j} = -\beta \frac{I_j}{N}$. By the laws of logarithms, this is equivalent to $\log \frac{S_j}{S_{j+1}} = \beta \frac{I_j}{N}$.
+
+			We can find the sum of this term up to some index m
+			\begin{align*}
+				\beta \sum_{j=0}^m \frac{I_j}{N} &= \sum_{j=0}^m \log \frac{S_j}{S_{j+1}} \\
+								 &= \sum_{j=0}^m \left( \log S_j - \log S_{j+1} \right) \\
+								 &= \log \frac{S_0}{S_m}
+			\end{align*}
+			Taking the limit as $m\to\infty$, this becomes
+			\[
+			\log \frac{S_0}{S_\infty} = \beta \sum_{j=0}^\infty \frac{I_j}{N}
+			\] 
+			which is the desired result.
+
+			% 1d %%%%%%%%%%
+		\item We can find an alternative equality for $\beta \sum_{j=1}^\infty \frac{I_j}{N} $ and subsitute it into the previous equation. We can find this with the $\Delta (S+I)_j$ terms we defined earlier.
+			\begin{align*}
+				\Delta (S+I)_j &= (\sigma-1) I_{j-1} \\
+				\sum_{j=1}^{m+1} \Delta (S+I)_j &= -(1-\sigma) \sum_{j=0}^{m} I_j \\
+				-\frac{\beta}{N(1-\sigma)} \sum_{j=1}^{m+1} \Delta (S+I)_j &= \beta \sum_{j=0}^{m} \frac{I_j}{N} 
+				\intertext{Since we are defining $\rr = \frac{\beta}{1-\sigma} $ and since $\sum_{j=1}^{m+1} \Delta (S+I)_j = (S+I)_{m+1} - (S+I)_0$, this simplifies to}
+				-\frac{\rr}{N} \left( (S+I)_{m+1} - (S+I)_0 \right) &= \beta \sum_{j=0}^{m} \frac{I_j}{N}
+				\intertext{By assumption, $S_0 + I_0 = N$, so this can be reduced further to}
+				\rr \left( 1 - \frac{(S+I)_{m+1}}{N} \right) &= \beta \sum_{j=0}^{m} \frac{I_j}{N}
+				\intertext{Finally, we can take the limit as $m \to \infty$ and use the fact that $(S+I)_{\infty} = S_\infty$ to get}
+				\rr \left( 1 - \frac{S_{\infty}}{N} \right) &= \beta \sum_{j=0}^{m} \frac{I_j}{N}
+			\end{align*}
+			Substituting this into the final equality from part (iii) gives
+			\[
+				\log \frac{S_0}{S_\infty} = \rr \left( 1 - \frac{S_\infty}{N}  \right)
+			\] 
+			as desired.
+		\end{enumerate}
+
+	% 2 %%%%%%%%%%%%%%%%%%%%	
+	\item
+	\begin{enumerate}
+		\item The function $I(t) = e^{-\gamma t}$ satisfies the ODE since $I'(t) = -\gamma e^{-\gamma t} = -\gamma I(t)$.
+
+		\item Using the tail sum formula, we can compute the expectation of $T_ R$ as
+			\begin{align*}
+				\mathbb{E}[T_R] &= \int_{0}^{\infty} \mathbb{P}(T_R > t) dt \\
+						&= \int_{0}^{\infty} I(t) dt \\
+						&= \int_{0}^{\infty} e^{-\gamma t} dt \\
+						&= \left[ -\frac{1}{\gamma} e^{-\gamma t} \right]_0^\infty \\
+						&= \frac{1}{\gamma} 
+			\end{align*}
+	\end{enumerate}
+
+	% 3 %%%%%%%%%%%%%%%%%%%%        
+        \item
+	\begin{enumerate}
+		% i %%%%%%%%%%
+		\item Since each $I_k(t)$ can be interpreted as the probability that someone is in stage $k$ and has not yet moved to the next stage at time $t$, the set $\left\{ I_1, \dots, I_n \right\}$ represent a set of disjoint probabilities. Thus the probability of their union of all these events (which would be someone being in any stage of the disease at time $t $) is just their sum.
+		\[
+			\mathbb{P}(T_R > t) = \sum_{k=1}^{n} I_k(t) 
+		\] 
+
+		% ii %%%%%%%%%%
+		\item The density $\rho(t)$ of $T_R$ is then
+		\begin{align*}
+			\rho_(t) &= \frac{d }{d t} \mathbb{P}(T_R \leq t) \\
+				 &= - \frac{d }{d t} \mathbb{P}(T_R > t) \\
+				 &= - \sum_{k=1}^{n} I_k(t) \\
+				 &= r \left[ I_1 - I_1 + I_2 - I_2 + \cdots + I_{n-1} - I_{n-1} + I_n \right] \\
+				 &= r I_n(t)
+		\end{align*}
+
+		% iii %%%%%%%%%%
+		\item We claim that the solution of this system is of the form
+		\[
+			I_k(t) = \frac{r^{k-1}}{(k-1)!} t^{k-1} e^{-rt}
+		\] 
+		which we can prove by induction. The first equation of the system is satisfied by this solution since
+		\begin{align*}
+			I_1(t) &= e^{-rt} \\
+			I_1'(t) &= -r e^{-rt} \\
+				&= -r I_1(t)
+		\end{align*}
+		Assuming this holds for stage $k-1$, we can show that it also holds for stage $k$.
+		\begin{align*}
+			I_{k}'(t) &= \frac{d }{d t} \left( \frac{r^{k-1}}{(k-1)!} t^{k-1} e^{-rt}  \right) \\
+				  &= \frac{r^{k-1}}{(k-2)!} t^{k-2} e^{-rt} - \frac{r^{k}}{(k-1)!} t^{k-1} e^{-rt} \\
+				  &= r \left( \frac{r^{k-2}}{(k-2)!} t^{k-2} e^{-rt} \right) - r \left( \frac{r^{k-1}}{(k-1)!} t^{k-1} e^{-rt} \right) \\
+				  &= r I_{k-1}(t) - r I_k(t)
+		\end{align*}
+		where the last step follows from the inductive hypothesis and our proposed definition of $I_k$. This proves the claim.
+
+		% iv %%%%%%%%%%
+		\item Based on the given definition of the gamma distribution, it is clear that in our model, $\alpha=n$ and $\beta=r$. Thus $\mathbb{E}[T_R] = \frac{n}{r} $.
+
+		This makes intuitive sense, as larger $n$ means more stages (and thus more time) are required to recover from the disease, and a higher transition rate $r$ means that the stages are passed through more quickly (which decreases the expected recovery time).
+
+		% v %%%%%%%%%%
+	\item If $r = \gamma a$, then $\mathbb{E}[T_R] = \frac{1}{\gamma}$. The mean is then the same as with one stage; however, the mode of the distribution shifts to the right as $n$ increases. This seems more realistic, as it will take some time for almost all people to recover from any given disease.
+	\end{enumerate}
+
+\end{enumerate}
+
+\end{document}

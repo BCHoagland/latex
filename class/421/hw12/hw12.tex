@@ -1,0 +1,140 @@
+\documentclass[twoside,10pt]{report}
+\newcommand{\docTitle}{Hw 12}
+\usepackage{/Users/bradenhoagland/latex/math2}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+\begin{exer}[]
+	Show that $[X,Y]$ satisfies a Leibniz rule.
+\end{exer}
+
+There are two different Leibniz-esque rules that I thought fit here. The first for $[X,Y](fg)$ the second is for $[X,fY](g)$.
+
+\vspace{5mm}
+\textbf{Version 1:} We'll need the fact that
+\begin{align*}
+	X(Y(fg)) &= X(Y(f)g+fY(g)) \\
+		 &= X(Y(f))g + fX(Y(g)).
+\end{align*}
+Similarly,
+\[
+	Y(X(fg)) = Y(X(f))g + fY(X(g)).
+\] Then we have
+\begin{align*}
+	[X,Y] &= X(Y(fg)) - Y(X(fg)) \\
+	      &= \left( X(Y(f))-Y(X(f)) \right)g + f\left( X(Y(g))-Y(X(g)) \right) \\
+	      &= [X,Y](f) g + f[X,Y](g).
+\end{align*}
+
+\vspace{5mm}
+\textbf{Version 2:}
+\begin{align*}
+	[X,fY](g) &= X(fY(g)) - fY(X(g)) \\
+		  &= X(f)Y(g) + fX(Y(g)) - fY(X(g)) \\
+		  &= X(f)Y(g) = f[X,Y](g).
+\end{align*}
+
+\newpage
+\begin{exer}[]
+	What are the components of $[X,Y]$?
+\end{exer}
+We have
+\begin{align*}
+	[X,Y] &= X\left( w^{i}\frac{\p }{\p x^{i}}  \right)-Y\left( v^{i}\frac{\p }{\p x^{i}}  \right) \\
+	      &= v^{j}\frac{\p }{\p x^{j}} w^{i}\frac{\p}{\p x^{i}} - w^{j}\frac{\p }{\p x^{j}} v^{i}\frac{\p }{\p x^{i}} \\
+	      &= \left( v^{j} \frac{\p }{\p x^{j}}w^{i}-w^{j} \frac{\p }{\p x^{j}}v^{i} \right) \frac{\p }{\p x^{i}}.
+\end{align*}
+Thus the components of $[X,Y]$ are $v^{j}\frac{\p }{\p x^{j}}w^{i}-w^{j}\frac{\p }{\p x^{j}}v^{i}$.
+
+\newpage
+\begin{exer}[]
+	Show $R(X,Y,Z)$ is a tensor.
+\end{exer}
+If we show that $R$ is linear in each variable, then it'll be a tensor. For showing linearity in the first two terms, we use the result from Exercise 1 that
+\[
+	[X,fY] = X(f)Y+f[X,Y],
+\] which we can also apply to $[fX,Y]$ since $[X,Y]=-[Y,X]$.
+
+\textbf{Linear in $X$:}
+\begin{align*}
+	R(fX,Y,Z) &= \nabla_{fX}\nabla_{Y}Z - \nabla_{Y}\nabla_{fX}Z-\nabla_{[fX,Y]}Z \\
+		  &= f\nabla_{X}\nabla_{Y}Z-\nabla_{Y}(f\nabla_{X}Z)-\nabla_{f[X,Y]-Y(f)X}Z \\
+		  &= f\nabla_{X}\nabla_{Y}Z-\cancel{Y(f)\nabla_{X}Z}-f\nabla_{Y}\nabla_{X}Z-f\nabla_{[X,Y]}Z+\cancel{Y(f)\nabla_{X}Z} \\
+		  &= fR(X,Y,Z).
+\end{align*}
+
+\textbf{Linear in $Y$:} 
+\begin{align*}
+	R(X,fY,Z) &= \nabla_{X}\nabla_{fY}Z-\nabla_{fY}\nabla_{X}Z-\nabla_{[X,Y]}Z \\
+		  &= \cancel{X(f)\nabla_{Y}Z}+f\nabla_{X}\nabla_{Y}Z-f\nabla_{Y}\nabla_{X}Z-\cancel{X(f)\nabla_{Y}Z}-f\nabla_{[X,Y]}Z \\
+		  &= fR(X,Y,Z).
+\end{align*}
+
+\textbf{Linear in $Z$:} 
+\begin{align*}
+	R(X,Y,fZ) &= \nabla_{X}\nabla_{Y}(fZ) - \nabla_{Y}\nabla_{X}(fZ)-\nabla_{[X,Y]}(fZ) \\
+		  &= \nabla_{X}(Y(f)Z+f\nabla_{Y}Z) - \nabla_{Y}(X(f)Z+f\nabla_{X}Z)-([X,Y](f)+f\nabla_{[X,Y]}Z) \\
+		  &= f\nabla_{X}\nabla_{Y}Z-f\nabla_{Y}\nabla_{X}Z-f\nabla_{[X,Y]}Z \\
+		  &= fR(X,Y,Z).
+\end{align*}
+
+Thus $R(X,Y,Z)$ is a tensor.
+
+\newpage
+\begin{exer}[]
+	Compute the Levi-Civita connection $\Gamma^{i}_{jk}$ and the Riemann curvature tensor $R^{i}_{jkl}$, then show that
+	\[
+		R_{ijkl} = K(g_{ik}g_{jl}-g_{il}g_{jk}).
+	\] 
+\end{exer}
+The metric tensor has matrix
+\[
+	(g_{ij}) =
+\begin{pmatrix}
+	r^{2}&0\\
+	0&r^{2}\sin^{2}\theta
+\end{pmatrix}
+\] and inverse matrix
+\[
+	(g^{ij}) =
+	\begin{pmatrix}
+		r^{-2}&0\\
+		0&r^{-2}\sin^{-2}\theta
+	\end{pmatrix}.
+\] 
+Note that since $x^{1}=\theta$ and $x^{2}=\phi$,
+\begin{align*}
+	\p_{2}{g_{xy}} =\p_{2}{g^{xy}} = \p_{1}{g_{11}} =\p_{1}{g_{12}} =\p_{1}{g_{21}} =0.
+\end{align*}
+We can then plug these into the definition of the Levi-Civita connection
+\[
+	\Gamma^{i}_{jk} = \frac{1}{2} g^{il}(\p_{j}{g_{kl}} +\p_{k}{g_{jl}} -\p_{l}{g_{jk}} ).
+\] 
+Because so many of the partial derivatives are 0, the computations end up being relatively simple. We get
+\begin{align*}
+	\Gamma^{1}_{11} = \Gamma^{1}_{12}=\Gamma^{1}_{21}=\Gamma^{2}_{11}=\Gamma^{2}_{22}&=0,\\
+	\Gamma^{1}_{22} &= -\sin\theta\cos\theta,\\
+	\Gamma^{2}_{12}=\Gamma^{2}_{21}&=\sin^{-1}\theta\cos\theta.
+\end{align*}
+Then we can plug these into the relation
+\[
+R^{i}_{jkl}=\p_{k}{\Gamma^{i}_{lj}} -\p_{l}{\Gamma^{i}_{kj}} + \Gamma^{i}_{km}\Gamma^{m}_{lj}-\Gamma^{i}_{lm}\Gamma^{m}_{kj}
+\] to recover the Riemann curvature tensor. The computations come out to
+\begin{align*}
+	R^{1}_{111}=R^{1}_{112}=R^{1}_{121}=R^{1}_{211}=R^{1}_{122}=R^{1}_{222} &= 0,\\
+	R^{2}_{111}=R^{2}_{211}=R^{2}_{221}=R^{2}_{212}=R^{2}_{122}=R^{2}_{222} &= 0,\\
+	R^{1}_{221} &= -\sin^{2}\theta,\\
+	R^{1}_{212} &= \sin^{2}\theta,\\
+	R^{2}_{112} &= -1,\\
+	R^{2}_{121} &= 1.
+\end{align*}
+Then using the formula
+\[
+R_{ijkl} = K(g_{ik}g_{jl}-g_{il}g_{jk}),
+\] 
+we can plug in these values of $R^{i}_{jkl}$ along with $K=1/r^{2}$, which we know to be the Gaussian curvature for this surface. In every case, we get equality, so the formula holds.
+
+\end{document}

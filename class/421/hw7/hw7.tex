@@ -1,0 +1,136 @@
+\documentclass[10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/math}
+
+\lhead{Braden Hoagland}
+\chead{HW 7}
+\rhead{}
+
+\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+\begin{exer}[]
+\S 5.6 \#2.
+\end{exer}
+\begin{enumerate}
+	\item Principal, asymptotic.
+	\item Principal, geodesic.
+	\item Asymptotic, geodesic.
+\end{enumerate}
+
+\begin{exer}[]
+\S 6.2 \#2.
+\end{exer}
+\begin{enumerate}
+	\item We know $\omega_{12}=f_1\theta_1+f_2\theta_2$, where $f_1=\omega_{12}(E_1), f_2=\omega_{12}(E_2)$, so by \S 6.2 Corollary 2.3,
+		\begin{align*}
+			-K\theta_1\wedge\theta_2 &= d\omega_{12} \\
+						 &= df_1\wedge \theta_1 + f_1d\theta_1 + df_2\wedge \theta_2 + f_2d\theta_2 \\
+						 &= df_1\wedge\theta_1 + f_1\omega_{12}\wedge\theta_2+df_2\wedge\theta_2-f_2\omega_{12}\wedge\theta_1 \\
+						 &= \left( df_1-f_2\omega_{12} \right)\wedge\theta_1 + \left( df_2+f_1\omega_{12} \right)\wedge \theta_2.
+		\end{align*}
+			 Applying this at $(E_1,E_2)$ and using the fact that $\theta_i(E_j)=\delta_{ij}$ then gives
+		 \[
+			-K=(-K\theta_1\wedge\theta_2)(E_1,E_2)=-E_2[f_1]+E_1[f_2]+f_1^2+f_2^2.
+		\]
+		Negating both sides then gives
+		\[
+			K=E_2[f_1]-E_1[f_2]-f_1^2-f_2^2,
+		\] as desired.
+
+	\item Since
+		\begin{align*}
+			\omega_{12}&=f_1\theta_1+f_2\theta_2 \\
+			\sin\phi\;d\theta&=f_1r\cos\phi\;d\theta+f_2r\;d\phi,
+		\end{align*}
+		we have $f_1=\frac{\tan\phi}{r} $ and $f_2=0$. The formula for $K$ that we derived in part (a) then gives
+		\begin{align*}
+			K &= E_2[f_1]-E_1[f_2]-f_1^2-f_2^2 \\
+			  &= E_2\left[ \frac{\tan\phi}{r}  \right]-\frac{\tan^2\phi}{r^2} \\
+			  &= \frac{\sec^2\phi}{r^2} -\frac{\tan^2\phi}{r^2} \\
+			  &= \frac{1}{r^2} .
+		\end{align*}
+		We already know the Gaussian curvature of a sphere is $1/r^2$ everywhere, so our formula from part (a) was correct.
+\end{enumerate}
+
+\begin{exer}[]
+\S 6.4 \#1.
+\end{exer}
+\textbf{a implies c:} Suppose $F_{*}$ preserves inner products, and let $\mathbf{e}_1,\mathbf{e}_2$ be a tangent frame at $\mathbf{p}$. Then $F_{*}(\mathbf{e}_i)\cdot F_{*}(\mathbf{e}_{j})=\mathbf{e}_{i}\cdot \mathbf{e}_{j}=\delta_{ij}$, so $F_{*}(\mathbf{e}_{1}), F_{*}(\mathbf{e}_{2})$ is a tangent frame at $F({\mathbf{p}})$.
+
+\textbf{c implies d:} Suppose $F_{*}$ preserves frames, then ${\Vert{F_{*}(\mathbf{e}_i)}\Vert}=1={\Vert{\mathbf{e}_i}\Vert}$ and $F_{*}(\mathbf{e}_{1})\cdot F_{*}(\mathbf{e}_{2})=0=\mathbf{e}_{1}\cdot \mathbf{e}_{2}$. Note that $\mathbf{e}_1$ and $\mathbf{e}_2$ are linearly independent because they are a frame, so they are the $\mathbf{u},\mathbf{v}$ we are looking for.
+
+\textbf{d implies b:} Let $\mathbf{z} \in T_{\mathbf{p}}(M)$, then because $\mathbf{v},\mathbf{w}$ are linearly independent, they span $T_{\mathbf{p}}(M)$, i.e. $\mathbf{z} = a\mathbf{v}+b\mathbf{w}$ for some scalars $a,b$. Then by the linearity of $F_{*}$,
+\begin{align*}
+	{\Vert{F_{*}(\mathbf{z})}\Vert}^2&= {\Vert{F_{*}(a\mathbf{v}+b\mathbf{w})}\Vert}^2 \\
+				       &= {\Vert{aF_{*}(\mathbf{v})+bF_{*}(\mathbf{w})}\Vert}^2 \\
+				       &= a^2{\Vert{F_{*}(\mathbf{v})}\Vert}^2+2abF_{*}(\mathbf{v})\cdot F_{*}(\mathbf{w})+b^2{\Vert{F_{*}(\mathbf{w})}\Vert}^2 \\
+				       &= a^2{\Vert{\mathbf{v}}\Vert}^2 + 2ab\mathbf{v}\cdot\mathbf{w}+b^2{\Vert{\mathbf{w}}\Vert}^2 \\
+				       &= {\Vert{\mathbf{z}}\Vert}^2,
+\end{align*}
+so ${\Vert{F_{*}(\mathbf{z})}\Vert}={\Vert{\mathbf{z}}\Vert}$.
+
+\textbf{b implies a:} Suppose $F_{*}$ preserves norms. We can expand the dot product between arbitrary $\mathbf{x}$ and $\mathbf{y}$ as
+\[
+	x\cdot y = \frac{1}{4} \left( {\Vert{\mathbf{x}+\mathbf{y}}\Vert}^2-{\Vert{\mathbf{x}-\mathbf{y}}\Vert}^2 \right).
+\] Then using the linearity of $F_{*}$, the dot product between $F_{*}(\mathbf{v})$ and $F_{*}(\mathbf{w})$ is
+\begin{align*}
+	F_{*}(\mathbf{v})\cdot F_{*}(\mathbf{w}) &= \frac{1}{4} \left( {\Vert{F_{*}(\mathbf{v})+F_{*}(\mathbf{w})}\Vert}^2-{\Vert{F_{*}(\mathbf{v})-F_{*}(\mathbf{w})}\Vert}^2 \right) \\
+						 &= \frac{1}{4} \left( {\Vert{F_{*}(\mathbf{v}+\mathbf{w})}\Vert}^2-\Vert F_{*}(\mathbf{v}-\mathbf{w})\Vert^2 \right) \\
+						 &= \frac{1}{4} \left( {\Vert{\mathbf{v}+\mathbf{w}}\Vert}^2-{\Vert{\mathbf{v}-\mathbf{w}}\Vert}^2 \right) \\
+						 &= \mathbf{v} \cdot \mathbf{w}.
+\end{align*}
+
+\begin{exer}[]
+\S 6.4 \#8.
+\end{exer}
+\begin{enumerate}
+	\item
+		\begin{itemize}
+			\item $F_{*}$ preserves inner products up to a scalar multiple $\lambda(\mathbf{p})^2$.
+			\item ${\Vert{F_{*}(\mathbf{v})}\Vert}=\lambda_{\mathbf{p}}{\Vert{\mathbf{v}}\Vert}$ for all $\mathbf{v}$ at $\mathbf{p}$.
+			\item If $\mathbf{e}_1, \mathbf{e}_{2}$ is a frame of $\mathbf{p}$, then
+				\[
+					\frac{F_{*}(\mathbf{e}_1)\cdot F_{*}(\mathbf{e}_2)}{\lambda(\mathbf{p})^2} 
+				\] is a frame of $F(\mathbf{p})$.
+			\item For one pair of linearly independent $\mathbf{v},\mathbf{w}$, we have
+				\begin{align*}
+					{\Vert{F_{*}(\mathbf{v})}\Vert}&=\lambda(\mathbf{p}){\Vert{\mathbf{v}}\Vert} \\
+					{\Vert{F_{*}(\mathbf{w})}\Vert}&=\lambda(\mathbf{p}){\Vert{\mathbf{w}}\Vert} \\
+					F_{*}(\mathbf{v})\cdot F_{*}(\mathbf{w})&=\lambda(\mathbf{p})^2\mathbf{v}\cdot \mathbf{w}.
+				\end{align*}
+		\end{itemize}
+	\item \textbf{Forward:} Suppose $\mathbf{x}$ is conformal. It suffices to evaluate $\mathbf{x}_{*}$ at $\mathbf{e}_1, \mathbf{e}_2$, which gives $\mathbf{x}_{*}(\mathbf{e}_1)=\mathbf{x}_{u}$, $\mathbf{x}_{*}(\mathbf{e}_2)=\mathbf{x}_{v}$. Then
+		\[
+			F = \mathbf{x}_{u}\cdot \mathbf{x}_{v}= \lambda(\mathbf{p})^2\mathbf{e}_{1}\cdot \mathbf{e}_{2}=0
+		\] and
+		\[
+			E = {\Vert{x_{u}}\Vert}=\lambda(\mathbf{p}){\Vert{\mathbf{e}1}\Vert}=\lambda(\mathbf{p}){\Vert{\mathbf{e}_{2}}\Vert}={\Vert{\mathbf{x}_{v}}\Vert}=G.
+		\] 
+
+		\textbf{Backward:} Suppose $E=G$ and $F=0$, then
+		\[
+		{\Vert{\mathbf{x}_{u}}\Vert}=\mathbf{x}_{u}\cdot \mathbf{x}_{u}=E=G=\mathbf{x}_{v}\cdot \mathbf{x}_{v}={\Vert{\mathbf{x}_{v}}\Vert}.
+		\] Any tangent vector $\mathbf{v}$ can be written $a\mathbf{x}_{u}+b\mathbf{x}_{v}$, so
+		\begin{align*}
+			{\Vert{a\mathbf{x}_{u}+b\mathbf{x}_{v}}\Vert}&=a^2{\Vert{\mathbf{x}_{v}}\Vert}^2+2ab\mathbf{x}_{u}\cdot \mathbf{x}_{v}+b^2{\Vert{\mathbf{x}_{v}}\Vert}^2.
+			\intertext{Then since since ${\Vert{\mathbf{x}_{u}}\Vert}={\Vert{\mathbf{x}_{v}}\Vert}=E$ and $\mathbf{x}_{u}\cdot \mathbf{x}_{v}=F=0$, this becomes}
+								     &= E^2 (a^2+b^2) \\
+								     &= E^2 {\Vert{a\mathbf{e}_{1}+b\mathbf{e}_{2}}\Vert}.
+		\end{align*}
+		Thus $\mathbf{x}$ is conformal.
+
+	\item Since $F_{*}$ preserves inner products up to a scalar multiple $\lambda(-\mathbf{p})^2$,
+		\[
+		\begin{matrix}
+			F_{*}(\mathbf{v})\cdot F_{*}(\mathbf{w}) & = & {\Vert{F_{*}(\mathbf{v})}\Vert}{\Vert{F_{*}(\mathbf{w})}\Vert}\cos\theta \\
+			\shortparallel & & \shortparallel \\
+			\lambda(\mathbf{p})^2 \mathbf{v}\cdot \mathbf{w}& = & \lambda^2(\mathbf{p}) {\Vert{\mathbf{v}}\Vert}{\Vert{\mathbf{w}}\Vert}\cos \tilde{\theta}.
+		\end{matrix}
+		\]
+		Now since ${\Vert{F_{*}(\mathbf{x})}\Vert}=\lambda(\mathbf{p}){\Vert{\mathbf{x}}\Vert}$ for all $\mathbf{x}$ at $\mathbf{p}$, this implies that $\cos\theta= \cos\tilde{\theta}$. Thus $\theta=\tilde{\theta}$, i.e. $F_{*}$ preserves angles.
+\end{enumerate}
+
+
+\end{document}

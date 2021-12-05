@@ -1,0 +1,320 @@
+\documentclass[10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/math}
+
+\lhead{Braden Hoagland}
+\chead{Math 421 - HW 1}
+\rhead{}
+
+\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+\begin{exer}[1.2.4]
+	If $V=y^2U_1-x^2U_3$ and $W=x^2U_1-zU_2$, find functions $f$ and $g$ such that the vector field $fV+gW$ can be expressed in terms of $U_2$ and $U_3$ only.
+\end{exer}
+If we let $f=x^2$ and $g=-y^2$, then the vector field $fV + gW$ becomes
+\begin{align*}
+	fV+gW &= (fy^2 + gx^2)U_1-gzU_2-fx^2U_3 \\
+	      &= (x^2y^2 - x^2y^2)U_1 + y^2zU_2-x^4U_3 \\
+	      &= y^2zU_2-x^4U_3.
+\end{align*}
+
+\begin{exer}[1.2.5]
+	Let $V_1=U_1-xU_3, V_2=U_2,$ and $V_3=xU_1+U_3.$ 
+	\begin{enumerate}
+		\item Prove that the vectors $V_1(\mathbf{p}), V_2(\mathbf{p}),$ and $V_3(\mathbf{p})$ are linearly independent at each point of $\mathbb{R}^3$.
+		\item Express the vector field $xU_1+yU_2+zU_3$ as a linear combination of $V_1,V_2,$ and $V_3.$
+	\end{enumerate}
+\end{exer}
+\begin{enumerate}
+	\item We must show that if $\alpha_i$ are scalars, then for all $\mathbf{p} \in \mathbb{R}^3$,
+		\[
+			\alpha_1V_1(\mathbf{p})+\alpha_2V_2(\mathbf{p})+\alpha_3V_3(\mathbf{p}) = \mathbf{0}
+		\] implies that each $\alpha_i$ is zero. Substituting in the definition of each $V_i$ gives
+		\[
+			(\alpha_1+\alpha_3x(\mathbf{p}))U_1(\mathbf{p}) + \alpha_2U_2(\mathbf{p})+(\alpha_3-\alpha_1x(\mathbf{p}))U_3(\mathbf{p}) = \mathbf{0}.
+		\] Since the coefficients of each $U_i(\mathbf{p})$ must be 0 in order for their sum to be the zero vector, this clearly shows that $\alpha_2=0$. Additionally, we have the system
+		\begin{align*}
+			\alpha_1+\alpha_3x(\mathbf{p}) &= 0 \\
+			\alpha_3-\alpha_1x(\mathbf{p}) &= 0.
+		\end{align*}
+		Solving for $\alpha_1$ in terms of $\alpha_3$ in the first equation and substituting into the second yields
+		\[
+			\alpha_3(1+x(\mathbf{p})^2) = 0.
+		\] Since $(1+x(\mathbf{p})^2)$ can never be 0, this shows $\alpha_3=0$, from which $\alpha_1=0$ follows. Since $\mathbf{p}$ was arbitrary, $\mathbf{p}$, $V_1(\mathbf{p}), V_2(\mathbf{p})$, and $V_3(\mathbf{p})$ are linearly independent for all $\mathbf{p} \in \mathbb{R}^3$.
+
+	\item If $\beta_i$ is a scalar field, then we must solve the system
+		\begin{align*}
+			\beta_1+\beta_3x &= x \\
+			\beta_2 &= y \\
+			\beta_3 - \beta_1x &= z.
+		\end{align*}
+		This has the solution
+		\begin{align*}
+			\beta_1 &= \frac{x(1-z)}{1+x^2} \\
+			\beta_2 &= y \\
+			\beta_3 &= \frac{x^2+z}{1+x^2}.
+		\end{align*}
+\end{enumerate}
+
+\begin{exer}[1.3.3]
+	Let $V=y^2U_1-xU_3$, and let $f=xy,g=z^3$. Compute the following functions.
+\end{exer}
+\begin{enumerate}
+	\item $V[f] = y^2 U_1[xy] - xU_3[xy] = y^3 - 0 = y^3.$
+	\item $V[g] = y^2 U_1[z^3] - xU_3[z^3] = 0 - 3xz^2 = -3xz^2.$
+	\item $V[fg] = V[f]g = fV[g] = y^3z^3 - 3x^2yz^2.$
+	\item $fV[g] - gV[f] = -3x^2yz^2 - y^3z^3$ (this is just the above expression but with the first term negated).
+	\item $V[f^2+g^2] = V[f^2]+V[g^2]$. To reuse old computations, we can notice that since the reals commute, so do scalar fields. Thus by the Leibniz rule, this is $2fV[f] + 2gV[g] = 2xy^4 - 6xz^5.$ 
+	\item $V[V[f]] = V[y^3]$, but $V$ is not in terms of $U_2$ at all, so this is equal to 0.
+\end{enumerate}
+
+\begin{exer}[1.3.4]
+	Prove the identity $V=\sum_i V[x_i] U_i$, where the $x_i$ are the natural coordinate functions.
+\end{exer}
+Any vector space can be written in terms of its Euclidean coordinate functions as $V = \sum_i v_i U_i,$ so evaluating $V$ on the natural coordinate function $x_j$ gives
+\begin{align*}
+	V[x_j] &= \sum_i v_i U_i[x_j] \\
+	       &= \sum_i v_i \frac{\partial x_j}{\partial x_i} \\
+	       &= \sum_i v_i \delta_{ij} \\
+	       &= v_j.
+\end{align*}
+Thus $\sum_i V[x_i] U_i = \sum_i v_i U_i = V$.
+
+\begin{exer}[1.5.1]
+	Let $\mathbf{v}=(1,2,-3)$ and $\mathbf{p}=(0, -2, 1).$ Evaluate the following 1-forms on the tangent vector $\mathbf{v}_{\mathbf{p}}$:
+	\begin{enumerate}
+		\item $y^2\;dx$
+		\item $z\;dy - y\;dz$ 
+		\item $(z^2-1)\;dx - dy + x^2\;dz.$
+	\end{enumerate}
+\end{exer}
+\begin{enumerate}
+	\item $(y^2\;dx)(\mathbf{v}_{\mathbf{p}}) = y^2(\mathbf{p})dx(\mathbf{v}_{\mathbf{p}})=4\mathbf{v}_{\mathbf{p}}[x] = 4v_1=4.$ 
+	\item $(z\;dy - y\;dz)(\mathbf{v}_{\mathbf{p}}) = z(\mathbf{p})dy(\mathbf{v}_{\mathbf{p}}) - y(\mathbf{p})dz(\mathbf{v}_{\mathbf{p}})=v_2+2v_3=-4$.
+	\item $( (z^2-1)dx-dy+x^2\;dz)(\mathbf{v}_{\mathbf{p}})=(z^2-1)(\mathbf{p})v_1-v_2+x^2(\mathbf{p})v_3 = 0 - 2 + 0 = -2.$
+\end{enumerate}
+
+\begin{exer}[1.5.2]
+	If $\phi=\sum_i f_i dx_i$ and $V=\sum_i v_i U_i$, show that the 1-form $\phi$ evaluated on the vector field $V$ is the function $\phi(V)=\sum_i f_i v_i$.
+\end{exer}
+This relies on the fact that if $\phi=\sum_i f_i \;dx_i$, then $f_i = \phi(U_i)$. Then since $\phi$ is linear,
+\begin{align*}
+	\phi(V) &= \phi\left( \sum_i v_i U_i \right) \\
+		&= \sum_i v_i \phi(U_i) \\
+		&= \sum_i v_i f_i.
+\end{align*}
+
+\begin{exer}[1.5.4a]
+	Express the differential $d(f^5)$ in terms of $df$.
+\end{exer}
+This is a straightforward application of the identity $d(h(f)) = h'(f) \;df.$
+\[
+	d(f^5) = 5f^4 \;df.
+\] 
+
+\begin{exer}[1.5.6a]
+	For $f=xy^2-yz^2$, compute the differential of $f$ and find the directional derivative $\mathbf{v}_{\mathbf{p}}[f]$, for $\mathbf{v}_{\mathbf{p}}$ as in Exercise 1.5.1.
+\end{exer}
+For general $f$, the differential is $df = \sum_i \frac{\partial f}{\partial x_i} \;dx_i$. Then the differential for our particular $f$ is
+\begin{align*}
+	df &= y^2 \;dx + (2xy-z^2)\;dy -2yz\;dz.
+\end{align*}
+The directional derivative of $f$ with respect to the tangent vector from Exercise 1.5.1 is then
+\begin{align*}
+	\mathbf{v}_{\mathbf{p}}[f] &= df(\mathbf{v}_{\mathbf{p}}) \\
+				   &= p_2^2v_1+(2p_1p_2-p_3^2)v_2-2p_2p_3v_3 \\
+				   &= 4 - 2 - 12 \\
+				   &= -10.
+\end{align*}
+
+\begin{exer}[1.5.9]
+	A $1$-form of $\phi$ is \textbf{zero} at a point $\mathbf{p}$ provided $\phi(\mathbf{v}_{\mathbf{p}})=0$ for all tangent vectors at $\mathbf{p}$. A point whose differential $df$ is zero is called a \textbf{critical point} of the function $f$. Prove that $\mathbf{p}$ is a critical point of $f$ if and only if
+	\[
+		\frac{\partial f}{\partial x} (\mathbf{p})=\frac{\partial f}{\partial y} (\mathbf{p})=\frac{\partial f}{\partial z} (\mathbf{p})=0.
+	\] 
+	Find all critical points of $f=(1-x^2)y+(1-y^2)z$.
+\end{exer}
+\textbf{Forward:} Let $\mathbf{p}$ be a critical point of $f$, then for all tangent vectors $\mathbf{v}_{\mathbf{p}}$ of $\mathbf{p}$,
+\[
+	df(\mathbf{v}_{\mathbf{p}}) = \sum \frac{\partial f}{\partial x_i} (\mathbf{p})dx_i(\mathbf{v}_\mathbf{p}) = 0.
+\] 
+Evaluating this on the tangent vector $(1,0,0)_{\mathbf{p}}$ yields
+\[
+	\frac{\partial f}{\partial x_1} (\mathbf{p}) = 0.
+\] Similarly, evaluating on $(0,1,0)_\mathbf{p}$ and $(0,0,1)_{\mathbf{p}}$ show that the other two partial derivatives are also 0.
+
+\textbf{Backward:} Suppose the three given partial derivatives of $f$ are 0 at $p$, then
+\[
+	df(\mathbf{v}_\mathbf{p}) = \sum \frac{\partial f}{\partial x_i} (\mathbf{p})dx_i(\mathbf{v}_{\mathbf{p}}) = \sum 0 dx_i(\mathbf{v}_{\mathbf{p}}) = 0
+\] for all tangent vectors $\mathbf{v}_{\mathbf{p}}$ of $\mathbf{p}$. Thus $p$ is a critical point of $f$.
+
+\textbf{Finding critical points:} For the given function $f$, the three partial derivatives are
+\begin{align*}
+	\frac{\partial f}{\partial x} &= -2xy, \\
+	\frac{\partial f}{\partial y} &= 1-x^2-2yz, \text{ and} \\
+	\frac{\partial f}{\partial z} &= 1-y^2.
+\end{align*}
+Setting these to 0 gives a system whose solutions are the critical points of $f$. Using $\frac{\partial f}{\partial z} = 0$, we see that $y(\mathbf{p})$ must be $\pm 1$. Then by $\frac{\partial f}{\partial x} =0$, since $y(\mathbf{p})$ is nonzero, it must be the case that $x(\mathbf{p})$ is zero. We can then solve for $z(\mathbf{p})$ using $\frac{\partial f}{\partial y} =0$, giving the two critical points
+\[
+	(0, 1, 1/2) \text{ and } (0, -1, -1/2).
+\] 
+
+
+\begin{exer}[1.5.10]
+	Prove that the local maxima and local minima of $f$ are critical points of $f$.
+\end{exer}
+It suffices to show only the case of local maxima, as the local minima of $f$ are the local maxima of $-f$. Thus we will show that if $\mathbf{p}$ is a local max of $f$, then $df(\mathbf{v}_{\mathbf{p}})=0$ for all tangent vectors $\mathbf{v}_\mathbf{p}$ of $\mathbf{p}$. By Exercise 1.5.9, this is equivalent to showing that the partial derivatives of $f$ with respect to the Euclidean coordinate functions are all 0.
+
+We first consider
+\[
+	\frac{\partial f}{\partial x} (\mathbf{p}) = \lim_{h \to 0} \frac{f(\mathbf{p}+h\mathbf{e}_1)-f(\mathbf{p})}{h} .
+\] Assuming $f$ is differentiable, this quantitiy exists. First note that since $\mathbf{p}$ is a local maximum of $f$, there is some $\delta>0$ such that
+\[
+	f(\mathbf{p}+he_1) \leq f(\mathbf{p})
+\] when $0 < h < \delta.$ Then the limit from above, since $h$ is always positive, satisfies
+\[
+\lim_{h \searrow 0} \frac{f(\mathbf{p}+he_1)-f(\mathbf{p})}{h} \leq 0.
+\] When $h$ approaches $0$ from below, however, the denominator is negative, so the limit from below satisfies
+\[
+\lim_{h \nearrow 0} \frac{f(\mathbf{p}+he_1)-f(\mathbf{p})}{h} \geq 0.
+\] Since the limit exists, these two quantities must be equal, meaning that $\frac{\partial f}{\partial x} (\mathbf{p})=0$.
+
+Similarly, the partial derivaties $\frac{\partial f}{\partial y} $ and $\frac{\partial f}{\partial z} $ are also 0 at $\mathbf{p}$. Thus $\mathbf{p}$ is a critical point of $f$.
+
+
+\begin{exer}[1.6.3]
+	For any function $f$, show that $d(df)=0.$ Deduce that $d(f\;dg)=df\wedge dg$.
+\end{exer}
+Since $df= \sum_i \frac{\partial f}{\partial x_i} dx_i$, we can write $d(df)$ as
+\begin{align*}
+	d(df) &= \sum_i d\left( \frac{\partial f}{\partial x_i}  \right)dx_i \\
+	      &= \sum_{i,j}\frac{\partial^2 f}{\partial x_j \partial x_i} dx_j \wedge dx_i.
+\end{align*}
+Since $f$ is continuous,
+\[
+\frac{\partial^2 f}{\partial x_j \partial x_i} = \frac{\partial^2 f}{\partial x_i \partial x_j}
+\] for all pairs $i,j$. Then for all pairs $i,j$, there are two terms in the sum
+\[
+	\frac{\partial^2 f}{\partial x_j \partial x_i} dx_j \wedge dx_i \text{ and } \frac{\partial^2 f}{\partial x_i \partial x_j} dx_i \wedge dx_j
+\] whose coefficients are equivalent. Then by the anti-commutativity of the wedge product, the sum of each of these pairs is 0, so the whole sum is 0. Thus $d(df)=0$.
+
+Then $d(f\;dg) = df\wedge dg + f\;d(dg) = df\wedge dg$.
+
+
+\begin{exer}[1.6.4]
+	Simplify the following forms:
+	\begin{enumerate}
+		\item $d(f\;dg+g\;df)$.
+		\item $d( (f-g)(df+dg))$.
+		\item $d(f\;dg+g\;df)$.
+		\item $d(gf\;df)+d(f\;dg)$.
+	\end{enumerate}
+\end{exer}
+All of these calculations at some point or another use the identities $d^2 = 0$ and $d(f\;dg) = df\wedge dg$, as derived in the previous problem.
+\begin{enumerate}
+	\item
+		\begin{align*}
+			d(f\;dg+gdf) &= df\wedge dg+dg\wedge gf \\
+				     &= df\wedge dg - df\wedge dg \\
+				     &= 0.
+		\end{align*}
+
+	\item 
+		\begin{align*}
+			d( (f-g)(df+dg)) &= d(f-g) \wedge (df+dg) + (f-g) d(df+dg) \\
+					 &= (df-dg) \wedge (df+dg) + (f-g) 0 \\
+					 &= (df\wedge dg) - (dg\wedge df) \\
+					 &= 2(df \wedge dg).
+		\end{align*}
+
+	\item 
+		\begin{align*}
+			d(f\;dg\wedge g\;df) &= (d(f\;dg)\wedge g\;df) - (f\;dg \wedge d(g\;df)) \\
+					     &= (df\wedge dg \wedge g\;df) - (f\;dg \wedge dg\wedge df) \\
+					     &= 0 - 0 \\
+					     &= 0.
+		\end{align*}
+
+	\item 
+		\begin{align*}
+			d(gf\;df) + d(f\;dg) &= (d(gf)\wedge df)+(df\wedge dg) \\
+					     &= ( (dg)f + g\;df)\wedge df + (df\wedge dg) \\
+					     &= (f\;dg\wedge df) + (df \wedge dg) \\
+					     &= (1-f)(df\wedge dg).
+		\end{align*}
+\end{enumerate}
+
+
+\begin{exer}[1.6.6]
+	If $r,\theta,z$ are the cylindrical coordinate functions on $\mathbb{R}^3$, then $x=r\cos \theta$, $y=r\sin\theta$, and $z=z$. Compute the \textbf{volume element} $dx\;dy\;dz$ of $\mathbb{R}^3$ in cylindrical coordinates (that is, express $dx\;dy\;dz$ in terms of the functions $r,\theta,z$, and their differentials).
+\end{exer}
+In cylindrical coordinates, $dx$, $dy$, and $dz$ become
+\begin{itemize}
+	\item $dx = d(r\cos\theta) = dr\;\cos\theta + r \;d(\cos\theta) = \cos\theta \;dr - r \sin\theta \;d\theta$,
+	\item $dy = dr\;\sin\theta + r d(\sin\theta) = \sin\theta\;dr + r\cos\theta\;d\theta$, and
+	\item $dz = dz$.
+\end{itemize}
+Their wedge product simplifies considerably, as the $dr \wedge dr$ and $d\theta \wedge d\theta$ terms become 0.
+\begin{align*}
+	dx \wedge dy \wedge dz &= (\cos\theta \;dr - r \sin\theta \;d\theta) \wedge (\sin\theta\;dr + r\cos\theta\;d\theta) \wedge dz \\
+			       &= (r\cos^2\theta)\;dr\;d\theta\;dz - (r\sin^2\theta)\;d\theta\;dr\;dz \\
+			       &= r (\cos^2\theta + \cos^2\theta) \;dr\;d\theta\;dz \\
+			       &= r \;dr\;d\theta\;dz,
+\end{align*}
+where the last line follows from the identity $\cos^2\theta + \sin^2\theta = 1$.
+
+
+
+\begin{exer}[1.6.7]
+	Prove that for any $1$-form $\phi$, $d(d\phi)=0$.
+\end{exer}
+$\phi= \sum f_i \;dx_i$, so $d\phi$ is the 2-form $\sum df_i \wedge dx_i$. By the definition of $d$ on forms, applying $d$ to just the scalar components of this 2-form is the same result as applying $d$ to each $df_i$. Then by Exercise 1.6.3,
+\[
+	d\phi = \sum d(df_i) \wedge dx_i = 0.
+\] 
+
+
+\begin{exer}[1.6.8]
+	Prove that the gradient, curl, and divergence can be expressed as exterior derivatives.
+\end{exer}
+\begin{enumerate}
+	\item The differential of $f$ can be written
+		\[
+		df = \sum \frac{\partial f}{\partial x_i} dx_i
+		\] 
+		and the gradient of $f$ is
+		\[
+			\text{grad } f = \sum \frac{\partial f}{\partial x_i} U_i.
+		\] 
+		Then corresponding every $dx_i$ and $U_i$ gives $df \stackrel{(1)}{\leftrightarrow} \text{grad } f$.
+
+	\item Assume $\phi \stackrel{(1)}{\leftrightarrow} V$. Applying $d$ to $\phi$ then yields
+		\begin{align*}
+			d\phi &= df_1\;dx + df_2\;dy + df_3\;dz.
+			\intertext{Expanding each $df_i$ and removing instances of $dx_i \wedge dx_i$ gives}
+			      &= \left( \frac{\partial f_1}{\partial x_2}dy + \frac{\partial f_1}{\partial x_3}dz  \right)dx + \left( \frac{\partial f_2}{\partial x_1}dx + \frac{\partial f_2}{\partial x_3}dz  \right)dy + \\
+			      &\quad \left( \frac{\partial f_3}{\partial x_1}dx + \frac{\partial f_3}{\partial x_2}dy  \right)dz \\
+			      &= \left( \frac{\partial f_2}{\partial x_1} -\frac{\partial f_1}{\partial x_2}  \right)dx\;dy - \left( \frac{\partial f_1}{\partial x_3} -\frac{\partial f_3}{\partial x_1}  \right)dx\;dz + \left( \frac{\partial f_3}{\partial x_2} -\frac{\partial f_2}{\partial x_3}  \right)dy\;dz.
+		\end{align*}
+		The given $(2)$ correspondence then allows us to associate this with
+		\begin{align*}
+			\left( \frac{\partial f_3}{\partial x_2} -\frac{\partial f_2}{\partial x_3}  \right)U_1 + \left( \frac{\partial f_1}{\partial x_3} - \frac{\partial f_3}{\partial x_1}  \right)U_2 + \left( \frac{\partial f_2}{\partial x_1} -\frac{\partial f_1}{\partial x_2}  \right)U_3,
+		\end{align*}
+		which, since $\phi \stackrel{(1)}{\leftrightarrow} V$, corresponds to $\text{curl } V$.
+
+	\item Assume $\mu \stackrel{(1)}{\leftrightarrow} V$. We can write any 2-form $\mu$ as
+		\[
+		\mu = f_3 \;dx\;dy + f_2\;dz\;dx + f_1\;dy\;dz,
+		\] so applying $d$ yields
+		\begin{align*}
+			d\mu &= df_3\;dx\;dy + df_2\;dz\;dx + df_1\;dy\;dz.
+			\intertext{Expanding each $df_i$ and removing $dx_i \wedge dx_i$ terms gives}
+			     &= \frac{\partial f_3}{\partial x_3} dz\;dx\;dy + \frac{\partial f_2}{\partial x_2} dy\;dz\;dx + \frac{\partial f_1}{\partial x_1} dx\;dy\;dz \\
+			     &= \left( \sum_i \frac{\partial f_i}{\partial x_i}  \right)dx\;dy\;dz.
+		\end{align*}
+		Since $\mu \stackrel{(1)}{\leftrightarrow} V$, this is the same as $(\text{div } V) dx\;dy\;dz$.
+\end{enumerate}
+
+\end{document}

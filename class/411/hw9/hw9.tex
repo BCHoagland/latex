@@ -1,0 +1,61 @@
+\documentclass[10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/math}
+
+\lhead{Braden Hoagland}
+\chead{HW 9}
+\rhead{}
+
+\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+{\color{blue}Problems completed: All.}
+
+\begin{exer}[\S 51 \#1]
+If $h,h':X\to Y$ are homotopic and $k,k':Y\to Z$ are homotopic, then $k \circ h$ and $k' \circ h'$ are homotopic.
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+Suppose $h \simeq h'$ via  $H$ and $k \simeq k'$ via $K$, then we claim that $k \circ h \simeq k'\circ h'$ via the map
+\begin{align*}
+	F: X \times I &\to Z\\
+	(x,t)&\mapsto K(H(x,t),t).
+\end{align*}
+At $t=0$, $F(x,0) = K(H(x,0),0) = K(h(x),0) = (k\circ h)(x)$. Similarly, at $t=1$, $F(x,1)=K(H(x,1),1)=K(h'(x),1) = (k'\circ h')(x)$. Finally, $F$ is continuous since it is the composition of continuous functions: Let $H' = (H, \pi_2)$, then $H'$ is continuous and $F = K \circ H'$.
+
+\pagebreak
+\begin{exer}[\S 51 \#3]
+	$X$ is \textbf{contractible} if $i_{X}$ is nulhomotopic.
+	\begin{enumerate}
+		\item $I=[0,1]$ and $\mathbb{R}$ are contractible.
+		\item A contractible space is path connected.
+		\item If $Y$ is contractible, then for any $X$, the set $[X,Y]$ (the set of homotopy classes of maps of $X$ into $Y$) has a single element.
+		\item If $X$ is contractible and $Y$ is path connected, then $[X,Y]$ has a single element.
+	\end{enumerate}
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+\begin{enumerate}
+	\item If a space is convex, then any two paths are homotopic via the straight line homotopy. Since $I$ and $\mathbb{R}$ are both convex, they are both contractible.
+
+	\item Suppose $X$ is contractible and $x,y \in X$. Since $X$ is contractible, $i_{X}$ and some constant function $\tilde{f}(x) = c$ are homotopic via some $F$. Since $F$ is continuous by definition,
+		\begin{align*}
+			f_{x} &\cdot F(x,\cdot) \\
+			f_{y} &\cdot F(y,\cdot)
+		\end{align*}
+		are both continuous. Then $f_{x}$ is a path from $x$ to $c$, and $f_{y}$ is a path from $y$ to $c$. Then $f:[0,2]\to X$ given by
+		\[
+			f(t) \doteq
+			\begin{cases}
+				f_{x}(t) & t \leq 1 \\
+				f_{y}(2-t) & t \geq 1
+			\end{cases}
+		\] is a path from $x$ to $y$. Thus $X$ is path connected.
+
+	\item Since $Y$ is contractible, $i_{Y}$ and some constant function $y\mapsto c$ are homotopic via some $G$. Let $f:X\to Y$ be arbitrary, then $F(x,t) = G(f(x),t)$ is a homotopy from  $f$ to $\tilde{f}$, where $\tilde{f}(x)=c$. Since $f$ was arbitrary, this means that all maps from $X$ to $Y$ are homotopic to $\tilde{f}$. Since homotopy is an equivalence relation, this means all such maps are homotpic to each other, i.e. $[X,Y]$ has one element.
+
+	\item Fix $y \in Y$. Since $X$ is contractible, $i_{X}$ and some constant function $x \mapsto c$ are homotopic via some $G$. Then for all maps $f:X\to Y$, the map $F(x,t) = f(G(x,t))$ is a homotopy from $f$ to the constant function $x \mapsto f(c)$. Now since $Y$ is path connected, there is a path $\gamma$ from $f(c)$ to $y$. Then $H(x,t) = \gamma(t)$ is a homotopy from $x \mapsto f(c)$ to $x \mapsto y$. Composing these two homotopies shows $f \simeq x \mapsto y$. But since $f$ was arbitrary, this means all maps from $X$ to $Y$ are homotopic to the same constant function. Since homotopy is an equivalence relation, this means $[X,Y]$ has one element.
+\end{enumerate}
+
+\end{document}

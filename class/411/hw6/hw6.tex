@@ -1,0 +1,93 @@
+\documentclass[10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/math}
+
+\lhead{Braden Hoagland}
+\chead{HW 6}
+\rhead{}
+
+\begin{document}
+%\tableofcontents
+
+\renewcommand{\theenumi}{\alph{enumi}}
+
+{\color{blue}Problems completed: All.}
+
+\begin{exer}[]
+Munkres \S 25, pg. 162 \#4.
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+Let $C$ be an open connected set in $X$. Then for all $x \in C$, since $C$ is a neighborhood of $x$ and $X$ is locally path connected, there is some path component $P_{x} \subset C$. Then $C = \bigcup_{x \in X}P_{x}$.
+
+By Munkres Theorem 25.4, each $P_{x_i}$ is open in $X$. Since $C$ is open in $X$, this means that each $P_{x_i}$ is open in $C$ as well. Thus if any two $P_{x_i}$, $P_{x_j}$ are disjoint, we have contradicted the connectedness of $C$, so all $P_{x_i}$ must intersect at least one other $P_{x_j}$. Thus $C$ is path connected.
+
+\begin{exer}[]
+Munkres \S 25, pg. 162 \#5.
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+\begin{enumerate}
+	\item \textbf{Path Connected:} Let $x,y \in T$, then $x$ lies on a line $L_x$ and $y$ lies on a line $L_y$. To get from $x$ to $y$, follow $L_x$ to $p$, then follow $L_y$ to $y$. Thus $T$ is path connected.
+
+		\textbf{Locally Connected at $p$:} Let $U$ be any neighborhood of $p$, then we can find an open rectangle inside of $U$ that contains $p$. But then this region is homeomorphic to the entire space (it's just a ``scaled down" version), which we know now to be path connected, so it must also be connected. Thus $T$ is locally connected at $p$.
+
+		\textbf{Not Locally Connected Elsewhere:} Now consider any point $x \neq p$ in $T$ on the line $L_{q_1}$, and let $B(x, {\Vert{x-p}\Vert}) \cap T$ be a neighborhood of $x$ that does not contain $p$. We want to show that any open set $U$ that lies in this open ball is disconnected. Any such $U$ must contain at least one other distinct line, say $L_{q_2}$, and since $\mathbb{Q}$ is dense in $\mathbb{R}$, we can find a line $L_r$ for $r\in \mathbb{R}$ that lies between $L_{q_1}$ and $L_{q_2}$ that is not in $T$.
+
+		Let $U_1$ denote the intersection of all of $T$ to the left of $L_{r}$ with $U$, and let $U_2$ be the intersection of all of $T$ to the right of $L_{r}$ with $U$. These are both open sets in $U$, as they are open sets of $[0,1] \times [0,1]$ intersected with $U$. And since $U$ is the disjoint union of $U_1$ and $U_2$, it is disconnected.
+
+	\item Let $T'$ be the union of all lines connecting the origin to the rational points of the interval $[-1,0] \times \left\{ 1 \right\}$, and consider the space given by the union of $T$ with $T'$. The argument that this space is path connected everywhere and disconnected at all of the non-hub points is identical to the arguments before.
+
+		At the hub points, the previous argument no longer holds, as any open set containing a hub point also contains lines from the opposing set of lines. Then the same argument for all the non-hub points can be used to show that our space is disconnected at the two hub points, so it is nowhere locally connected.
+\end{enumerate}
+
+\begin{exer}[]
+Munkres \S 26, pg. 171 \#7.
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+Let $A \times B$ be closed in $X \times Y$, the we want to show that $\pi_1(A \times B)=A$ is closed in $X$. Let $a \not\in A$, then $\pi_1^{-1}(a) = \left\{ a \right\}\times Y$ is disjoint from $A \times B$. Since $A \times B$ is closed, its complement is open, so there is some open set $U$ around $\left\{ a \right\}\times Y$ that does not intersect $A \times B$.
+
+Then since $Y$ is compact, by the tube lemma we can find a neighborhood $V$ of $a$ such that $V \times Y \subset U$. Since $U$ does not intersect $A \times B$, neither does $V \times Y$. But since $Y$ clearly intersects $B$ ($B$ is a subset of $Y$), the only way this is possible is if $V$ does not intersect $A$.
+
+We have found a neighborhood of $a \not\in A$ that does not intersect $A$, so $X-A$ is open, so $A$ is closed. Thus $\pi_1$ is a closed map.
+
+\begin{exer}[]
+Munkres \S 26, pg. 171 \#8.
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+\textbf{Forward:} Suppose $f$ is continuous. If $x \times y \not\in G_{f}$, then $y \neq f(x)$. Since $Y$ is Hausdorff, we can find disjoint neighborhoods $U, V$ of $y,f(x)$, respectively. Additionally, the continuity of $f$ lets us find a neighborhood $W$ of $x$ such that $f(W) \subset V$. Then $W \times U$ is a neighborhood of $x \times y$ that does not intersect $G_{f}$, so $(X \times Y ) - G_{f}$ is open, so $G_{f}$ is closed.
+
+\textbf{Backward:} Supose $G_f$ is closed, and let $V$ be a neighborhood of $f(x)$. Then $Y-V$ is closed, so $X \times (Y-V)$ is closed as it is the product of two closed sets. Then $G_{f}\cap(X \times (Y-V))$ is closed as it is the intersection of closed sets.
+
+Since $Y$ is compact, by the previous exercise, $\pi_1$ is a closed map. Thus
+\[
+	\pi_1\left( G_{f}\cap (X \times (Y-V)) \right) = \left\{ x \;|\; f(x) \in Y-V \right\}
+\] is closed. Then its complement $U \cdot \left\{ x \;|\; f(x) \in V \right\}$ is open. We have found a neighborhood $U$ of $x$ such that $f(U) \subset V$, so $f$ is continuous.
+\pagebreak
+
+\begin{exer}[]
+Munkres \S 26, pg. 171 \#11.
+\end{exer}
+{\color{blue}Collaborators: Saloni Bulchandani.}
+
+\begin{lem}
+	If $C, D$ are disjoint compact subsets of a Hausdorff space $X$, then there exist disjoint open sets $U,V$ of $X$ containing $C,D$, respectively.
+\end{lem}
+\begin{proof}
+	Fix $d \in D$. Since $X$ is Hausdorff, for all $c \in C$ we can find disjoint neighborhoods $U_{c,d}, V_{c,d}$ of $c,d$, respectively. Since $\left\{ U_{c,d} \right\}_{c \in C}$ covers $C$ and $C$ is compact, there is a finite subcover $\left\{ U_{c_i,d} \right\}_{i=1}^N$. Then $U_{d}\doteq \bigcup_{i=1}^N U_{c_i,d}$ contains $C$ and does not intersect $V_{d}\doteq \bigcap_{i=1}^N V_{c_i,d}$, which is a neighborhood of $d$ since the intersection is finite.
+
+	Now $\left\{ V_{d} \right\}_{d \in D}$ is an open cover of $D$ and $D$ is compact, we can find a finite subcover $\left\{ V_{d_j} \right\}_{j=1}^M$. Since $U_d$ doesn't intersect $V_d$ for all $d$, we can define two disjoint open sets
+	\[
+		U \doteq \bigcap_{j=1}^M U_{d_j}, \quad V \doteq \bigcup_{j=1}^M V_{d_j}.
+	\] 
+	Since each $U_{d_j}$ contains $C$, so does their intersection $U$, and $V$ is a cover of $D$ by definition. Thus we have found disjoint open sets containing $C$ and $D$.
+\end{proof}
+
+Suppose $C,D$ separate $Y$. Since $C$ and $D$ are open and are each others' complements in $Y$, they are also both closed in $Y$. Since $Y$ is the intersection of closed sets in $X$, $Y$ is closed in $X$. Then $ C,D$ are closed in $X$, and since $X$ is compact, $C,D$ are also compact.
+
+By the lemma, we can find disjoint open sets $U,V$ of $C,D$. Now for any $A \in \mathcal{A}$, the set $A - (U \cup V)$ is nonempty. Otherwise, $U \cap A, V \cap A$ would separate $A$, contradicting the connectedness of $A$. Since any finite subset of $\mathcal{A}$ is nested, we know that $\mathcal{A}$ (and by extension $Y$) satisfies the finite intersection property.
+
+Since $U \cup V$ is open and $A$ is closed, $A - (U \cup V) = A \cap (X-(U \cup V))$ is the intersection of two closed sets and so must be closed itself. Then since $X$ is compact, by Theorem 26.9, the intersection $\bigcap_{A \in \mathcal{A}}(A - (U \cup V))$ is nonempty. Then $\bigcap_{A \in \mathcal{A}}(A - (C \cup D))$ must also be nonempty, which contradicts the fact that $C$ and $D$ cover $Y$. Thus by contradiction, $Y$ must be connected.
+
+\end{document}

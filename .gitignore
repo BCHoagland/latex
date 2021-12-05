@@ -9,8 +9,5 @@
 *.bbl
 *.blg
 
-# don't track homework files
-class
-
 # general stuff
 .DS_Store

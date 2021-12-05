@@ -1,0 +1,208 @@
+\documentclass[10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/math}
+
+\lhead{Braden Hoagland}
+\chead{HW 10}
+\rhead{}
+
+\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+
+\begin{exer}[]
+7.3: 1.
+\end{exer}
+\begin{enumerate}
+	\item Since $E_{i}=v U_{i}$, the dual frame is given by
+		\[
+			\theta_{i}(V) = \left\langle E_i,V \right\rangle=\left\langle vU_i,V \right\rangle = \frac{U_{i}\cdot V}{v} ,
+		\] which forces $\theta_1=du/v, \theta_2 = dv/v$. Then by the first structural equations,
+		\begin{align*}
+			\frac{1}{v^2} \;du \wedge dv &= d\theta_1 = \omega_{12}\wedge \theta_2 = \omega_{12} \wedge dv/v,\\
+			0 &= d\theta_2 = \omega_{21}\wedge \theta_1 = -\omega_{12} \wedge du/v,
+		\end{align*}
+		which implies $\omega_{12} = du/v = \theta_1$.
+
+	\item Since $\alpha=(r \cos t, r\sin t)$, our frame is given by
+		\begin{align*}
+			E_1 &= r \sin t \; U_1, \\
+			E_1 &= r \sin t \; U_2.
+		\end{align*}
+		W can then calculate the velocity of $\alpha$ by
+		\begin{align*}
+			\alpha &= r \cos t \;U_1 + r \sin t \;U_2, \\
+			\alpha' &= -r \sin t \;U_1 + r \cos t \;U_2 \\
+				&= -E_1 + \cot t \;E_2.
+		\end{align*}
+		Since $\omega_{12}=\theta_1$, the covariant derivative formula for curves becomes
+		\begin{align*}
+			\alpha''=\nabla_{\alpha'}\alpha' &= \left[ f_1'+f_2 \omega_{21}(\alpha') \right]E_1 + \left[ f_2'+f_1\omega_{12}(\alpha') \right]E_2 \\
+						&= \left[ f_1'-f_1f_2 \right]E_1+ \left[ f_2'+f_1^2 \right]E_2 \\
+						&= \cot t\; E_1 + (1-\csc^2 t) E_2 \\
+						&= \cot t\; E_1 - \cot^2 t \;E_2 \\
+						&= -\cot t \;\alpha'.
+		\end{align*}
+
+	\item Similarly, $v=st$, so $\beta' = (c,s)$ written in terms of our frame field is
+		\[
+		\beta' = \frac{c}{st} \;E_1 + \frac{1}{t} \;E_2.
+		\] 
+		Then
+		\begin{align*}
+			\beta'' = \nabla_{\beta'}\beta' &= \left[ -\frac{c}{st^2} -\frac{c}{st^2}  \right]E_1 + \left[ -\frac{1}{t^2} +\left( \frac{c}{st}  \right)^2 \right]E_2 \\
+							&= -\frac{2c}{st^2} E_1 + \frac{c^2-s_2}{s^2t^2} E_2.
+		\end{align*}
+		Now by our condition $c^2+s^2=1$,
+		\begin{align*}
+			\left\langle \beta',\beta' \right\rangle = \frac{\beta'\cdot \beta'}{v^2} = \frac{c^2+s^2}{s^2t^2} = \frac{1}{s^2t^2} ,
+		\end{align*} we get $\left\langle \beta',\beta' \right\rangle' = -2/s^2t^3$. The same condition also gives
+		\[
+		\left\langle \beta',\beta'' \right\rangle = \frac{-c^2-s^2}{s^2t^3p} = \frac{-1}{s^2t^3} ,
+		\] so $2\left\langle \beta',\beta'' \right\rangle=-2/s^2t^3=\left\langle \beta',\beta' \right\rangle$, as desired.
+\end{enumerate}
+
+\begin{exer}[]
+7.3: 4.
+\end{exer}
+	Since $\mathbf{x}(u,v) = \left( r\cos v \cos u,r \cos v \sin u, r \sin v \right)$, our frame is
+		\begin{align*}
+			E_1 &= \frac{\mathbf{x}_{u}}{\sqrt{E}} = \frac{\mathbf{x}_{u}}{r \cos v} ,\\
+			E_2 &= \frac{\mathbf{x}_{v}}{\sqrt{G} } = \frac{\mathbf{x}_{v}}{r} .
+		\end{align*}
+		The velocity of $\alpha$ is then
+		\begin{align*}
+			\alpha' &= \left( -r \cos v_0 \sin u, r \cos v_0 \cos u,0 \right) \\
+				&= r \cos v_0 \;E_1.
+		\end{align*}
+		To use the textbook's form of the covariant derivative formula for curves, we define $f_1 = r \cos v_0, f_2=0$. Note that $f_1'=f_2'=0$. Then since the connection is worked out in the chapter as $\omega_{12}= \sin v \; du$, the covariant derivative becomes
+		\begin{align*}
+			\alpha'' &= f_1\omega_{12}(\alpha') \; E_2 \\
+				 &= r \cos v_0 \sin v_0 \; E_2.
+		\end{align*}
+
+\pagebreak
+\begin{exer}[]
+7.3: 5.
+\end{exer}
+\begin{enumerate}
+	\item Suppose $\omega_{12}$ is the connection form on a frame field of $\mathcal{D}$. By the second structural equation,
+		\[
+		d \omega_{12} = -K \theta_1 \wedge \theta_2 = -K \;dM.
+		\] Then by Stokes' Theorem,
+		\[
+		\psi_{\alpha} = -\int_{\alpha} \omega_{12} = \int_{} \int_{\mathcal{D}} K\;dM.
+		\] 
+
+	\item Since
+		\[
+			\frac{\psi_{\alpha}}{A(\mathcal{D})} = \frac{\int_{} \int_{\mathcal{D}} K\;dM}{\int_{} \int_{\mathcal{D}} dM} ,
+		\] as we take the limit as $\mathcal{D}$ is contracted to $\mathbf{p}$, we recover just $K(\mathbf{p})$.
+\end{enumerate}
+
+\begin{exer}[]
+7.4: 2.
+\end{exer}
+At $t=0$, $\gamma_{cv}(t) = \gamma_{v}(ct)$ since $c\mathbf{v},\mathbf{v}$ have the same point of application. Also,
+\[
+	\gamma_{v}'(ct) = c \frac{d\gamma_{v}(ct)}{d(ct)} = c \gamma_{v}'(t) = c\mathbf{v}.
+\] Since $\gamma_{v}(ct)$ and $\gamma_{cv}(t)$ agree at their initial position and velocity, and since initial position and velocity uniquely determine geodesics, these two geodesics must be the same.
+
+\pagebreak
+\begin{exer}[]
+7.4: 6.
+\end{exer}
+In this question I use the fact that $F:\Sigma(r) \to P(r)$ is a local isometry. Since geodesics are isometric invariants, this means the geodesics of $P(r)$ are precisely the images of the geodesics of $\Sigma(r)$ under $F$.
+\begin{enumerate}
+	\item The geodesics of $\Sigma(r)$ are the great circles of $\Sigma(r)$, which are simple closed curves of radius $2\pi r$. After identifying antipodal points, the radius of these curves becomes just $\pi r$. No self-intersections are introduced by $F$ and the endpoints of the curves still equal the starting points, so they're still simple and closed.
+
+	\item Any two distinct points on the sphere that are not antipodal have a unique great circle $C$ containing both of them. Then $F (C)$ is a geodesic in $P(r)$ containing both points (they're still distinct since they weren't antipodal and thus weren't identified by $F$), which induces a geodesic route between them.
+
+	\item On $\Sigma(r)$, two distinct geodesics meet at 2 antipodal points. Then in $P(r)$, since these two intersection points are identified, two distinct geodesics intersect at exactly 1 point.
+\end{enumerate}
+
+\pagebreak
+\begin{exer}[]
+7.5: 5.
+\end{exer}
+Since $\mathbf{x}(u,v) = ( (R+r\cos u) \cos v, (R + r\cos u) \sin v, r \sin u)$, we can manually calculate $G = \mathbf{x}_{v}\cdot \mathbf{x}_{v} = (R+r\cos u)^2$. This means that the slant for the torus is
+\[
+	c = \sqrt{G} (a_1) \sin \phi = (R+r\cos a_1) \sin \phi.
+\]
+
+\begin{enumerate}
+	\item If $\alpha$ is tangent to the top circle, then $a_1=\phi=\pi/2$, so $\cos a_1=\sin\phi=1$, so $c = R$. Then by Theorem 5.3, we can't leave the region
+\[
+	\left\{ G \geq c^2 \right\} = \left\{ (R+r c\cos u)^2 \geq R^2 \right\} = \left\{ -\frac{\pi}{2} \leq u \leq \frac{\pi}{2}  \right\}.
+\] We know that the parellels of the circle (besides the inner and outer equators) are not geodesics, so $\alpha$ must leave the top circle, i.e. $\sin \phi$ decreases. But as $\sin \phi$ approaches 0, we approach the boundary of the restricted region, meaning that $\alpha$ has to level out and become tangent to the bottom circle. Then by a symmetric argument, $\alpha$ returns to the top circle, then repeats this cycle.
+
+	\item If $\alpha$ crosses the inner equator, then $a_1=-\pi$, so the slant is
+		\[
+			c = (R+r \cos a_1) \sin \phi = (R-r) \sin \phi < R-r,
+		\] where the last inequality follows from $\alpha$ not being tangent to the inner equator, i.e. $\sin \phi<1$. Without loss of generality, suppose $\alpha$ is traveling upward, then $\sin \phi$ must decrease, so $R + r\cos a_1$ must increase, meaning that $\alpha$ approaches the top circle.
+
+		As $\alpha$ crosses the top circle (it cannot be tangent to it, as then $c$ would equal $R$, which isn't less than $R-r$), $R+r \cos a_1$ continues to increase and $\sin \phi$ continues to decrease. Once $\alpha$ croses the outer equator, we're in a symmetric situation as to the one we started in, so $\alpha$ will continue to loop around the torus.
+
+		If $\alpha$ is a meridian, then it is just a closed loop that intersects the two equators at one point each. If $\alpha$ is not a meridiean, then it must twist around the torus.
+
+	\item Since $c = (R+r \cos a_1)\sin \phi$, then
+		\[
+			c^2 = (R+r\cos a_1)^2 \sin^2 \phi \leq (R+r)^2,
+		\] so $|c| \leq R+r$. In particular, this means part (a) is the case $R-r < |c| < R+r$ and part (b) is the case $0 \leq |c| < R-r$. In the case $|c|=R-r$, we have the inner equator, and in the case $|c|=R+r$, we have the outer equator. This is all possible cases, so all geodesics besides the equators must cross the outer equator.
+\end{enumerate}
+
+\pagebreak
+\begin{exer}[]
+7.5: 8.
+\end{exer}
+\begin{enumerate}
+	\item Since $\overline{iz+2} = 2-\overline{z}i$,
+		\begin{align*}
+			F(z_0 &= \frac{z+2i}{iz+2} \\
+			      &= \frac{z+2i}{iz+2} \frac{2-\overline{z}i}{2-\overline{z}i} \\
+			      &= \frac{2(z-\overline{z}) + (4-|z|^2)i}{|iz+2|^2} .
+		\end{align*}
+		Thus the imaginary component of $F(z)$ is
+		\[
+			\mathscr{I} F(z) = \frac{4-|z|^2}{|iz+2|^2}.
+		\] We also note that the real component is
+		\[
+			\mathscr{R} F(z) = \frac{2(z-\overline{z})}{|iz+2|^2}.
+		\] 
+	
+	\item We can manually solve for the inverse of $F$, which is
+		\[
+			F^{-1}(z) = \frac{2(z-i)}{1-zi} .
+		\] We can check manually that $F(F^{-1}(z)) = F^{-1}(F(z))=z$, so this is indeed the inverse. Since it's also differentiable, $F$ is a diffeomorphism.
+
+	\item Since $F$ is a diffeomorphism, it is necessarily regular. Then by \S 7.1 Exercise 7 (we did this in HW 8), $F=(f,g)$ is conformal if $f_{u}=g_{v}$ and $f_{v}=-g_{u}$ and has scale factor $\left| dF/dz \right|$.
+
+		We can write $F$ in this form by $F = (\mathscr{I} F, \mathscr{R} F)$, then expanding into $u$ and $v$ components by $z=u+vi$, we get
+		\[
+			f(u,v) = \frac{4u}{4-4v+v^2+u^2} , \quad g(u,v) = \frac{4-u^2-v^2}{4-4v+v^2+u^2} .
+		\] We can manually calculate all the partials, getting
+		\begin{align*}
+			f_{u} &= \frac{16-16v+4v^2-4u^2}{(4-4v+v^2+u^2)^2} = g_{v},\\
+			f_{v} &= \frac{16u-8uv}{(4-4v+v^2+u^2)^2} = -g_{u}.
+		\end{align*}
+		Thus $F$ is conformal, and its scale factor is
+		\[
+			\lambda(z) = \left| \frac{dF}{dz}  \right| = \left| \frac{(iz+2)-(z+2i)i}{(iz+2)^2}  \right| = \left| \frac{4}{(iz+2)^2}  \right| = \frac{4}{|iz+2|^2} .
+		\] 
+
+	\item For $\mathbf{v},\mathbf{w}$ tangent to $z$, the metrics on $H$ and $P$ are
+		\begin{align*}
+			\left\langle \mathbf{v},\mathbf{w} \right\rangle_{H} &= \frac{\mathbf{v}\cdot \mathbf{w}}{(1- |z|^2/4)^2} = \frac{4^2 (\mathbf{v}\cdot \mathbf{w})}{(4-|z|^2)^2}, \\
+			\left\langle \mathbf{v},\mathbf{w} \right\rangle_{P} &= \frac{\mathbf{v}\cdot \mathbf{w}}{(\mathscr{I} z)^2} .
+		\end{align*}
+		Since in HW 7 we proved that conformal maps preserve inner products up to $\lambda^2$,
+		\begin{align*}
+			\left\langle F_{*}\mathbf{v},F_{*}\mathbf{w} \right\rangle_{P} &= \frac{F_{*}\mathbf{v} \cdot F_{*}\mathbf{w}}{(\mathscr{I} F(z))^2} \\
+										       &= \frac{(4-|z|^2)^2}{4^2} \frac{(|iz+2|^2)^2}{(4-|z|^2)^2} \left\langle F_{*}\mathbf{v},F_{*}\mathbf{w} \right\rangle_{H} \\
+										       &= \left( \frac{|iz+2|^2}{4} \right)^2 \lambda^2(z) \left\langle \mathbf{v},\mathbf{w} \right\rangle_{H}\\
+										       &= \lambda^{-2}(z) \lambda^2(z) \left\langle \mathbf{v},\mathbf{w} \right\rangle_{H}\\
+										       &= \left\langle \mathbf{v},\mathbf{w} \right\rangle_{H}.
+		\end{align*}
+		Thus $F$ is an isometry.
+\end{enumerate}
+
+\end{document}

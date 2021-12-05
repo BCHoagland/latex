@@ -1,0 +1,301 @@
+\documentclass[twoside,10pt]{report}
+\newcommand{\docTitle}{Final Exam}
+\usepackage{/Users/bradenhoagland/latex/math2}
+
+\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+\begin{exer}[]
+Prove/counterexamples.
+\end{exer}
+\begin{enumerate}
+	\item False. Consider the 1-form
+		\[
+		\psi= \frac{u\;dv-v\;du}{u^{2}+v^{2}} .
+	\] Suppose $\psi$ is exact, i.e. $\psi=df$ for some scalar field $f$. Then by Stokes' Theorem and the fact that $S^{1}$ has no boundary,
+		\[
+		\int_{S^{1}} \psi = \int_{S^{1}} df = \int_{\p S^{1}} f=0.
+		\] 
+		But $\int_{S^{1}} \psi=2\pi\neq 0$, so $\psi$ cannot be exact.
+
+	\item False. The curve $\alpha(t)=(0,0,0)$ is infinitely differentiable, but $\alpha'(t) = (0,0,0)$, so $\alpha$ is not regular.
+
+	\item False. Consider an infinite cylinder with radius $r$, which have principal curvatures $k_1=1/r$ and $k_2=0$. Its Gaussian curvature is $K=k_1k_2=0$, but its mean curvature is $H=\frac{1}{2} (k_1+k_2) = \frac{1}{2r} \neq 0$.
+
+	\item False. The projective plane $P$ is compact with Euler characteristic 1.
+\end{enumerate}
+
+\newpage
+\begin{exer}[]
+Overlapping patches.
+\end{exer}
+\begin{enumerate}
+	\item Solving for $u',v'$ in terms of $u,v$ gives
+		\begin{align*}
+			u&= \frac{u'}{2} -\frac{v'}{4} ,\\
+			v&= \frac{v'}{2} .
+		\end{align*}
+		Then
+		\begin{align*}
+			u^{2}+v^2&=\left( \frac{u'}{2} -\frac{v'}{4} \right)^2+\left( \frac{v'}{2} \right)^2 \\
+				 &= \frac{4(u')^2-4u'v'+5(v')^2}{16}.
+		\end{align*}
+
+	\item Using the previous expression for $u$ and $v$ and using the fact that $d$ is linear,
+		\begin{align*}
+			du &= \frac{du'}{2} -\frac{dv'}{4} ,\\
+			dv &= \frac{dv'}{2} .
+		\end{align*}
+		Then
+		\begin{align*}
+			du+v\;dv &= \frac{du'}{2} -\frac{dv'}{4} + \frac{v'\;dv'}{4} \\
+				 &= \frac{2\;du'+dv'(v'-1)}{4} .
+		\end{align*}
+	
+	\item By the chain rule,
+		\[
+		\frac{\p f}{\p u} =\frac{\p f}{\p u'} \frac{\p u'}{\p u} +\frac{\p f}{\p v'} \frac{\p v'}{\p u} .
+		\] 
+		Since
+		\[
+		\frac{\p u'}{\p u} =2, \quad \frac{\p v'}{\p u} =0,
+		\] this becomes
+		\[
+		\frac{\p f}{\p u} = 2\frac{\p f}{\p u'} .
+	\] Then since $v^2=(v')^2/4$,
+		\[
+			V[f] = \frac{(v')^{2}}{2} \frac{\p f}{\p u'} .
+		\] 
+\end{enumerate}
+
+\newpage
+\begin{exer}[]
+Bucky Ball.
+\end{exer}
+\begin{enumerate}
+	\item Let $p$ be the number of pentagons and $h$ the number of hexagons, then our assumption that two hexagons and one pentagon meet at each vertex gives us the following system:
+		\begin{align*}
+			v &= \frac{1}{3} (5p+6h)\\
+			e &= \frac{1}{2} (5p+6h) \\
+			f &= p+h\\
+			5p&= \frac{1}{2} (6h).
+		\end{align*}
+		The first equation counts each vertex on each face, then divides by 3 since each vertex is counted three times (by assumption, it touches three faces). The second equation counts the edges of each face, then divides by 2 since each edge is similarly counted twice. The third equation counts the total number of faces. The fourth equation is the relation that every vertex touches one pentagon and two hexagons.
+
+		Now since a convex polyhedron is diffeomorphic to the sphere, it has Euler characteristic 2, so the first three equations give
+		\begin{align*}
+			v - e + f &= 2,\\
+			(\frac{5}{3} -\frac{5}{2} +1)p + (2-3+1)h &= 2,\\
+			\frac{1}{6} p&=2, \\
+			p&=12.
+		\end{align*}
+		The fourth equation then gives $h = \frac{5}{3} p = 20$. We can then use the vertex equation to get $v = 60$.
+
+	\item This is impossible. Let $t$ be the number of triangles and $h$ be the number of heptagons. We have a similar system as before:
+		\begin{align*}
+			v&=\frac{1}{3} (3t+7h),\\
+			e&=\frac{1}{2} (3t+7h),\\
+			f&=t+h,\\
+			3t&=\frac{7}{2} h.
+		\end{align*}
+		The Euler characteristic is still 2, so we can use the first three equations to get
+		\[
+		h=3t-12.
+		\] But plugging this into the last equation yields
+		$
+		t=\frac{84}{15}.
+		$ This is not an integer, and we can't have a fractional number of triangles in our polyhedron, so it must be impossible to construct one.
+\end{enumerate}
+
+\newpage
+\begin{exer}[]
+Fresnet apparatus and osculating circle.
+\end{exer}
+\begin{enumerate}
+	\item We can calculate the Fresnet apparatus using Theorem 4.3 in O'Neill \S 2.4. We calculate
+		\begin{align*}
+			\alpha'&=(-2\sin t,\cos t,1),\\
+			\alpha''&=(-2\cos t,-\sin t,0),\\
+			\alpha''&=(2\sin t,-\cos t,0).
+		\end{align*}
+		Note that ${\Vert{\alpha'}\Vert}=\sqrt{3 \sin^{2}t+2} $. Since this is never 0, $\alpha$ is regular (so we can apply the theorem). Then at $t=0$, we have
+		\begin{align*}
+			\alpha'&=(0,1,1), \quad {\Vert{\alpha'}\Vert}=\sqrt{2} ,\\
+			\alpha''&=(-2,0,0), \quad {\Vert{\alpha''}\Vert}=2,\\
+			\alpha'''&=(0,-1,0),\\
+			\alpha'\times \alpha''&= (0,-2,2), \quad {\Vert{\alpha'\times \alpha''}\Vert}=\sqrt{8} .
+		\end{align*}
+		Then by the theorem,
+		\begin{align*}
+			T &= \frac{\alpha'}{{\Vert{\alpha'}\Vert}} =\frac{(0,1,1)}{\sqrt{2} } ,\\
+			B &= \frac{\alpha' \times \alpha''}{{\Vert{\alpha' \times \alpha''}\Vert}} = \frac{(0,-2,2)}{\sqrt{8} } ,\\
+			N &= B\times T = (-1,0,0),\\
+			\kappa&= \frac{{\Vert{\alpha' \times \alpha''}\Vert}}{{\Vert{\alpha'}\Vert}^{3}} = \frac{\sqrt{8} }{(\sqrt{2} )^{3}} = \frac{2\sqrt{2} }{2\sqrt{2} }=1,\\
+			\tau&=\frac{(\alpha' \times \alpha'')\cdot \alpha'''}{{\Vert{\alpha'\times \alpha''}\Vert}^{2}} = \frac{1}{4} .
+		\end{align*}
+
+	\item The curvature of the circle must match that of $\alpha$ at $t=0$, and we know the curvature of a circle is the constant $1/r$, so since $\kappa=1$ at $t=0$,
+		\[
+		\kappa=\frac{1}{r} \implies r = \frac{1}{\kappa} =1.
+		\] 
+		Since ${\Vert{N}\Vert}=1$, we can find the center $\mathbf{c}$ of the circle by
+		\begin{align*}
+			\mathbf{c}&=\alpha(0) + r N(0) \\
+				  &= (2,0,0) + 1 \cdot (-1,0,0)\\
+				  &= (1,0,0).
+		\end{align*}
+\end{enumerate}
+
+\newpage
+\begin{exer}[]
+Half plane.
+\end{exer}
+\begin{enumerate}
+	\item Let $\left\{ U_i \right\}$ be the natural frame field, then set $E_i = yU_i$. Then
+		\[
+		\left\langle E_i,E_j \right\rangle = \frac{yU_i \cdot yU_j}{y^2} = U_i \cdot U_j = \delta_{ij},
+	\] so this is a frame on $P$. Now set $\theta_1 = \frac{dx}{y} ,\theta_2=\frac{dy}{y} $. Then $\theta_i(E_j) = dx_{i}(U_{j}) = \delta_{ij}$, so this is a coframe.
+
+\item We can determine $\omega_{12}$ using the first structural equations. We have
+	\begin{align*}
+		d\theta_1 &= \omega_{12}\wedge \theta_2 \\
+		-\frac{1}{y^{2}} dy \wedge dx &= \omega_{12}\wedge \frac{1}{y} dy,
+	\end{align*}which implies that the $dx$ component is $\frac{1}{y} dx$. Similarly, we have
+	\begin{align*}
+		d\theta_2&=\omega_{21}\wedge \theta_1\\
+		0&=-\omega_{12}\wedge \frac{1}{y} dx,
+	\end{align*}which implies that the $dy$ component is 0. Thus $\omega_{12}=\frac{dx}{y} =\theta_1$. By antisymmetry, $\omega_{21}=-\theta_1$ and $\omega_{11}=\omega_{22}=0$.
+
+	\item We can determine $K$ using the second structural equation. We have
+		\begin{align*}
+			d\omega_{12}&=-K\theta_1\wedge \theta_2\\
+			-\frac{1}{y^2} dy\wedge dx &=-K \frac{dx}{y} \wedge \frac{dy}{y} \\
+			dx\wedge dy &= -Kdx\wedge dy.
+		\end{align*}Thus $K=-1$.
+
+	\item The velocity of $\alpha$ is
+		\begin{align*}
+			\alpha &= r \cos t \;U_1 + r \sin t \;U_2, \\
+			\alpha' &= -r \sin t \;U_1 + r \cos t \;U_2 \\
+				&= -E_1 + \cot t \;E_2.
+		\end{align*}
+		Since $\omega_{12}=\theta_1$, the covariant derivative formula for curves becomes
+		\begin{align*}
+			\alpha''=\nabla_{\alpha'}\alpha' &= \left[ f_1'+f_2 \omega_{21}(\alpha') \right]E_1 + \left[ f_2'+f_1\omega_{12}(\alpha') \right]E_2 \\
+						&= \left[ f_1'-f_1f_2 \right]E_1+ \left[ f_2'+f_1^2 \right]E_2 \\
+						&= \cot t\; E_1 + (1-\csc^2 t) E_2 \\
+						&= \cot t\; E_1 - \cot^2 t \;E_2 \\
+						&= -\cot t \;\alpha'.
+		\end{align*}
+
+	\item $\alpha$ is not a geodesic since its acceleration is not 0. It \textit{is}, however, a pregeodesic: $\alpha'$ and $\alpha''$ are collinear, so by the remarks at the end of O'Neill \S 7.4, $\alpha$ is a pregeodesic.
+
+	\item Since $\mathbf{x}_{u}, \mathbf{x}_{v}$ are orthonomal, we calculate
+		\[
+		E=G=\frac{1}{y^{2}} , \quad F = \frac{0}{y^{2}} =0,
+	\] so $P$ is Clairaut (in a symmetric sense; the $x$ and $y$ coordinates are swapped). Then by a swapped version of O'Neill \S 7.5 Proposition 5.5, the geodesics with $\alpha'$ never orthogonal to the meridians are given by
+	\begin{align*}
+		\frac{d x}{d y} &= \pm \frac{c\sqrt{G} }{\sqrt{E} \sqrt{E-c^2} } \\
+				&= \pm \frac{c}{\left( \frac{1}{y^2} -c^2 \right)^{1/2}} \\
+				&= \pm \frac{cy}{(1-y^2c^2)^{1/2}} .
+	\end{align*}
+	Integrating gives
+	\begin{align*}
+		x &= \pm \frac{(1-y^{2}c^{2})^{1/2}}{c}+C\\
+		(x-C)^2&= \frac{1-y^2c^2}{c^2} \\
+		(x-C)^2&=\frac{1}{c^2} -y^2\\
+		(x-C)^2+y^2&=\frac{1}{c^2} .
+	\end{align*}
+	Thus these geodesics are semicircles with center on the $x$-axis. The other meridians are then those orthogonal to the meridians. Since $x$ and $y$ are swapped, the meridians are the $x$-curves, so the orthogonal curves are the $y$-curves, i.e. vertical lines. They're geodesics by a swapped version of O'Neill \S 7.5 Lemma 5.2.
+\end{enumerate}
+
+\newpage
+\begin{exer}[]
+Integrals.
+\end{exer}
+\begin{enumerate}
+	\item We calculate $\alpha'(t) = (-\sin t, \cos t)$. Then by definition,
+		\[
+			\int_{\alpha} \phi= \int_{0}^{2\pi} \phi(\alpha'(t))\;dt = \int_{0}^{2\pi} (-\sin^{2}t-\cos^{2}t)\;dt =-\int_{0}^{2\pi} dt = -2\pi.
+		\] 
+	\item Let $f=\frac{1}{2} (x^2+y^2)$, then $df = x\;dx + y\;dy=\phi$, so by O'Neill \S 4.6 Theorem 6.2 and using the fact that $\alpha(0) = \alpha(2\pi)$,
+		\[
+			\int_{\alpha} \phi = \int_{\alpha} df = f(\alpha(2\pi)) - f(\alpha(0)) = 0.
+		\] 
+
+	\item Suppose $\psi \doteq \sin\theta\;d\theta\;d\phi$ is exact, i.e. $\psi=d\varphi$ for some 1-form $\varphi$. Then by Stokes' Theorem, for a surface $M$,
+		\[
+		\int_{} \int_{M} \psi = \int_{} \int_{M} d\varphi = \int_{\p M} \varphi.
+		\] Let $M$ be the sphere $S^{2}$, then since $S^{2}$ has no boundary, $\int_{} \int_{S^{2}} \psi=0$. But we can manually calculate this integral using a change of coordinates:
+		\begin{align*}
+			\int_{} \int_{S^{2}} \psi &= \int_{} \int_{S^{2}} \sin\theta\;d\theta\;d\phi \\
+						  &= \int_{0}^{\pi} \int_{0}^{\pi} r^{2}\sin^{2}\theta\;d\theta\;d\phi \\
+						  &= r^{2}\int_{0}^{2\pi} \left[ \frac{\theta}{2} -\frac{\sin(2\theta)}{4}  \right]^{\theta=\pi}_{\theta=0}\;d\phi \\
+						  &= r^{2}\int_{0}^{2\pi} \frac{\pi}{2} \;d\phi\\
+						  &= \pi^{2}r^2.
+		\end{align*}
+		But this is not equal to 0, so $\psi$ cannot be exact.
+\end{enumerate}
+
+\newpage
+\begin{exer}[]
+Shape operator.
+\end{exer}
+\begin{enumerate}
+	\item Note that $M$ is the image of the Monge patch $\mathbf{x}(x,y) = (x,y,f(x,y))$, so
+		\begin{align*}
+			\mathbf{x}_{x}(x,y)&=(1,0,f_{x}(x,y)),\\
+			\mathbf{x}_{y}(x,y)&=(0,1,f_{y}(x,y)).
+		\end{align*}
+		By assumption, $\mathbf{x}_{x}(0,0) = (1,0,0)=U_{1}(\mathbf{0})$ and $\mathbf{x}_{y}(0,0)=(0,1,0)=U_{2}(\mathbf{0})$. Then by O'Neill \S 4.3 Lemma 3.6, since $\mathbf{x}(\mathbf{0}) = (0,0,f(0,0))=\mathbf{0}$, $\mathbf{u}_{1}=\mathbf{x}_{x}(\mathbf{0})$, and $\mathbf{u}_{2}=\mathbf{x}_{y}(\mathbf{0})$, the vectors $\mathbf{u}_{1}$ and $\mathbf{u}_{2}$ are tangent to $M$ at $\mathbf{0}$.
+
+		By \S 4.3 Lemma 3.8, $M$ has a normal vector field
+		\[
+			\nabla_{}(x-f(x,y)) = -f_{x}U_1-f_{y}U_2+U_3.
+		\] Dividing by its norm yields a unit normal vector field
+		\[
+		U = \frac{-f_{x}U_1-f_{y}U_2+U_3}{\sqrt{1+f_{x}^{2}+f_{y}^2} } .
+		\] 
+
+	\item The shape operator is given by
+		\[
+			S_{\mathbf{p}}(\mathbf{v}) = -\nabla_{\mathbf{v}}U,
+		\] where $\mathbf{v}$ is tangent to $\mathbf{p}$. Since $\mathbf{u}_{1},\mathbf{u}_{2}$ are tangent to $\mathbf{0}$, this means $S_{0}(\mathbf{u}_{1}), S_{0}(\mathbf{u}_{2})$ are well-defined. Since $\sqrt{1+f_{x}^{2}+f_{y}^2}=1$ at the origin,
+		\begin{align*}
+			-\nabla_{u_i}U &= \frac{1}{\sqrt{1+f_{x}^{2}+f_{y}^2}}\left( \mathbf{u}_{i}[f_{x}]U_1+\mathbf{u}_{i}[f_{y}]U_2+\mathbf{u}_{i}[-1]U_3 \right) \\
+				       &= \mathbf{u}_{i}[f_{x}]U_1+\mathbf{u}_{i}[f_{y}]U_2.
+		\end{align*}
+		Then since $\mathbf{u}_{i}=U_{i}(\mathbf{0})$ and $f_{xy}=f_{yx}$,
+		\begin{align*}
+			S_0(\mathbf{u}_{1})&=f_{xx}(\mathbf{0})\mathbf{u}_{1}+f_{xy}(\mathbf{0})\mathbf{u}_{2}, \\
+			S_0(\mathbf{u}_{2})&=f_{xy}(\mathbf{0})\mathbf{u}_{1}+f_{yy}(\mathbf{0})\mathbf{u}_{2}.
+		\end{align*}
+		This gives the matrix
+		\[
+			S_0=
+		\begin{pmatrix}
+			f_{xx}(\mathbf{0})&f_{xy}(\mathbf{0})\\
+			f_{xy}(\mathbf{0})&f_{yy}(\mathbf{0})
+		\end{pmatrix}.
+		\] 
+
+	\item For (i), we get $f_{xx}=f_{yy}=0$ and $f_{xy}=1$, so the matrix becomes
+		\[
+		\begin{pmatrix}
+			0&1\\
+			1&0
+		\end{pmatrix},
+	\] which has rank 2.
+
+	For (ii), we get $f_{xx}=f_{yy}=f_{xy}=2$, so the matrix becomes
+	\[
+	\begin{pmatrix}
+		2&2\\
+		2&2
+	\end{pmatrix},
+	\] which has rank 1.
+\end{enumerate}
+
+\end{document}

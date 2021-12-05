@@ -1,0 +1,122 @@
+\documentclass[10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/math}
+
+\lhead{Braden Hoagland}
+\chead{HW 2}
+\rhead{}
+
+\renewcommand{\theenumi}{\alph{enumi}}
+
+\newmdtheoremenv{challenge}{Challenge}
+
+\begin{document}
+
+{\color{red}Problems completed: All (except challenge).}
+
+\begin{exer}[6 points]
+	Munkres, \S 13, pg. 83 \#7. You needn't compare $\mathcal{T}_1$ and $\mathcal{T}_3$ as this was an exercise on Homework 1.
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+Below is a figure showing the relations between each of the five topologies, with vertical position indicating which other topologies a certain topology contains.
+
+\begin{figure}[H]
+\centering	
+\begin{tikzcd}
+\mathcal{T}_2                     &                                                                           & \mathcal{T}_4 \\
+                                  & \mathcal{T}_1 \arrow[rd, no head] \arrow[ru, no head] \arrow[lu, no head] &               \\
+\mathcal{T}_3 \arrow[ru, no head] &                                                                           & \mathcal{T}_5
+\end{tikzcd}
+\end{figure}
+
+In order to determine all these relations, transitivity of inclusion means that we only need to compare a select few of the toplogies. From homework 1, we already know that $\mathcal{T}_3$ is strictly coarser than $\mathcal{T}_1$.
+
+\textbf{$\mathcal{T}_1$ vs $\mathcal{T}_2$:} Since the basis for the $K$-topology on $\mathbb{R}$ is $\left\{ (a,b) \;|\; a<b \right\} \cup \left\{ (a,b)-K \;|\; a<b \right\}$, it contains the entire basis for the standard topology. If $B=(-1,1) - K$, though, we cannot find an open interval of the form $(a,b)$ that contains $0$ but remains in $B$. Thus $\mathcal{T}_1$ is strictly coarser than $\mathcal{T}_2$.
+
+\textbf{$\mathcal{T}_1$ vs $\mathcal{T}_4$:} If $B=(a,b)$ is in the standard basis and $x \in B$, then $(a,x]$ is an element of the upper limit basis that contains $x$ and remains in $B$, so $\mathcal{T}_1 \subset \mathcal{T}_4$. This inclusion is strict, since for $B'=(a,b]$, there is no interval of the form $(c,d)$ that contains $b$ and remains in $B'$.
+
+\textbf{$\mathcal{T}_2$ vs $\mathcal{T}_4$:} As indicated in the diagram, these two topologies are not comparable. Let $B=(10,11]$ be an element of the upper limit basis, then there is no element of the $K$-basis that contains 11 and remains in $B$. On the other hand, if $B'=(-1,1)-K$ is an element of the $K$-basis, then there is no interval of the form $(a,b]$ containing 0 that also lies entirely in $B'$. Since neither topology is a subset of the other, they are not comparable.
+
+\textbf{$\mathcal{T}_1$ vs $\mathcal{T}_5$:} For $x \in B=(-\infty,a)$, the set $(x-1, a)$ contains $x$ and lies entirely in $B$, so $\mathcal{T}_5 \subset \mathcal{T}_1$. This inclusion is strict, since for $B'=(a,b)$ in the standard basis, there is no interval of the form $(-\infty,c)$ that lies entirely inside $B'$.
+
+\textbf{$\mathcal{T}_3$ vs $\mathcal{T}_5$:} The interval $(-\infty,a)$ is an element of $\mathcal{T}_5$, but $\mathbb{R}-(-\infty,a)=[a,\infty)$ is infinite, so it is not in the finite complement topology. On the other hand, $\mathbb{R}-\left\{ 0 \right\}$ is in the finite complement topology, but there is no way to take the union of elements of the form $(-\infty,a)$ and create such a hole at 0, so this set is not in $\mathcal{T}_5$. Thus the two topologies are not comarable.
+
+
+\begin{exer}[4 points]
+	Munkres, \S 16, pg. 91 \#1.
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+Denote the topology that $A$ inherits from $X$ by $\mathcal{T}_A^X$ and the topology it inherits from $Y$ by $\mathcal{T}_A^Y$.
+
+We first show $\mathcal{T}_A^Y \subset \mathcal{T}_A^X$. Let $U \in \mathcal{T}_A^Y$, then $U = U'\cap A$ for some $U'$ open in $Y$. But since $U'$ is open in $Y$, we can write it as $U' = U'' \cap Y$, where $U''$ is open in $X$. Then since $A$ is a subset of $Y$, we have $U = U'' \cap Y \cap A = U'' \cap A$, so $U \in \mathcal{T}_X$.
+
+We now show $\mathcal{T}_A^X \subset \mathcal{T}_A^Y$. Let $V \in \mathcal{T}_A^X$, then $V = V'\cap A$ for some $V'$ open in $X$. Since $A$ is a subset of $Y$, we can this as $V = (V' \cap Y) \cap A$. Now $V' \cap Y$ is an element of the topology on $Y$, so we have expressed $V$ as the intersection of $A$ and an open set of $Y$, so $V \in \mathcal{T}_Y$.
+
+
+\begin{exer}[5 points]
+	Prove Theorem 17.3 in \S 17, pg. 95 of Munkres.
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+Let $A$ be closed in $Y$, then since $Y$ is a subspace of $X$, $A = Y \cap B$ for some $B$ closed in $X$. Then since $Y$ is closed in $X$, $A$ is the intersection of closed sets of $X$, so $A$ is itself closed in $X$.
+
+\begin{exer}[5 points]
+	Munkres, \S 17, pg. 101 \#6.
+\end{exer}
+{\color{blue}Collaborators: None.}
+
+\begin{enumerate}
+	\item $A \subset B \subset \overline{B}$, so $\overline{B}$ is a closed set containing $A$. Now $\overline{A}$ is the intersection of all closed sets containing $A$, so $\overline{A} \subset \overline{B}$.
+	\item First we show $\overline{A \cup B} \subset \overline{A}\cup \overline{B}$. Since $A \subset \overline{A}$ and $B\subset \overline{B}$, we have $A \cup B \subset \overline{A} \cup \overline{B}$. Then by part (a), $\overline{A \cup B} \subset \overline{\overline{A} \cup \overline{B}} = \overline{A} \cup \overline{B}$, where the last equality follows from the finite union of closed sets being closed.
+
+		Now we show $\overline{A} \cup \overline{B} \subset \overline{A \cup B} $. By part (a), since $A \subset A \cup B$, we have $\overline{A} \subset \overline{A \cup B} $. Similarly, $\overline{B} \subset  \overline{A \cup B} $. Since $\overline{A}$ and $\overline{B}$ are both subsets of $\overline{A \cup B} $, their union $\overline{A} \cup \overline{B}$ is also a subset of $\overline{A \cup B} $.
+	\item For all $\beta$, $A_{\beta}\subset \cup_{\alpha}A_{\alpha}$. So by part (a), $\overline{A_{\beta}} \subset \overline{\cup_{\alpha}A_{\alpha}} $ for all $\beta$. Then $\cup_{\alpha} \overline{A_{\alpha}} \subset \overline{\cup_{\alpha}A _{\alpha}} $.
+
+		As a counterexample for the reverse inclusion, consider the set of intervals 
+		\[
+		\left\{ \left[ \frac{1}{n} , 1 \right] \right\}_{n \in \mathbb{Z}^+}
+	\] in the standard topology on $\mathbb{R}$. The closure of their union is $\overline{\cup_{n}[1/n, 1]} = \overline{(0,1]} =[0,1]$, but their union of their closures is $\cup_{n}\overline{[1/n,1]} =\cup_{n}[1/n,1] = (0,1]$.
+\end{enumerate}
+
+\begin{exer}[5 points]
+	Munkres, \S 17, pg. 101 \#8.
+\end{exer}
+{\color{blue}Collaborators: Rahul Ramesh, Saloni Bulchandani.}
+
+\begin{enumerate}
+	\item Equality does not hold, but we do have $\overline{A \cup B} \subset \overline{A} \cap \overline{B}$. Since $A \cap B \subset A, B$, by part (a) in the previous problem, $\overline{A \cap B} \subset \overline{A}, \overline{B}$. Then $\overline{A \cap B} \subset \overline{A} \cap \overline{B}$.
+
+		As a counterexample for the reverse inclusion, consider the two intervals
+		\begin{align*}
+			A &= (0, 1) \\
+			B &= (1, 2)
+		\end{align*}
+		in the standard topology on $\mathbb{R}$. For these two intervals, $\overline{A \cap B} = \overline{\varnothing} =\varnothing$, but $\overline{A} \cap \overline{B} = [0,1] \cap [1,2] = \left\{ 1 \right\}$.
+
+	\item Again, we do not have equality, but we do have $\overline{\cap A_{\alpha}} \subset \overline{A_{\alpha}}$. For all $\beta$, $\cap A_{\alpha}\subset A_{\beta}$. Then by part(a) of the previous problem, $\overline{\cap A_{\alpha}} \subset \overline{A_{\beta}} $ for all $\beta$, so $\overline{\cap A_{\alpha}} \subset \cap \overline{A_{\alpha}} $.
+
+		The counterexample from part (a) of this problem shows that the reverse inclusion does not hold.
+
+	\item We don't have equality here, either, but this time the inclusion is reversed. Let $x \in \overline{A}-\overline{B}$, then every neighborhood of $x$ intersects $A$ but does not intersect $B$. In other words, every neighborhood of $x$ intersects $A-B$, so $x \in \overline{A-B}$. Thus $\overline{A}-\overline{B} \subset \overline{A-B} $.
+
+		As a counterexample for the reverse inclusion, consider the intervals
+		\begin{align*}
+			A&=(0,3) \\
+			B&=(1,2)
+		\end{align*}
+		in the standard topology on $\mathbb{R}$. For this example, $\overline{A-B} =\overline{(0,1] \cup [2,3)} =[0,1] \cup [2,3]$, but $\overline{A}-\overline{B}=[0,3]-[1,2] = [0,1) \cup (2,3]$.
+\end{enumerate}
+
+\newpage
+
+\begin{challenge}
+	This challenge problem is just for fun and worth no points, even if solved correctly. Please complete your solutions to all other problems before spending time on this question.
+	
+	Let $S$ be an arbitrary subset of a topological space $X$. What is the maximum number of distinct subsets of $X$ obtainable from $S$ using only the operations of closure and complement?
+
+	As an example, suppose $S = (0, 1) \subseteq \mathbb{R}$. The complement of $S$ is $A_1 = (-\infty, 0] \cup [1, \infty)$, which is closed. The closure of $S$ is $A_2 = [0, 1]$, whose complement is $A_3 = (-\infty, 0) \cup (1, \infty)$. Since the closure of $A_3$ is back to $A_1$, we are done. Hence, $4$ sets are obtainable from $S$, including $S$ itself.
+\end{challenge}
+{\color{red}Collaborators: None.}
+
+\end{document}

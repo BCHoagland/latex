@@ -1,0 +1,179 @@
+\documentclass[10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/math}
+
+\lhead{Braden Hoagland}
+\chead{HW 6}
+\rhead{}
+
+\begin{document}
+%\tableofcontents
+
+\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{exer}[]
+\S 4.8 \#6.
+\end{exer}
+\begin{enumerate}
+	\item \textbf{Covering Axiom:} Suppose $\mathbf{u}$ is a unit normal vector to $M$, then $\mathbf{u} \in \hat{M}$. Also, $\mathbf{u}$ is tangent to $\mathbf{x}(u,v)$ for some $u,v \in \mathbb{R}^2$. Then one of $\mathbf{x}_{\pm}(u,v)$ is equal to $\mathbf{u}$, so the $\mathbf{x}_{\pm}$ cover $\hat{M}$.
+
+		\textbf{Smooth overlaps:} Suppose $\mathbf{x}_{\pm}, \mathbf{y}_{\pm}$ overlap (their signs don't matter, so pick either). We know $\mathbf{x}^{-1}\mathbf{y}$ and $\mathbf{y}^{-1}\mathbf{x}$ are differentiable, and the cross product is differentiable, so $\mathbf{x}_{\pm}^{-1}\mathbf{y}_{\pm}$ and $\mathbf{y}_{\pm}^{-1}\mathbf{x}_{\pm}$ are also differentiable.
+
+		\textbf{Hausdorff:} Fix $\mathbf{p} \neq \mathbf{q} \in \hat{M}$. Since both are normal to $M$, they are only distinct if they are at different points of $M$. Then since $M$ is Hausdorff, $\mathbf{p} \in \mathbf{x}$, $\mathbf{q} \in \mathbf{y}$ for disjoint patches $\mathbf{x}, \mathbf{y}$. Then $\mathbf{x}_{\pm}, \mathbf{y}_{\pm}$ are also disjoint patches of $\hat{M}$, so $\hat{M}$ is Hausdorff.
+
+	\item On the sphere, the unit vectors either extend away from the sphere or toward the origin, so $\hat{\Sigma}$ is the collection of these two differently-directed unit vectors.
+
+		On the torus, the unit vectors either extend away from the surface or inside (along each circular slice of the torus, the unit vectors point toward the center of that circle). These two collections of vectors make up the orientation covering surface of the torus.
+
+	\item By \S 4.7 Proposition 7.5, $M$ has 2 smooth unit normals $\pm U$. We can associate $\pm U$ to its corresponding point of application $\mathbf{p} \in M$. Since $U$ is smooth, this map is locally diffeomorphic, so the vectors associated with all $U$ and the vectors associated with all $-U$ are both diffeomorphic copies of $M$.
+
+	\item Diffeomorphisms are necessarily regular, so the map $\pm U \mapsto \mathbf{p}$ must be regular.
+\end{enumerate}
+
+\begin{exer}[]
+\S 4.8 \#7.
+\end{exer}
+\begin{enumerate}
+	\item Since $M$ is nonorientable, it has a reversing loop, say at $\mathbf{q} \in M$. Fix $U_{q}$, then all elements $U_{p}$ of $\hat{M}$ can be connected to $U_{q}$ with a path from $\mathbf{p}$ to $\mathbf{q}$ (this is possible since $M$ is connected). If moving $U_{p}$ along this path yields $-U_{q}$, just slide it around the reversing loop to get $U_{q}$ instead. Thus $\hat{M}$ is connected.
+
+	\item Two patches $\mathbf{x}, \mathbf{y}$ have unit normals
+		\[
+		U_{x}= \frac{\mathbf{x}_{u}\times \mathbf{x}_{v}}{{\Vert{\mathbf{x}_{u} \times \mathbf{x}_{v}}\Vert}} , \quad U_{y}= \frac{\mathbf{y}_{u}\times \mathbf{y}_{v}}{{\Vert{\mathbf{y}_{u} \times \mathbf{y}_{v}}\Vert}}.
+	\] If $\mathbf{x}$ and $\mathbf{y}$ overlap and $U_{x}=-U_{y}$, (i.e. $M$ is nonorientable), then $\hat{\mathbf{x}}$ and $\hat{\mathbf{y}}$ are disjoint by definition. Thus there is no problem with opposing unit normal signs on the overlaps of $\hat{M}$, so $\hat{M}$ is orientable.
+\end{enumerate}
+
+\begin{exer}[]
+\S 4.8 \#8.
+\end{exer}
+Usually tracing out a circle would not be one-to-one, but in our case we are also twisting the surface as it is traced along the circle. Since only half a turn is made before returning to the start of the circle, each point on the circle has a unique rotation, thus making the map one-to-one.
+
+The derivative of the patch with respect to $u$ is $\beta'(u) + v\delta'(u)$, and the derivative with respect to $v$ is just $\delta(u)$. Since $\mathbf{x}_{u}$ depends on $v$ and $\mathbf{x}_{v}$ does not, the Jacobian must have maximal rank 2 (its two rows cannot possibly be linear combinations of one another), so $\mathbf{x}$ must be regular.
+
+The unit normal is given by
+\[
+U = \frac{\mathbf{x}_{u}\times \mathbf{x}_{v}}{{\Vert{\mathbf{x}_{u} \times \mathbf{x}_{v}}\Vert}},
+\] but we can simplify this. First note that $\mathbf{x}_{v} = \delta$. Also, manually expanding out $\mathbf{x}_{u}$ and taking its dot product with $\delta$ gives 0, so the two are orthogonal. Additionally, we can check that ${\Vert{\delta}\Vert}=1$. Then the norm of their cross product is
+\[
+{\Vert{\mathbf{x}_{u}\times \delta}\Vert} = {\Vert{\mathbf{x}_{u}}\Vert}{\Vert{\delta}\Vert}\sin \theta = {\Vert{x_{u}}\Vert}.
+\] Thus the unit normal vector is given by
+\[
+U = \frac{\mathbf{x}_{u}\times \delta}{{\Vert{\mathbf{x}_{u}}\Vert}} .
+\] 
+
+\begin{exer}[]
+\S 5.1 \#4.
+\end{exer}
+\begin{enumerate}
+	\item The normal vector fields on the cylinder are $\pm U = \pm (1/r)(x,y,0)$, so $G(M)$ is the equator of $\Sigma$.
+	\item Calculating the gradient and then making it unit length shows that \[\pm U = \pm \frac{1}{\sqrt{2} } \left( -\frac{x}{\sqrt{x^2+y^2} } ,-\frac{y}{\sqrt{x^2+y^2} } ,1 \right).\] Thus $G(M)$ is the circle on $\Sigma$ parallel to the equator at height $z=1/\sqrt{2} $ (or $-1/\sqrt{2} $ if we're using $-U$).
+	\item $\pm U = \pm (1/\sqrt{2} )(1,1,1)$, so $G(M)$ is the single point $\pm(1/\sqrt{3} )(1,1,1)$ (the sign depends on if we use $U$ or $-U$).
+	\item The normal vectors on the given sphere, when translated to the origin, line up with all points on $\Sigma$, so $G(M) = \Sigma$ for both $U$ and $-U$.
+\end{enumerate}
+
+\begin{exer}[]
+\S 5.2 \#1.
+\end{exer}
+\begin{enumerate}
+	\item Fix $\mathbf{p}$ on the cylinder, then set $\mathbf{e}_1$ to be running down the length of the cylinder and $\mathbf{e}^2$ to be tangent to the circle that $\mathbf{p}$ sits on. Then $S(\mathbf{e}_1)=0$ and $S(\mathbf{e}_2)=-\mathbf{e}_2/r$, so these are the principal vectors with principal curvatures $k_1=0$ and $k_2=-1/r$.
+
+	\item For $\mathbf{v}=(v_1,v_2)$, we know $S(\mathbf{v}) = S(v_1\mathbf{e}_1+v_2\mathbf{e}_2) = v_2\mathbf{e}_1 + v_1\mathbf{e}_2$. We also want $S(\mathbf{v}) = \lambda \mathbf{v}$, giving us the system
+		\begin{align*}
+			\lambda v_1 &= v_2 \\
+			\lambda v_2 &= v_1.
+		\end{align*}
+		This is satisfied when $v_1 = \pm v_2$. Additionally, since $\mathbf{v}$ must be a unit vector and since the two vectors we pick must we orthogonal, we get principal vectors $\mathbf{e}_1 = (1/\sqrt{2} )(1,-1)$ and $\mathbf{e}_2=(1/\sqrt{2} )(1,1)$. Their respective principal curvatures are then $k_1=-1$ and $k_2=1$.
+\end{enumerate}
+
+\begin{exer}[]
+\S 5.3 \#3.
+\end{exer}
+\begin{enumerate}
+	\item Let $\mathbf{v}$ and $\mathbf{w}$ be orthogonal unit tangent vectors to $\mathbf{p}$. By Corollary 2.6, if $\mathbf{v} = \cos \theta_v \mathbf{e}_1 + \sin \theta_v \mathbf{e}_2$ (where the $\mathbf{e}_i$ are the principal directions), the normal curvature is $k(\mathbf{v}) = k_1 \cos^2\theta_v + k_2 \sin^2\theta_v$. A similar formula holds for $k(\mathbf{w})$.
+
+		Since $\mathbf{v}$ and $\mathbf{w}$ are orthogonal, the angle between them differs by $\pi/2$, so $\cos^2 \theta_w = \sin^2 \theta_v$ and $\sin^2 \theta_w = \cos^2 \theta_v$. Their average value of $k(\mathbf{v})$ and $k(\mathbf{w})$ is then
+		\begin{align*}
+			\frac{1}{2} (k(\mathbf{v})+k(\mathbf{w})) &= \frac{1}{2} (k_1\cos^2\theta_v+k_2\sin^2\theta_v + k_1 \sin^2\theta_v + k_2 \cos^2\theta_v) \\
+								  &= \frac{1}{2} (k_1+k_2) \\
+								  &= H(\mathbf{p}).
+		\end{align*}
+	
+	\item Since $k(\theta) = k_1 \cos^2 \theta + k_2 \sin^2 \theta$, the given integral becomes
+		\begin{align*}
+			\frac{1}{2\pi} \int_{0}^{2\pi} k(\theta)\;d\theta &=  \frac{k_1}{2\pi} \int_{0}^{2\pi} \cos^2\theta\;d\theta +  \frac{k_2}{2\pi} \int_{0}^{2\pi} \sin^2\theta\;d\theta.
+			\intertext{But both integrals above evaluate to $\pi$, so this becomes}
+									  &=  \frac{1}{2\pi} (k_1\pi+k_2\pi) \\
+									  &= \frac{1}{2} (k_1+k_2) \\
+									  &= H(\mathbf{p}).
+		\end{align*}
+\end{enumerate}
+
+\begin{exer}[]
+\S 5.4 \#2.
+\end{exer}
+We calculate
+\begin{align*}
+	\mathbf{x}_u&=(1,0,f_u), \mathbf{x}_v=(0,1,f_v),\\
+	\mathbf{x}_{uu}&=(0,0,f_{uu}), \mathbf{x}_{uv}=(0,0,f_{uv}), \mathbf{x}_{vv}=(0,0,f_{vv}).
+\end{align*}
+Then
+\begin{align*}
+	E = 1+f_{u}^2, \quad F=f_uf_v, \quad G=1+f_v^2
+\end{align*}
+and
+\begin{align*}
+	U = \frac{\mathbf{x}_{u}\times \mathbf{x}_{v}}{{\Vert{\mathbf{x}_{u}\times \mathbf{x}_{v}}\Vert}} = \frac{(-f_u,-f_v,1)}{W} .
+\end{align*}
+This gives
+\begin{align*}
+	L=\frac{f_{uu}}{W} ,\quad M=\frac{f_{uv}}{W} , \quad N=\frac{f_{vv}}{W},
+\end{align*}
+so the Gaussian curvature is
+\[
+	K = \frac{LN-M^2}{W^2} = \frac{f_{uu}f_{vv}-f_{uv}^2}{(f_u^2+f_v^2+1)^2}
+\] and the mean curvature is
+\[
+	H = \frac{GL+EN-2FM}{2W^2} = \frac{(1+f_v^2)f_{uu}+(1+f_{u}^2)f_{vv}-2f_{u}f_{v}f_{uv}}{2(f_{u}^2+f_{v}^2+1)^{3/2}} .
+\] 
+
+
+\begin{exer}[]
+\S 5.4 \#4.
+\end{exer}
+We calculate
+\begin{align*}
+	\mathbf{x}_{u}&=(1,0,\tan u), \mathbf{x}_{v}=(0,1,-\tan v),\\
+	\mathbf{x}_{uu}&=(0,0,\sec^2 u), \mathbf{x}_{uv}=(0,0,0), \mathbf{x}_{vv}=(0,0,-\sec^2 v).
+\end{align*}
+Then
+\[
+E = 1+\tan^2 u, \quad F = -\tan u \tan v, \quad G = 1+ \tan^2 v
+\] and
+\[
+	U = \frac{\mathbf{x}_{u}\times \mathbf{x}_{v}}{{\Vert{\mathbf{x}_{u}\times \mathbf{x}_{v}}\Vert}} = \frac{(-\tan u, \tan v,1)}{W} .
+\] This gives
+\[
+L = \frac{\sec^2 u}{W} , \quad M = 0, N = -\frac{\sec^2 v}{W} ,
+\] so the Gaussian curvature is
+\[
+	K = \frac{LN-M^2}{W^2} = -\frac{\sec^2 u \sec^2 v}{W^2(1+\tan^2 u + \tan^2 v)} = -\frac{\sec^2 u \sec^2 v}{W^4}.
+\] The surface is minimal since the identity $1 + \tan^2 \theta = \sec^2 \theta$ makes the mean curvature reduce to
+\[
+H = \frac{GL+EN-2FM}{2W^2} = \frac{\sec^2 v \sec^2 u - \sec^2 u \sec^2 v}{2W^3} = 0.
+\] 
+
+\begin{exer}[]
+\S 5.4 \#7.
+\end{exer}
+We can use the Monge patch $\mathbf{x}(u,v) = (u,v,f(u,v))$, where $f(u,v) = u^3-3uv^2$. Then we calculate
+\begin{align*}
+	f_{u}&=3u^2-3v^2, \quad f_{v}=-6uv \\
+	f_{uu}&=6u, \quad f_{uv}=-6v, \quad f_{vv}=-6u.
+\end{align*}
+Let $W = \left( f_{u}^2+f_{v^2}+1 \right)^{1/2}=\left( 9r^4+1 \right)^{1/2}$, then by Exercise 7, the Gaussian curvature is
+\[
+	K = \frac{-36u^2-36v^2}{(9r^4+1)^(4/2)} = \frac{-36r^2}{(9r^4+1)^2} .
+\] Again by Exercise 7, the mean curvature is
+\[
+	H = \frac{27u(-u^4+2u^2v^2+3v^4)}{W^2} = \frac{27u(3v^2-u^2)r^2}{(9r^4+1)^{3/2}} .
+\] 
+
+\end{document}
