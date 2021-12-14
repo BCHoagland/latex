@@ -39,8 +39,6 @@
 %--------------------------------------------------------------------------------
 \section{Introduction}
 
-\warn{Add in citations.}
-
 Generative models are a means of producing data that is qualitatively similar to some collection of training data, usually by sampling noise and transforming it. More formally, if we have a collection of $n$-dimensional points $\hat{X}$, we then can treat this as a discrete, unbiased sample of a manifold $X$ embedded in $\R^{n}$. The goal of a generative model is then to create unseen points of $X$ using only $\hat{X}$ as a reference.
 
 A common strategy is to suppose that $X$ can be reasonably compressed into a simpler, lower-dimensional latent space $L$. If we can learn a map $L\to X$ that reconstructs $\hat{X}$ from points in $L$, and if $L$ is a simple enough space, then it should be straightforward to sample points randomly from $L$ and pass them through our reconstruction map to create unseen points in $X$.
@@ -56,7 +54,7 @@ Neural networks are powerful function approximators that are frequently used in 
 \begin{equation}
 	\mathbb{E}_{x \in X}\left[ \Delta(\hat{f}(x),f(x)) \right] \approx \frac{1}{|\hat{X}|} \sum_{x\in \hat{X}} \Delta(\hat{f}(x),f(x)).
 \end{equation}
-To perform this minimization, we can calculate the gradient of this expression with respect to the parameters composing the neural network, then take small steps in the direction of the negative gradient. This process, stochastic gradient descent, converges almost surely to a local minimum under some moderate assumptions. Although this minimum theoretically need not be the global minimum, various heuristics make stochastic gradient descent viable for finding nearly optimal solutions.
+To perform this minimization, we can calculate the gradient of this expression with respect to the parameters composing the neural network, then take small steps in the direction of the negative gradient. This process, stochastic gradient descent, converges almost surely to a local minimum under some moderate assumptions\cite{sgd-conv}. Although this minimum theoretically need not be the global minimum, various heuristics make stochastic gradient descent viable for finding nearly optimal solutions\cite{adam}.
 
 With large datasets, it might be infeasible to compute $(1)$ for all of $\hat{X}$. Instead, we can sample subsets (batches) of $\hat{X}$ and take a stochastic gradient descent step using each batch. This does not affect performance in practice, so we use it in our implementations of the various algorithms in this paper. From now on, we will treat neural networks as black box function approximators, specifying only the $\Delta$ maps used during gradient descent.
 
@@ -100,9 +98,13 @@ In addition to learning compressed representations of data, autoencoders can be 
 
 Perhaps the most obvious flaw with using autoencoders as generative models is that we do not know \textit{a priori} where the encoded representations of our sample points in $X$ will be in $L$, making it difficult to sample from $L$ effectively.
 
-\warn{draw model architecture}
-
 To realize this problem, we trained an autoencoder with a 2-dimensional latent space ($L=\R^{2}$) on the MNIST dataset of hand-drawn digits so as to visualize the distribution of latent embeddings. MNIST images are $28 \times 28$ grayscale values, so $X = \R^{784}$, and the dataset is standard in evaluating generative models. We used a simple feed-forward architecture for both $\mathcal{E}$ and $\mathcal{D}$, each with two hidden layers of 64 nodes and using ELU activations. All outputs from the decoder were passed through a sigmoid function to ensure that only valid grayscale values were produced.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.8]{fig/architecture.pdf}
+	\caption{The fully connected feed-forward autoencoder architecture used throughout our experiments. The only change to this architecture in any experiment was the dimension of $L$.}
+\end{figure}
 
 To train the network, we used mean binary cross entropy as the reconstruction loss and performend batch stochastic gradient descent. Thus for a batch $B$, the total loss was
 \begin{align*}
@@ -124,13 +126,13 @@ To train the network, we used mean binary cross entropy as the reconstruction lo
 %--------------------------------------------------------------------------------
 \section{Related Work}
 
-A common approach to addressing this sampling issue is the \textit{variational} autoencoder (VAE). Instead of $\mathcal{E}$ being a deterministic map $X\to L$, it maps points $x \in X$ to normal distributions $\mathcal{N}(\mu_{x}, \sigma^{2}_{x})$. To regularize the latent space, it minimizes the expected Kullback-Leibler divergence between the distributions output by the encoder and a standard normal distribution, which is feasible computationally since it has a closed form. This forces the points in the latent space to be approximately lie in a standard normal distribution, allowing for easier sampling.
+A common approach to addressing this sampling issue is the \textit{variational} autoencoder (VAE). Instead of $\mathcal{E}$ being a deterministic map $X\to L$, it maps points $x \in X$ to normal distributions $\mathcal{N}(\mu_{x}, \sigma^{2}_{x})$. To regularize the latent space, it minimizes the expected Kullback-Leibler divergence between the distributions output by the encoder and a standard normal distribution, which is feasible computationally since it has a closed form\cite{vae}. This forces the points in the latent space to be approximately lie in a standard normal distribution, allowing for easier sampling.
 
-\warn{Why should the embeddings be stochastic?}
+This is unsatisfying, however, as there is little reason for the embeddings to be inherently stochastic. Although useful for regularization purposes, adding noise to the latent embeddings reduces the quality of the learned representations of individual training points.
 
-\warn{Topological autoencoders paper: topological regularization, but trying to preserve topological features instead of just trying to regularize the latent space.}
+The application of a topology-based loss term to an autoencoder is not a novel idea. This same concept has been addressed by Moor et al., 2020 \cite{topo-ae}. In this paper, the authors construct a topological loss term that is shown empirically to aid in a variety of quality metrics while not having an adverse effect on the reconstruction loss. However, their loss aims to preserve topological structure of the input space in the latent representation of the autoencoder. This differs from our approach, as we try to regularize the latent space through enforcing later death times of connected components.
 
-\warn{Persistent homology and intrinsic dimension paper [Jerry].}
+A recent work, \cite{birdal}, also explores the use of topological regularization for deep neural networks. Theoretical connections are made between the box dimension, a measure of model complexity, and the 0th persistent homology dimension. The authors also experiment with a loss term built upon the 0th persistence diagrams, but the complexes are computed on the model \emph{weights}, not the latent space of a generative model. Empirical experiments verify that their regularization loss term acts as a proxy for the persistent homology dimension and improves the model's generalization ability.
 
 %--------------------------------------------------------------------------------
 % Methods
@@ -190,30 +192,33 @@ For $L=\R^2$, the standard autoencoder samples points with reasonable decodings,
 
 For $L=\R^{10}$, the irregular clusters of the standard autoencoder again prevent us from sampling effectively. Since the dataset has remained fixed while the number of latent dimensions has increased, we have increased the size of the regions in the latent space where the model has unknown behavior. It seems from \Cref{ae-10-comparison} that we have sampled from one of these regions, resulting in nonsensical images. On the contrary, the regularized autoencoder exhibits high coverage without producing uninterpretable results, and its clarity has improved over the $L=\R^2$ case, as one would expect with a higher-capacity model.
 
-\warn{Could put all the loss graphs and extra stuff in an appendix? Should ask Prof if that would contribute to page count...}
-
-%-------------------
-% Comparison with Variational Autoencoders
-%-------------------
-\subsection{Comparison with Variational Autoencoders}
-
-\warn{Do this.}
-
 %--------------------------------------------------------------------------------
 % Limitations and Discussion
 %--------------------------------------------------------------------------------
 \section{Limitations and Discussion}
 
-\warn{Computational concerns: no noticeable increase in computation time. Sometimes was ever so slightly faster, sometimes was ever so slightly slower. Do tests to see how that changes with larger batch sizes.}
+During our experiments, there was no noticeable increase in computation time when using our topological regularization with batch size 128; however, there \textit{was} a significant increase with batch size 512 due to the increased difficulty of computing the persistent homology death times. Thus this regularization is most feasible when using small batch sizes. Further computaitonal tricks and approximations might be possible to reduce training time, but this would require further research.
 
-\warn{Mention how the regularization makes the model more robust to changes in hyperparameters, especially $\dim L$.}
+Although our topological regularization was somewhat limited by batch size, it was successful in improving generative performance without sacrificing the quality of learned representations. Our regularized models were more robust with respect to the latent dimension when compared to standard autoencoders, and they generated images qualitatively similar to those of VAEs without injecting any stochasticity into the latent embeddings.
+
+More direct relationships between our regularized autoencoders and VAEs might exist. For instance, instead of using the degree-0 total persistence $\sum_{d \in \dagger}d$ in $\mathcal{L}_{\text{top}}$, we could have used the degree-$k$ total persistence $\sum_{d \in \dagger}d^{k}$. Qualitatively, the latent embeddings would still fill all of $D_{L}$, but as $k$ increases, more would begin clustering near the origin. Determining if it is possible to approximate a standard normal distribution (and thus the latent embedding distribution of VAEs) by using variations of the total persistence like this would be an interesting topic for further research.
 
 %-------------------
 % Failed Methodologies
 %-------------------
 \subsection{Failed Methodologies}
 
-\warn{do this}
+Before settling on the current implementation of our topological loss term, we experimented with a variety of TDA metrics and methods. One such metric was the persistence landscape, a way to vectorize a persistence diagram. Because persistence landscapes have been shown to be both a stable and robust metric \cite{persistence-landscapes}, we thought they would encapsulate the gradual clustering of the MNIST classes throughout training so that we could use them in some capacity for a topological regularizer; however, we had difficulty determining a reasonable way of using them in this capacity and struggled with computationally efficient implementations. One thing to note is that 0-dimensional persistent homology is generally characterized by the death of each connected component, as each connected component is born at the same time. Thus, our metric does, in fact, capture the most salient features (the death times) of a persistent landscape corresponding to the 0-dimensional persistent homology.
+
+We also considered \emph{minimizing} the 0-dimensional persistent homology death times per class while still maximizing them globally in order to promote class clustering in the latent space. Balancing these competing goals proved tricky, and our models struggled to converge with this updated objective.
+
+%--------------------------------------------------------------------------------
+% Conclusion
+%--------------------------------------------------------------------------------
+\section{Conclusion}
+We presented a method of regularizing the latent space of autoencoders that has been shown experimentally to improve the quality of generated MNIST and Fashion-MNIST images. We utilized TDA methods, specifically persistent homology, to enforce the dispersion of points within the unit ball of the latent space while maintaining the separation of classes, leading to qualitatively realistic generated images--uniformly sampled from the latent space--that are more representative of the dataset.
+
+As our topological loss term only requires a distance matrix between samples, it is architecture independent. So, we hope to apply our topological regularizer to more sophisticated autoencoders in the future. Furthermore, as our experimentation largely focused on the MNIST and Fashion-MNIST datasets, we hope to test our method on more complex datasets to see if the same qualitative improvements in generated images are realized. 
 
 %--------------------------------------------------------------------------------
 % Appendix A: Experiment Details
@@ -221,9 +226,7 @@ For $L=\R^{10}$, the irregular clusters of the standard autoencoder again preven
 \section*{Appendix A: Experiment Details}
 \label{experiment-details}
 
-\warn{Talk about effect of toplogical loss in addition to disk penalty. Ablation study.}
-
-\warn{used Pytorch and gudhi}
+All the code used in our experiments can be found at \href{https://github.com/BCHoagland/TDA-Project}{\color{blue}github.com/bchoagland/TDA-Project}, and is based on the PyTorch and Gudhi libraries. All the collected data from our experiments can be found at \href{https://wandb.ai/bchoagland/TDA-autoencoders}{\color{blue}wandb.ai/bchoagland/TDA-autoencoders}. This includes generated images and latent embeddings (for 2-dimensional latent spaces) from every intermediate training epoch and resource allocation throughout training. Below we detail important training results that accompany those in the main body of the paper.
 
 Throughout our experiments, we used a fixed random seed of 0 and the same feed-forward autoencoder architecture as in \Cref{ae-flaws}, with hidden layers of 64 nodes and ELU activations. We used the Adam optimization algorithm for all models with a fixed learning rate of $0.0003$. In general, we found it best to set the regularization coefficient $\lambda$ such that $\mathcal{L}_{\text{top}}$ was a small fraction of $\mathcal{L}_{\text{rec}}$. This encouraged regularization of the latent embeddings without significantly reducing the fidelity of their reconstructions. In the following experiments, we used $\lambda = 0.005$.
 
@@ -231,7 +234,7 @@ We also tested using separate coefficients for the disk and topological penaltie
 
 The following two tables show generated images from autoencoders trained to convergence (in this case, 100 epochs) on the MNIST and Fashion-MNIST datasets with batch size 128 and latent dimension as listed. The left columns show generated images from standard autoencoders, and the middle columns from autoencoders trained with our topological regularization. For comparison, the right columns are from VAEs trained with the same parameters.
 
-All collected data from our experiments can be found at \href{https://wandb.ai/bchoagland/TDA-autoencoders}{\color{blue}wandb.ai/bchoagland/TDA-autoencoders}, and all the code can be found at \href{https://github.com/BCHoagland/TDA-Project}{\color{blue}github.com/bchoagland/TDA-Project}. This includes generated images and latent embeddings (for 2-dimensional latent spaces) from every intermediate training epoch and resource allocation throughout training.
+Note that in all cases, the standard autoencoders struggled to generate reasonable images as the latent dimension increased, and the generated images had poor coverage of the various classes in the datasets. On the other hand, the regularized autoencoders and the VAEs did not suffer from this issue at all and in fact produced images of greater clarity as the latent dimension increased. Also note that our regularization produced images of similar quality to those of the VAEs.
 
 \begin{figure}[H]
 	\centering
@@ -271,7 +274,26 @@ All collected data from our experiments can be found at \href{https://wandb.ai/b
 	\end{tabular}
 \end{figure}
 
-Note that in all cases, the standard autoencoders struggled to generate reasonable images as the latent dimension increased, while the autoencoders with regularization and the VAEs did not suffer from this issue at all and in fact produced images of greater clarity as the latent dimension increased.
+%-------------------
+% Necessity of Topological Regularization
+%-------------------
+\subsection{Necessity of Topological Regularization}
+
+It is natural to ask whether the disk penalty by itself is enough to regularize the latent space. To test this, we trained an autoencoder on the MNIST dataset using the exact same setup as in the previous experiment, except we removed the persistent homology contribution in $\mathcal{L}_{\text{top}}$. \Cref{only-disc-latent} shows how the latent embeddings for the autoencoder with $L=\R^2$, although lying entirely within $D_{L}$, do not fill the whole ball. \Cref{only-disc-images} shows how this irregularity lowers sampling quality as the dimension of $L$ increases.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{fig/only-disc-latent.pdf}
+	\caption{MNIST latent embeddings from an autoencoder whose only regularization was the disk penalty.}
+	\label{only-disc-latent}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{fig/only-disc-comparison.png}
+	\caption{Generated images from an autoencoder whose only regularization was the disk penalty. From left to right: $L=\R^2$, $L=\R^{5}$, and $L=\R^{10}$.}
+	\label{only-disc-images}
+\end{figure}
 
 %--------------------------------------------------------------------------------
 % Bibliography
