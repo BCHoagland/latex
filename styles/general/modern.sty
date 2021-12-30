@@ -4,6 +4,7 @@
 % Fonts
 %--------------------------------------------------------------------------------
 \setmainfont{Baskerville}
+\setsansfont{Graphik}
 
 %--------------------------------------------------------------------------------
 % Sections
@@ -19,11 +20,31 @@
 \let\tocold\tableofcontents
 \renewcommand{\tableofcontents}{
         \pagestyle{empty}
-        \pagenumbering{roman}
+	\pagenumbering{roman}
         \tocold
         \newpage
-        \pagenumbering{arabic}
         \pagestyle{fancy}
+	\pagenumbering{arabic}
+}
+
+%--------------------------------------------------------------------------------
+% Title
+%--------------------------------------------------------------------------------
+\renewcommand{\title}[2]{
+        \thispagestyle{empty}
+	\pagenumbering{Roman}
+        {
+		\vspace*{20mm}
+		\noindent
+		{\Huge\sffamily\bfseries\MakeUppercase{\docTitle}}\\[10mm]
+		\noindent
+		{#1}\\[5mm]
+		\noindent
+		{#2}
+	}
+
+	\newpage
+	\pagenumbering{arabic}
 }
 
 %--------------------------------------------------------------------------------

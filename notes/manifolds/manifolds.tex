@@ -1,0 +1,58 @@
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/styles/toggles}
+\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{Manifolds}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\importStyles{modern}{rainbow}{boxy}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+
+\title{Braden Hoagland}{Based on \textit{An Introduction to Manifolds} by L. Tu.}
+
+\tableofcontents
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Foundations: Euclidean Space
+
+\chapter{Foundations: Euclidean Space}
+
+%--------------------------------------------------------------------------------
+% Reminders
+%--------------------------------------------------------------------------------
+\section{Reminders}
+
+We say $f$ is \textbf{real analytic} at $p$ if it's equal to its Taylor series at $p$ in some neighborhood of $p$. Note that if $f$ is real analytic, then it's also $C^{\infty}$ (the converse isn't true in general, though).
+
+\begin{prop}[Baby Taylor's Theorem with Remainder]
+	Let $U$ be open in $\R^{n}$ and star-convex wrt $p$. If $f$ is $C^{\infty}$ on $U$, then there are $C^{\infty}$ functions $g_1, \dots, g_{n}$ on $U$ such that
+	\[
+		f(x) = f(p) + \sum_{i}(x^{i}-p^{i}) g_{i}(x)
+	\] and $g_{i}(p) = \frac{\p f}{\p x^{i}} (p)$ for all $i$.
+\end{prop}
+\begin{proof}
+	Since $U$ is star-convex wrt $p$, we can draw a straight line from $p$ to any $x \in U$. Intuitively, $f(x)$ should be $f(p)$ plus all the changes in $f$ along this line. We can use the FToC to formalize this:
+	\[
+		f(x) - f(p) = \int_{0}^{1} \frac{d}{dt} f(p+t(x-p))\;dt.
+	\]
+	We can use the chain rule to evaluate $\frac{d}{dt} f(p+t(x-p))$, giving
+	\[
+		f(x) - f(p) = \sum (x^{i} - p^{i}) \int_{0}^{1} \frac{\p f}{\p x^{i}} (p+t(x-p)) \;dt.
+	\] 
+	Set $g_{i}(x)$ to be its respective integral in the above sum.
+\end{proof}
+
+%--------------------------------------------------------------------------------
+% Tangent Vectors as Derivations
+%--------------------------------------------------------------------------------
+\section{Tangent Vectors as Derivations}
+
+
+
+\end{document}

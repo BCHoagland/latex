@@ -1,7 +1,7 @@
 %--------------------------------------------------------------------------------
 % Title Page
 %--------------------------------------------------------------------------------
-\newcommand{\formalTitle}[3]{
+\renewcommand{\title}[2]{
         % title page
         \thispagestyle{empty}
         \begin{center}
@@ -9,12 +9,12 @@
 			\vspace*{20mm}
 		}{}
                 \MakeUppercase{
-                        \textbf{#1}\\
+                        \textbf{\docTitle}\\
                         \vspace{10mm}
-                        {\footnotesize #2}\\
+                        {\footnotesize #1}\\
                         \vspace{5mm}
                 }
-		{\footnotesize\textit{#3}}
+		{\footnotesize\textit{#2}}
         \end{center}
 	\iftoggle{separateTitlePage}{
 		\newpage
