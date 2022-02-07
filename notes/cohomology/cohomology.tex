@@ -1,0 +1,171 @@
+\documentclass[twoside,10pt]{article}
+\usepackage{/Users/bradenhoagland/latex/styles/toggles}
+\toggletrue{sectionbreaks}
+%\toggletrue{sectionheaders}
+\newcommand{\docTitle}{Cohomology}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\importStyles{modern}{rainbow}{boxy}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+%\tableofcontents
+
+%--------------------------------------------------------------------------------
+% (Co)homology with coefficients
+%--------------------------------------------------------------------------------
+\section{(Co)homology with coefficients}
+
+Let $\mathcal{C}$ be a chain complex of free $\mathbb{Z}$-modules (free abelian groups)
+\[
+\cdots \to C_{n+1} \stackrel{\p}{\to }  C_{n}\stackrel{\p}{\to} C_{n-1}\to  \cdots,
+\] then we can apply any functor $\mathcal{F}:\cat{Ab} \to \cat{Ab}$ (perhaps contravariant) to get another complex $\mathcal{F}\mathcal{C}$. In particular, we can use the following two functors, where $G$ is some abelian group.
+\begin{itemize}
+	\item $- \otimes_{} G$ (covariant) maps $C \mapsto C \otimes_{}G$ and $\phi \mapsto \phi \otimes_{} \id_{}$; since $G$ is an abelian group, we're implicitly using $\otimes_{\mathbb{Z}}$;
+	\item $\hom(-,G)$ (contravariant) maps $C \mapsto \hom(C,G)$ and $\phi \mapsto \phi^{*}$ (precomposition with $\phi$).
+\end{itemize}
+
+\begin{defn}[]
+	For a chain complex $\mathcal{C}$, its \textbf{homology with $G$ coefficients} is
+	\[
+		H_{*}(\mathcal{C}; G) := H_{*}(\mathcal{C} \otimes_{}G).
+	\] Its \textbf{cohomology with $G$ coefficients} is
+	\[
+		H^{*}(\mathcal{C}; G) := H_{*}(\hom(\mathcal{C},G)).
+	\] 
+\end{defn}
+
+Note that $C \otimes_{\mathbb{Z}}\mathbb{Z} \cong C$ for any abelian group $C$, so $H_{*}(\mathcal{C};\mathbb{Z}) \cong H_{*}(\mathcal{C})$. Also, when dealing with $H^{*}$, we throw ``co-" on the front of all the vocab words, e.g. ``cocyle" instead of ``cycle".
+
+\warn{go over why using TP and hom instead of hom and hom...}
+
+%--------------------------------------------------------------------------------
+% Ext and Tor
+%--------------------------------------------------------------------------------
+\section{Ext and Tor}
+
+Derived functors measure the extent to which a functor fails to preserve exactness. Ext and Tor are two examples of derived functors, which we will use in a bit to formulate the Universal Coefficient Theorem.
+
+\begin{defn}[]
+        A covariant functor $\mathcal{F}$ is one of the below if it preserves exactness in the manner depicted.
+\begin{equation*}
+        \begin{aligned}[c]
+                \text{\textbf{exact}} \\
+                \text{\textbf{left exact}} \\
+                \text{\textbf{right exact}}
+        \end{aligned}
+        \qquad
+        \begin{aligned}[c]
+                A\to B\to C \quad&\leadsto\quad 0\to \mathcal{F}A\to \mathcal{F}B\to \mathcal{F}C\to 0\\
+                0\to A\to B\to C \quad&\leadsto\quad 0\to \mathcal{F}A\to \mathcal{F}B\to \mathcal{F}C\\
+                A\to B\to C\to 0 \quad&\leadsto\quad \qquad \mathcal{F}A\to \mathcal{F}B\to \mathcal{F}C\to 0
+        \end{aligned}
+\end{equation*}
+The following apply to a contravariant functor $\mathcal{G}$ instead.
+\begin{equation*}
+        \begin{aligned}[c]
+                \text{\textbf{exact}} \\
+                \text{\textbf{left exact}} \\
+                \text{\textbf{right exact}}
+        \end{aligned}
+        \qquad
+        \begin{aligned}[c]
+                A\to B\to C \quad&\leadsto\quad 0\to \mathcal{G}C\to \mathcal{G}B\to \mathcal{G}A\to 0\\
+                A\to B\to C\to 0 \quad&\leadsto\quad 0\to \mathcal{G}C\to \mathcal{G}B\to \mathcal{G}A\\
+                0\to A\to B\to C \quad&\leadsto\quad \qquad \mathcal{G}C\to \mathcal{G}B\to \mathcal{G}A\to 0
+        \end{aligned}
+\end{equation*}
+\end{defn}
+
+\warn{In \cat{Ab}, the above definitions are equivalent to those given by including 0's on the left and right of each LHS, but the forms above are a bit easier to work with since we won't always have things with 0's bookending them.}
+
+\begin{defn}[]
+A \textbf{free} resolution of an abelian group $A$ is an exact sequence of abelian groups
+\[
+\cdots \to F_2\to F_1\to F_0\to A \to 0,
+\] where each $F_{i}$ is free.
+\end{defn}
+
+\begin{note}[]
+We're really only concerned with the derived functors Ext and Tor, which are both formulated in terms of projective resolutions. But that's okay, since a free module is projective. Thus we only need to concern ourselves with free resolutions.
+\end{note}
+
+Supose we have a right exact covariant functor $\mathcal{F}$ and a free resolution
+\[
+\cdots \to F_2\to F_1\to F_0\epi A \to 0,
+\] 
+then applying $\mathcal{F}$ gives
+\[
+	\cdots \to \mathcal{F} F_2 \to {\color{blue}\mathcal{F}F_1 \to \mathcal{F}F_0 \epi \mathcal{F}A \to 0.}
+\] 
+Since $\mathcal{F}$ is right exact, the blue subsequence above is still exact. Removing $\mathcal{F}A$, we get a new sequence
+\[
+\cdots \to \mathcal{F}F_2 \to \mathcal{F}F_1 \to \mathcal{F}F_0 \to 0,
+\] 
+Taking homology gives us the \textbf{derived functors} of $\mathcal{F}$. A similar story holds when $\mathcal{F}$ is a contravariant left exact functor instead. \warn{check that still functor, i.e. a morphism $X\to Y$ induces morphism $L_{i}X\to L_{i}Y$.}
+
+\begin{thrm}
+	\label{diff-resolutions-same-derived}
+	Different free resolutions yield \warn{isomorphic} derived functors.
+\end{thrm}
+\begin{proof}
+	\warn{Do this.}
+\end{proof}
+
+\begin{note}
+	A nice thing about working with abelian groups is that you can find short free resolutions, which makes calculating derived functors much easier by \Cref{diff-resolutions-same-derived}.
+\end{note}
+
+\begin{prop}
+	Every abelian group $A$ has a free resolution
+	\[
+		0 \to \ker \varepsilon \inj \ang{A} \stackrel{\varepsilon}{\epi} A \to 0.
+	\] 
+\end{prop}
+\begin{proof}
+	First note that all objects in the sequence are free abelian since the kernel of a free abelian group is itself free abelian. Construct $\varepsilon$ by extenting $\id_{A}$. Exactness is clear.
+\end{proof}
+
+\begin{note}[]
+To be clear, $\Ang{A}$ is not necessarily the same thing as $A$, since $A$ might have extra relations. None of these relations are in $\Ang{A}$. Thus $\ker \varepsilon$ is generated by the relations of $A$.
+\end{note}
+
+\begin{cor}
+\warn{calc derived functors for abelian group.}
+\end{cor}
+
+\warn{how to turn $0\to A\to B\to C\to 0$ SES into LES using derived functors?}
+
+With all this in place, we can finally define Ext and Tor as the derived functors of particular functors.
+
+\begin{defn}[]
+	\textbf{Ext} is the derived functors of $\hom(-,G)$, and \textbf{Tor} is the derived functors of $-\otimes G$.
+\end{defn}
+
+Note that both of these use projetive resolutions, as $\hom(-,G)$ is contravariant and left exact and $-\otimes_{}G$ is covariant and right exact. \warn{Go over earlier in more detail why contra/left and cov/right work with free resolutions.}
+
+
+%--------------------------------------------------------------------------------
+% The Universal Coefficient Theorem
+%--------------------------------------------------------------------------------
+\section{The Universal Coefficient Theorem}
+
+Homology with coefficients is useful for simplifying certain calculations, but as it turns out, it encodes the exact same information that the usual homology with $\mathbb{Z}$ coefficients does. The idea is that although $H_{n}(\mathcal{C} \otimes_{}G) \not\cong H_{n}(\mathcal{C}) \otimes_{}G$ and $H^{*}(\hom(\mathcal{C},G)) \not\cong \hom(H_{n}\mathcal{C},G)$ in general, we can use these as approximations and introduce some correction terms. These corrections are Ext and Tor.
+
+\begin{thrm}[The Universal Coefficient Theorem]
+Let $\mathcal{C}$ be a chain complex of free abelian groups, and let $G$ be any abelian group. Then there are short exact sequences
+\[
+\begin{tikzcd}
+	0 \rar & H_{n}\mathcal{C} \otimes_{}G \rar & H_{n}(\mathcal{C};G) \rar & \tor(H_{n-1}\mathcal{C},G) \rar & 0, \\
+	0 & \lar \hom(H_{n}\mathcal{C},G) & \lar H^{n}(\mathcal{C};G) & \lar \ext(H_{n-1}\mathcal{C},G) & \lar 0
+\end{tikzcd}
+\] that are natural and split (although the splitting isn't natural). In other words,
+\begin{align*}
+	H_{n}(\mathcal{C};G) &\cong (H_{n}\mathcal{C} \otimes_{}G) \oplus \tor(H_{n-1}\mathcal{C},G),\\
+	H^{n}(\mathcal{C};G) &\cong \hom(H_{n}\mathcal{C},G) \oplus \ext(H_{n-1}\mathcal{C},G).
+\end{align*}
+\end{thrm}
+
+hello there. changes.
+
+\end{document}

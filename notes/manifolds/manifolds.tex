@@ -6,11 +6,13 @@
 \usepackage{/Users/bradenhoagland/latex/styles/common}
 \importStyles{modern}{rainbow}{boxy}
 
+\usepackage{dutchcal}
+
 %\renewcommand{\theenumi}{\alph{enumi}}
 
 \begin{document}
 
-\title{Braden Hoagland}{Based on \textit{An Introduction to Manifolds} by L. Tu.}
+\title{Braden Hoagland}{Based on Tu's \textit{An Introduction to Manifolds}.}
 
 \tableofcontents
 
@@ -19,9 +21,9 @@
 %| |    Chapter    | |
 %| +---------------+ |
 %+-------------------+
-% Foundations: Euclidean Space
+% Euclidean Space
 
-\chapter{Foundations: Euclidean Space}
+\chapter{Euclidean Space}
 
 %--------------------------------------------------------------------------------
 % Reminders
@@ -31,6 +33,7 @@
 We say $f$ is \textbf{real analytic} at $p$ if it's equal to its Taylor series at $p$ in some neighborhood of $p$. Note that if $f$ is real analytic, then it's also $C^{\infty}$ (the converse isn't true in general, though).
 
 \begin{prop}[Baby Taylor's Theorem with Remainder]
+	\label{baby-taylor}
 	Let $U$ be open in $\R^{n}$ and star-convex wrt $p$. If $f$ is $C^{\infty}$ on $U$, then there are $C^{\infty}$ functions $g_1, \dots, g_{n}$ on $U$ such that
 	\[
 		f(x) = f(p) + \sum_{i}(x^{i}-p^{i}) g_{i}(x)
@@ -48,11 +51,154 @@ We say $f$ is \textbf{real analytic} at $p$ if it's equal to its Taylor series a
 	Set $g_{i}(x)$ to be its respective integral in the above sum.
 \end{proof}
 
-%--------------------------------------------------------------------------------
-% Tangent Vectors as Derivations
-%--------------------------------------------------------------------------------
-\section{Tangent Vectors as Derivations}
+\begin{defn}[]
+A vector space map $L:\mathcal{V}\to \mathcal{W}$ is \textbf{linear} if
+\begin{enumerate}
+	\item $L(u+v) = Lu + Lv$; and
+	\item $L(\lambda v) = \lambda Lv$.
+\end{enumerate}
+If $\mathcal{V}$ and $\mathcal{W}$ are both over $K$, then we might say ``$K$-linear".
+\end{defn}
+Note that since an algebra \textit{is} a vector space, a map of algebras can be linear.
 
+\begin{defn}[]
+	An \textbf{algebra} over a field $K$ is a $K$-vector space $A$ with bilinear associative multiplication map:
+	\begin{enumerate}
+		\item $(ab)c = a(bc)$;
+		\item $(a+b)c = ac+bc$ and $a(b+c) = ab+ac$; and
+		\item $\lambda(ab) = (\lambda a)b = a(\lambda b)$.
+	\end{enumerate}
+\end{defn}
 
+\begin{defn}[]
+A map of algebras $D:A\to A$ is a \textbf{derivation} of $A$ if it's linear and satisfies the Leibniz rule
+\[
+	D(ab) = Da\cdot b + a \cdot Db.
+\] 
+\end{defn}
+
+%--------------------------------------------------------------------------------
+% Tangent Vectors as Point Derivations
+%--------------------------------------------------------------------------------
+\section{Tangent Vectors as Point Derivations}
+
+\begin{defn}[]
+	Let $v \in T_{p}(\R^{n})$, then define
+	\[
+	D_{v} := \sum v^{i} \frac{\p }{\p x^{i}} \Big|_{p}.
+	\] 
+	If $f$ is $C^{\infty}$ in some neighborhood of $p$, then $D_{v}f$ is the \textbf{directional derivative} of $f$ at $p$ in the direction of $v$. The ``$p$" is implicit in the notation since $v \in T_{p}$. Note that $D_{v}f$ is an actual number, not a function.
+\end{defn}
+
+A useful equivalence class if all functions that have the same directional derivative at a fixed point, since these functions will all look the same locally (from the PoV of calculus, these shouldn't be distinguished).
+
+\begin{defn}[]
+	Suppose $f,g$ are $C^{\infty}$ on open sets $U,V \subset \R^{n}$, respectively. Then we say $(f,U) \sim (g,V)$ if there's another open set $W \subset U \isct V$ such that $f=g$ on $W$. The \textbf{germ} of $f$ at $p$ is then just $[(f,U)]$. Denote the set of all germs at $p$ by $C_{p}^{\infty}$.
+\end{defn}
+
+We can turn $C_{p}^{\infty}$ into an $\R$-algebra by equipping it with the operations
+\begin{align*}
+	[(f,U)] + [(g,V)] &:= [(f+g,U\isct V)],\\
+	[(f,U)] [(g,V)] &:= [(fg,U\isct V)],\\
+	\lambda [(f,U)] &:= [(\lambda f,U)].
+\end{align*}
+
+Now note that $D_{v}: C_{p}^{\infty}\to \R$ is $\R$-linear and satisfies the Leibniz rule
+\[
+	D_{v}(fg) = D_{v}f \cdot g(p) + f(p) \cdot D_{v}g,
+\] so it's a kind of pseudo-derivation (it has the right properties, but is $C_{p}^{\infty}\to \R$ instead of $C_{p}^{\infty}\to C_{p}^{\infty}$). This motivates the following definition.
+
+\begin{defn}[]
+	A \textbf{point derivation} at $p$ is a linear map $D:C_{p}^{\infty}\to \R$ satisfying the Leibniz rule
+	\[
+		D(fg) = Df \cdot g(p) + f(p) \cdot Dg.
+	\] 
+	Denote the real vector space of all point derivations at $p$ by $\mathcal{D}_{p}(\R^{n})$.
+\end{defn}
+
+Note the abuse of notation above: $f$ and $g$ are germs, not functions, but I can use normal function notation since any functions in the same germ at $p$ must agree at $p$. This is the same reason we can treat $D_{v}$ as a map on $C_{p}^{\infty}$ instead of just a map of $C^{\infty}$ functions.
+
+\begin{lem}
+	\label{derivation-constant}
+	If $D$ is a point derivation, then $Dc = 0$ for all constant functions $c$.
+\end{lem}
+\begin{proof}
+	By the Leibniz rule, $D(1) = D(1\cdot 1) = D(1) \cdot 1 + 1 \cdot D(1) \implies D(1) = 0$. Then by linearity, $Dc = c D(1) = 0$.
+\end{proof}
+
+\begin{thrm}[]
+	$T_{p}(\R^{n}) \cong \mathcal{D}_{p}(\R^{n})$ as vector spaces via the map
+	\begin{align*}
+		\phi : T_{p}(\R^{n}) &\to \mathcal{D}_{p}(\R^{n}) \\
+		v &\mapsto D_{v}.
+	\end{align*}
+\end{thrm}
+\begin{proof}
+	$\phi$ is clearly linear, so we only need to check bijectivity. To check injectivity, suppose $D_{v}=0$, then apply each coordinate function $x^{j}$ to show $0=D_{v}x^{j} = v^{j}$. To show surjectivity, suppose $D \in \mathcal{D}_{p}$ and $[(f,U)] \in C_{p}^{\infty}$. We can always restrict $U$ to an open ball and stay within the same equivalence class, so we can assume $U$ is star-shaped wrt $p$. By \Cref{baby-taylor}, there are $g_{i}$ such that
+	\[
+		f = f(p) + \sum (x^{i}-p^{i}) g_{i}.
+	\] Now we apply $D$ to $f$. Using linearity, the Leibniz rule, and $D(f(p)) = D(p^{i})=0$ (by \Cref{derivation-constant}),
+	\[
+		Df = \sum Dx^{i} g_{i}(p) = \sum Dx^{i} \frac{\p f}{\p x^{i}} (p).
+	\]
+	Thus $Df = D_{v} = \phi(v)$, where $v = (Dx^{1}, \dots, Dx^{n})$.
+\end{proof}
+
+\begin{note}[]
+	The big takeaway from all this is that we can \emph{define} $T_{p}(\R^{n})$ to be the real vector space $\mathcal{D}_{p}(\R^{n})$ instead of the usual one spanned by $\left\{ e_1, \dots, e_{n} \right\}$. Since $\phi(e^{j}) = \frac{\p }{\p x^{j}} \big|_{p}$, we know
+\[
+\left\{ \frac{\p }{\p x^{1}} \Big|_{p}, \dots, \frac{\p }{\p x^{n}} \Big|_{p} \right\}
+\] is a basis for $\mathcal{D}_{p}(\R^{n})$. Thus any tangent vector at $p$ can be written
+\[
+	v = \sum v^{i}\frac{\p }{\p x^{i}} \Big|_{p}.
+\] 
+\end{note}
+
+%--------------------------------------------------------------------------------
+% The Wedge Product
+%--------------------------------------------------------------------------------
+\section{The Wedge Product}
+
+\warn{Do this.}
+
+\warn{Discuss $dx^{i}$, and how to interpret it when used with a wedge product.}
+
+%--------------------------------------------------------------------------------
+% Differential Forms
+%--------------------------------------------------------------------------------
+\section{Differential Forms}
+
+A differential form is something that can be integrated. In $n$ dimensions, the following are the bases of the spaces of 1-forms and 2-forms:
+\begin{align*}
+	k=1: &\qquad \left\{ dx^{1}, \dots, dx^{n} \right\},\\
+	k=2: &\qquad \left\{ dx^{1} \wedge dx^{2}, dx^{1} \wedge dx^{3}, \dots, dx^{1}dx^{n}, dx^{2} dx^{3}, dx^{4}, \dots \right\}.
+\end{align*}
+The pattern is clear: the basis of the space of $k$-forms in an $n$-dimensional space is
+\[
+\left\{ dx^{i_1} \wedge \dots \wedge dx^{i_k} \;|\; 1 \leq i_1 < \dots < i_k \leq n \right\}.
+\] 
+
+Thus a $k$-form takes in a $k$-dimensional parallelepiped sitting in the tangent space and spits out a real number proportional to the area of that parallelepiped. This lets us perform the usual integration procedure: suppose we have a $k$-dimensional region $U \subset \R^{n}$ that we want to integrate a $k$-form over, then
+
+\warn{could have multiple collections of tangent vectors if $k < n$.}
+\begin{enumerate}
+	\item Approximate $U$ by selecting a bunch of points.
+	\item At each of these points $p$, the collection of tangent basis vectors
+		\[
+			\left\{ \frac{\p}{\p x^{i_1}} \Big|_p, \dots, \frac{\p}{\p x^{i_k}} \Big|_p \right\}
+		\] represents a parallelepiped that roughly matches up with the local volume of the surface. Since this is infinitesimal, it doesn't really matter that it's just an approximation.
+	\item At every point $p$, 
+		\[
+			\left( dx^{i_1} \wedge \cdots \wedge dx^{i_k} \right)\left( \frac{\p}{\p x^{i_1}} \Big|_p, \dots, \frac{\p}{\p x^{i_k}} \Big|_p \right)
+		\] gives the volume of this parallelepiped, allowing us to approximate the local volume of our surface.
+\end{enumerate}
+
+\warn{show $dx^{i}(\p_i|_p) = \delta_{i}^{j}$.}
+
+\warn{$dx^{1}\wedge \cdots \wedge dx^{n}$ when evaluated on a bunch of vectors gives the determinant of those vectors or something like that?}
+
+Since the wedge product produces an alternating linear map, the space of $k$-forms on an open set $U \subset \R^{n}$ is \warn{the same} as the space of alternating $k$-linear maps on $\prod_{i=1}^{k} T_{p}(U)$.
+
+\warn{Still don't understand how this generalization helps if we just use the defintion of the Lebesgue integral anyway... does this help with change of variables or something?}
 
 \end{document}

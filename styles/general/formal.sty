@@ -32,15 +32,11 @@
 %--------------------------------------------------------------------------------
 % Header and Footer
 %--------------------------------------------------------------------------------
-\newcommand{\formalHeader}[2]{
-	% odd pages
-	\iftoggle{sectionheaders}{
-		\fancyhead[RO]{\color{gray}\small\textit{\rightmark} \quad \thepage}
-	}{
-		\fancyhead[RO]{\color{gray}\small\textit{#2} \quad \thepage}
-	}
+\newcommand{\header}[2]{
 	% even pages
-	\fancyhead[LE]{\color{gray}\small\thepage \quad \textit{#1}}
+	\fancyhead[RE]{\color{gray}\small\textit{#2} \quad $\vert$ \quad \thepage}
+	% odd pages
+	\fancyhead[LO]{\color{gray}\small\thepage \quad $\vert$ \quad \textit{#1}}
 }
 
 \pagestyle{fancy}
