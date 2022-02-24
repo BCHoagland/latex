@@ -10,7 +10,6 @@
 
 \usepackage[
         backend=biber,
-        autocite=superscript
 ]{biblatex}
 \addbibresource{bib.bib}
 
@@ -23,8 +22,8 @@
 \begin{document}
 %\tableofcontents
 
-\formalTitle{\docTitle}{Braden Hoagland}{Math 493: Research Independent Study}
-\formalHeader{Braden Hoagland}{Dynamic Percolation Processes}
+\title{\docTitle}{Braden Hoagland \quad\&\quad Rick Durrett}
+\header{Braden Hoagland}{Dynamic Percolation Processes}
 
 \begin{abstract}
 	We develop the theory of cluster growth near criticality for a general class of rules for dynamically growing graphs called 2-choice rules. We use scaling theory to compute critical exponents for any 2-choice rule, and we show special cases in which we can solve for these exponents explicitly. Finally, we consider the \ER rule, the simplest 2-choice rule for which more explicit calculations are possible. We derive several of its important properties, then show that a large subset of 2-choice rules - greedy bounded size rules - act as \ER near criticality.
@@ -35,7 +34,7 @@
 %--------------------------------------------------------------------------------
 \section{Introduction}
 
-Suppose we have an empty graph on $n$ vertices, and at each step we add one edge chosen at random. If each step corresponds to time $1/n$, then as $n\to \infty$ the graph at time $t$ converges to an \ER graph in which the connection probability between any two edges is $2t/n$. Then by basic results on \ER graphs,\autocite{ER} there is a critical time $t_{c}=1/2$ at which point a giant component with order $n$ points emerges, which is referred to as ``percolation".
+Suppose we have an empty graph on $n$ vertices, and at each step we add one edge chosen at random. If each step corresponds to time $1/n$, then as $n\to \infty$ the graph at time $t$ converges to an \ER graph in which the connection probability between any two edges is $2t/n$. Then by basic results on \ER graphs \cite{ER}, there is a critical time $t_{c}=1/2$ at which point a giant component with order $n$ points emerges, which is referred to as ``percolation".
 
 The properties of the \ER model are well understood, so it serves as a natural reference point when studying other models. For example, if $\theta(t)$ is the fraction of vertices in the giant component (after we have let $n\to \infty$), then $\theta(t)\to 0$ as $t\searrow t_{c}$. This shows that the phase transition is continuous. Additionally, $\theta(t) \sim (t-t_{c})^{\beta}$, where $\beta=1$. This gives us a ``critical exponent" $\beta$ that describes the behavior of the process near $t_{c}$.
 
@@ -43,13 +42,13 @@ It is then natural to ask which generalizations of \ER graphs also have these pr
 
 If $\kappa_i$ is the cluster size of $v_{i}$, then two possible rules are the sum rule and product rule. In the sum rule, the first edge is added if $\kappa_1+\kappa_2 < \kappa_3+\kappa_4$, and the second edge is added otherwise. In the product rule, the first edge is added if $\kappa_1 \kappa_2 < \kappa_3 \kappa_4$, and the second edge is added otherwise.
 
-These rules are just two of many rules desgined to delay the growth of clusters and, by extension, the eventual emergence of the giant component. In 2001, Bohman and Frieze were the first to describe an Achlioptas process that delayed percolation.\autocite{BF} At each step, the first edge is added if both $v_1$ and $v_2$ were isolated vertices, and the second edge is added otherwise. They showed that there was a constant $c_0>0.535$ such that the largest component at time $c_0$ has size bounded by $(\log n)^{O(1)}$.
+These rules are just two of many rules desgined to delay the growth of clusters and, by extension, the eventual emergence of the giant component. In 2001, Bohman and Frieze were the first to describe an Achlioptas process that delayed percolation \cite{BF}. At each step, the first edge is added if both $v_1$ and $v_2$ were isolated vertices, and the second edge is added otherwise. They showed that there was a constant $c_0>0.535$ such that the largest component at time $c_0$ has size bounded by $(\log n)^{O(1)}$.
 
-In 2013, Bhamidi, Budhirja, and Wang showed that the behavior of the Bohman-Frieze process near the critical point was the same as in the \ER case.\autocite{coal} Explicitly, they showed that at time $t_c + r/n^{1/3}$ for $-\infty<r<\infty$, the system converges to the ``multiplicative coalesent", in which clusters of size $x$ and $y$ merge at rate $xy$. Aldous showed a corresponding result for \ER graphs.\autocite{Aldous} Through far from trivial, this result should not be surprising. After some time there will be very few isolated vertices, so the process will start to add edges almost uniformly at random.
+In 2013, Bhamidi, Budhirja, and Wang showed that the behavior of the Bohman-Frieze process near the critical point was the same as in the \ER case \cite{coal}. Explicitly, they showed that at time $t_c + r/n^{1/3}$ for $-\infty<r<\infty$, the system converges to the ``multiplicative coalesent", in which clusters of size $x$ and $y$ merge at rate $xy$. Aldous showed a corresponding result for \ER graphs \cite{Aldous}. Through far from trivial, this result should not be surprising. After some time there will be very few isolated vertices, so the process will start to add edges almost uniformly at random.
 
-The Bohman-Frieze rule is an example of a ``bounded size rule", in which all components of size greater than or equal to some constant $K$ are treated the same. In 2011, Riordan and Warnke showed that the phase transition at criticality is continuous for all $\ell$-vertex rules,\autocite{RW-cont} which are a generalization of Achlioptas processes. Then in 2017, Riordan and Warnke showed that all bounded size Achlioptas processes share (in a strong sense) all the features of the \ER phase transition.\autocite{RW-bounded}
+The Bohman-Frieze rule is an example of a ``bounded size rule", in which all components of size greater than or equal to some constant $K$ are treated the same. In 2011, Riordan and Warnke showed that the phase transition at criticality is continuous for all $\ell$-vertex rules \cite{RW-cont}, which are a generalization of Achlioptas processes. Then in 2017, Riordan and Warnke showed that all bounded size Achlioptas processes share (in a strong sense) all the features of the \ER phase transition \cite{RW-bounded}.
 
-One unfortunate consequence of working in such generality is that Riordan and Warnke's work is largely based on contradiction, and thus it does not provide much quantitative information about the sizes of the graph clusters near criticality. Under the additional assumption of ``scaling behavior" that is supported by numerical evidence (see da Costa et al.\autocite{daCosta}), though, it is possible to calculate further critical exponents for these processes.
+One unfortunate consequence of working in such generality is that Riordan and Warnke's work is largely based on contradiction, and thus it does not provide much quantitative information about the sizes of the graph clusters near criticality. Under the additional assumption of ``scaling behavior" that is supported by numerical evidence (see da Costa et al \cite{daCosta}), though, it is possible to calculate further critical exponents for these processes.
 
 The focus of this work will then be to generalize existing methods of calculating critical exponents, determining the classes of rules for which this is possible, and studying the limiting behavior of the critical exponents as their corresponding rules' parameters tend to extreme values.
 
@@ -58,7 +57,7 @@ The focus of this work will then be to generalize existing methods of calculatin
 %--------------------------------------------------------------------------------
 \section{2-Choice Rules}
 
-To begin, we will need to define some basic terms that will be used over and over again. Let $S$ be the relative size of the dominating cluster as $n \to \infty$. If $x_i$ is a vertex, then we denote its absolute cluster size by $\kappa_i$. Denote the probability that the minimum of $m$ i.i.d. sampled vertices is $s$ by
+To begin, we will need to define some basic terms that will be used over and over again. Let $S$ be the relative size of the dominating cluster as $n \to \infty$. If $x_i$ is a vertex, then we denote its absolute cluster size by $\kappa_i$. Denote the probability that the minimum of $m$ independetly and randomly sampled vertices is $s$ by
 \[
         Q_m(s) := \mathbb{P}\left( \min\left\{ \kappa_1, \dots, \kappa_m \right\} = s \right) .
 \]
@@ -76,12 +75,12 @@ for any real-valued function $\phi$. In the special case $\phi = Q_{m}$, we'll u
 \]
 We will use $\Ang{\;\cdot\;}_{P}$ and $\ang{\;\cdot\;}_{Q}$ instead of $\Ang{\;\cdot\;}_{1}$ and $\ang{\;\cdot\;}_{2}$, respectively. Finally, we'll use the notation $a(t) \sim b(t)$ to denote that $a(t)/b(t)$ converges to a constant as $t$ approaches some critical value, which should be clear from context.
 
-With these definitions in hand, we can turn our attention to the main attraction. We will be discussing rules that add a single edge every $t=1/n$ units of time, gotten by randomly sampling two groups of vertices i.i.d. from the graph, then choosing an endpoint vertex from each group. The following definition is a straightforward generalization of this idea, but we will only concern ourselves in this work with the case $\ell=2$.
+With these definitions in hand, we can turn our attention to the main attraction. We will be discussing rules that add a single edge every $t=1/n$ units of time, gotten by randomly sampling two groups of vertices independently from the graph, then choosing an endpoint vertex from each group. The following definition is a straightforward generalization of this idea, but we will only concern ourselves in this work with the case $\ell=2$.
 
 \begin{defn}[]
         Define a rule $\mathcal{R}$ as follows:
         \begin{itemize}
-                \item Every $t=1/n$ units of time, choose $\ell$ groups of vertices $\mathcal{V}_1, \dots, \mathcal{V}_{\ell}$ (of potentially different sizes) by sampling vertices i.i.d. from the graph.
+                \item Every $t=1/n$ units of time, choose $\ell$ groups of vertices $\mathcal{V}_1, \dots, \mathcal{V}_{\ell}$ (of potentially different sizes) by sampling vertices independent and at random from the graph.
                 \item For each $i$, follow some rule $\mathcal{F}_{i}$ to choose a vertex $x_i$ with cluster size $\kappa_w$ from group $\mathcal{V}_i$, subject to the condition that $\mathcal{F}_i$ induces a function $\phi_i(s) = \mathbb{P}\left( \kappa_i=s \right) $ that does not depend on any other $\phi_j$ for $j \neq i$.
         \end{itemize}
 We call $\mathcal{R}$ an \textbf{$\ell$-choice rule}.
@@ -93,12 +92,14 @@ If $\phi_{i}=Q_{m_i}$ for each $i$, then $\mathcal{R}$ is \textbf{minimizing}. W
 % The Scaling Assumption and Critical Exponents
 %-------------------
 \subsection{The Scaling Assumption and Critical Exponents}
-\label{scaling-assumption}
+
+\warn{Motivation for this...}
 
 Most of the results in this work follow from the assumption that near the critical time $t_c$, the function $P$ is of the form
-\[
-        P(s) = s^{1-\tau}f(s \delta^{1/\sigma})
-\] for constants $\tau$ and $\sigma$ and scaling function $f$ when $s$ is large. The following theorem gives relations between the exponents $\tau$ and $1/\sigma$ if some regularity conditions hold for the scaling function $f$.
+\begin{equation}
+        P(s) = s^{1-\tau}f(s \delta^{1/\sigma}),
+\end{equation}
+where$\tau$ and $\sigma$ are constants, $f$ is a scaling function, $\delta:= s-t_{c}$, and $s$ is large. The following theorem gives relations between the exponents $\tau$ and $1/\sigma$ if some regularity conditions hold for the scaling function $f$.
 
 \begin{thrm}
         \label{crit-exp}
@@ -163,15 +164,18 @@ We will see later on that the quantity $1-\ang{1}_{\phi}$ occurs quite naturally
 
 In the following sections, we will derive scaling relations for general 2-choice rules in terms of standard induced order maps, then use these to analyze minimizing rules and several other commonly studied rules.
 
+\warn{spend more time talking about induced order maps}
+
 %-------------------
 % Scaling Relations
 %-------------------
 \subsection{Scaling Relations}
 
-Suppose $\mathcal{R}$ is some general 2-choice rule, then, since none of the $\phi_i$ depend on each other, it satisfies the Smoluchowski equation
-        \[
+Suppose $\mathcal{R}$ is some general 2-choice rule, then, since none of the $\phi_i$ depend on each other, it satisfies the equation
+	\begin{equation}
+		\label{smoluchowski}
                 \p_{t}{P(s)} = s \sum_{u+v=s} \phi_1(u) \phi_2(v) - s \phi_1(s) - s\phi_2(s).
-        \]
+	\end{equation}
 	The summation term represents two components merging into a new component of size $s$, and the last two terms each represent a component of size $s$ joining with another component (this also has an integral form, which we will use when it's convenient). We can use this to calculate the growth rate of the giant component, which allows us to prove an important computational theorem.
 
 \begin{lem}
@@ -355,10 +359,10 @@ If $F_{i}(\beta)\to 0$ for both $i$, then we get the asymptotic behavior $\var_i
                 \var_1(s) &= \delta^{(2-a-2b)\beta-2},\\
                 \var_2(s) &= \delta^{(2-2a-b)\beta-2}.
         \end{align*}
-        If \Cref{m-beta-0} is true,, then $\var_i(s) \to \delta^{-2}$ for both $i$.
+        If \Cref{m-beta-0} is true, then $\var_i(s) \to \delta^{-2}$ for both $i$.
 \end{ex}
 
-We can consider what happens in the limit for certain rules. If $F_{i}(\beta)\to 0$ for both $i$, then by the proof of \Cref{2c-limits}, $\beta\to 0$ as well. Then a simple computation yields
+We can consider what happens in the limit for certain rules. If $F_{i}(\beta)\to 0$ as for both $i$ as $a,b\to \infty$, then by the proof of \Cref{2c-limits}, $\beta\to 0$ as well. Then a simple computation yields
 \[
 	\var_{i}(s) = \delta^{-2}
 \] for both $i$. Thus if \Cref{m-beta-0} holds, this is true for minimizing 2-choice rules.
@@ -393,7 +397,7 @@ With such a simple rule, we can in fact determine much more. In particular, we c
 	For the \ER rule, the critical time is $1/2$.
 \end{lem}
 \begin{proof}
-	This is a result of translating between the \ER rule and \ER random graphs. It is well known \autocite{princeton} that percolation in \ER random graphs occurs when the connection probability is $1/(n-1)$, which corresponds to using the \ER rule up until time $1/2$ by our earlier discussion.
+	This is a result of translating between the \ER rule and \ER random graphs. It is well known \cite{princeton} that percolation in \ER random graphs occurs when the connection probability is $1/(n-1)$, which corresponds to using the \ER rule up until time $1/2$ by our earlier discussion.
 \end{proof}
 
 Note that since the critical time is $t/n = 1/2$, this corresponds to adding $t=n/2$ edges to the graph. To find $\beta$ then, we can apply the theory of branching processes to study how connected the static graphs $G(n,t/n)$ are for $t < n/2$, as branching processes arise quite naturally in them.
@@ -440,7 +444,7 @@ A critical assumption of this work was the scaling assumption, and for \ER, we c
 	If $s$ is the cluster size, then for \ER, the scaling assumption holds when $\delta = \Theta(s^{-1/4})$. Thus in the limit as $s\to \infty$, the scaling assumption is accurate at all times.
 \end{thrm}
 \begin{proof}
-	We use the following two relationships, which \cite{daCosta} derived for symmetric minimizing 2-choice rules when $t < t_c$ and $s$ is large.
+	We use the following two relationships, which \cite{daCosta} derives for symmetric minimizing 2-choice rules when $t < t_c$ and $s$ is large.
 \begin{itemize}
         \item $P(x) = \delta^{(\tau-1)/\sigma} \tilde{f}(x \delta^{1/\sigma})$;
         \item $\tilde{f}(x) \propto x^{\lambda} \exp\left( -Cx^{1 + \log_2 m} \right)$, where $\lambda = (1+\log_2 m)\left( 1 + \frac{1}{4m-2}  \right)-\frac{2m}{2m-1} $;
@@ -449,7 +453,7 @@ where $m$ is the group size. In the case of \ER, we know $m=1$, $\tau=5/2$, and 
 \[
         P(x) = \tilde{C} \delta^{2} x^{-1/2} \exp\left( -Cx \delta^{2} \right),
 \]
-where $ \tilde{C}$ is the constant of propotionality from $\tilde{f}$. To clean up notation, we use the shorthand $\mathcal{E}_x := \exp\left( -C x \delta^{2} \right)$. Also note that $\delta = t_c-t$ when $t < t_c$, so $\p_{t}{\delta} =-1$. With these observations, we can begin the computation. When $s$ is large, we know $P$ satisfies the Smoluchowki ODE
+where $ \tilde{C}$ is the constant of propotionality from $\tilde{f}$. To clean up notation, we use the shorthand $\mathcal{E}_x := \exp\left( -C x \delta^{2} \right)$. Also note that $\delta = t_c-t$ when $t < t_c$, so $\p_{t}{\delta} =-1$. With these observations, we can begin the computation. When $s$ is large, \Cref{smoluchowski} becomes
 \begin{align*}
         \p_{t}{P}(s) &= \frac{s}{2} \int_{0}^{s} P(u)P(s-u)\;du - sP(s) \\
         \p_{t}\left\{ \tilde{C} \delta^{2}s^{-1/2}\mathcal{E}_{s} \right\} &= \frac{s}{2} \int_{0}^{s} \tilde{C}^{2}\delta^{4}(su-u^2)^{-1/2} \mathcal{E}_{u}\mathcal{E}_{s-u} \; du \quad-\quad \tilde{C}\delta^{2}s^{1/2}\mathcal{E}_{s} \\
@@ -520,7 +524,7 @@ Since $t \mapsto (1-P_1)^{m}$ is continuous at $t_c$, this has the same critical
 
 \begin{ex}[]
 	\label{nonzero-at-criticality}
-For this particular rule, we can also explicitly track how the number of isolated clusters is changing through time; we will see that a nonzero proportion of our graph will be made up of isolated nodes at criticality. Let $m=1$, then the Smoluchowski equation gives
+For this particular rule, we can also explicitly track how the number of isolated clusters is changing through time; we will see that a nonzero proportion of our graph will be made up of isolated nodes at criticality. Let $m=1$, then \Cref{smoluchowski} gives
 \begin{align*}
         \p_{t}{P_1} &= -2 \phi(1) \\
                     &= -2 + 2(1-P_1)^{m+1} \\

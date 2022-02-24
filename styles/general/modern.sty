@@ -63,3 +63,23 @@
 % odd pages
 \fancyhead[RO]{\color{gray}\small\spacedSans{\docTitle}}
 \fancyhead[LO]{\color{gray}\small\spacedSans{\thepage \quad $\vert$ \quad Braden Hoagland}}
+
+
+
+
+
+\newcommand{\header}[2]{
+        % even pages
+	\fancyhead[LE]{\color{gray}\spacedSans{#1}}
+	\fancyhead[RE]{\color{gray}\small\spacedSans{#2 \quad $\vert$ \quad \thepage}}
+        % odd pages
+	\fancyhead[RO]{\color{gray}\small\spacedSans{#2}}
+	\fancyhead[LO]{\color{gray}\small\spacedSans{\thepage \quad $\vert$ \quad #1}}
+}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\sectionmark}[1]{\markboth{}{#1}}
+\setlength{\headsep}{0.6in}
+
+\fancyhf{}

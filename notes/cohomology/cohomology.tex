@@ -1,7 +1,6 @@
 \documentclass[twoside,10pt]{article}
 \usepackage{/Users/bradenhoagland/latex/styles/toggles}
 \toggletrue{sectionbreaks}
-%\toggletrue{sectionheaders}
 \newcommand{\docTitle}{Cohomology}
 \usepackage{/Users/bradenhoagland/latex/styles/common}
 \importStyles{modern}{rainbow}{boxy}
@@ -166,6 +165,14 @@ Let $\mathcal{C}$ be a chain complex of free abelian groups, and let $G$ be any 
 \end{align*}
 \end{thrm}
 
-hello there. changes.
+We'll be mostly interested in the second statement since we care more about cohomology. If we're working with field coefficients, then the UCT gets simpler.
+
+\begin{thrm}[UCT for Fields]
+If $\mathbf{k}$ is a field, then
+\[
+H^{n}(\mathcal{C},\mathbf{k}) \cong \hom_{\mathbf{k}}\left( H_{n}(\mathcal{C};\mathbf{k}),\mathbf{k} \right).
+\] 
+\end{thrm}
+Note that it's $H_{n}(\mathcal{C};\mathbf{k})$, \emph{not} $H_{n}(\mathcal{C})$.
 
 \end{document}
