@@ -15,9 +15,9 @@
 			\vspace*{20mm}
 		}{}
                 \MakeUppercase{
-                        \textbf{\docTitle}\\
+                        \so{\docTitle}\\
                         \vspace{10mm}
-                        {\footnotesize #1}\\
+                        {\footnotesize \so{#1}}\\
                         \vspace{5mm}
                 }
 		{\footnotesize\textit{#2}}
@@ -32,17 +32,17 @@
 %--------------------------------------------------------------------------------
 % Sections
 %--------------------------------------------------------------------------------
-\titleformat{\section}{\center\small\bfseries\MakeUppercase}{\thesection}{1em}{}
-\titleformat{\subsection}{\vspace{3mm}\center\footnotesize\MakeUppercase}{\thesubsection}{1em}{\vspace{1mm}}
+\titleformat{\section}{\center\small\MakeUppercase}{\thesection}{1em}{\so}
+\titleformat{\subsection}{\vspace{3mm}\center\footnotesize\MakeUppercase}{\thesubsection}{1em}{\vspace{1mm}\so}
 
 %--------------------------------------------------------------------------------
 % Header and Footer
 %--------------------------------------------------------------------------------
 \newcommand{\header}[2]{
 	% even pages
-	\fancyhead[RE]{\color{gray}\small\textit{#2} \quad $\vert$ \quad \thepage}
+	\fancyhead[RE]{\color{gray}\small\so{\MakeUppercase{#2}} \quad $\vert$ \quad \thepage}
 	% odd pages
-	\fancyhead[LO]{\color{gray}\small\thepage \quad $\vert$ \quad \textit{#1}}
+	\fancyhead[LO]{\color{gray}\small\thepage \quad $\vert$ \quad \so{\MakeUppercase{#1}}}
 }
 
 \pagestyle{fancy}
