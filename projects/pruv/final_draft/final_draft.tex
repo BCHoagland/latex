@@ -26,7 +26,7 @@
 \header{Braden Hoagland}{Dynamic Percolation Processes}
 
 \begin{abstract}
-	We develop the theory of cluster growth near criticality for a general class of rules for dynamically growing graphs called 2-choice rules. We use scaling theory to compute critical exponents for any 2-choice rule, and we show special cases in which we can solve for these exponents explicitly. Finally, we consider the \ER rule, the simplest 2-choice rule for which more explicit calculations are possible. We derive several of its important properties, then show that a large subset of 2-choice rules - greedy bounded size rules - act as \ER near criticality.
+	We develop the theory of cluster growth near criticality for a general class of rules for dynamically growing graphs called 2-choice rules. We use scaling theory to compute critical exponents for any 2-choice rule, and we show special cases in which we can solve for these exponents explicitly. Finally, we consider the \ER rule, the simplest 2-choice rule for which more explicit calculations are possible. We derive several of its important properties, then show that a large subset of 2-choice rules - minimizing bounded size rules - act as \ER near criticality.
 \end{abstract}
 
 %--------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ These rules are just two of many rules desgined to delay the growth of clusters 
 
 In 2013, Bhamidi, Budhirja, and Wang showed that the behavior of the Bohman-Frieze process near the critical point was the same as in the \ER case \cite{coal}. Explicitly, they showed that at time $t_c + r/n^{1/3}$ for $-\infty<r<\infty$, the system converges to the ``multiplicative coalesent", in which clusters of size $x$ and $y$ merge at rate $xy$. Aldous showed a corresponding result for \ER graphs \cite{Aldous}. Through far from trivial, this result should not be surprising. After some time there will be very few isolated vertices, so the process will start to add edges almost uniformly at random.
 
-The Bohman-Frieze rule is an example of a ``bounded size rule", in which all components of size greater than or equal to some constant $K$ are treated the same. In 2011, Riordan and Warnke showed that the phase transition at criticality is continuous for all $\ell$-vertex rules \cite{RW-cont}, which are a generalization of Achlioptas processes. Then in 2017, Riordan and Warnke showed that all bounded size Achlioptas processes share (in a strong sense) all the features of the \ER phase transition \cite{RW-bounded}.
+The Bohman-Frieze rule is an example of a ``bounded size rule", in which all components of size greater than some constant $K$ are treated the same. In 2011, Riordan and Warnke showed that the phase transition at criticality is continuous for all $\ell$-vertex rules \cite{RW-cont}, which are a generalization of Achlioptas processes. Then in 2017, Riordan and Warnke showed that all bounded size Achlioptas processes share (in a strong sense) all the features of the \ER phase transition \cite{RW-bounded}.
 
 One unfortunate consequence of working in such generality is that Riordan and Warnke's work is largely based on contradiction, and thus it does not provide much quantitative information about the sizes of the graph clusters near criticality. Under the additional assumption of ``scaling behavior" that is supported by numerical evidence (see da Costa et al \cite{daCosta}), though, it is possible to calculate further critical exponents for these processes.
 
@@ -81,7 +81,7 @@ With these definitions in hand, we can turn our attention to the main attraction
         Define a rule $\mathcal{R}$ as follows:
         \begin{itemize}
                 \item Every $t=1/n$ units of time, choose $\ell$ groups of vertices $\mathcal{V}_1, \dots, \mathcal{V}_{\ell}$ (of potentially different sizes) by sampling vertices independent and at random from the graph.
-                \item For each $i$, follow some rule $\mathcal{F}_{i}$ to choose a vertex $x_i$ with cluster size $\kappa_w$ from group $\mathcal{V}_i$, subject to the condition that $\mathcal{F}_i$ induces a function $\phi_i(s) = \mathbb{P}\left( \kappa_i=s \right) $ that does not depend on any other $\phi_j$ for $j \neq i$.
+                \item For each $i \in \left\{ 1, \dots, \ell \right\}$, follow some rule $\mathcal{F}_{i}$ to choose a vertex $x_i$ with cluster size $\kappa_i$ from group $\mathcal{V}_i$, subject to the condition that $\mathcal{F}_i$ induces a function $\phi_i(s) = \mathbb{P}\left( \kappa_i=s \right) $ that does not depend on any other $\phi_j$ for $j \neq i$.
         \end{itemize}
 We call $\mathcal{R}$ an \textbf{$\ell$-choice rule}.
 \end{defn}
@@ -140,6 +140,8 @@ As a consequence, we can determine $\gamma_{\phi}$ with respect to $1/\sigma$ us
 \subsection{Induced Order Maps}
 
 An important tool used throughout this work is the \emph{induced order map}, which encodes how quickly the giant component is growing at criticality.
+
+\warn{need to first say what a scaling form is}
 
 \begin{defn}[]
 	Suppose $\zeta$ is a real-valued function of $S$, then the \textbf{induced order map} of $\zeta$ is the unique map $F_{\zeta}:\R\to \R$ such that $F_{\zeta}(\beta)$ gives the order of the scaling form of $\zeta(S)$. The \textbf{$i$-th standard induced order map} $F_{i}$ of an $\ell$-choice rule is the induced order map of $1 - \ang{1}_{\phi_{i}}$.
@@ -539,12 +541,14 @@ We know that percolation occurs at $t=1$ at the very latest by \cite{RW-cont}. B
 \end{ex}
 
 %-------------------
-% Greedy Bounded Size Rules
+% Minimizing Bounded Size Rules
 %-------------------
-\subsection{Greedy Bounded Size Rules}
-\label{greedy-rules}
+\subsection{Minimizing Bounded Size Rules}
+\label{minimizing-bounded-size-rules}
 
-We can generalize our \BF variant to get closer to the case of a general bounded size rule. Let's still sample $m$ points for each group, but now we'll take the first one whose cluster size is $\leq K$. If each of the $m$ cluster sizes are greater than $K$, we'll sample a new random vertex and always choose it. We call such a rule a \textbf{greedy bounded size rule}.
+\warn{don't really need it to be symmetric?}
+
+We can generalize our \BF variant to get closer to the case of a general bounded size rule. Let's still sample $m$ points for each group, but now we'll take the first one whose cluster size is $\leq K$. If each of the $m$ cluster sizes are greater than $K$, we'll sample a new random vertex and always choose it. We call such a rule a \textbf{minimizing bounded size rule}.
 
 Calculating $\phi(s)$ for $s \leq K$ would be pretty messy, but we definitely know
 \[
@@ -560,7 +564,11 @@ Calculating $\phi(s)$ for $s \leq K$ would be pretty messy, but we definitely kn
                        &= 1 - (1-P_{\leq K})^{m} \left[ 1 - \sum_s P_s \right] \\
                        &= 1 - (1-P_{\leq K})^{m} S.
 \end{align*}
-Since $t \mapsto (1-P_{\leq K})^{m}$ is continuous at $t_c$, by the same logic as before, any greedy bounded size rule shares all its critical exponents with \ER.
+Since $t \mapsto (1-P_{\leq K})^{m}$ is continuous at $t_c$, by the same logic as before, any minimizing bounded size rule shares all its critical exponents with \ER.
+
+\warn{make sure you're consistent with bounded size: $\geq$ or $>$.}
+
+\warn{What if I defined a ``maximizing bdd size rule" and then show it also has ER critical exponents, then can argue that anything in the middle must also?}
 
 
 %--------------------------------------------------------------------------------
@@ -570,9 +578,9 @@ Since $t \mapsto (1-P_{\leq K})^{m}$ is continuous at $t_c$, by the same logic a
 
 We developed the basic theory of 2-choice rules, then used it to compute the critical exponents of any such rule in terms of the exponent $\beta$ related to the size of the giant component. This gave us a powerful computational tool: \Cref{2c-scaling-relations} allows us to compute each critical exponent with respect to $\beta$ using only the standard induced order map $1 - \ang{1}_{\phi}$.
 
-We also examined the limiting behavior of 2-choice rules and the variance of their cluster sizes, and we saw that these also depended entirely on $\beta$ and the standard induced order map. Finally, we developed a more complete theory for the \ER rule and showed how a large family of rules -- greedy bounded size rules -- act like \ER at criticality.
+We also examined the limiting behavior of 2-choice rules and the variance of their cluster sizes, and we saw that these also depended entirely on $\beta$ and the standard induced order map. Finally, we developed a more complete theory for the \ER rule and showed how a large family of rules -- minimizing bounded size rules -- act like \ER at criticality.
 
-As shown in \cite{RW-bounded}, all bounded size rules share the same critical properties of \ER, so we expect it to be possible to extend the results in \Cref{greedy-rules} to apply to all bounded size rules. Additionally, much of the work comparing more rules to \ER was to find when certain rules behaved exactly like \ER. But it would be more useful to develop a notion of similarity, not just equality, with \ER so that we can get a sense of the critical behavior of complicated rules that do not act like \ER at criticality.
+As shown in \cite{RW-bounded}, all bounded size rules share the same critical properties of \ER, so we expect it to be possible to extend the results in \Cref{minimizing-bounded-size-rules} to apply to all bounded size rules. Additionally, much of the work comparing more rules to \ER was to find when certain rules behaved exactly like \ER. But it would be more useful to develop a notion of similarity, not just equality, with \ER so that we can get a sense of the critical behavior of complicated rules that do not act like \ER at criticality.
 
 %--------------------------------------------------------------------------------
 % bibliography

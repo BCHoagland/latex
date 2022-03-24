@@ -141,7 +141,7 @@ We'll define the It\^o integral for simple adapted processes, then extend it to 
 \warn{finish}
 
 \begin{prop}
-The quadratic variation of $X(t) = \int_{0}^{t} \sigma\;dB$ is
+Let $\sigma \in \mathcal{L}_{A}^2$, then the quadratic variation of $X(t) = \int_{0}^{t} \sigma\;dB$ is
 \[
 [X,X](t) = \int_{0}^{t} \sigma^{2}\;ds.
 \] 
@@ -182,7 +182,16 @@ This integral has all the same properties as the one for simple processes.
 %--------------------------------------------------------------------------------
 \section{It\^o's Formula}
 
-\warn{do this.}
+\begin{thrm}[]
+	Let $Z$ be an It\^o process satisfying
+	\[
+	dZ = \mu\;dt + \sigma\;dB.
+	\] Let $f(t,x) \in C^2$, then
+	\[
+	df(t, Z_{t}) = \left[ \frac{\p f}{\p x} \right]dZ + \left[ \frac{\p f}{\p t} + \frac{1}{2} \frac{\p^2 f}{\p x^2} \sigma^{2} \right]dt,
+	\] 
+	where all partial derivatives are evaluated at $(t,Z_{t})$.
+\end{thrm}
 
 
 \end{document}
