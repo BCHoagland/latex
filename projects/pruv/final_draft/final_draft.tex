@@ -99,7 +99,7 @@ Most of the results in this work follow from the assumption that near the critic
 \begin{equation}
         P(s) = s^{1-\tau}f(s \delta^{1/\sigma}),
 \end{equation}
-where$\tau$ and $\sigma$ are constants, $f$ is a scaling function, $\delta:= s-t_{c}$, and $s$ is large. The following theorem gives relations between the exponents $\tau$ and $1/\sigma$ if some regularity conditions hold for the scaling function $f$.
+where $\tau$ and $\sigma$ are constants, $f$ is a scaling function, $\delta:= s-t_{c}$, and $s$ is large. The following theorem gives relations between the exponents $\tau$ and $1/\sigma$ if some regularity conditions hold for the scaling function $f$.
 
 \begin{thrm}
         \label{crit-exp}
@@ -402,7 +402,7 @@ With such a simple rule, we can in fact determine much more. In particular, we c
 	This is a result of translating between the \ER rule and \ER random graphs. It is well known \cite{princeton} that percolation in \ER random graphs occurs when the connection probability is $1/(n-1)$, which corresponds to using the \ER rule up until time $1/2$ by our earlier discussion.
 \end{proof}
 
-Note that since the critical time is $t/n = 1/2$, this corresponds to adding $t=n/2$ edges to the graph. To find $\beta$ then, we can apply the theory of branching processes to study how connected the static graphs $G(n,t/n)$ are for $t < n/2$, as branching processes arise quite naturally in them.
+Note that since the critical time is $t/n = 1/2$, this corresponds to adding $t=n/2$ edges to the graph. To find $\beta$, we can apply the theory of branching processes to study how connected the static graphs $G(n,t/n)$ are for $t < n/2$, as branching processes arise quite naturally in them.
 
 \begin{thrm}[]
 For the \ER rule, $\beta=1$.
@@ -522,7 +522,7 @@ The quantity $\ang{s^{k}}_{\phi}$ determines the critical exponent $\gamma_{\phi
                        &= 1 - (1-P_1)^{m} (1-\ang{1}_{P}) \\
                        &= 1 - (1-P_1)^{m} S.
 \end{align*}
-Since $t \mapsto (1-P_1)^{m}$ is continuous at $t_c$, this has the same critical exponents as $\ang{1}_{P} = 1-S$, i.e. $\gamma_{\phi} = \gamma_{P}$. By \Cref{exponent-to-induced-map}, this rule has the same standard induced order maps as \ER. Then since our analysis of 2-choice rules only relied on standard induced order maps, this \BF variant has all the same critical exponents as \ER.
+Since $t \mapsto (1-P_1)^{m}$ \warn{is continuous} at $t_c$, this has the same critical exponents as $\ang{1}_{P} = 1-S$, i.e. $\gamma_{\phi} = \gamma_{P}$. By \Cref{exponent-to-induced-map}, this rule has the same standard induced order maps as \ER. Then since our analysis of 2-choice rules only relied on standard induced order maps, this \BF variant has all the same critical exponents as \ER.
 
 \begin{ex}[]
 	\label{nonzero-at-criticality}
@@ -580,7 +580,7 @@ We developed the basic theory of 2-choice rules, then used it to compute the cri
 
 We also examined the limiting behavior of 2-choice rules and the variance of their cluster sizes, and we saw that these also depended entirely on $\beta$ and the standard induced order map. Finally, we developed a more complete theory for the \ER rule and showed how a large family of rules -- minimizing bounded size rules -- act like \ER at criticality.
 
-As shown in \cite{RW-bounded}, all bounded size rules share the same critical properties of \ER, so we expect it to be possible to extend the results in \Cref{minimizing-bounded-size-rules} to apply to all bounded size rules. Additionally, much of the work comparing more rules to \ER was to find when certain rules behaved exactly like \ER. But it would be more useful to develop a notion of similarity, not just equality, with \ER so that we can get a sense of the critical behavior of complicated rules that do not act like \ER at criticality.
+As shown in \cite{RW-bounded}, all bounded size rules share the same critical properties of \ER, so we expect it to be possible to extend the results in \Cref{minimizing-bounded-size-rules} to apply to all bounded size rules. Additionally, the \ER comparisons in this paper illustrate when various rules behave exactly like \ER at criticality, but it would be more useful to develop a notion of similarity in the absence of identical behavior. Then we could get a sense of the critical behavior of complicated rules that do not act mimic the cluster growth of \ER.
 
 %--------------------------------------------------------------------------------
 % bibliography
