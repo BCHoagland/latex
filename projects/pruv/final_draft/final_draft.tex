@@ -28,7 +28,7 @@
 \header{Braden Hoagland}{Dynamic Percolation Processes}
 
 \begin{abstract}
-	We develop the theory of cluster growth near criticality for a general class of rules for dynamically growing graphs called 2-choice rules. We use scaling theory to compute critical exponents for any 2-choice rule, and we show special cases in which we can solve for these exponents explicitly. Finally, we consider the \ER rule, the simplest 2-choice rule for which more explicit calculations are possible. We derive several of its important properties, then show that a large subset of 2-choice rules - minimizing bounded size rules - act as \ER near criticality.
+	We develop the theory of cluster growth near criticality for a general class of rules for dynamically growing graphs called 2-choice rules. We use scaling theory to compute critical exponents for any 2-choice rule, and we show special cases in which we can solve for these exponents explicitly. Finally, we consider the \ER rule, the simplest 2-choice rule for which more explicit calculations are possible. We derive several of its important properties, then show that a large subset of 2-choice rules - bounded size rules - act as \ER near criticality.
 \end{abstract}
 
 %--------------------------------------------------------------------------------
@@ -59,15 +59,9 @@ The properties of the \ER model are well understood, so it serves as a natural r
 
 It is then natural to ask which generalizations of \ER graphs also have these properties. At a Fields Institute workshop in 2000, Dmitris Achlioptas suggested a class of variants of the \ER model, now dubbed ``Achlioptas processes". One starts with an empty graph, and at each step two edges $(v_1,v_2)$ and $(v_3,v_4)$ are randomly chosen from the set of all possible edges. Only one of them is added to the graph, though, according to some rule that depends on the cluster sizes of the current graph.
 
-If $\kappa_i$ is the cluster size of $v_{i}$, then two possible rules are the sum rule and product rule. In the sum rule, the first edge is added if $\kappa_1+\kappa_2 < \kappa_3+\kappa_4$, and the second edge is added otherwise. In the product rule, the first edge is added if $\kappa_1 \kappa_2 < \kappa_3 \kappa_4$, and the second edge is added otherwise.
+In 2001, Bohman and Frieze were the first to describe an Achlioptas process that delayed percolation \cite{BF}. At each step, the first edge is added if both $v_1$ and $v_2$ were isolated vertices, and the second edge is added otherwise. They showed that there was a constant $c_0>0.535$ such that the largest component at time $c_0$ has size bounded by $(\log n)^{O(1)}$. This rule is an example of a ``bounded size rule", in which all components of size greater than some constant $K$ are treated the same.
 
-These rules are just two of many rules desgined to delay the growth of clusters and, by extension, the eventual emergence of the giant component. In 2001, Bohman and Frieze were the first to describe an Achlioptas process that delayed percolation \cite{BF}. At each step, the first edge is added if both $v_1$ and $v_2$ were isolated vertices, and the second edge is added otherwise. They showed that there was a constant $c_0>0.535$ such that the largest component at time $c_0$ has size bounded by $(\log n)^{O(1)}$. This rule is an example of a ``bounded size rule", in which all components of size greater than some constant $K$ are treated the same.
-
-In 2013, Bhamidi, Budhirja, and Wang showed that the behavior of the Bohman-Frieze process near the critical point was the same as in the \ER case \cite{coal}. Explicitly, they showed that at time $t_c + r/n^{1/3}$ for $-\infty<r<\infty$, the system converges to the ``multiplicative coalesent", in which clusters of size $x$ and $y$ merge at rate $xy$. Aldous had already showed a corresponding result for \ER graphs \cite{Aldous}, so this hinted at a deeper connection between the Bohman-Frieze and \ER processes. Through far from trivial, this result should not be surprising. After some time there will be very few isolated vertices, so the process will start to add edges \emph{almost} uniformly at random.
-
-\warn{Talk about explosive percolation somewhere, then put following figure (min 5 rule)}
-
-\warn{make sure to mention da Costa rule.}
+If $\kappa_i$ is the cluster size of $v_{i}$, then two possible rules are the sum rule and product rule. In the sum rule, the first edge is added if $\kappa_1+\kappa_2 < \kappa_3+\kappa_4$, and the second edge is added otherwise. In the product rule, the first edge is added if $\kappa_1 \kappa_2 < \kappa_3 \kappa_4$, and the second edge is added otherwise. In 2009, Achlioptas, D'Souza, and Spencer \cite{discontinuous} used numerical experiments to claim that the product rule exhibited ``explosive percolation" by causing a discontinuous phase transition at the critical time; however, in 2010, da Costa, et al. \cite{dacosta2010} found that the product rule's phase transition was actually continuous by comparing it to a strictly more explosive rule with continuous phase transition; the da Costa rule with parameter $m$ selected two groups of $m$ vertices at random and joined the vertices from each group with the smallest cluster size. In 2011, Riordan and Warnke showed that results for the da Costa rule could be greatly generalized: the phase transition at criticality is continuous for all $\ell$-vertex rules \cite{RW-cont}, which are a generalization of Achlioptas processes.
 
 \begin{figure}[H]
         \centering
@@ -83,12 +77,12 @@ In 2013, Bhamidi, Budhirja, and Wang showed that the behavior of the Bohman-Frie
                 \centering
                 \includegraphics[scale=0.45]{fig/exp-postcrit.pdf}
         \end{subfigure}
-	\caption{The above is an approximation of the da Costa rule with $m = 5$ \warn{I think it's $m$?} at times $t = \frac{1}{2} ,\frac{3}{4} ,$ and $1$, respectively. Here we see explosive cluster growth: by time $\frac{3}{4} $, there are many large clusters cluttering the graph, and by time $t=1$, they have all merged into a single cluster that contains all but a handful of vertices.}
+	\caption{The above is an approximation of the da Costa rule with $m = 5$ at times $t = \frac{1}{2} ,\frac{3}{4} ,$ and $1$, respectively. Here we see explosive cluster growth: by time $\frac{3}{4} $, there are many large clusters cluttering the graph, and by time $t=1$, they have all merged into a single cluster that contains all but a handful of vertices.}
 \end{figure}
 
-In 2011, however, Riordan and Warnke showed that the phase transition at criticality is continuous for all $\ell$-vertex rules \cite{RW-cont}, which are a generalization of Achlioptas processes. Then in 2017, Riordan and Warnke showed that all bounded size Achlioptas processes share (in a strong sense) all the features of the \ER phase transition \cite{RW-bounded}.
+In 2013, Bhamidi, Budhirja, and Wang showed that the behavior of the Bohman-Frieze process near the critical point was the same as in the \ER case \cite{coal}. Explicitly, they showed that at time $t_c + r/n^{1/3}$ for $-\infty<r<\infty$, the system converges to the ``multiplicative coalesent", in which clusters of size $x$ and $y$ merge at rate $xy$. Aldous had already showed a corresponding result for \ER graphs \cite{Aldous}, so this hinted at a deeper connection between the Bohman-Frieze and \ER processes. Through far from trivial, this result should not be surprising. After some time there will be very few isolated vertices, so the process will start to add edges \emph{almost} uniformly at random.
 
-One unfortunate consequence of working in such generality is that Riordan and Warnke's work is largely based on contradiction, and thus it does not provide much quantitative information about the sizes of the graph clusters near criticality. Under the additional assumption of ``scaling behavior" that is supported by numerical evidence (see da Costa et al \cite{daCosta}), though, it is possible to calculate further critical exponents for these processes.
+Then in 2017, Riordan and Warnke showed that \emph{all} bounded size Achlioptas processes share (in a strong sense) all the features of the \ER phase transition \cite{RW-bounded}. One unfortunate consequence of working in such generality is that Riordan and Warnke's work is largely based on contradiction, and thus it does not provide much quantitative information about the sizes of the graph clusters near criticality. Under the additional assumption of ``scaling behavior" that is supported by numerical evidence (see da Costa et al \cite{daCosta}), though, it is possible to calculate further critical exponents for these processes.
 
 The focus of this work will then be to generalize existing methods of calculating critical exponents, determining the classes of rules for which this is possible, and studying the limiting behavior of the critical exponents as their corresponding rules' parameters tend to extreme values.
 
@@ -99,9 +93,9 @@ The focus of this work will then be to generalize existing methods of calculatin
 
 To begin, we will need to define some basic terms that will be used over and over again. Let $S$ be the relative size of the dominating cluster as $n \to \infty$. If $x_i$ is a vertex, then we denote its absolute cluster size by $\kappa_i$. Denote the probability that the minimum of $m$ independetly and randomly sampled vertices is $s$ by
 \[
-        Q_m(s) := \mathbb{P}\left( \min\left\{ \kappa_1, \dots, \kappa_m \right\} = s \right) .
+        Q_m(s, t) := \mathbb{P}\left( \min\left\{ \kappa_1, \dots, \kappa_m \right\} = s \text{ at time } t \right) .
 \]
-Consider the sum $\ang{1}_{m} := \sum_{s} Q_{m}(s)$, where $s$ implicitly ranges over only finite values. Since $S$ is the probability that a randomly chosen vertex belongs to an infinite cluster, we can write this sum as $\ang{1}_{m} = 1-S^{m}$. Since they frequently show up in common examples, we give $m=1$ and $m=2$ shorthands:
+For notational simplicity, the time input will be left implicit. Consider the sum $\ang{1}_{m} := \sum_{s} Q_{m}(s)$, where $s$ implicitly ranges over only finite values. Since $S$ is the probability that a randomly chosen vertex belongs to an infinite cluster, we can write this sum as $\ang{1}_{m} = 1-S^{m}$. Since $S=0$ for $t \leq t_{c}$ by definition, $\ang{1}_{m}=1$ for all $t \leq t_c$. Since they frequently show up in common examples, we give $m=1$ and $m=2$ shorthands:
 \[
         P := Q_1, \quad\quad Q := Q_2.
 \]
@@ -113,9 +107,10 @@ for any real-valued function $\phi$. In the special case $\phi = Q_{m}$, we'll u
 \[
         \ang{s^{k}}_{m} := \ang{s^{k}}_{Q_{m}}.
 \]
-We will use $\Ang{\;\cdot\;}_{P}$ and $\ang{\;\cdot\;}_{Q}$ instead of $\Ang{\;\cdot\;}_{1}$ and $\ang{\;\cdot\;}_{2}$, respectively. Finally, we'll use the notation $a(t) \sim b(t)$ to denote that $a(t)/b(t)$ converges to a nonnegative constant as $t$ approaches some critical value at which $a(t)$ and $b(t)$ both blow up; this critical value should be clear from context.
-
-\warn{in this case, if $a(t) \sim b(t)$, then $a(t) + C \sim b(t)$ too.}
+We will use $\Ang{\;\cdot\;}_{P}$ and $\ang{\;\cdot\;}_{Q}$ instead of $\Ang{\;\cdot\;}_{1}$ and $\ang{\;\cdot\;}_{2}$, respectively. Finally, we'll use the notation $a(t) \sim b(t)$ to denote that $a(t)$ and $b(t)$ are asymptotically similar in the following sense: if $t$ approaches some critical value $t^{*}$ (which should be clear from context) such that $a(t), b(t) \to \infty$ as $t\to t^{*}$, then
+\[
+a(t) \sim b(t) \iff \frac{a(t)}{b(t)} \to C \text{ as } t\to t^{*}
+\] for some nonzero constant $C$. It's straightforward to show that if $a(t) \sim b(t)$, then for any nonzero constants $\lambda, \mu$, we have $a(t) \sim \lambda a(t) \sim a(t) + \mu \sim b(t)$.
 
 With these definitions in hand, we can turn our attention to the main attraction. We will be discussing rules that add a single edge every $t=1/n$ units of time, gotten by randomly sampling two groups of vertices independently from the graph, then choosing an endpoint vertex from each group. The following definition is a straightforward generalization of this idea, but we will only concern ourselves in this work with the case $\ell=2$.
 
@@ -135,13 +130,12 @@ If $\phi_{i}=Q_{m_i}$ for each $i$, then $\mathcal{R}$ is \textbf{minimizing}. W
 %-------------------
 \subsection{The Scaling Assumption and Critical Exponents}
 
-\warn{Motivation for this...}
-
-Most of the results in this work follow from the assumption that near the critical time $t_c$, the function $P$ is of the form
+Most of the results in this work follow from the assumption that near the critical time $t_c$, the function $P$ obeys the power law
 \begin{equation}
-        P(s) = s^{1-\tau}f(s \delta^{1/\sigma}),
+	\label{scaling-assumption}
+        P(s, t) = s^{1-\tau}f(s \delta^{1/\sigma}),
 \end{equation}
-where $\tau$ and $\sigma$ are constants, $f$ is a scaling function, $\delta:= s-t_{c}$, and $s$ is large. The following theorem gives relations between the exponents $\tau$ and $1/\sigma$ if some regularity conditions hold for the scaling function $f$.
+where $\tau$ and $\sigma$ are constants, $f$ is a scaling function, $\delta:= t-t_{c}$, and $s$ is large. The following theorem gives relations between the exponents $\tau$ and $1/\sigma$ if some regularity conditions hold for the scaling function $f$.
 
 \begin{thrm}
         \label{crit-exp}
@@ -158,13 +152,13 @@ where $\tau$ and $\sigma$ are constants, $f$ is a scaling function, $\delta:= s-
         such that $S \sim \delta^{\beta}$ and $\ang{s^{k}}_{m} \sim \delta^{-\gamma_m-(k-1)/\sigma}$.
 \end{thrm}
 \begin{proof}
-        We'll begin by deriving $\beta$. Since
+        We'll begin by deriving $\beta$. Since $S(t) = 1 - \sum_{s} P(s, t) = \sum_{s} ( P(s, t_c) - P(s, t))$, we can replace the sum with integration and substitute (\ref{scaling-assumption}) to get
         \begin{align*}
-                S &\approx \int_{0}^{\infty} s^{1-\tau}(f(0)-f(s \delta^{1/\sigma})) \;ds,
-                \intertext{we can make the change of variable $s = x \delta^{-1/\sigma}$ to get}
-                  &= \delta^{(\tau-2)/\sigma} \int_{0}^{\infty} x^{1-\tau} (f(0)-f(x)) \;dx.
+                S &\approx \int_{0}^{\infty} s^{1-\tau}(f(0)-f(s \delta^{1/\sigma})) \;ds.
+                \intertext{We can make the change of variable $s = x \delta^{-1/\sigma}$ to get}
+                S &= \delta^{(\tau-2)/\sigma} \int_{0}^{\infty} x^{1-\tau} (f(0)-f(x)) \;dx.
                 \intertext{Integrating by parts gives}
-                &= \frac{\delta^{(\tau-2)/\sigma}}{\tau-2} \left[ \left[ -x^{2-\tau} (f(0) - f(x)) \right]^{x=\infty}_{x=0} - \int_{0}^{\infty} x^{2-\tau} f'(x) \;dx \right].
+                S &= \frac{\delta^{(\tau-2)/\sigma}}{\tau-2} \left[ \left[ -x^{2-\tau} (f(0) - f(x)) \right]^{x=\infty}_{x=0} - \int_{0}^{\infty} x^{2-\tau} f'(x) \;dx \right].
         \end{align*}
         So by our assumptions on $f$, we have $S \sim \delta^{\beta}$, where $\beta = (\tau-2)/\sigma$. The derivation of $\gamma_{m}$ is similar.
 \end{proof}
@@ -181,16 +175,18 @@ As a consequence, we can determine $\gamma_{\phi}$ with respect to $1/\sigma$ us
 %-------------------
 \subsection{Induced Order Maps}
 
-An important tool used throughout this work is the \emph{induced order map}, which encodes how quickly the giant component is growing at criticality.
-
-\warn{need to first say what a scaling form is}
+An important tool used throughout this work is the \emph{induced order map}, which encodes how quickly the giant component is growing at criticality. We use the term \emph{scaling form} to denote the function of $\delta$ that a particular value takes on as a result of the scaling assumption (\ref{scaling-assumption}). For example, the scaling form of $S$ is $\delta^{\beta}$, a direct result of \Cref{crit-exp}.
 
 \begin{defn}[]
 	Suppose $\zeta$ is a real-valued function of $S$, then the \textbf{induced order map} of $\zeta$ is the unique map $F_{\zeta}:\R\to \R$ such that $F_{\zeta}(\beta)$ gives the order of the scaling form of $\zeta(S)$. The \textbf{$i$-th standard induced order map} $F_{i}$ of an $\ell$-choice rule is the induced order map of $1 - \ang{1}_{\phi_{i}}$.
 \end{defn}
 
 \begin{ex}[]
-	Consider the 2-choice rule with $\phi_1 = \phi_2 = Q_{m}$. Both standard induced order maps are the same: the unique map $F$ such that $F(\beta)$ is the order of the scaling form of $1 - \ang{1}_{m}$. Recall the identity $1-\ang{1}_{m}= S^{m}$, which means the scaling form is $\delta^{m \beta}$, so $F(\beta) = m\beta$.
+Consider the map $f(S) = S^{a}$ for some constant $a$. In scaling form, $f(S) \sim \delta^{a \beta}$, so the induced order map $F_{f}$ is multiplication by $a$. Alternatively, consider the map $g(S) = b S$ for some constant $b$. In scaling form, $g(S) \sim b \delta^{a}$, so the induced order map $F_{g}$ is the identity. This is expected, as $g$ does not change the asymptotic behavior of the growth of $S$.
+\end{ex}
+
+\begin{ex}[]
+	Consider the 2-choice rule with $\phi_1 = \phi_2 = Q_{m}$. Both standard induced order maps are the same: the unique map $F$ such that $F(\beta)$ is the order of the scaling form of $1 - \ang{1}_{m}$. Recall the identity $1-\ang{1}_{m}= S^{m}$, which means the scaling form is $\delta^{m \beta}$, so $F(\beta) = m\beta$. Note that $F(\beta)=\beta$ for the \ER rule ($m=1$), i.e. $1 - \ang{1}_{P} = S \sim \delta^{\beta}$.
 \end{ex}
 
 We will see later on that the quantity $1-\ang{1}_{\phi}$ occurs quite naturally when describing the growth of the giant component near criticality, which motivates why we use it to define the standard induced order map. On a different note, the following theorem ties together critical exponents and induced order maps, allowing us to translate between the two whenever necessary.
@@ -208,7 +204,6 @@ We will see later on that the quantity $1-\ang{1}_{\phi}$ occurs quite naturally
 
 In the following sections, we will derive scaling relations for general 2-choice rules in terms of standard induced order maps, then use these to analyze minimizing rules and several other commonly studied rules.
 
-\warn{spend more time talking about induced order maps}
 
 %-------------------
 % Scaling Relations
@@ -472,26 +467,6 @@ Note that since the critical time for the \ER rule is $t_c = t/n = 1/2$, this co
 	Thus $\theta \sim t-1$. But in this slowed down version of \ER, the critical time is 1, so this is in the form $\theta \sim \delta$. By definition, $\beta$ is the exponent such that $\theta \sim \delta^{\beta}$, so $\beta=1$.
 \end{proof}
 
-\begin{figure}[H]
-        \centering
-        \begin{subfigure}
-                \centering
-                \includegraphics[scale=0.3]{fig/100.pdf}
-        \end{subfigure}
-        \begin{subfigure}
-                \centering
-                \includegraphics[scale=0.3]{fig/1000.pdf}
-        \end{subfigure}
-        \begin{subfigure}
-                \centering
-                \includegraphics[scale=0.3]{fig/2500.pdf}
-        \end{subfigure}
-        \caption{The above plots show the relative size of the giant component for 20 \ER processes graphs with $n=100, 1000,$ and $2500$ vertices, respectively. The fact that $\beta=1$, i.e. $\theta \sim \delta$, means that the slopes of these lines at $t=1/2$ become linear in the limit as $n\to \infty$.}
-\end{figure}
-
-\warn{According to scaling window thing below, the lines after $t=1/2$ become linear all the way until $t=1$}
-
-
 %-------------------
 % The Scaling Window
 %-------------------
@@ -500,6 +475,7 @@ Note that since the critical time for the \ER rule is $t_c = t/n = 1/2$, this co
 A critical assumption of this work was the scaling assumption, and for \ER, we can find an explicit bound on the size of the \textit{scaling window}, the region where the scaling assumption is accurate.
 
 \begin{thrm}[]
+	\label{crit-window}
 	If $s$ is the cluster size, then for \ER, the scaling assumption holds after $t_{c}$ when $\delta = \Theta(s^{-1/2})$. Thus in the limit as $s\to \infty$, the scaling assumption is accurate in the entire postcritical regime.
 \end{thrm}
 \begin{proof}
@@ -541,6 +517,24 @@ where $ \tilde{C}$ is the constant of propotionality from $\tilde{f}$. To clean 
 
 Thus for large clusters formed by the \ER rule, the scaling assumption is perfectly reasonable. We have been unable to extend this result to more complicated rules, although it is believed that the scaling assumption also holds in the general case.
 
+\begin{figure}[H]
+        \centering
+        \begin{subfigure}
+                \centering
+                \includegraphics[scale=0.3]{fig/100.pdf}
+        \end{subfigure}
+        \begin{subfigure}
+                \centering
+                \includegraphics[scale=0.3]{fig/1000.pdf}
+        \end{subfigure}
+        \begin{subfigure}
+                \centering
+                \includegraphics[scale=0.3]{fig/2500.pdf}
+        \end{subfigure}
+        \caption{The above plots show the relative size of the giant component for 20 \ER processes graphs with $n=100, 1000,$ and $2500$ vertices, respectively. The fact that $\beta=1$, i.e. $\theta \sim \delta$, means that the slopes of these lines at $t=1/2$ become linear in the limit as $n\to \infty$. Furthermore, \Cref{crit-window} implies that as $n\to \infty$, the entire plot after $t=1/2$ becomes linear.}
+\end{figure}
+
+
 %-------------------
 % Bounded Size Rules
 %-------------------
@@ -548,7 +542,7 @@ Thus for large clusters formed by the \ER rule, the scaling assumption is perfec
 
 Since the \ER rule is so well understood, it is useful to know how any arbitrary rule relates to it. In particular, we can focus on rules that behave exactly like \ER, as characterized by critical exponents. These rules might have different subcritical and supercritical behavior, but as the giant component emerges, the rule produces similar graphs as \ER.
 
-Bounded size rules are a very general category of rule that eventually start acting like \ER in the following sense: fix a constant $K \in \mathbb{N}$, then $\mathcal{R}$ is a bouded size rule if it treats all sampled points with $\kappa_i > K$ identically. In fact, \cite{RW-bounded} shows that bounded size rules share all the key features of \ER at criticality in a certain precise sense.
+Bounded size rules are a very general category of rule that eventually start acting like \ER in the following sense: fix a constant $K \in \mathbb{N}$, then $\mathcal{R}$ is a bouded size rule if it treats all sampled vertices with $\kappa_i > K$ identically. In fact, \cite{RW-bounded} shows that bounded size rules share all the key features of \ER at criticality in a certain precise sense.
 
 Intuitively, it makes sense that a bounded size rule eventually become similar to \ER. After enough clusters have been joined, the number of clusters of size $\leq K$ will be so small that it won't have much of an effect on the growth of the giant component. The key to noticing the complexity here is actually twofold:
 
@@ -596,38 +590,64 @@ Solving this differential equation and using the initial condition $P_1(0)=1$ gi
 We know that percolation occurs at $t=1$ at the very latest by \cite{RW-cont}. But plugging in $t=1$ gives $P_1(1) = \frac{2}{e^{4}+1} \approx 0.024$, so at criticality, a strictly positive proportion of our nodes are still isolated.
 \end{proof}
 
-\warn{To have all critical exponents the same, I think I need to calculate $1/\sigma$.}
+As it turns out, this does not significantly affect cluster growth for bounded size rules, which we can formalize in terms of critical exponents. This is a known result \cite{RW-bounded}, but using our theory of induced order maps, the proof is computational instead of by contradiction, as in \cite{RW-bounded}.
 
+\begin{thrm}[]
+Every bounded size 2-choice rule has the same critical exponents as \ER.
+\end{thrm}
+\begin{proof}
+	Suppose we have a bounded size 2-choice rule that treats all clusters of size $>K$ the same. Without loss of generality, suppose this rule is also symmetric with $\phi(s) = \P{ \kappa=s }$ (this argument really only applies to the representative selection process for one of the two vertex groups, so it readily extends to the case of non-symmetric rules). Finally, suppose each vertex group contains $m$ vertices.
 
-%-------------------
-% Minimizing Bounded Size Rules
-%-------------------
-\subsection{Minimizing Bounded Size Rules}
-\label{minimizing-bounded-size-rules}
+	We'll also need a bit of new notation. Let $N$ denote the number of vertices in our group of $m$ whose cluster size is $\leq K$, and let $P_{\leq K} = P_1 + \cdots + P_{K}$. Then for $s>K$, we can partition $\phi(s)$ and use the fact that it acts exactly like \ER if all $m$ of the vertices in the group come from clusters of size $> K$.
+	\begin{align*}
+		\phi(s) &= \P{ \kappa = s \;|\; N = 0}\P{ N=0 } + \P{ \kappa = s \;|\; N>0 } \P{ N>0 } \\
+			&= \frac{P_{s}}{S + \sum_{r>K}P_{r}} (1-P_{\leq K})^{m} + \P{ \kappa = s \;|\; N>0 } \P{ N>0 }.
+	\end{align*}
+	But $1-P_{\leq K} = S + \sum_{r>K}P_{r}$, so this becomes
+	\[
+		\phi(s) = P_{s}(1-P_{\leq K})^{m-1} + \P{ \kappa = s \;|\; N>0 } \P{ N>0 }.
+	\]
+	For $s \leq K$, we can use this same partition to get a similar expression.
+	\begin{align*}
+		\phi(s) &= \cancel{\P{ \kappa = s \;|\; N = 0}}\P{ N=0 } + \P{ \kappa = s \;|\; N>0 } \P{ N>0 } \\
+			&= \P{ \kappa = s \;|\; N>0 } \P{ N>0 }.
+	\end{align*}
+	This allows us to sum over all $\phi(s)$ and thus calculate $\ang{1}_{\phi}$.
+	\begin{align*}
+		\sum_{s} \phi(s) &= \left[ \sum_{s > K} \phi(s) \right] + \left[ \sum_{ s \leq K}\phi(s) \right] \\
+				 &= \left[ \sum_{s>K}(1-P_{\leq K})^{m-1} \right] + \left[ \sum_{s} \P{ \kappa=s\;|\; N>0 }\P{ N>0 } \right] \\
+				 &= (1-P_{\leq K})^{m-1}(1-S-P_{\leq K}) + (1-(1-P_{\leq K})^{m}) \sum_{s} \P{ \kappa=s\;|\; N>0 } \\
+				 &= (1- P_{\leq K})^{m-1} \left[ 1 - S - \xi + (\xi-1)P_{\leq K} \right] + \xi,
+	\end{align*}
+	where $\xi = \sum_{s} \P{ \kappa=s\;|\; N>0 }$ is the probability that the chosen vertex's cluster is finite given that there is at least 1 finite cluster to choose from in the group. In scaling form, the first term above will be dominated by the smallest critical exponent since we care about $\delta$ as it approaches 0. After multiplying everything out, the term with the lowest exponent will be $S$ (with critical exponent $\beta$).
 
-\warn{don't really need it to be symmetric?}
+	We will now induct on the group size $m$ to show that $\xi \sim \beta$. When $m=1$,
+	\[
+	\sum_{s} \P{ \kappa=s\;|\; N>0 } = \sum_{s}\P{ \kappa=s\;|\; N=1 } = 1.
+	\] Then assuming $\sum_{s} \P{ \kappa=s\;|\; N>0 } \sim 1$ when the group size is $m-1$,
+	\begin{align*}
+		\sum_{s}\P{ \kappa=s\;|\; N>0 } &= \sum_{s}\P{ \kappa=s\;|\; 0<N<m }\P{ 0<N<m\;|\;N>0 } \\
+							 &\quad + \sum_{s} \P{ \kappa=s\;|\; N=m }\P{ N=m\;|\;N>0 } \\
+							 &= \P{ 0<N<m\;|\; N>0 } \sum_{s} \P{ \kappa=s\;|\; 0<N<m } \\
+							 &\quad + \P{ N=m\;|\;N>0 }\sum_{s}\P{ \kappa=s\;|\; N=m }.
+	\end{align*}
+	The first sum above is $\sim 1$ by our inductive hypothesis, and the second sum is exactly equal to 1. Thus
+	\[
+		\sum_{s}\P{ \kappa=s\;|\; N>0 } \sim \P{ 0<N<m\;|\; N>0 } + \P{ N=m\;|\;N>0 } = 1,
+	\]
+	as desired. Thus as $\delta \to 0$, the scaling form of $\ang{1}_{\phi}=\sum_{s}\phi(s)$ is
+	\[
+	\ang{1}_{\phi} \sim \delta^{\beta} = \delta^{-\gamma_{1}},
+	\] 
+	where the last equality follows from \Cref{crit-exp}.
 
-\warn{need better word than minimizing}
+	By definition, this fixes the standard induced order map of this rule. Since our computation of the critical exponents of 2-choice rules relied only on the standard induced order maps, it follows that our rule has the same critical exponents as \ER.
+\end{proof}
 
-We can generalize our \BF variant to get closer to the case of a general bounded size rule. Let's still sample $m$ points for each group, but now we'll take the first one whose cluster size is $\leq K$. If each of the $m$ cluster sizes are greater than $K$, we'll sample a new random vertex and always choose it. We call such a rule a \textbf{minimizing bounded size rule}.
-
-Calculating $\phi(s)$ for $s \leq K$ would be pretty messy, but we definitely know
+A crucial relation used in the previous theorem was the fact that
 \[
-        \sum_{s \leq K} \phi(s) = 1 - (1-P_{\leq K})^{m+1}
-\] and
-\[
-        \phi(s) = (1-P_{\leq K})^{m}P_{s} \qquad \text{ when } s>K.
-\] This is enough to mimic the earlier calculation of $\ang{1}_{\phi}$ for the \BF rule.
-\begin{align*}
-        \ang{1}_{\phi} &= \sum_{s \leq K}\phi(s) + \sum_{s > K}\phi(s) \\
-                       &= 1 - (1-P_{\leq K})^{m+1} + \sum_{s>K}(1-P_{\leq K})^{m}P_s \\
-                       &= 1 - (1-P_{\leq K})^{m} \left[ 1 - P_{\leq K}-\sum_{s>K}P_s \right] \\
-                       &= 1 - (1-P_{\leq K})^{m} \left[ 1 - \sum_s P_s \right] \\
-                       &= 1 - (1-P_{\leq K})^{m} S.
-\end{align*}
-Since $t \mapsto (1-P_{\leq K})^{m}$ is continuous at $t_c$, by the same logic as before, any minimizing bounded size rule shares all its critical exponents with \ER.
-
-\warn{make sure you're consistent with bounded size: $\geq$ or $>$.}
+\xi = \sum_{s} \P{ \kappa=s\;|\; N>0 }
+\] is dominated by other terms as we approach criticality. For many bounded size 2-choice rules, more can be said of this term. For example, the \BF rule is a bounded size rule with threshold $K=1$, and $\xi_{BF}= 1$ since it always prioritizes connecting isolated vertices. It is already intuitively clear that the \BF rule cannot prioritize isolated clusters (more generally, the clusters below its size threshold) any further, but this classification gives that statement rigorous meaning.
 
 
 %--------------------------------------------------------------------------------
@@ -637,9 +657,9 @@ Since $t \mapsto (1-P_{\leq K})^{m}$ is continuous at $t_c$, by the same logic a
 
 We developed the basic theory of 2-choice rules, then used it to compute the critical exponents of any such rule in terms of the exponent $\beta$ related to the size of the giant component. This gave us a powerful computational tool: \Cref{2c-scaling-relations} allows us to compute each critical exponent with respect to $\beta$ using only the standard induced order map $1 - \ang{1}_{\phi}$.
 
-We also examined the limiting behavior of 2-choice rules and the variance of their cluster sizes, and we saw that these also depended entirely on $\beta$ and the standard induced order map. Finally, we developed a more complete theory for the \ER rule and showed how a large family of rules -- minimizing bounded size rules -- act like \ER at criticality.
+We also examined the limiting behavior of 2-choice rules and the variance of their cluster sizes, and we saw that these also depended entirely on $\beta$ and the standard induced order maps. Finally, we developed a more complete theory for the \ER rule and showed how a large family of rules -- bounded size rules -- act like \ER at criticality.
 
-As shown in \cite{RW-bounded}, all bounded size rules share the same critical properties of \ER, so we expect it to be possible to extend the results in \Cref{minimizing-bounded-size-rules} to apply to all bounded size rules. Additionally, the \ER comparisons in this paper illustrate when various rules behave exactly like \ER at criticality, but it would be more useful to develop a notion of similarity in the absence of identical behavior. Then we could get a sense of the critical behavior of complicated rules that do not act mimic the cluster growth of \ER.
+The \ER comparisons in this paper illustrate when various rules behave exactly like \ER at criticality, but it would be more useful to develop a notion of similarity in the absence of identical behavior. Then we could get a sense of the critical behavior of complicated rules that do not act mimic the cluster growth of \ER.
 
 
 %--------------------------------------------------------------------------------

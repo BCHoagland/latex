@@ -2184,18 +2184,21 @@
   <bcf:section number="0">
     <bcf:citekey order="1">ER</bcf:citekey>
     <bcf:citekey order="2">BF</bcf:citekey>
-    <bcf:citekey order="3">coal</bcf:citekey>
-    <bcf:citekey order="4">Aldous</bcf:citekey>
+    <bcf:citekey order="3">discontinuous</bcf:citekey>
+    <bcf:citekey order="4">dacosta2010</bcf:citekey>
     <bcf:citekey order="5">RW-cont</bcf:citekey>
-    <bcf:citekey order="6">RW-bounded</bcf:citekey>
-    <bcf:citekey order="7">daCosta</bcf:citekey>
-    <bcf:citekey order="8">daCosta</bcf:citekey>
+    <bcf:citekey order="6">coal</bcf:citekey>
+    <bcf:citekey order="7">Aldous</bcf:citekey>
+    <bcf:citekey order="8">RW-bounded</bcf:citekey>
     <bcf:citekey order="9">daCosta</bcf:citekey>
-    <bcf:citekey order="10">princeton</bcf:citekey>
+    <bcf:citekey order="10">daCosta</bcf:citekey>
     <bcf:citekey order="11">daCosta</bcf:citekey>
-    <bcf:citekey order="12">RW-bounded</bcf:citekey>
-    <bcf:citekey order="13">RW-cont</bcf:citekey>
+    <bcf:citekey order="12">princeton</bcf:citekey>
+    <bcf:citekey order="13">daCosta</bcf:citekey>
     <bcf:citekey order="14">RW-bounded</bcf:citekey>
+    <bcf:citekey order="15">RW-cont</bcf:citekey>
+    <bcf:citekey order="16">RW-bounded</bcf:citekey>
+    <bcf:citekey order="17">RW-bounded</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">
