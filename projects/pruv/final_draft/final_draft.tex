@@ -114,6 +114,8 @@ a(t) \sim b(t) \iff \frac{a(t)}{b(t)} \to C \text{ as } t\to t^{*}
 
 With these definitions in hand, we can turn our attention to the main attraction. We will be discussing rules that add a single edge every $t=1/n$ units of time, gotten by randomly sampling two groups of vertices independently from the graph, then choosing an endpoint vertex from each group. The following definition is a straightforward generalization of this idea, but we will only concern ourselves in this work with the case $\ell=2$.
 
+\pagebreak
+
 \begin{defn}[]
         Define a rule $\mathcal{R}$ as follows:
         \begin{itemize}
@@ -562,7 +564,7 @@ Although well understood, this rule does not fit nicely into our familiar 2-choi
         \item At each step, pick $m$ vertices. These are the group 1 vertices.         \item If any of the $m$ vertices are isolated, pick the first such one as the group 1 representative. If not, sample one more random vertex and pick it no matter what.
         \item Repeat this for group 2, and connect the 2 group representatives with an edge.
 \end{enumerate}
-For this particular rule, we can also explicitly track how the number of isolated clusters is changing through time; we will see that a nonzero proportion of our graph will be made up of isolated nodes at criticality.
+For this particular rule, we can explicitly track how the number of isolated clusters is changing through time; we will see that a nonzero proportion of our graph will be made up of isolated nodes at criticality.
 \begin{prop}[]
 	\label{nonzero-at-criticality}
 	For the \BF rule with $m=1$, a nonzero proportion of the vertices in the graph are isolated at percolation.
@@ -592,13 +594,15 @@ We know that percolation occurs at $t=1$ at the very latest by \cite{RW-cont}. B
 
 As it turns out, this does not significantly affect cluster growth for bounded size rules, which we can formalize in terms of critical exponents. This is a known result \cite{RW-bounded}, but using our theory of induced order maps, the proof is computational instead of by contradiction, as in \cite{RW-bounded}.
 
+\warn{This is wrong: it has the same relations between critical exponents, but I haven't calculated $\beta$.}
+
 \begin{thrm}[]
 Every bounded size 2-choice rule has the same critical exponents as \ER.
 \end{thrm}
 \begin{proof}
 	Suppose we have a bounded size 2-choice rule that treats all clusters of size $>K$ the same. Without loss of generality, suppose this rule is also symmetric with $\phi(s) = \P{ \kappa=s }$ (this argument really only applies to the representative selection process for one of the two vertex groups, so it readily extends to the case of non-symmetric rules). Finally, suppose each vertex group contains $m$ vertices.
 
-	We'll also need a bit of new notation. Let $N$ denote the number of vertices in our group of $m$ whose cluster size is $\leq K$, and let $P_{\leq K} = P_1 + \cdots + P_{K}$. Then for $s>K$, we can partition $\phi(s)$ and use the fact that it acts exactly like \ER if all $m$ of the vertices in the group come from clusters of size $> K$.
+	We'll also need a bit of new notation. Let $N \in \left\{ 0, \dots, m \right\}$ denote the number of vertices in our group whose cluster size is $\leq K$, and let $P_{\leq K} = P_1 + \cdots + P_{K}$. Then for $s>K$, we can partition $\phi(s)$ and use the fact that it acts exactly like \ER if all $m$ of the vertices in the group come from clusters of size $> K$.
 	\begin{align*}
 		\phi(s) &= \P{ \kappa = s \;|\; N = 0}\P{ N=0 } + \P{ \kappa = s \;|\; N>0 } \P{ N>0 } \\
 			&= \frac{P_{s}}{S + \sum_{r>K}P_{r}} (1-P_{\leq K})^{m} + \P{ \kappa = s \;|\; N>0 } \P{ N>0 }.
@@ -609,19 +613,19 @@ Every bounded size 2-choice rule has the same critical exponents as \ER.
 	\]
 	For $s \leq K$, we can use this same partition to get a similar expression.
 	\begin{align*}
-		\phi(s) &= \cancel{\P{ \kappa = s \;|\; N = 0}}\P{ N=0 } + \P{ \kappa = s \;|\; N>0 } \P{ N>0 } \\
-			&= \P{ \kappa = s \;|\; N>0 } \P{ N>0 }.
+		\phi(s) &= \P{ \kappa = s \;|\; N = 0}\P{ N=0 } + \P{ \kappa = s \;|\; N>0 } \P{ N>0 } \\
+			&= 0 + \P{ \kappa = s \;|\; N>0 } \P{ N>0 }.
 	\end{align*}
 	This allows us to sum over all $\phi(s)$ and thus calculate $\ang{1}_{\phi}$.
 	\begin{align*}
-		\sum_{s} \phi(s) &= \left[ \sum_{s > K} \phi(s) \right] + \left[ \sum_{ s \leq K}\phi(s) \right] \\
+		\sum_{s} \phi(s) &= \sum_{s > K} \phi(s) + \sum_{ s \leq K}\phi(s) \\
 				 &= \left[ \sum_{s>K}(1-P_{\leq K})^{m-1} \right] + \left[ \sum_{s} \P{ \kappa=s\;|\; N>0 }\P{ N>0 } \right] \\
-				 &= (1-P_{\leq K})^{m-1}(1-S-P_{\leq K}) + (1-(1-P_{\leq K})^{m}) \sum_{s} \P{ \kappa=s\;|\; N>0 } \\
+				 &= \Bigg[ (1-P_{\leq K})^{m-1}(1-S-P_{\leq K}) \Bigg] + \left[ (1-(1-P_{\leq K})^{m}) \sum_{s} \P{ \kappa=s\;|\; N>0 } \right] \\
 				 &= (1- P_{\leq K})^{m-1} \left[ 1 - S - \xi + (\xi-1)P_{\leq K} \right] + \xi,
 	\end{align*}
-	where $\xi = \sum_{s} \P{ \kappa=s\;|\; N>0 }$ is the probability that the chosen vertex's cluster is finite given that there is at least 1 finite cluster to choose from in the group. In scaling form, the first term above will be dominated by the smallest critical exponent since we care about $\delta$ as it approaches 0. After multiplying everything out, the term with the lowest exponent will be $S$ (with critical exponent $\beta$).
+	where $\xi = \sum_{s} \P{ \kappa=s\;|\; N>0 }$. In scaling form, the first term above will be dominated by the \emph{smallest} critical exponent since $\delta$ is approaching 0. After multiplying everything out, the term with the lowest exponent will be $S$ (with critical exponent $\beta$).
 
-	We will now induct on the group size $m$ to show that $\xi \sim \beta$. When $m=1$,
+	We will now induct on the group size $m$ to show that $\xi \sim 1$. When $m=1$,
 	\[
 	\sum_{s} \P{ \kappa=s\;|\; N>0 } = \sum_{s}\P{ \kappa=s\;|\; N=1 } = 1.
 	\] Then assuming $\sum_{s} \P{ \kappa=s\;|\; N>0 } \sim 1$ when the group size is $m-1$,
@@ -635,19 +639,17 @@ Every bounded size 2-choice rule has the same critical exponents as \ER.
 	\[
 		\sum_{s}\P{ \kappa=s\;|\; N>0 } \sim \P{ 0<N<m\;|\; N>0 } + \P{ N=m\;|\;N>0 } = 1,
 	\]
-	as desired. Thus as $\delta \to 0$, the scaling form of $\ang{1}_{\phi}=\sum_{s}\phi(s)$ is
+	as desired. Thus the scaling form of $\ang{1}_{\phi}=\sum_{s}\phi(s)$ is
 	\[
-	\ang{1}_{\phi} \sim \delta^{\beta} = \delta^{-\gamma_{1}},
+	\ang{1}_{\phi} \sim \delta^{\beta}.
 	\] 
-	where the last equality follows from \Cref{crit-exp}.
-
-	By definition, this fixes the standard induced order map of this rule. Since our computation of the critical exponents of 2-choice rules relied only on the standard induced order maps, it follows that our rule has the same critical exponents as \ER.
+	By definition, this fixes the standard induced order map of this rule. 	Note that for \ER, $\ang{1}_{P} = S \sim \delta^{\beta}$ as well, so both rules share the same standard induced order map. Since our computation of the critical exponents of 2-choice rules relied only this map, it follows that our rule has the same critical exponents as \ER.
 \end{proof}
 
 A crucial relation used in the previous theorem was the fact that
 \[
 \xi = \sum_{s} \P{ \kappa=s\;|\; N>0 }
-\] is dominated by other terms as we approach criticality. For many bounded size 2-choice rules, more can be said of this term. For example, the \BF rule is a bounded size rule with threshold $K=1$, and $\xi_{BF}= 1$ since it always prioritizes connecting isolated vertices. It is already intuitively clear that the \BF rule cannot prioritize isolated clusters (more generally, the clusters below its size threshold) any further, but this classification gives that statement rigorous meaning.
+\] is dominated by other terms as we approach criticality. For certain bounded size 2-choice rules, more can be said of this term. For example, the \BF rule is a bounded size rule with threshold $K=1$, and $\xi_{BF}= 1$ since it always prioritizes connecting isolated vertices. It is already intuitively clear that the \BF rule cannot prioritize isolated clusters (more generally, the clusters below its size threshold) any further, but this classification gives that statement rigorous meaning.
 
 
 %--------------------------------------------------------------------------------
