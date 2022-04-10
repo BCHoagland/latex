@@ -1,0 +1,92 @@
+\documentclass{beamer}
+
+%\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{amsmath,amssymb,tikz-cd}
+\usepackage{xcolor, xspace}
+
+%\usefonttheme[onlymath]{serif}
+
+\definecolor{darkblue}{HTML}{12335F}
+\definecolor{myblue}{HTML}{00A2FF}
+
+%--------------------------------------------------------------------------------
+% Custom Template
+%--------------------------------------------------------------------------------
+\usecolortheme[named=myblue]{structure}
+
+\setbeamertemplate{frametitle}{\vspace{5mm}\bfseries\insertframetitle}
+\setbeamercolor{frametitle}{fg=darkblue}
+
+\setbeamerfont{section in toc}{series=\bfseries}
+\setbeamercolor{section in toc}{fg=darkblue}
+
+\AtBeginEnvironment{theorem}{%
+	\setbeamercolor{block title}{fg=white, bg=darkblue}
+	\setbeamercolor{block body}{fg=black,bg=myblue!20}
+}
+
+\newcommand{\sectionSlide}[2]{
+{
+	\setbeamercolor{background canvas}{bg=darkblue}
+	\begin{frame}
+		\bfseries
+		{\color{white}
+			\huge {#1}
+		}
+		\vspace{5mm}
+
+		{\color{myblue}
+			{#2}
+		}
+	\end{frame}
+	}
+}
+
+%--------------------------------------------------------------------------------
+% Custom Commands
+%--------------------------------------------------------------------------------
+\newcommand{\ER}{Erd\H{o}s R\'enyi\xspace}
+
+%--------------------------------------------------------------------------------
+% Fonts
+%--------------------------------------------------------------------------------
+\setmainfont{Baskerville}
+%\setsansfont{Graphik}
+\setsansfont{Baskerville}
+
+\begin{document}
+
+%--------------------------------------------------------------------------------
+% Title Page
+%--------------------------------------------------------------------------------
+{
+\setbeamercolor{background canvas}{bg=darkblue}
+\begin{frame}
+	\bfseries
+	{\color{white}
+		\huge Percolation Phase Transitions on Dynamically Grown Graphs
+	}
+	\vspace{5mm}
+
+	{\color{myblue}
+		\large Braden Hoagland
+
+		Advised by Rick Durrett
+	}
+
+	\vspace*{\fill}
+	{\color{white}
+		\small April 15, 2022
+	}
+\end{frame}
+}
+
+%--------------------------------------------------------------------------------
+% Background
+%--------------------------------------------------------------------------------
+\section{Background}
+\sectionSlide{Background}{Dynamically grown graphs and percolation}
+
+
+\end{document}

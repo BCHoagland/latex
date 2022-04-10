@@ -24,13 +24,22 @@
 \begin{document}
 %\tableofcontents
 
-\title{Duke PRUV Research Project}{Braden Hoagland \quad\&\quad Rick Durrett}
+%\title{Duke PRUV Research Project}{Braden Hoagland \quad\&\quad Rick Durrett}
+\thispagestyle{empty}
+\begin{center}
+	\MakeUppercase{
+		{\large\so{Percolation Processes} \\ \so{on Dynamically Grown Graphs}}\\
+		\vspace{10mm}
+		{\footnotesize \so{Duke Mathematics Senior Thesis}}\\
+		\vspace{5mm}
+	}
+	{\footnotesize\textit{Braden Hoagland \quad\&\quad Rick Durrett}}
+\end{center}
+
 \header{Braden Hoagland}{Dynamic Percolation Processes}
 
-\warn{change std induced order map to be order of $\ang{1}_{\phi}$.}
-
 \begin{abstract}
-	We develop the theory of cluster growth near criticality for a general class of rules for dynamically growing graphs called two-choice rules. We use scaling theory to compute critical exponents for any two-choice rule, and we show special cases in which we can solve for these exponents explicitly. Finally, we consider the \ER rule, the simplest two-choice rule for which more explicit calculations are possible. We derive several of its important properties, then show that a large subset of two-choice rules - bounded size rules - behave like \ER near criticality.
+	We develop the theory of cluster growth near criticality for a class of ``two-choice rules" for dynamically grown graphs. We use scaling theory to compute critical exponents for any two-choice rule, and we show special cases in which we can solve for these exponents explicitly. Finally, we compare our results with the corresponding results for the \ER rule, the simplest two-choice rule for which more explicit calculations are possible. We derive several of its important properties, then show that a large subset of two-choice rules - bounded size rules - behave like \ER near criticality.
 \end{abstract}
 
 %--------------------------------------------------------------------------------
@@ -54,7 +63,7 @@ We begin with an empty graph on $n$ vertices, and at each step we add one edge c
 		\centering
                 \includegraphics[scale=0.45]{fig/postcrit.pdf}
         \end{subfigure}
-	\caption{The above is an approximation of the \ER process using 2500 vertices at times $t = \frac{2}{5} ,\frac{1}{2} ,$ and $\frac{3}{5} $, respectively. Black vertices are isolated; otherwise, vertices of the same color belong to the same cluster. Cluster color corresponds to cluster size, with blue clusters being small and red clusters large. Note that after time $\frac{1}{2} $, a single cluster has begun to dominate the graph.}
+	\caption{The above is an approximation of the \ER process using 2500 vertices at times $t = \frac{2}{5} ,\frac{1}{2} ,$ and $\frac{3}{5} $, respectively. Black vertices are isolated; otherwise, vertices of the same color belong to the same cluster. Cluster color corresponds to cluster size, with dark clusters being small and light clusters large. Note that after time $\frac{1}{2} $, a single cluster has begun to dominate the graph.}
 \end{figure}
 
 The properties of the \ER model are well understood, so it serves as a natural reference point when studying other models. For example, if $\theta(t)$ is the fraction of vertices in the giant component (after we have let $n\to \infty$), then $\theta(t)\to 0$ as $t\searrow t_{c}$. This shows that the phase transition is continuous. Additionally, $\theta(t) \sim (t-t_{c})^{\beta}$, where $\beta=1$. This gives us a ``critical exponent" $\beta$ that describes the behavior of the process near $t_{c}$.
@@ -63,7 +72,9 @@ It is then natural to ask which generalizations of \ER graphs also have these pr
 
 In 2001, Bohman and Frieze were the first to describe an Achlioptas process that delayed percolation \cite{BF}. At each step, the first edge is added if both $v_1$ and $v_2$ were isolated vertices, and the second edge is added otherwise. They showed that there was a constant $c_0>0.535$ such that the largest component at time $c_0$ has size bounded by $(\log n)^{O(1)}$. This rule is an example of a ``bounded size rule", in which all components of size greater than some constant $K$ are treated the same.
 
-If $\kappa_i$ is the cluster size of $v_{i}$, then two possible rules are the sum rule and product rule. In the sum rule, the first edge is added if $\kappa_1+\kappa_2 < \kappa_3+\kappa_4$, and the second edge is added otherwise. In the product rule, the first edge is added if $\kappa_1 \kappa_2 < \kappa_3 \kappa_4$, and the second edge is added otherwise. In 2009, Achlioptas, D'Souza, and Spencer \cite{discontinuous} used numerical experiments to claim that the product rule exhibited ``explosive percolation" by causing a discontinuous phase transition at the critical time; however, in 2010, da Costa, et al. \cite{dacosta2010} found that the product rule's phase transition was actually continuous by comparing it to a strictly more explosive rule with continuous phase transition; the da Costa rule with parameter $m$ selected two groups of $m$ vertices at random and joined the vertices from each group with the smallest cluster size. In 2011, Riordan and Warnke showed that results for the da Costa rule could be greatly generalized: the phase transition at criticality is continuous for all $\ell$-vertex rules \cite{RW-cont}, which are a generalization of Achlioptas processes.
+If $\kappa_i$ is the cluster size of $v_{i}$, then two possible rules are the sum rule and product rule. In the sum rule, the first edge is added if $\kappa_1+\kappa_2 < \kappa_3+\kappa_4$, and the second edge is added otherwise. In the product rule, the first edge is added if $\kappa_1 \kappa_2 < \kappa_3 \kappa_4$, and the second edge is added otherwise. In 2009, Achlioptas, D'Souza, and Spencer \cite{discontinuous} used numerical experiments to claim that the product rule exhibited ``explosive percolation" by causing a discontinuous phase transition at the critical time; however, in 2010, da Costa, et al. \cite{dacosta2010} found that the product rule's phase transition was actually continuous by comparing it to a strictly more explosive rule with continuous phase transition; the da Costa rule with parameter $m$ selected two groups of $m$ vertices at random and joined the vertices from each group with the smallest cluster size (in this work, we will classify a rule like this as a ``minimizing two-choice rule"). Their arguments relied on scaling theory, and our results in turn rely heavily on their ideas.
+
+In 2011, Riordan and Warnke showed that results for the da Costa rule could be greatly generalized even without the use of scaling theory: the phase transition at criticality is continuous for all $\ell$-vertex rules \cite{RW-cont}, which are a generalization of Achlioptas processes in which $\ell$ vertices are sampled independetly at random and one or more edges are necessarily added between them only if each vertex is in a distinct cluster.
 
 \begin{figure}[H]
         \centering
@@ -116,11 +127,9 @@ for any real-valued function $\phi$. In the special case $\phi = Q_{m}$, we will
 We will use $\Ang{\;\cdot\;}_{P}$ and $\ang{\;\cdot\;}_{Q}$ instead of $\Ang{\;\cdot\;}_{1}$ and $\ang{\;\cdot\;}_{2}$, respectively. Finally, we will use the notation $a(t) \sim b(t)$ to denote that $a(t)$ and $b(t)$ are asymptotically similar in the following sense: if $t$ approaches some critical value $t^{*}$ (which will be clear from context) such that $a(t), b(t) \to \infty$ as $t\to t^{*}$, then
 \[
 a(t) \sim b(t) \iff \frac{a(t)}{b(t)} \to C \text{ as } t\to t^{*}
-\] for some nonzero constant $C$. It's straightforward to show that if $a(t) \sim b(t)$, then for any nonzero constants $\lambda, \mu$, we have $a(t) \sim \lambda a(t) \sim a(t) + \mu \sim b(t)$.
+\] for some nonzero constant $C$. It is straightforward to show that if $a(t) \sim b(t)$, then for any nonzero constants $\lambda, \mu$, we have $a(t) \sim \lambda a(t) \sim a(t) + \mu \sim b(t)$.
 
 With these definitions in hand, we can turn our attention to the main results. We will be discussing rules that add a single edge every $t=1/n$ units of time, gotten by randomly sampling two groups of vertices independently from the graph, then choosing an endpoint vertex from each group. The following definition is a straightforward generalization of this idea, but we will only concern ourselves in this work with the case $\ell=2$.
-
-\pagebreak
 
 \begin{defn}[]
         Define a rule $\mathcal{R}$ as follows:
@@ -149,7 +158,7 @@ where $\tau$ and $\sigma$ are constants, $f$ is a scaling function, $\delta:= t-
         \label{crit-exp}
         Suppose a rule $\mathcal{R}$ has a scaling function $f$ such that
         \begin{enumerate}
-                \item $\lim_{x \to \infty} x^{2-\tau}f(x) = 0$; and
+                \item $\lim_{x \to \infty} x^{2-\tau}f(x)$ is finite; and
                 \item $\int_{0}^{\infty} x^{2-\tau} f'(x) \;dx$ is finite.
         \end{enumerate}
         Then there are \textbf{critical exponents}
@@ -171,12 +180,33 @@ where $\tau$ and $\sigma$ are constants, $f$ is a scaling function, $\delta:= t-
         So by our assumptions on $f$, we have $S \sim \delta^{\beta}$, where $\beta = (\tau-2)/\sigma$. The derivation of $\gamma_{m}$ is similar.
 \end{proof}
 
-We will primarily be concerned with determining the critical exponents $1/\sigma, \tau$, and $\gamma_{m}$. More generally, we can also consider exponents $\gamma_{\phi}$ for any real-valued function $\phi$: $\gamma_{\phi}$ is the unique real number such that $\ang{s}_{\phi}\sim \delta^{-\gamma_{\phi}}$. By similar logic, we can see that for any $k$,
-\begin{equation}
+We will primarily be concerned with determining the critical exponents $1/\sigma, \tau$, and $\gamma_{m}$. More generally, we can also consider exponents $\gamma_{\phi}$ for any real-valued function $\phi$: $\gamma_{\phi}$ is the unique real number such that $\ang{s}_{\phi}\sim \delta^{-\gamma_{\phi}}$, if it exists. If so, we can generalize the previous theorem to extend its results to this case.
+\begin{thrm}[]
 	\label{crit-exp-phi}
-	\ang{s^{k}}_{\phi} \sim \delta^{-\gamma_{\phi}-(k-1)/\sigma}.
-\end{equation}
-As a consequence, we can determine $\gamma_{\phi}$ from $1/\sigma$ using any $k$. Thus we can always choose whichever one makes computations easiest.
+	Suppose $\phi(s)$ can be written in the form $\psi(P(s))$, and suppose further that there is a $\gamma_{\phi}$ such that $\ang{s}_{\phi} \sim \delta^{-\gamma_{\phi}}$. Then
+	\[
+		\ang{s^{k}}_{\phi} \sim \delta^{-\gamma_{\phi}-(k-1)/\sigma}
+	\] for all $k$.
+\end{thrm}
+\begin{proof}
+	The integral definition of $\ang{s^{k}}_{\phi}$ and the scaling asumption give
+	\begin{align*}
+		\ang{s^{k}}_{\phi} &= \int_{0}^{\infty} s^{k} \psi(P(s)) \;ds \\
+				   &= \int_{0}^{\infty} \psi(s^{1-\tau}f(s \delta^{1/\sigma}))\;ds.
+	\end{align*}
+	We make the change of variable $s=x \delta^{1/\sigma}$ to get
+	\[
+	\ang{s^{k}}_{\phi} = \delta^{-(k+1)/\sigma} \int_{0}^{\infty} x^k \psi(x^{1-\tau} \delta^{(1-\tau)/\sigma} f(x))\;dx.
+	\] Let $g_{k}(x) := x^{k} \delta^{-(k+1)/\sigma} \psi(x^{1-\tau} \delta^{(1-\tau)/\sigma} f(x))$, then
+	\begin{align*}
+		\ang{s^{k}}_{\phi} = \int_{0}^{\infty} g_{k}(x)\;dx &= \delta^{-1/\sigma} \int_{0}^{\infty} x g_{k-1}(x)\;dx \\
+								    &= \delta^{-(k-1)/\sigma} \int_{0}^{\infty} x^{k-1} g_1(x)\;dx.
+	\end{align*}
+	By our assumption that $\gamma_{\phi}$ exists, the above integral is $\sim \delta^{-\gamma_{\phi}}$. Thus $\ang{s^{k}}_{\phi} \sim \delta^{-\gamma_{\phi} - (k-1)/\sigma}$ for all $k > 0$.
+	
+\end{proof}
+
+As a consequence, we can determine $\gamma_{\phi}$ from $1/\sigma$ using any $k$. Thus we can always choose whichever one makes computations easiest. From now on, we will assume that all rules we work with satisfy the conditions of \Cref{crit-exp-phi}.
 
 %-------------------
 % Induced Order Maps
@@ -186,7 +216,10 @@ As a consequence, we can determine $\gamma_{\phi}$ from $1/\sigma$ using any $k$
 An important tool used throughout this work is the \emph{induced order map}, which encodes how quickly the giant component is growing at criticality. We use the term \emph{scaling form} to denote the function of $\delta$ that a particular value takes on as a result of the scaling assumption (\ref{scaling-assumption}). For example, the scaling form of $S$ is $\delta^{\beta}$, a direct result of \Cref{crit-exp}.
 
 \begin{defn}[]
-	Suppose $\zeta$ is a real-valued function of $S$, then the \textbf{induced order map} of $\zeta$ is the unique map $F_{\zeta}:\R\to \R$ such that $F_{\zeta}(\beta)$ gives the order of the scaling form of $\zeta(S)$. The \textbf{$i$-th standard induced order map} $F_{i}$ of an $\ell$-choice rule is the induced order map of $1 - \ang{1}_{\phi_{i}}$.
+	For $\zeta$ a real-valued function of $S$, the \textbf{induced order map} of $\zeta$ is the unique map $F_{\zeta}:\R\to \R$ such that
+	\[
+	\zeta(S) \sim \delta^{F_{\zeta}(\beta)},
+	\] i.e. $F_{\zeta}(\beta)$ is the order of the scaling form of $\zeta(S)$. The \textbf{$i$-th standard induced order map} $F_{i}$ of an $\ell$-choice rule is the induced order map of $1 - \ang{1}_{\phi_{i}}$, the probability that the vertex selected by $\phi_i$ belongs to an infinite cluster.
 \end{defn}
 
 \begin{ex}[]
@@ -223,7 +256,7 @@ Suppose $\mathcal{R}$ is a general two-choice rule, then, since the two sets are
 		\label{smoluchowski}
                 \p_{t}{P(s)} = s \sum_{u+v=s} \phi_1(u) \phi_2(v) - s \phi_1(s) - s\phi_2(s).
 	\end{equation}
-	The summation term represents two components merging into a new component of size $s$, and the last two terms each represent a component of size $s$ joining with another component (this also has an integral form, which we will use when it's convenient). We can use this to calculate the growth rate of the giant component, which allows us to prove an important computational theorem.
+	The summation term represents two components merging into a new component of size $s$, and the last two terms each represent a component of size $s$ joining with another component (this also has an integral form, which we will use when it is convenient). We can use this to calculate the growth rate of the giant component, which allows us to prove an important computational theorem.
 
 \begin{lem}
         \label{2c-sdelS}
@@ -350,32 +383,24 @@ Suppose we are instead working with a minimizing two-choice rule, i.e. $\phi_1=Q
 %-------------------
 \subsection{Limiting Behavior}
 
-One might expect that as $a$ and $b$ grow, we can delay the emergence of the giant component since we have more control over which vertices are connected. The following proposition makes this notion precise in terms of induced order maps.
+One might expect that as $a$ and $b$ grow, we can delay the emergence of the giant component since we have more control over which vertices are connected. The following proposition makes this notion precise for minimizing two-choice rules in terms of induced order maps.
 
 \begin{prop}
 	\label{2c-limits}
-	Suppose $\mathcal{R}$ is a two-choice rule with standard induced order maps $F_1$ and $F_2$. If $F_i(\beta)\to 0$ as $a,b\to \infty$ for both $i$, then the critical exponents for $\mathcal{R}$ have limits
+	Suppose $\mathcal{R}$ is a minimizing two-choice rule with standard induced order maps $F_1(\beta) = a\beta$ and $F_2(\beta)=b \beta$. If $a \beta\to 0$ and $b \beta\to 0$ as $a,b\to \infty$, then the critical exponents for $\mathcal{R}$ have limits
 	\[
 		\gamma_{\phi_1} = \gamma_{\phi_2} = \gamma_{P} = \frac{1}{\sigma} = 1, \qquad \tau = 2.
 	\]
 \end{prop}
 \begin{proof}
-	Suppose $\mathcal{R}$ is a two-choice rule with induced order maps $F_1, F_2$, then by \Cref{2c-scaling-relations} its scaling relations are
-\begin{align*}
-	\gamma_{\phi_1} &= F_1(\beta)-\beta+1,\\
-	\gamma_{\phi_2} &= F_1(\beta)-\beta+1,\\
-	\gamma_{P} &= F_1(\beta)+F_2(\beta)-2\beta+1,\\
-	\frac{1}{\sigma} &= F_1(\beta)+F_2(\beta)-\beta+1,\\
-	\tau &= \frac{\beta}{F_1(\beta)+F_2(\beta)-\beta+1} +2.
-\end{align*}
-If $F_{i}(\beta)\to 0$, then $1 - \ang{1}_{\phi_i} \to 1$, meaning $\ang{1}_{\phi_i}\to 0$ for both $i$. Then by \Cref{2c-sdelS}, the growth rate of the giant component is $\p_{t}{} S = 0$. If $\beta \to r$ for any $r \in \R - \left\{ 0 \right\}$, then $\p_{t}{} S$ cannot converge to $0$, so $\beta \to 0$ necessarily. Then since $\beta \to 0$ and $F_{i}(\beta)\to 0$ for both $i$, the limits in the proposition are straightforward computations.
+	If $a\beta, b\beta \to 0$, then $\beta\to 0$ necessarily. This is then a straightforward computation using \Cref{2c-minimizing-scaling-relations}.
 \end{proof}
 
 Of course, not all rules will satisfy this condition, as not all rules attempt to delay the critical time in the first place. It is an interesting question to determine broad families of rules for which $F_{i}(\beta)\to 0$ for both $i$ as $a,b \to \infty$. We conjecture that this applies for all minimizing two-choice rules.
 
 \begin{conj}
 	\label{m-beta-0}
-        Suppose $\mathcal{R}$ is a minimizing two-choice rule with group sizes $a$ and $b$. Then $a\beta \to 0$ and $b\beta\to 0$, i.e. the limits in \Cref{2c-limits} apply.
+        Suppose $\mathcal{R}$ is a minimizing two-choice rule with group sizes $a$ and $b$. Then $a\beta \to 0$ and $b\beta\to 0$ as $a,b \to \infty$, i.e. the limits in \Cref{2c-limits} apply.
 \end{conj}
 
 %-------------------
@@ -432,8 +457,10 @@ Before deriving our first results, we should note that the \ER rule is both mini
 With such a simple rule, we can in fact determine much more. In particular, we can determine $\beta$, which in turn fixes the other critical exponents. We will show $\beta=1$ (see \Cref{beta1} below), which subsequently implies $\sigma = 1/2$ and $\tau = 5/2$.
 
 %-------------------
-% Finding $\beta$
+% Finding $\beta$ for \ER
 %-------------------
+\pagebreak
+
 \subsection{Finding \texorpdfstring{$\beta$}{beta} for \ER}
 \label{finding-beta}
 
@@ -501,7 +528,7 @@ where $ \tilde{C}$ is the constant of propotionality from $\tilde{f}$. To clean 
         \tilde{C} \delta \mathcal{E}_{s} \left[ 2s^{-1/2} - 2C\delta^{2}s^{1/2} \right] &= \tilde{C} \delta \mathcal{E}_{s} \left[ \frac{s}{2} \int_{0}^{s} \tilde{C}\delta^{3}(su-u^2)^{-1/2}  \; du \quad-\quad \delta s^{1/2} \right] \\
 	2s^{-1/2} - 2C \delta^{2}s^{1/2} &= \frac{s}{2} \tilde{C} \delta^3 \int_{0}^{s} (su-u^2)^{-1/2}\;du \quad-\quad \delta s^{1/2}.
 \end{align*}
-	Consider the integral above. It's straightforward to check that $2\sin^{-1}(\sqrt{u/s} )$ is an antiderivative of $\frac{1}{\sqrt{su-u^2} } $ when $s$ is positive, so this integral evaluates to
+	Consider the integral above. It is straightforward to check that $2\sin^{-1}(\sqrt{u/s} )$ is an antiderivative of $\frac{1}{\sqrt{su-u^2} } $ when $s$ is positive, so this integral evaluates to
 	\begin{align*}
 		\int_{0}^{s} \frac{1}{\sqrt{su-u^2} }\;du &= 2 \left( \sin^{-1}(1)-\sin^{-1}(0) \right) \\
 							  &= \pi.
@@ -537,7 +564,7 @@ Thus for large clusters formed by the \ER rule, the scaling assumption is perfec
                 \centering
                 \includegraphics[scale=0.3]{fig/2500.pdf}
         \end{subfigure}
-        \caption{The above plots show the fraction of vertices in the giant component for 20 \ER processes graphs with $n=100, 1000,$ and $2500$ vertices, respectively. The fact that $\beta=1$, i.e. $\theta \sim \delta$, means that the slopes of these lines at $t=1/2$ become linear in the limit as $n\to \infty$. Furthermore, \Cref{crit-window} implies that as $n\to \infty$, the entire plot after $t=1/2$ becomes linear.}
+        \caption{The above plots show the fraction of vertices in the giant component for 20 \ER processes with $n=100, 1000,$ and $2500$ vertices, respectively. The fact that $\beta=1$, i.e. $\theta \sim \delta$, means that the slopes of these lines at $t=1/2$ become linear in the limit as $n\to \infty$. Furthermore, \Cref{crit-window} implies that as $n\to \infty$, the entire plot after $t=1/2$ becomes linear.}
 \end{figure}
 
 
@@ -550,11 +577,11 @@ Since the \ER rule is so well understood, it is useful to know how any arbitrary
 
 Bounded size rules are a very general category of rule that eventually start acting like \ER in the following sense: fix a constant $K \in \mathbb{N}$, then $\mathcal{R}$ is a bouded size rule if it treats all sampled vertices with $\kappa_i > K$ identically. In fact, \cite{RW-bounded} shows that bounded size rules share all the key features of \ER at criticality in a certain precise sense.
 
-Intuitively, it makes sense that a bounded size rule eventually become similar to \ER. After enough clusters have been joined, the number of clusters of size $\leq K$ will be so small that it won't have much of an effect on the growth of the giant component. The key to noticing the complexity here is actually twofold:
+Intuitively, it makes sense that a bounded size rule eventually become similar to \ER. After enough clusters have been joined, the number of clusters of size $\leq K$ will be so small that it will not have much of an effect on the growth of the giant component. The key to noticing the complexity here is actually twofold:
 
 \begin{enumerate}
 	\item For any $k \leq K$, the number of clusters of size $k$ can be \textit{nonzero} at percolation (see \Cref{nonzero-at-criticality} below);
-        \item After all clusters of size $\leq K$ have stopped having a real effect on the giant component, we're in a position much different than that of \ER. Instead of lots of isolated nodes, we have lots of finite size clusters.
+        \item After all clusters of size $\leq K$ have stopped having a real effect on the giant component, we are in a position much different than that of \ER. Instead of lots of isolated nodes, we have lots of finite size clusters.
 \end{enumerate}
 
 We can use a simple bounded size two-choice rule to examine these problems, which we do using a generalization of the well known \BF rule:
@@ -601,7 +628,7 @@ Every bounded size two-choice rule has critical exponents
 \begin{proof}
 	Suppose we have a bounded size two-choice rule that treats all clusters of size $>K$ the same. Without loss of generality, suppose this rule is also symmetric with $\phi(s) = \P{ \kappa=s }$ (this argument really only applies to the representative selection process for one of the two vertex groups, so it readily extends to the case of non-symmetric rules). Finally, suppose each vertex group contains $m$ vertices.
 
-	We'll also need a bit of new notation. Let $N \in \left\{ 0, \dots, m \right\}$ denote the number of vertices in our group whose cluster size is $\leq K$, and let $P_{\leq K} = P_1 + \cdots + P_{K}$. Then for $s>K$, we can partition $\phi(s)$ and use the fact that it acts exactly like \ER if all $m$ of the vertices in the group come from clusters of size $> K$.
+	We will also need a bit of new notation. Let $N \in \left\{ 0, \dots, m \right\}$ denote the number of vertices in our group whose cluster size is $\leq K$, and let $P_{\leq K} = P_1 + \cdots + P_{K}$. Then for $s>K$, we can partition $\phi(s)$ and use the fact that it acts exactly like \ER if all $m$ of the vertices in the group come from clusters of size $> K$.
 	\begin{align*}
 		\phi(s) &= \P{ \kappa = s \;|\; N = 0}\P{ N=0 } + \P{ \kappa = s \;|\; N>0 } \P{ N>0 } \\
 			&= \frac{P_{s}}{S + \sum_{r>K}P_{r}} (1-P_{\leq K})^{m} + \P{ \kappa = s \;|\; N>0 } \P{ N>0 }.
