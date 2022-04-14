@@ -202,9 +202,9 @@
 
 \begin{frame}{Continuous phase transition}
 
-	\warn{Define Achlioptas rule} \nl
+	\emph{Achlioptas rule}: select two edges at random, then choose one of them to keep via some rule based on the cluster sizes of the edges' vertices \nl
 
-	Achlioptas claimed to have found a discontinuous emergence of a giant component based on simulations \warn{When?}
+	Achlioptas (2009): claimed to have found a discontinuous emergence of a giant component based on simulations
 \end{frame}
 
 \begin{frame}{Continuous phase transition}
@@ -221,9 +221,7 @@
 
 \begin{frame}{Scaling behavior}
 
-	\warn{reference da Costa? who tf showed this?}
-
-	The distribution of vertices belonging to a cluster of size $s$ follows a power law
+	Because of the continuous phase transition, the distribution of vertices belonging to a cluster of size $s$ follows a power law
 	\[
 	s^{1-\tau} f \, (s \delta^{1/\sigma})
 	\] 
@@ -278,27 +276,61 @@
 \end{frame}
 
 \begin{frame}{Scaling Relations}
+
+	\warn{need to introduce $\gamma_{\phi}$ somewhere}
+
+	For a two-choice rule with $1 - \ang{1}_{\phi} \sim \delta^{F(\beta)}$,
+
+	\begin{align*}
+		\gamma_{\phi} &= F(\beta) - \beta + 1 \\
+		\gamma_{P} &= 2 (F(\beta) - \beta) + 1 \\
+		\frac{1}{\sigma} &= 2 F(\beta) - \beta + 1 \\
+		\tau &= \frac{\beta}{2 F(\beta) - \beta + 1} +2
+	\end{align*}
 	
-	\warn{Put scaling relations for 2C rules here}
 \end{frame}
 
-\begin{frame}{Scaling Relations}
+\begin{frame}{da Costa}
 	
-	\warn{put example for da Costa and then say that it agress with what he derived}
+	da Costa (2015): if groups are size $m$ and the rule selects the vertex with the smallest cluster size, then
+	\begin{align*}
+		\gamma_{\phi} &= 1 + (m-1)\beta \\
+		\gamma_{P} &= 1 + 2(m-1)\beta \\
+		\frac{1}{\sigma} &= 1 + (2m-1)\beta \\
+		\tau &= 2 + \frac{\beta}{1 + (2m-1)\beta} 
+	\end{align*}
+\end{frame}
+
+\begin{frame}{da Costa}
+	\warn{need to introduce $S$ somewhere}
+
+	Since $1 - \ang{1}_{\phi}$ is the probability that a vertex chosen by our rule is in an infinite cluster,
+	\[
+	1 - \ang{1}_{\phi} = S^{\,m} \sim (\delta^{\beta})^{m} \sim \delta^{m \beta},
+	\] 
+	so $F(\beta) = m\beta$ \nl
+
+	Plugging this into our earlier equations recovers da Costa's scaling relations
 \end{frame}
 
 \begin{frame}{\ER}
 	
-	\warn{\ER scaling relations}
+	This is the da Costa rule with $m=1$, so
+	\begin{align*}
+		\gamma_{\phi} = \gamma_{P} &= 1 \\
+		\frac{1}{\sigma} &= \beta + 1 \\
+		\tau &= \frac{\beta}{\beta + 1} + 2
+	\end{align*}
+	
 \end{frame}
 
 \begin{frame}{\ER}
 	
 	Much more is possible since \ER is such a simple rule \nl
 
-	$\beta = 1$, i.e. giant component grows linearly near $t_{c}$ \nl
+	Known result: $\beta = 1$, i.e. giant component grows linearly near $t_{c}$ \nl
 
-	\warn{other crit exps}
+	This fixes $\gamma_{P} = 1, \quad \frac{1}{\sigma} = 2, \quad \tau = 5/2$
 \end{frame}
 
 \begin{frame}{\ER ($n =2500$)}
@@ -352,23 +384,32 @@
 	A \emph{bounded size rule} with size threshold $K$ treats all clusters of size $> K$ the same \nl
 
 	Intuition: eventually there will be so few clusters of size $\leq K$ that it starts acting like \ER \nl
-
-	\pause
-	Can have noticeable differences in behavior vs \ER!
 \end{frame}
 
 \begin{frame}{\BF}
 	
-	\warn{define and then show nonzero proportion of vertices are isolated (below size threshold) at percolation}
+	For each group of vertices, do the following:
+	\begin{itemize}
+		\item Pick $m+1$ vertices
+		\item If any of the first $m$ vertices are isolated, pick one at random as the representative
+		\item If not, pick the $(m+1)$-st vertex instead
+	\end{itemize} \nl
+
+	Bounded size rule with size threshold $K = 1$
 \end{frame}
 
 \begin{frame}{Scaling Relations}
 	
-	Can still calculate scaling relations in terms of $\beta$ \nl
+	For any bounded size rule, $1 - \ang{1}_{\phi} \sim \delta^{\beta}$ \nl
 
-	\warn{put them here} \nl
+	Thus $F(\beta) = \beta$ (the same as \ER!) \nl
 
-	Same as \ER (with potentially different $\beta$)
+	Same scaling relations as \ER (with potentially different $\beta$)
+	\begin{align*}
+                \gamma_{\phi} = \gamma_{P} &= 1 \\
+                \frac{1}{\sigma} &= \beta + 1 \\
+                \tau &= \frac{\beta}{\beta + 1} + 2
+        \end{align*}
 \end{frame}
 
 \begin{frame}
