@@ -46,7 +46,12 @@
 %--------------------------------------------------------------------------------
 % Custom Commands
 %--------------------------------------------------------------------------------
+\newcommand{\warn}[1]{\textbf{\color{red}#1}}
 \newcommand{\ER}{Erd\H{o}s R\'enyi\xspace}
+\newcommand{\nl}{
+\vspace{5mm}
+
+}
 
 %--------------------------------------------------------------------------------
 % Fonts
@@ -87,6 +92,175 @@
 %--------------------------------------------------------------------------------
 \section{Background}
 \sectionSlide{Background}{Dynamically grown graphs and percolation}
+
+\begin{frame}{Dynamically Grown Graphs}
+	
+	Start with a graph with $n$ vertices and 0 edges \nl
+
+	Add edges randomly every $1/n$ units of time \nl
+
+	We'll work in the limit as $n\to \infty$
+\end{frame}
+
+\begin{frame}{Dynamically Grown Graphs}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=1]{fig/graph-1.pdf}
+        \end{figure}
+\end{frame}
+\begin{frame}{Dynamically Grown Graphs}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=1]{fig/graph-2.pdf}
+        \end{figure}
+\end{frame}
+\begin{frame}{Dynamically Grown Graphs}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=1]{fig/graph-3.pdf}
+        \end{figure}
+\end{frame}
+\begin{frame}{Dynamically Grown Graphs}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=1]{fig/graph-4.pdf}
+        \end{figure}
+\end{frame}
+\begin{frame}{Dynamically Grown Graphs}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=1]{fig/graph-5.pdf}
+        \end{figure}
+\end{frame}
+
+\begin{frame}{Percolation}
+	
+	A \emph{giant component} is a cluster that takes up a finite fraction of the graph \nl
+
+	\emph{Percolation} is when a giant component first emerges (call this time $t_c$) \nl
+
+	\pause
+	This emergence has lots of different behaviors
+\end{frame}
+
+\begin{frame}{\ER}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.7]{fig/precrit.pdf}
+		%\caption{}
+	\end{figure}
+\end{frame}
+\begin{frame}{\ER}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.7]{fig/crit.pdf}
+                %\caption{}
+        \end{figure}
+\end{frame}
+\begin{frame}{\ER}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.7]{fig/postcrit.pdf}
+                %\caption{}
+        \end{figure}
+\end{frame}
+
+\begin{frame}{da Costa}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.7]{fig/exp-precrit.pdf}
+                %\caption{}
+        \end{figure}
+\end{frame}
+\begin{frame}{da Costa}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.7]{fig/exp-crit.pdf}
+                %\caption{}
+        \end{figure}
+\end{frame}
+\begin{frame}{da Costa}
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.7]{fig/exp-postcrit.pdf}
+                %\caption{}
+        \end{figure}
+\end{frame}
+
+\begin{frame}{Explosive Percolation}
+
+	\emph{Explosive Percolation} is a sudden, seemingly discontinuous emergence of the giant component
+\end{frame}
+
+%--------------------------------------------------------------------------------
+% Basic Results
+%--------------------------------------------------------------------------------
+\section{Basic Results}
+\sectionSlide{Basic Results}{Continuous phase transition and scaling behavior}
+
+\begin{frame}{Continuous phase transition}
+
+	\warn{Define Achlioptas rule} \nl
+
+	Achlioptas claimed to have found a discontinuous emergence of a giant component based on simulations \warn{When?}
+\end{frame}
+
+\begin{frame}{Continuous phase transition}
+
+	Riordan and Warnke (2012) \nl
+
+	\emph{$\ell$-vertex rule}: choose $\ell$ vertices i.i.d., and you're only required to add an edge if all $\ell$ of them are in distinct clusters (generalizes Achlioptas processes) \nl
+
+        All $\ell$-vertex rules have a continuous phase transition \nl
+
+        \pause
+        Proof by contradiction...
+\end{frame}
+
+\begin{frame}{Scaling behavior}
+
+	\warn{reference da Costa? who tf showed this?}
+
+	The distribution of vertices belonging to a cluster of size $s$ follows a power law
+	\[
+	s^{1-\tau} f \, (s \delta^{1/\sigma})
+	\] 
+	where $\delta = t - t_c$ and $\,f\,$ is a scaling function. \nl
+
+	\pause
+	Noticing scaling behavior in rules with explosive percolation was motivation for proving their continuity
+\end{frame}
+
+
+%--------------------------------------------------------------------------------
+% Two-Choice Rules
+%--------------------------------------------------------------------------------
+\section{Two-Choice Rules}
+\sectionSlide{Two-Choice Rules}{Our Results}
+
+\begin{frame}{Two-Choice Rules}
+
+	Pick two finite groups of i.i.d. vertices \nl
+
+	Follow a deterministic method to choose a representative vertex from each group (can be a different rule for each group) \nl
+
+	Add an edge between the two representatives
+\end{frame}
+
+\begin{frame}{Two-Choice Rules}
+	
+	\ER: Both groups are size 1, so this is the same as sampling edges randomly \nl
+
+	Correspondence with \ER random graph \nl
+
+	\pause
+	da Costa: both groups are of size $m$, and pick the vertex with the smallest cluster size from each group
+\end{frame}
+
+\begin{frame}{Scaling Relations}
+	
+	\warn{hi}
+\end{frame}
 
 
 \end{document}
