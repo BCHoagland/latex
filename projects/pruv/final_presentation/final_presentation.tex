@@ -46,8 +46,10 @@
 %--------------------------------------------------------------------------------
 % Custom Commands
 %--------------------------------------------------------------------------------
+\newcommand{\ang}[1]{\langle #1 \rangle}
 \newcommand{\warn}[1]{\textbf{\color{red}#1}}
 \newcommand{\ER}{Erd\H{o}s R\'enyi\xspace}
+\newcommand{\BF}{Bohman-Frieze\xspace}
 \newcommand{\nl}{
 \vspace{5mm}
 
@@ -231,6 +233,11 @@
 	Noticing scaling behavior in rules with explosive percolation was motivation for proving their continuity
 \end{frame}
 
+\begin{frame}{Critical Exponents}
+
+	\warn{Hi}
+\end{frame}
+
 
 %--------------------------------------------------------------------------------
 % Two-Choice Rules
@@ -259,8 +266,116 @@
 
 \begin{frame}{Scaling Relations}
 	
-	\warn{hi}
+	Consider
+	\[
+	1 - \ang{1}_{\phi} = 1 - \sum_{s \text{ finite}} \phi(s),
+	\] where $\phi(s) = \mathbb{P}( \text{representative has cluster size } s )$ \nl
+
+	Under certain regularity conditions, this quantity is $\sim \delta^{F(\beta)}$ \warn{need to define $\sim$} \nl
+
+	\pause
+	Can express critical exponents in terms of $\beta$ and $F(\beta)$
 \end{frame}
+
+\begin{frame}{Scaling Relations}
+	
+	\warn{Put scaling relations for 2C rules here}
+\end{frame}
+
+\begin{frame}{Scaling Relations}
+	
+	\warn{put example for da Costa and then say that it agress with what he derived}
+\end{frame}
+
+\begin{frame}{\ER}
+	
+	\warn{\ER scaling relations}
+\end{frame}
+
+\begin{frame}{\ER}
+	
+	Much more is possible since \ER is such a simple rule \nl
+
+	$\beta = 1$, i.e. giant component grows linearly near $t_{c}$ \nl
+
+	\warn{other crit exps}
+\end{frame}
+
+\begin{frame}{\ER ($n =2500$)}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.7]{fig/2500.pdf}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{\ER}
+	
+	Scaling behavior occurs in region of order $\Theta(s^{-1/2})$ around $t_{c}$ \nl
+
+	As $s \to \infty$, the scaling window shrinks \nl
+
+	In particular, the region of linear giant component growth shrinks as $n \to \infty$
+
+\end{frame}
+
+\begin{frame}{\ER ($n =100$)}
+
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.7]{fig/100.pdf}
+        \end{figure}
+\end{frame}
+\begin{frame}{\ER ($n =1000$)}
+
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.7]{fig/1000.pdf}
+        \end{figure}
+\end{frame}
+\begin{frame}{\ER ($n =2500$)}
+
+        \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.7]{fig/2500.pdf}
+        \end{figure}
+\end{frame}
+
+%--------------------------------------------------------------------------------
+% Bounded Size Rules
+%--------------------------------------------------------------------------------
+\section{Bounded Size Rules}
+\sectionSlide{Bounded Size Rules}{Rules that are almost \ER}
+
+\begin{frame}{Bounded Size Rules}
+	
+	A \emph{bounded size rule} with size threshold $K$ treats all clusters of size $> K$ the same \nl
+
+	Intuition: eventually there will be so few clusters of size $\leq K$ that it starts acting like \ER \nl
+
+	\pause
+	Can have noticeable differences in behavior vs \ER!
+\end{frame}
+
+\begin{frame}{\BF}
+	
+	\warn{define and then show nonzero proportion of vertices are isolated (below size threshold) at percolation}
+\end{frame}
+
+\begin{frame}{Scaling Relations}
+	
+	Can still calculate scaling relations in terms of $\beta$ \nl
+
+	\warn{put them here} \nl
+
+	Same as \ER (with potentially different $\beta$)
+\end{frame}
+
+\begin{frame}
+	
+	\warn{Need to finish up the presentation somehow}
+\end{frame}
+
 
 
 \end{document}

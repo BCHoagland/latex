@@ -47,6 +47,8 @@
 %--------------------------------------------------------------------------------
 \section{Introduction}
 
+\warn{check pagebreaks}
+
 We begin with an empty graph on $n$ vertices, and at each step we add one edge chosen at random. If each step corresponds to time $1/n$, then as $n\to \infty$ the graph at time $t$ converges to an \ER graph in which the connection probability between any two edges is $2t/n$. A basic result on \ER graphs \cite{ER} is that there is a critical time $t_{c}=1/2$ at which point a giant component with order $n$ points emerges, which is referred to as ``percolation".
 
 \begin{figure}[H]
@@ -509,7 +511,7 @@ A critical assumption of this work was the scaling assumption, and for \ER, we c
 
 \begin{thrm}[]
 	\label{crit-window}
-	If $s$ is the cluster size, then for \ER, the scaling assumption holds after $t_{c}$ when $\delta = \Theta(s^{-1/2})$. Thus in the limit as $s\to \infty$, the scaling assumption is accurate in the entire postcritical regime.
+	For \ER, the scaling assumption holds for clusters of size $s$ after $t_{c}$ when $\delta = \Theta(s^{-1/2})$.
 \end{thrm}
 \begin{proof}
 	We use the following two relationships, which \cite{daCosta} derives for symmetric minimizing two-choice rules when $t < t_c$ and $s$ is large.
@@ -548,8 +550,6 @@ where $ \tilde{C}$ is the constant of propotionality from $\tilde{f}$. To clean 
 	The only valid root is the positive one since $\delta >0$ in the postcritical regime. This root is $\Theta(s^{-1/2})$ when $s$ is large.
 \end{proof}
 
-Thus for large clusters formed by the \ER rule, the scaling assumption is perfectly reasonable. We have been unable to extend this result to more complicated rules, although it is believed that the scaling assumption also holds in the general case.
-
 \begin{figure}[H]
         \centering
         \begin{subfigure}
@@ -564,7 +564,7 @@ Thus for large clusters formed by the \ER rule, the scaling assumption is perfec
                 \centering
                 \includegraphics[scale=0.3]{fig/2500.pdf}
         \end{subfigure}
-        \caption{The above plots show the fraction of vertices in the giant component for 20 \ER processes with $n=100, 1000,$ and $2500$ vertices, respectively. The fact that $\beta=1$, i.e. $\theta \sim \delta$, means that the slopes of these lines at $t=1/2$ become linear in the limit as $n\to \infty$. Furthermore, \Cref{crit-window} implies that as $n\to \infty$, the entire plot after $t=1/2$ becomes linear.}
+        \caption{The above plots show the fraction of vertices in the giant component for 20 \ER processes with $n=100, 1000,$ and $2500$ vertices, respectively. The fact that $\beta=1$, i.e. $\theta \sim \delta$, means that the slopes of these lines at $t=1/2$ become linear in the limit as $n\to \infty$. Furthermore, \Cref{crit-window} implies that as $n\to \infty$, the linear portion of the plot becomes smaller, which is somewhat evident from the above plots.}
 \end{figure}
 
 
