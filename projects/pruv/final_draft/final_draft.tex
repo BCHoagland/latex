@@ -47,8 +47,6 @@
 %--------------------------------------------------------------------------------
 \section{Introduction}
 
-\warn{check pagebreaks}
-
 We begin with an empty graph on $n$ vertices, and at each step we add one edge chosen at random. If each step corresponds to time $1/n$, then as $n\to \infty$ the graph at time $t$ converges to an \ER graph in which the connection probability between any two edges is $2t/n$. A basic result on \ER graphs \cite{ER} is that there is a critical time $t_{c}=1/2$ at which point a giant component with order $n$ points emerges, which is referred to as ``percolation".
 
 \begin{figure}[H]
@@ -266,6 +264,7 @@ Suppose $\mathcal{R}$ is a general two-choice rule, then, since the two sets are
 	\[
 		\p_{t}{S} = \ang{s}_{\phi_1}\left( 1-\ang{1}_{\phi_2} \right) + \ang{s}_{\phi_2}\left( 1-\ang{1}_{\phi_1} \right).
 	\] 
+	Furthermore, both terms have order $F_1(\beta)+F_2(\beta)-1/\sigma$, where $F_i$ is the standard induced order map of $\phi_{i}$.
 \end{lem}
 \begin{proof}
         Using the identity $\sum_s P(s) = 1-S$, we calculate
@@ -279,37 +278,22 @@ Suppose $\mathcal{R}$ is a general two-choice rule, then, since the two sets are
         \end{align*}
 \end{proof}
 
-\begin{thrm}
-	\label{2c-same-order}
-	For any two-choice rule $\mathcal{R}$, there are nonnegative functions $\zeta_1$ and $\zeta_2$ such that
-	\[
-		\p_{t}{S} = \ang{s}_{\phi_1}\zeta_2(S) + \ang{s}_{\phi_2}\zeta_1(S).
-	\] 
-	Furthermore, the two terms above have the same order $F_1(\beta) + F_2(\beta) - 1/\sigma$ when the expression is put into scaling form, where $F_{i}$ is the $i$-th standard induced order map of $\mathcal{R}$.
-\end{thrm}
-\begin{proof}
-	By \Cref{2c-sdelS}, we know $\p_{t}{S} = \ang{s}_{\phi_1}\left( 1-\ang{1}_{\phi_2} \right) + \ang{s}_{\phi_2}\left( 1-\ang{1}_{\phi_1} \right)$. Now for both $i$, consider the probability $\zeta_i(S)$ that a vertex chosen from group $i$ belongs to an infinite cluster. This satisfies the relation $\ang{1}_{\phi_i} = 1-\zeta_i(S)$, which allows us to recover the desired form of $\p_{t}{S} $. Then by \Cref{exponent-to-induced-map}, both terms have order $F_1(\beta) + F_2(\beta) - 1/\sigma$.
-\end{proof}
-
-To determine scaling relations for two-choice rules, we will need one last result, a consequence of \Cref{2c-same-order}.
+To determine scaling relations for two-choice rules, we will need one last result, a consequence of \Cref{2c-sdelS}.
 
 \begin{cor}
 	\label{2c-sdel-sp}
 	For any two-choice rule $\mathcal{R}$, the average cluster size $\ang{s}_{P}$ satisfies
 \[
-        \p_{t}{\ang{s}_{P}} = 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} - \ang{s^2}_{\phi_1}\zeta_2(S) - \ang{s^2}_{\phi_2}\zeta_1(S),
+        \p_{t}{\ang{s}_{P}} = 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} - \ang{s^2}_{\phi_1}(1-\ang{1}_{\phi_2}) - \ang{s^2}_{\phi_2}(1-\ang{1}_{\phi_1}).
 \]
-where $\zeta_1$ and $\zeta_2$ are the functions from \Cref{2c-same-order}.
 \end{cor}
 \begin{proof}
-	Recall from the proof of \Cref{2c-same-order} that there are functions $\zeta_1$ and $\zeta_2$ satisfying the relation $\ang{1}_{\phi_i} = 1-\zeta_i(S)$. We can then explicitly compute $\p_{t}{\ang{s}_{P}} $.
         \begin{align*}
                 \p_{t}{\ang{s}_{P}} &= \sum_s s \p_{t}{P(s)} \\
                                     &= \sum_s s^2 \sum_{u+v=s}\phi_1(u)\phi_2(v) - \sum_s s^2 \phi_1(s) - \sum_s s^2 \phi_2(s) \\
                                     &= \sum_{u}\sum_{v} (u+v)^2\phi_1(u) \phi_2(v) - \ang{s^2}_{\phi_1}-\ang{s^2}_{\phi_2} \\
                                     &= \ang{s^2}_{\phi_1}\ang{1}_{\phi_2} + 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} + \ang{1}_{\phi_1}\ang{s^2}_{\phi_2}- \ang{s^2}_{\phi_1}-\ang{s^2}_{\phi_2} \\
-                                    &= 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} + \ang{s^2}_{\phi_1}(\ang{1}_{\phi_2} - 1) + \ang{s^2}_{\phi_2}(\ang{1}_{\phi_1}-1) \\
-                                    &= 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} - \ang{s^2}_{\phi_1}\zeta_2(S) - \ang{s^2}_{\phi_2}\zeta_1(S).
+                                    &= 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} - \ang{s^2}_{\phi_1}(1-\ang{1}_{\phi_2}) - \ang{s^2}_{\phi_2}(1-\ang{1}_{\phi_1}).
         \end{align*}
 \end{proof}
 
@@ -325,11 +309,11 @@ where $\zeta_1$ and $\zeta_2$ are the functions from \Cref{2c-same-order}.
 	\end{align*}
 \end{thrm}
 \begin{proof}
-	Since $\p_{t}{S} \sim \delta^{\beta-1}$, \Cref{2c-same-order} shows
+	Since $\p_{t}{S} \sim \delta^{\beta-1}$, \Cref{2c-sdelS} shows
 \[
 	\frac{1}{\sigma} = F_1(\beta) + F_2(\beta) - \beta + 1.
 \]
-	Since $\p_{t}{S} = \ang{s}_{\phi_1}\zeta_2(S) + \ang{s}_{\phi_2}\zeta_1(S)$, the two dominating terms near criticality give us the system
+	Since $\p_{t}{S} = \ang{s}_{\phi_1}(1-\ang{1}_{\phi_2}) + \ang{s}_{\phi_2}(1-\ang{1}_{\phi_1})$, the two dominating terms near criticality give us the system
 \[
         \beta -1 \quad=\quad -\gamma_{\phi_1} + F_2(\beta) \quad=\quad -\gamma_{\phi_2} + F_1(\beta).
 \]
@@ -338,7 +322,7 @@ This system implies
         \gamma_{\phi_1} &= F_2(\beta) - \beta + 1,\\
         \gamma_{\phi_2} &= F_1(\beta) - \beta + 1.
 \end{align*}
-By \Cref{2c-sdel-sp}, we know $\p_{t}{\ang{s}_{P}} = 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} - \ang{s^2}_{\phi_1}\zeta_2(S) - \ang{s^2}_{\phi_2}\zeta_1(S)$. The three terms in this expression all have order $F_1(\beta)+F_2(\beta) - 2/\sigma$, which gives the system
+By \Cref{2c-sdel-sp}, we know $\p_{t}{\ang{s}_{P}} = 2\ang{s}_{\phi_1}\ang{s}_{\phi_2} - \ang{s^2}_{\phi_1}(1-\ang{1}_{\phi_2}) - \ang{s^2}_{\phi_2}(1-\ang{1}_{\phi_1})$. The three terms in this expression all have order $F_1(\beta)+F_2(\beta) - 2/\sigma$, which gives the system
 \[
         -\gamma_{P}-1 \quad=\quad -\gamma_{\phi_1}-\gamma_{\phi_2} \quad=\quad -\gamma_{\phi_1}-\frac{1}{\sigma} +F_2(\beta) \quad=\quad -\gamma_{\phi_2}-\frac{1}{\sigma} + F_1(\beta).
 \]
@@ -461,8 +445,6 @@ With such a simple rule, we can in fact determine much more. In particular, we c
 %-------------------
 % Finding $\beta$ for \ER
 %-------------------
-\pagebreak
-
 \subsection{Finding \texorpdfstring{$\beta$}{beta} for \ER}
 \label{finding-beta}
 
@@ -567,6 +549,8 @@ where $ \tilde{C}$ is the constant of propotionality from $\tilde{f}$. To clean 
         \caption{The above plots show the fraction of vertices in the giant component for 20 \ER processes with $n=100, 1000,$ and $2500$ vertices, respectively. The fact that $\beta=1$, i.e. $\theta \sim \delta$, means that the slopes of these lines at $t=1/2$ become linear in the limit as $n\to \infty$. Furthermore, \Cref{crit-window} implies that as $n\to \infty$, the linear portion of the plot becomes smaller, which is somewhat evident from the above plots.}
 \end{figure}
 
+In particular, consider the growth of the giant component as $n\to \infty$, where $n$ is the number of vertices in the graph. In the limit, the giant component's size at criticality approaches $\infty$, so it grows linearly (like $\delta^{\beta}$ for $\beta=1$) in only an infinitesimally small region around $t_{c}$.
+
 
 %-------------------
 % Bounded Size Rules
@@ -642,16 +626,18 @@ Every bounded size two-choice rule has critical exponents
 		\phi(s) &= \P{ \kappa = s \;|\; N = 0}\P{ N=0 } + \P{ \kappa = s \;|\; N>0 } \P{ N>0 } \\
 			&= 0 + \P{ \kappa = s \;|\; N>0 } \P{ N>0 }.
 	\end{align*}
-	This allows us to sum over all $\phi(s)$ and thus calculate $\ang{1}_{\phi}$.
+	This allows us to sum over all $\phi(s)$ and thus calculate $\ang{1}_{\phi}$. Let $\xi = \sum_{s} \P{ \kappa=s\;|\; N>0 }$, then
 	\begin{align*}
 		\sum_{s} \phi(s) &= \sum_{s > K} \phi(s) + \sum_{ s \leq K}\phi(s) \\
 				 &= \left[ \sum_{s>K}(1-P_{\leq K})^{m-1} \right] + \left[ \sum_{s} \P{ \kappa=s\;|\; N>0 }\P{ N>0 } \right] \\
 				 &= \Bigg[ (1-P_{\leq K})^{m-1}(1-S-P_{\leq K}) \Bigg] + \left[ (1-(1-P_{\leq K})^{m}) \sum_{s} \P{ \kappa=s\;|\; N>0 } \right] \\
-				 &= (1- P_{\leq K})^{m-1} \left[ 1 - S - \xi + (\xi-1)P_{\leq K} \right] + \xi,
+				 &= (1- P_{\leq K})^{m-1} \left[ 1 - S - \xi + (\xi-1)P_{\leq K} \right] + \xi.
 	\end{align*}
-	where $\xi = \sum_{s} \P{ \kappa=s\;|\; N>0 }$. In scaling form, the first term above will be dominated by the \emph{smallest} critical exponent since $\delta$ is approaching 0. After multiplying everything out, the term with the lowest exponent will be $S$ (with critical exponent $\beta$).
-
-	We will now induct on the group size $m$ to show that $\xi \sim 1$. When $m=1$,
+	The induced order map for this rule is then the order of the quantity
+	\[
+	1 - \ang{1}_{\phi} = 1 - (1- P_{\leq K})^{m-1} \left[ 1 - S - \xi + (\xi-1)P_{\leq K} \right] - \xi. \tag{$\star$}
+	\] 
+	We will induct on the group size $m$ to show that $\xi \sim 1$, which will greatly simplify $(\star)$. When $m=1$,
 	\[
 	\sum_{s} \P{ \kappa=s\;|\; N>0 } = \sum_{s}\P{ \kappa=s\;|\; N=1 } = 1.
 	\] Then assuming $\sum_{s} \P{ \kappa=s\;|\; N>0 } \sim 1$ when the group size is $m-1$,
@@ -665,14 +651,12 @@ Every bounded size two-choice rule has critical exponents
 	\[
 		\sum_{s}\P{ \kappa=s\;|\; N>0 } \sim \P{ 0<N<m\;|\; N>0 } + \P{ N=m\;|\;N>0 } = 1,
 	\]
-	as desired. Thus the scaling form of $\ang{1}_{\phi}=\sum_{s}\phi(s)$ is
+	as desired. Then $(\star)$ becomes $1 - \ang{1}_{\phi} \sim (1 - P_{\leq K})^{m-1} S$. Since $t \mapsto (1-P_{\leq K}(t))^{m-1}$ is continuous at $t_{c}$, its scaling form is
 	\[
-	\ang{1}_{\phi} \sim \delta^{\beta}.
+	1 - \ang{1}_{\phi} \sim \delta^{\beta}.
 	\] 
-	By definition, this fixes the standard induced order map of this rule. 	Note that for \ER, $\ang{1}_{P} = S \sim \delta^{\beta}$ as well, so both rules share the same standard induced order map. Since our computation of the critical exponents of two-choice rules relied only this map, the desired result follows.
+	By definition, this fixes the standard induced order map $F(\beta)=\beta$ for this rule. Note that for \ER, $1 - \ang{1}_{P} = S \sim \delta^{\beta}$ as well, so both rules share the same standard induced order map. Since our computation of the critical exponents of two-choice rules relied only this map, the desired result follows.
 \end{proof}
-
-\warn{Should be $1-\ang{1}_{\phi}$ instead of $\ang{1}_{\phi}$.}
 
 A crucial relation used in the previous theorem was the fact that
 \[
@@ -683,6 +667,7 @@ A crucial relation used in the previous theorem was the fact that
 %--------------------------------------------------------------------------------
 % bibliography
 %--------------------------------------------------------------------------------
+\newpage
 \printbibliography
 
 

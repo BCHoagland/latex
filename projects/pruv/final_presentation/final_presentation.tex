@@ -104,37 +104,6 @@
 	We'll work in the limit as $n\to \infty$
 \end{frame}
 
-\begin{frame}{Dynamically Grown Graphs}
-        \begin{figure}[H]
-                \centering
-                \includegraphics[scale=1]{fig/graph-1.pdf}
-        \end{figure}
-\end{frame}
-\begin{frame}{Dynamically Grown Graphs}
-        \begin{figure}[H]
-                \centering
-                \includegraphics[scale=1]{fig/graph-2.pdf}
-        \end{figure}
-\end{frame}
-\begin{frame}{Dynamically Grown Graphs}
-        \begin{figure}[H]
-                \centering
-                \includegraphics[scale=1]{fig/graph-3.pdf}
-        \end{figure}
-\end{frame}
-\begin{frame}{Dynamically Grown Graphs}
-        \begin{figure}[H]
-                \centering
-                \includegraphics[scale=1]{fig/graph-4.pdf}
-        \end{figure}
-\end{frame}
-\begin{frame}{Dynamically Grown Graphs}
-        \begin{figure}[H]
-                \centering
-                \includegraphics[scale=1]{fig/graph-5.pdf}
-        \end{figure}
-\end{frame}
-
 \begin{frame}{Percolation}
 	
 	A \emph{giant component} is a cluster that takes up a finite fraction of the graph \nl
@@ -145,21 +114,21 @@
 	This emergence has lots of different behaviors
 \end{frame}
 
-\begin{frame}{\ER}
+\begin{frame}{\ER $(t=2/5)$}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.7]{fig/precrit.pdf}
 		%\caption{}
 	\end{figure}
 \end{frame}
-\begin{frame}{\ER}
+\begin{frame}{\ER $(t=1/2)$}
         \begin{figure}[H]
                 \centering
                 \includegraphics[scale=0.7]{fig/crit.pdf}
                 %\caption{}
         \end{figure}
 \end{frame}
-\begin{frame}{\ER}
+\begin{frame}{\ER $(t=3/5)$}
         \begin{figure}[H]
                 \centering
                 \includegraphics[scale=0.7]{fig/postcrit.pdf}
@@ -167,21 +136,21 @@
         \end{figure}
 \end{frame}
 
-\begin{frame}{da Costa}
+\begin{frame}{da Costa $(t=1/2)$}
         \begin{figure}[H]
                 \centering
                 \includegraphics[scale=0.7]{fig/exp-precrit.pdf}
                 %\caption{}
         \end{figure}
 \end{frame}
-\begin{frame}{da Costa}
+\begin{frame}{da Costa $(t=3/4)$}
         \begin{figure}[H]
                 \centering
                 \includegraphics[scale=0.7]{fig/exp-crit.pdf}
                 %\caption{}
         \end{figure}
 \end{frame}
-\begin{frame}{da Costa}
+\begin{frame}{da Costa $(t=1)$}
         \begin{figure}[H]
                 \centering
                 \includegraphics[scale=0.7]{fig/exp-postcrit.pdf}
@@ -223,7 +192,7 @@
 
 	Because of the continuous phase transition, the distribution of vertices belonging to a cluster of size $s$ follows a power law
 	\[
-	s^{1-\tau} f \, (s \delta^{1/\sigma})
+	P(s, t) = s^{1-\tau} f \, (s \delta^{1/\sigma})
 	\] 
 	where $\delta = t - t_c$ and $\,f\,$ is a scaling function. \nl
 
@@ -232,8 +201,16 @@
 \end{frame}
 
 \begin{frame}{Critical Exponents}
-
-	\warn{Hi}
+        Let $S$ be the relative size of the giant component, and let
+        \[
+                \ang{s^{\,k}}_{P} = \sum_{s \text{ finite}} s^{\,k} P(s).
+        \] Then
+        \[
+                S \sim \delta^{\beta}, \quad\quad
+                \ang{1}_{P} \sim \delta^{-\gamma}, \quad\quad
+                \frac{\ang{s^{\,k+1}}_{P}}{\ang{s^{\,k}}_{P}} \sim \delta^{-1/\sigma}
+        \]
+        These exponents are called \textit{critical exponents}.
 \end{frame}
 
 
@@ -256,10 +233,8 @@
 	
 	\ER: Both groups are size 1, so this is the same as sampling edges randomly \nl
 
-	Correspondence with \ER random graph \nl
-
 	\pause
-	da Costa: both groups are of size $m$, and pick the vertex with the smallest cluster size from each group
+	da Costa: both groups are of size $m$, and pick the vertex with the smallest cluster size from each group.
 \end{frame}
 
 \begin{frame}{Scaling Relations}
@@ -269,15 +244,13 @@
 	1 - \ang{1}_{\phi} = 1 - \sum_{s \text{ finite}} \phi(s),
 	\] where $\phi(s) = \mathbb{P}( \text{representative has cluster size } s )$ \nl
 
-	Under certain regularity conditions, this quantity is $\sim \delta^{F(\beta)}$ \warn{need to define $\sim$} \nl
+	Under certain regularity conditions, this quantity is $\sim \delta^{F(\beta)}$ \nl
 
 	\pause
 	Can express critical exponents in terms of $\beta$ and $F(\beta)$
 \end{frame}
 
 \begin{frame}{Scaling Relations}
-
-	\warn{need to introduce $\gamma_{\phi}$ somewhere}
 
 	For a two-choice rule with $1 - \ang{1}_{\phi} \sim \delta^{F(\beta)}$,
 
@@ -291,8 +264,19 @@
 \end{frame}
 
 \begin{frame}{da Costa}
+
+	Since $1 - \ang{1}_{\phi}$ is the probability that a vertex chosen by our rule is in an infinite cluster,
+	\[
+	1 - \ang{1}_{\phi} = S^{\,m} \sim (\delta^{\beta})^{m} \sim \delta^{m \beta},
+	\] 
+	so $F(\beta) = m\beta$ \nl
+
+	Plugging this into our earlier equations gives scaling relations for the da Costa rule
+\end{frame}
+
+\begin{frame}{da Costa}
 	
-	da Costa (2015): if groups are size $m$ and the rule selects the vertex with the smallest cluster size, then
+	Matches with da Costa's own results
 	\begin{align*}
 		\gamma_{\phi} &= 1 + (m-1)\beta \\
 		\gamma_{P} &= 1 + 2(m-1)\beta \\
@@ -301,17 +285,6 @@
 	\end{align*}
 \end{frame}
 
-\begin{frame}{da Costa}
-	\warn{need to introduce $S$ somewhere}
-
-	Since $1 - \ang{1}_{\phi}$ is the probability that a vertex chosen by our rule is in an infinite cluster,
-	\[
-	1 - \ang{1}_{\phi} = S^{\,m} \sim (\delta^{\beta})^{m} \sim \delta^{m \beta},
-	\] 
-	so $F(\beta) = m\beta$ \nl
-
-	Plugging this into our earlier equations recovers da Costa's scaling relations
-\end{frame}
 
 \begin{frame}{\ER}
 	
@@ -412,11 +385,11 @@
         \end{align*}
 \end{frame}
 
-\begin{frame}
-	
-	\warn{Need to finish up the presentation somehow}
-\end{frame}
-
+%--------------------------------------------------------------------------------
+% Conclusion
+%--------------------------------------------------------------------------------
+\section{Conclusion}
+\sectionSlide{Thank you!}
 
 
 \end{document}
