@@ -1,0 +1,107 @@
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/styles/toggles}
+\toggletrue{sectionbreaks}
+\toggletrue{separateTitlePage}
+\newcommand{\docTitle}{Differential Geometry}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\importStyles{formal}{rainbow}{boxy}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+
+\title{Braden Hoagland}{via Visual Differential Geometry and Forms}
+\header{Braden Hoagland}{Differential Geometry}
+
+%\tableofcontents
+
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Geometries
+
+\chapter{Geometries}
+
+%--------------------------------------------------------------------------------
+% Curvature of a Geometry
+%--------------------------------------------------------------------------------
+\section{Curvature of a Geometry}
+
+Euclid's \textit{Elements} is axiomatic, and the changing of his fifth axiom is enough to change the geometry from that of the plane to either that of a sphere or of hyperbolic space. Suppose we have a straight line/geodesic $L$ and a point $p$ that doesn't lie on $L$, then
+\begin{itemize}
+	\item \textbf{Euclidean:} there is exactly 1 line parallel to $L$ and going through $p$;
+	\item \textbf{Hyperbolic:} there are 2+ lines parallel to $L$ and going through $p$;
+	\item \textbf{Spherical:} there are no lines pallel to $L$ and going through $p$.
+\end{itemize}
+
+In Euclidean space, the sum of the angles of a triangle $\Delta$ sum to $\pi$, but in the other geometries, this isn't necessarily true.
+
+\begin{defn}[]
+The \textbf{angular excess} $\mathcal{E}(\Delta)$ of a triangle $\Delta$ is
+\[
+	(\text{angle sum of } \Delta) - \pi.
+\] 
+\end{defn}
+
+\begin{thrm}[]
+	\label{constant-curvature}
+	For any geometry, the \textbf{curvature} $\mathcal{K} = \frac{\mathcal{E}(\Delta)}{\mathcal{A}(\Delta)} $ is a constant for any triangle in the geometry:
+\begin{itemize}
+	\item \textbf{Euclidean:} $\mathcal{K} = 0$;
+	\item \textbf{Hyperbolic:} $\mathcal{K} < 0$;
+	\item \textbf{Spherical:} $\mathcal{K} > 0$.
+\end{itemize}
+\end{thrm}
+There are some easy corollaries:
+\begin{itemize}
+	\item There are infinitely many spherical and hyperbolic geometries: just change $\mathcal{K}$;
+	\item The sum of angles in a triangle can't be negative $\implies \mathcal{E} \geq -\pi \implies \mathcal{A} \leq |\pi / \mathcal{K}|$ in hyperbolic geometry;
+	\item In the same geometry (i.e. same $\mathcal{K}$), triangles of different areas must have different $\mathcal{E}$, i.e. there are no similar triangles when $\mathcal{K} \neq 0$;
+\end{itemize}
+
+
+\begin{prop}
+	\label{GB-sphere}
+On a sphere of radius $R$, the area of a triangle is $\mathcal{A} = \mathcal{E} R^2$. Thus $\mathcal{K} = 1/R^2$ on the sphere.
+\end{prop}
+\begin{proof}
+	Take a triangle and extend each of its lines, dividing the sphere into 2 triangles and 6 other strips. Using certain pairs of strips and triangles, we can make shapes bounded by two meridians. Suppose the angle at the endpoints of such a shape is $\alpha$, then its area is $4\pi R^2 \cdot (\alpha / 2\pi) = 2 \alpha R^2$. Using some other basic relationships and a bit of algebra, we get the result.
+\end{proof}
+
+\begin{note}[]
+The big idea here is that $\mathcal{E} = \mathcal{K} \mathcal{A}$, i.e. the angular excess of a triangle is the ``total amount" of curvature inside the triangle. This generalizes in the next section to the local Gauss-Bonnet theorem.
+\end{note}
+
+%--------------------------------------------------------------------------------
+% Local Gauss-Bonnet
+%--------------------------------------------------------------------------------
+\section{Local Gauss-Bonnet}
+
+In spherical geometry, $\mathcal{K} = 1/R^2$, and in hyperbolic geometry, $\mathcal{K} = -1/R^2$. But we're interested in what happens on more general surfaces, not just ones that are entirely spherical or entirely flat or entirely hyperbolic. Thus we need a notion of curvature that varies point by point.
+
+\begin{defn}[]
+	Fix a point $p$ on a surface, and let $\Delta_{p}\to p$ denote a sequence of geodesic triangles containing $p$ and shrinking towards $p$. The \textbf{Gaussian curvature} at a point $p$ is then
+	\[
+	\mathcal{K}(p) = \lim_{\Delta_{p} \to p} \frac{\mathcal{E}(\Delta_{p})}{\mathcal{A}(\Delta_{p})} .
+	\] 
+	Note that this agrees with \Cref{constant-curvature}.
+\end{defn}
+This allows us to generalize \Cref{GB-sphere} to general curved surfaces.
+\begin{thrm}[Local Gauss-Bonnet]
+	\label{GB-local}
+	If $\Delta$ is a geodesic triangle, then
+	\[
+	\mathcal{E}(\Delta) = \iint_{\Delta} \mathcal{K}\;d\mathcal{A}.
+	\] 
+\end{thrm}
+It's easy to check that $\mathcal{E}$ is additive in the sense that if $\Delta_1 $ and $\Delta_2$ are both geodesic triangles that combine into one larger geodesic triangle $\Delta$, then
+\[
+\mathcal{E}(\Delta) = \mathcal{E}(\Delta_1) + \mathcal{E}(\Delta_2).
+\] 
+Then we can take any geodesic triangle $\Delta$ and continually subdivide it into finer parts. As the parts get finer, the Gaussian curvature over each individual part approaches a constant. By \Cref{constant-curvature}, we know that $\mathcal{E} = \mathcal{K} \mathcal{A}$ when $\mathcal{K}$ is constant. This is exactly what the integral $\iint_{\Delta} \mathcal{K}\;d\mathcal{A}$ captures.
+
+
+\end{document}

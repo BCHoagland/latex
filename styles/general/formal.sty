@@ -12,7 +12,7 @@
         \thispagestyle{empty}
         \begin{center}
 		\iftoggle{separateTitlePage}{
-			\vspace*{20mm}
+			\vspace*{30mm}
 		}{}
                 \MakeUppercase{
                         {\large\so{\docTitle}}\\
@@ -32,8 +32,9 @@
 %--------------------------------------------------------------------------------
 % Sections
 %--------------------------------------------------------------------------------
-\titleformat{\section}{\center\normalsize\MakeUppercase}{\thesection}{1em}{\so}
-\titleformat{\subsection}{\vspace{3mm}\center\footnotesize\MakeUppercase}{\thesubsection}{1em}{\vspace{1mm}\so}
+\titleformat{\chapter}{\center\LARGE\MakeUppercase}{\thechapter}{1em}{\so}
+\titleformat{\section}{\center\large\MakeUppercase}{\thesection}{1em}{\so}
+\titleformat{\subsection}{\vspace{3mm}\center\small\MakeUppercase}{\thesubsection}{1em}{\vspace{1mm}\so}
 
 %--------------------------------------------------------------------------------
 % Header and Footer
