@@ -1,0 +1,182 @@
+\documentclass[twoside,10pt]{report}
+\usepackage{/Users/bradenhoagland/latex/styles/toggles}
+\toggletrue{sectionbreaks}
+\toggletrue{separateTitlePage}
+\newcommand{\docTitle}{Stable Distributions}
+\usepackage{/Users/bradenhoagland/latex/styles/common}
+\importStyles{formal}{rainbow}{boxy}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+
+\title{Braden Hoagland}{}
+\tableofcontents
+
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Stable Distributions
+
+\chapter{Stable Distributions}
+
+%--------------------------------------------------------------------------------
+% Definitions
+%--------------------------------------------------------------------------------
+\section{Definitions}
+
+There are three main equivalent definitions of stable distributions.
+
+\begin{defn}[]
+A random variable $X$ is \textbf{stable} if any linear combination of independent copies of $X$ preserves the distribution of $X$ up to scaling and shifting, i.e. for any $a,b$,
+\[
+a X_1 + b X_2 \stackrel{d}{=} c X + d
+\] for some $c,d$. If $d=0$ for all $a$ and $b$, then $X$ is \textbf{strictly stable}. If $X$ is stable and $X \stackrel{d}{=} -X$, then it is \textbf{symmetric stable}.
+\end{defn}
+
+\begin{note}[]
+This is \textbf{not} the same as saying ``the sum of two Gaussians is itself a Gaussian." Instead, if we take two copies of the \emph{same} Gaussian and take a linear combination of those, it's just a scale and/or shift of that \emph{original} Gaussian.
+\end{note}
+
+\begin{defn}[]
+$X$ is \textbf{stable} if
+\[
+X_1 + \cdots + X_{n} = c_{n}X + d_{n}
+\] 
+
+\warn{finish...}
+\end{defn}
+
+We're interested in these because by the \warn{generalized central limit theorem}, stable distributions are the only limit distributions for properly normalized and centered sums of i.i.d. random variables.
+
+
+%--------------------------------------------------------------------------------
+% Explicit Distributions
+%--------------------------------------------------------------------------------
+\section{Explicit Distributions}
+
+There are only three families of stable distributions with known closed form densities:
+\begin{itemize}
+	\item Gaussian: $\frac{1}{\sqrt{2 \pi \sigma^{2}} } \exp\left( -\frac{(x-\mu)^2}{2\sigma^{2}}  \right)$ 
+
+	\item Cauchy (Lorentz): $\frac{1}{\pi} \frac{\gamma}{\gamma^{2}+(x-\delta)^2} $ 
+
+	\item L\'evy: $\sqrt{\frac{\gamma}{2\pi} } \frac{1}{(x-\delta)^{3/2}} \exp\left( -\frac{\gamma}{2(x-\delta)}  \right)$ for $x > \delta$
+\end{itemize}
+
+\warn{summarize important properties of each}
+
+\warn{add in plots}
+
+
+%--------------------------------------------------------------------------------
+% Parameterizations
+%--------------------------------------------------------------------------------
+\section{Parameterizations}
+
+\begin{prop}
+$X$ is stable $\iff X\deq \gamma Z + \delta$, where $\gamma \geq 0$ and $\delta$ are real numbers and $Z$ is a random variable with \warn{characteristic function}
+\[
+\phi(u) = \E{ e^{i u Z} } =
+\begin{cases}
+	\exp\left( -|u|^{\alpha}\left( 1- i \beta\tan(\frac{\pi \alpha}{2}  \right)\cdot \sgn(u) \right) & \alpha \neq 1, \\
+	\exp\left( -|u| \left( 1 + \frac{2}{\pi} i \beta \cdot \sgn(u) \cdot \log |u|  \right) \right) &  \alpha = 1
+\end{cases}
+\] 
+for $0 < \alpha \leq 2$ and $-1 \leq \beta \leq 1$.
+\end{prop}
+Thus we can parameterize a stable distribution with four parameters:
+\begin{itemize}
+	\item $\alpha$: index of stability / characteristic exponent
+	\item $\beta$: skewness
+	\item $\gamma$: scale
+	\item $\delta$: location
+\end{itemize}
+
+\warn{Different parameterizations}
+
+%-------------------
+% Qualitative Behavior
+%-------------------
+\subsection{Qualitative Behavior}
+
+$\alpha$ controls how fat the tails are.
+\begin{itemize}
+	\item $\alpha = 2$: Gaussian
+		\begin{itemize}
+			\item In this case, $\beta$ becomes inconsequential since $\tan(\pi \alpha/2) = 0$, i.e. $Z(2,\beta) \deq Z(2,0)$
+		\end{itemize}
+	\item As $\alpha$ increases, it becomes more Gaussian (and changing $\beta$ has less of an effect)
+	\item As $\alpha$ decreases, you get a taller, thinner peak and fatter tails
+\end{itemize}
+$\beta$ controls how one-sided a distribution is. If $\beta = \pm 1$, then the distribution is \textbf{totally skewed to the right (+1) / left (-1)}.
+\begin{itemize}
+	\item $\beta=0$: Symmetric
+	\item $\beta > 0$: Right tail is fatter than left
+	\item $\beta < 0$: Left tail is fatter than right
+\end{itemize}
+\warn{when totally skewed, can eliminate one of the tails... (lemma 1.1 in text)}
+
+\warn{plots for different $\beta$}
+
+Every stable distribution is unimodal, but there's no known formula for the mode; however, $m(\alpha,\beta) := \mathbb{S}(\alpha,\beta;0)$ can be numerically computed.
+
+
+%--------------------------------------------------------------------------------
+% Tails
+%--------------------------------------------------------------------------------
+\section{Tails}
+
+
+%--------------------------------------------------------------------------------
+% Moments
+%--------------------------------------------------------------------------------
+\section{Moments}
+
+
+%--------------------------------------------------------------------------------
+% Quantiles
+%--------------------------------------------------------------------------------
+\section{Quantiles}
+
+If $\beta \neq 0$, then the quantiles are not symmetric (unlike with Gaussians). In general, they depend on $\alpha$ and $\beta$.
+
+Let $z_{\lambda}(\alpha,\beta)$ be the unique real number associated with the standardized (i.e. $\gamma=1, \delta=0$) distribution $Z \sim \mathbb{S}(\alpha,\beta;0)$ such that $\P{ X < z_{\lambda} }=\lambda$. By the reflection property, $z_{\lambda}(\alpha,\beta) = - z_{1-\lambda}(\alpha,-\beta)$.
+
+Quantiles scale differently depending on the parameterization. For the 0-th parameterization, it's simply $\gamma z_{\lambda}+ \delta$. For other parameterizations, it's probably easiest to just convert the parameters to their 0-th parameterization equivalents and then do the same thing.
+
+%--------------------------------------------------------------------------------
+% Sums of alpha-Stable Distributions
+%--------------------------------------------------------------------------------
+\section{Sums of \texorpdfstring{$\alpha$}{alpha}-Stable Distributions}
+
+\begin{thrm}[]
+$X + Y$ is $\alpha$-stable $\iff X$ and $Y$ are both $\alpha$-stable themselves.
+\end{thrm}
+\warn{reference for this in text is pretty late in the book}
+
+If the distributions in the sum are independent, there's an exact form for the sum. If not, it's more complicated and depends on the dependence structure.
+
+\begin{prop}
+	This is all for the 0-parameterization.
+\begin{enumerate}
+	\item If $X \im \mathbb{S}(\alpha,\beta,\gamma,\delta;0)$, then $aX + b \;\sim\; \mathbb{S}(\alpha, \sgn(a)\beta, |\alpha|\gamma, a \delta+b;0)$.
+	\item The characteristic functions, densities, and CDFs are \warn{jointly continuous}in all parameters and in \warn{x}.
+	\item If $X_{i} \sim \mathbb{S}(\alpha,\beta_{i},\gamma_{i},\delta_{i};0)$ and $X_1 \perp X_2$, then $X_1+X_2 \sim \mathbb{S}(\alpha,\beta,\gamma,\delta;0)$, where
+		\begin{align*}
+			\beta &= \frac{\beta_1 \gamma_1^{\alpha} + \beta_2 \gamma_2^{\alpha}}{\gamma_1^{\alpha}+\gamma_2^{\alpha}} ,\\
+			\gamma^{\alpha} &= \gamma_1^{\alpha} + \gamma_2^{\alpha},\\
+			\delta&=
+			\begin{cases}
+				\delta_1+\delta_2+\tan\left( \frac{\pi \alpha}{2}  \right)\left( \beta \gamma - \beta_1 \gamma_1 - b_2 \gamma_2 \right) & \quad\alpha \neq 1,\\
+				\delta_1 + \delta_2 + \frac{2}{\pi} \left( \beta \gamma \log \gamma - \beta_1 \gamma_1 \log \gamma_1 - \beta_2 \gamma_2 \log \gamma_2 \right) & \quad\alpha=1.
+			\end{cases}
+		\end{align*}
+\end{enumerate}
+\end{prop}
+
+
+\end{document}
