@@ -4,15 +4,15 @@
 \toggletrue{separateTitlePage}
 \newcommand{\docTitle}{Stable Distributions}
 \usepackage{/Users/bradenhoagland/latex/styles/common}
-\importStyles{formal}{rainbow}{lined}
+\importStyles{notes}{rainbow}{boxy}
 
 %\renewcommand{\theenumi}{\alph{enumi}}
 
 \begin{document}
 
-\title{Braden Hoagland}{}
+%\title{Braden Hoagland}{}
 \tableofcontents
-%\header{Braden Hoagland}{Stable Distributions}
+\header{Braden Hoagland}{Stable Distributions}
 
 
 
@@ -39,9 +39,7 @@ a X_1 + b X_2 \stackrel{d}{=} c X + d
 \] for some $c,d$. If $d=0$ for all $a$ and $b$, then $X$ is \textbf{strictly stable}. If $X$ is stable and $X \stackrel{d}{=} -X$, then it is \textbf{symmetric stable}.
 \end{defn}
 
-\begin{note}[]
 This is \textbf{not} the same as saying ``the sum of two Gaussians is itself a Gaussian." Instead, if we take two copies of the \emph{same} Gaussian and take a linear combination of those, it's just a scale and/or shift of that \emph{original} Gaussian.
-\end{note}
 
 \begin{defn}[]
 $X$ is \textbf{stable} if

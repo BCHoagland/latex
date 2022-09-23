@@ -1,0 +1,54 @@
+%--------------------------------------------------------------------------------
+% Fonts
+%--------------------------------------------------------------------------------
+\setmainfont{Baskerville}
+\setsansfont{Graphik}
+
+%--------------------------------------------------------------------------------
+% Title Page
+%--------------------------------------------------------------------------------
+\renewcommand{\title}[2]{
+        % title page
+        \thispagestyle{empty}
+        \begin{center}
+                \iftoggle{separateTitlePage}{
+                        \vspace*{30mm}
+                }{}
+                \MakeUppercase{
+                        {\large\so{\docTitle}}\\
+                        \vspace{10mm}
+                        {\footnotesize \so{#1}}\\
+                        \vspace{5mm}
+                }
+                {\footnotesize\textit{#2}}
+        \end{center}
+        \iftoggle{separateTitlePage}{
+                \newpage
+        }{
+                \vspace{10mm}
+        }
+}
+
+%--------------------------------------------------------------------------------
+% Sections
+%--------------------------------------------------------------------------------
+\titleformat{\chapter}{\center\large\MakeUppercase}{\thechapter}{1em}{\bfseries}
+\titleformat{\section}{\center\MakeUppercase}{\thesection}{1em}{\bfseries}
+\titleformat{\subsection}{\vspace{3mm}\center\small\MakeUppercase}{\thesubsection}{1em}{\bfseries}
+
+%--------------------------------------------------------------------------------
+% Header and Footer
+%--------------------------------------------------------------------------------
+\newcommand{\header}[2]{
+        % even pages
+        \fancyhead[RE]{\color{gray}\small\so{\MakeUppercase{#2}} \quad $\vert$ \quad \thepage}
+        % odd pages
+        \fancyhead[LO]{\color{gray}\small\thepage \quad $\vert$ \quad \so{\MakeUppercase{#1}}}
+}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\sectionmark}[1]{\markboth{}{#1}}
+\setlength{\headsep}{0.3in}
+
+\fancyhf{}
