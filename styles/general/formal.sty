@@ -1,8 +1,15 @@
 %--------------------------------------------------------------------------------
 % Fonts
 %--------------------------------------------------------------------------------
-\setmainfont{Baskerville}
-\setsansfont{Graphik}
+%\usepackage{CormorantGaramond} % sets main font to Garamond, w/ an actual bold version so latex doesn't break
+
+% uses EB Garamond as the main font
+% by default, the numbers in this font are quite short for whatever reason,
+% but adding the `lining` option makes them normal sized again
+\usepackage[lining]{ebgaramond}
+
+%\setmainfont{EB Garamond}
+%\setsansfont{Graphik}
 
 %--------------------------------------------------------------------------------
 % Title Page
