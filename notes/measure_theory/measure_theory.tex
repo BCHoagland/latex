@@ -115,6 +115,95 @@ Given measurable maps
 the composition $g \circ f$ is also measurable.
 \end{prop}
 
-To define the Lebesgue integral, we'll start by defining it for simple functions (step functions), then extend it. We'll use it to integrate measurable functions $f:\Omega \to \R$ (where $\R$ is implicitly equipped with the Borel $\sigma$-algebra).
+\begin{ex}[]
+Given measurable $f,g: \Omega \to \R$, the maps $f \pm g, f\cdot g$, and $|f|$ are also measurable.
+\end{ex}
+
+To define the Lebesgue integral, we'll start by defining it for simple functions (step functions with finite range), then extend it. We'll use it to integrate measurable functions $f:\Omega \to \R$ (where $\R$ is implicitly equipped with the Borel $\sigma$-algebra).
+
+Take a simple function $h \in \mathbb{S}$ mapping $\Omega \to \R$ by
+\[
+h = \sum_{i=1}^{N} c_{i}\mathbb{I}_{A_{i}}
+\] for disjoint measurable $A_{i}$. Note that $h$ is measurable since $x \mapsto c_{i}$ and $\mathbb{I}_{A_{i}}$ are measurable for all $i$. We can define the integral of $h$ to be
+\[
+I(h) := \sum_{i=1}^{N} c_{i} \; \mu(A_{i}),
+\] which agrees with the intuition that the integral captures the area under the graph of a function (although this is now clearly generalizable to arbitrary dimensions, as long as $\Omega$ has a measure $\mu$).
+
+There's a problem here: suppose $h = 2 \mathbb{I}_{A_{1}} - 3 \mathbb{I}_{A_2}$ and $\mu(A_1) = \mu(A_2) = \infty$, then the integral evaluates to $I(h) = 2\cdot\infty - 3\cdot\infty$, which is undefined behavior so far. We have two main options to deal with this:
+\begin{enumerate}
+	\item Only define the integral for simple maps with $|c_{i}| < \infty$ and $\mu(A_{i}) < \infty$ for all $i$.
+	\item Enforce $c_{i} \geq 0$ for all $i$ (i.e. $h \geq 0$), then we can keep using $\infty$ without this problem.
+\end{enumerate}
+We'll do the second option.
+
+\warn{The representation of a simple function doesn't matter.}
+
+\begin{defn}[]
+Denote the space of non-negative simple maps $\Omega \to \R$ by $\mathbb{S}^{+}$. For $h \in \mathbb{S}^{+}$, choose a representation
+\[
+h = \sum_{i=1}^{N} c_{i} \mathbb{I}_{A_{i}}
+\] with $c_{i} \geq 0$ for all $i$. Then the \textbf{Lebesgue integral} of $h$ wrt $\mu$ is
+\[
+	\int_{\Omega} f\;d\mu := I(h) = \sum_{i=1}^{N} c_{i}\; \mu(A_{i}).
+\] 
+\end{defn}
+
+\begin{defn}[]
+Let $f: \Omega \to [0,\infty]$ be measurable. Then the Lebesgue integral of $f$ is
+\[
+\int_{\Omega} f\;d\mu = I(f) := \sup \left\{ I(h) \;|\; h \in \mathbb{S}^{+}, h\leq f \right\}.
+\] The map $f$ is \textbf{$\mu$-integrable} if $\int_{\Omega} f\;d\mu < \infty$.
+\end{defn}
+
+\warn{Intuition here w/ sketch}
+
+A nice property of the Lesbesgue integral is that sets of measure 0 don't change its value.
+
+\begin{prop}
+For $B \subset \Omega$ with $\mu(B) = 0$,
+\[
+\int_{\Omega} f \;d\mu = \int_{\Omega-B} f \;d\mu
+\] for all measurable $f$.
+\end{prop}
+\begin{proof}
+	Let $h \in \mathbb{S}^{+}$, then $h = \sum_{i=1}^{N} c_{i} \mathbb{I}_{A_{i}}$ for disjoint $A_{i}$. We can split this up as \[
+	h = \sum_{i=1}^{N} c_{i}\mathbb{I}_{(A_{i} \isct B^{c})} + \sum_{i=1}^{N} c_{i} \mathbb{I}_{(A_{i} \isct B)}.
+	\] Since $0 \leq \mu(A_{i}\isct B) \leq \mu(B) = 0$ for all $i$, the integral of $h$ is
+	\begin{align*}
+		I(h) &= \sum_{i=1}^{N} c_{i} \mu(A_{i}\isct B^{c}) + \sum_{i=1}^{N} c_{i} \mu(A_{i} \isct B) \\
+		     &= \sum_{i=1}^{N} c_{i} \mu(A_{i}\isct B^{c}) + \sum_{i=1}^{N} 0 \\
+		     &= I(h|_{\Omega-B}).
+	\end{align*}
+\end{proof}
+
+This result is nice because it lets us care about properties that hold $\mu$-a.e. instead of everywhere. In general, a property holds $\mu$-a.e. if the set of points for which it doesn't hold has measure 0.
+
+\begin{prop}
+Properties of the Lebesgue integral for general measurable maps:
+\begin{enumerate}
+	\item Linearity: $I(\alpha f + \beta g) = \alpha I(f) + \beta I(g)$.
+	\item Monotonicity: if $f \leq g \; \mu$-a.e., then $I(f) \leq I(g)$.
+	\item If $f=g\;\mu$-a.e., then $I(f) = I(g)$.
+	\item $f=0 \;\mu$-a.e. $\iff I(f) = 0$.
+\end{enumerate}
+\end{prop}
+
+\begin{thrm}[Monotone Convergence Theorem]
+For measurable $\left\{ f_{n} \right\}, f$ such that
+\begin{enumerate}
+	\item $f_{n} \leq f_{n+1}$ for all $n$;
+	\item $\lim_{n \to \infty} f_{n} = f \; \mu$-a.e.;
+\end{enumerate}
+then
+\[
+\lim_{n \to \infty} \int_{\Omega} f_{n}\;d\mu = \int_{\Omega} f\;d\mu.
+\] 
+\end{thrm}
+\begin{proof}
+	Since $f_{n} \leq f_{n+1} \;\mu$-a.e. for all $n$, and since $f_{n} \to f\;\mu$-a.e., we get that $f_{n} \leq f \;\mu$-a.e. Then by monotonicity,
+	\[
+	\int_{\Omega} f_{n}\;d\mu \leq \int_{\Omega} f\;d\mu \text{ for all } n \implies \lim_{n \to \infty} \int_{\Omega} f_{n}\;d\mu \leq \int_{\Omega} f\;d\mu.
+	\] Proving the opposite inequality is a bit more involved. \warn{Write this part down.}
+\end{proof}
 
 \end{document}
