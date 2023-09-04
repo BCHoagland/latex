@@ -85,8 +85,22 @@ We also want to define the ``normal" measure on $\R^{n}$. It should definitely h
 Note by extension, this first property becomes $\mu([a,b]^{n}) = (b-a)^{n}$ for all $a < b$. As it turns out, it's impossible to construct such a measure on all of $P(\R^{n})$. Instead, we'll have to construct it on a particular $\sigma$-algebra inside of $P( \R^{n})$. We'll call this the \textbf{Lebesgue measure}.
 
 \begin{prop}
-\warn{Prove that can't construct the Lebesgue measure on all of $P(\R^{n})$}
+	The Lebesgue measure does not exist on all of $P(\R^{n})$, except for the trivial measure $\mu=0$.
 \end{prop}
+\begin{proof}
+	We'll show something more general: Let $I_0 := (0, 1]$, and suppose $\mu( I_0 ) = \varepsilon < \infty$ and $\mu(x + A) = \mu(A)$. Define equivalence classes on $\R$ by $x\sim y  \iff x-y \in \mathbb{Q}$. Note that this forms uncountably many equivalence classes. Define $A \subset I_0$ by choosing one element from each equivalence class (this requires the axiom of choice). We'll now form countably many ``shifted" versions of $A$ that cover $I_0$, and use these to show that $I_{0}$ has measure 0 (from this, it'll follow that $\mu(\R) = 0$).
+
+	Let $A_{i} := r_{i} + A$, where $\left\{ r_{i} \right\}$ enumerates $\mathbb{Q} \isct (-1, 1]$, then $I_0 \subset \uni_{i}A_{i} \subset (-1, 2]$. Then by $\sigma$-additivity and translation invariance,
+	\[
+	\varepsilon = \mu(I_0) \leq \mu\left( \uni_{i}A_{i} \right) = \sum_{i=1}^{\infty} \mu(A_{i}) = \sum_{i=1}^{\infty} \mu(A) \leq \mu( (-1, 2] ) = 3\varepsilon.
+	\] 
+	But $\sum_{i=1}^{\infty}\mu(A) = \infty$ if $\mu(A) > 0$, so $\mu(A) = 0$. Then $\mu(I_0) \leq \mu\left( \uni_{i}A_{i} \right) = 0$, and
+	\[
+	\mu(\R) = \mu\left( \bigcup_{n \in \mathbb{N}} (n + I_0) \right) = \sum_{n \in \mathbb{N}} \mu(n + I_0) =  \sum_{n \in \mathbb{N}} 0 = 0.
+	\] 
+	Thus, $\mu = 0$, as any set $X \in P(\R)$ has measure $\mu(X) \leq \mu(\R) = 0$.
+	\warn{Higher dimensions}
+\end{proof}
 
 %--------------------------------------------------------------------------------
 % The Lebesgue Integral
@@ -146,13 +160,10 @@ h = \sum_{i=1}^{N} c_{i} \mathbb{I}_{A_{i}}
 \[
 	\int_{\Omega} f\;d\mu := I(h) = \sum_{i=1}^{N} c_{i}\; \mu(A_{i}).
 \] 
-\end{defn}
-
-\begin{defn}[]
-Let $f: \Omega \to [0,\infty]$ be measurable. Then the Lebesgue integral of $f$ is
+Now let $f: \Omega \to [0,\infty]$ be \textit{any} measurable map. Then the Lebesgue integral of $f$ is
 \[
 \int_{\Omega} f\;d\mu = I(f) := \sup \left\{ I(h) \;|\; h \in \mathbb{S}^{+}, h\leq f \right\}.
-\] The map $f$ is \textbf{$\mu$-integrable} if $\int_{\Omega} f\;d\mu < \infty$.
+\] A measurable map $f$ is \textbf{$\mu$-integrable} if $\int_{\Omega} f\;d\mu < \infty$.
 \end{defn}
 
 \warn{Intuition here w/ sketch}
@@ -163,7 +174,7 @@ A nice property of the Lesbesgue integral is that sets of measure 0 don't change
 For $B \subset \Omega$ with $\mu(B) = 0$,
 \[
 \int_{\Omega} f \;d\mu = \int_{\Omega-B} f \;d\mu
-\] for all measurable $f$.
+\] for all measurable $f \geq 0$.
 \end{prop}
 \begin{proof}
 	Let $h \in \mathbb{S}^{+}$, then $h = \sum_{i=1}^{N} c_{i} \mathbb{I}_{A_{i}}$ for disjoint $A_{i}$. We can split this up as \[
@@ -188,8 +199,15 @@ Properties of the Lebesgue integral for general measurable maps:
 \end{enumerate}
 \end{prop}
 
+%--------------------------------------------------------------------------------
+% Convergence Theorems
+%--------------------------------------------------------------------------------
+\section{Convergence Theorems}
+
+The first two theorems in this section cover measurable maps $f \geq 0$. Lebesgue's dominated convergence theorem applies to any measurable map.
+
 \begin{thrm}[Monotone Convergence Theorem]
-For measurable $\left\{ f_{n} \right\}, f$ such that
+For measurable $\left\{ f_{n} \right\}, f : \Omega \to [0,\infty]$ such that
 \begin{enumerate}
 	\item $f_{n} \leq f_{n+1}$ for all $n$;
 	\item $\lim_{n \to \infty} f_{n} = f \; \mu$-a.e.;
@@ -200,10 +218,157 @@ then
 \] 
 \end{thrm}
 \begin{proof}
-	Since $f_{n} \leq f_{n+1} \;\mu$-a.e. for all $n$, and since $f_{n} \to f\;\mu$-a.e., we get that $f_{n} \leq f \;\mu$-a.e. Then by monotonicity,
+	Since $f_{n} \leq f_{n+1} \;\mu$-a.e. for all $n$, and since $f_{n} \to f\;\mu$-a.e., we get that $f_{n} \leq f \;\mu$-a.e. Then by monotonicity of the integral,
 	\[
 	\int_{\Omega} f_{n}\;d\mu \leq \int_{\Omega} f\;d\mu \text{ for all } n \implies \lim_{n \to \infty} \int_{\Omega} f_{n}\;d\mu \leq \int_{\Omega} f\;d\mu.
 	\] Proving the opposite inequality is a bit more involved. \warn{Write this part down.}
 \end{proof}
+
+Define the limit inferior of a sequence of functions as follows:
+\[
+	\limi f_{n}(x) := \lim_{n \to \infty} \left( \inf_{k \geq n}f_{k}(x) \right).
+\] 
+Using this, we can derive Fatou's Lemma, which is a weak result but requires only weak conditions.
+
+\begin{thrm}[Fatou's Lemma]
+Let $f_{n}: \Omega\to [0,\infty]$ be measurable. Then
+\[
+\int_{\Omega} \limi f_{n} \;d\mu \leq \limi \int_{\Omega} f_{n}\;d\mu.
+\] 
+\end{thrm}
+\begin{proof}
+	Let $g_{n} := \inf_{k \geq n}f_{k}$, then $g_{i} \leq g_{i+1}$ for all $i$. Then by the MCT,
+	\[
+	\int_{\Omega} \lim_{n \to \infty} g_{n} d\mu = \lim_{n \to \infty} \int_{\Omega} g_{n}d\mu = \limi \int_{\Omega} g_{n}d\mu \leq \limi \int_{\Omega} f_{n}d\mu.
+	\] Note that the second equality is true b/c whenever a limit exists, it's equal to the limit inferior/superior. The last inequality is true because $g_{n} \leq f_{n}$ for all $n$.
+\end{proof}
+
+\begin{thrm}[Lebesgue's Dominated Convergence Theorem]
+Let $f_{n}, f : \Omega\to \R$ be arbitrary measurable maps, with $f_{n}\to f$ pointwise $\mu$-a.e. If there is some $g \in \mathcal{L}^{1}$ such that $|f_{n}| \leq g$ for all $n$ ($\mu$-a.e.), then $f_{n}, f \in \mathcal{L}^{1}$ for all $n$ and
+\[
+	\lim_{n \to \infty} \int_{\Omega} f_{n}\;d\mu = \int_{\Omega} f \; d\mu.
+\] 
+\end{thrm}
+
+%--------------------------------------------------------------------------------
+% Carath\'eodory's Extension Theorem
+%--------------------------------------------------------------------------------
+\section{Carath\'eodory's Extension Theorem}
+
+\begin{defn}[]
+A family of subsets $\mathcal{A}$ of a set $\Omega$ is a \textbf{semiring of sets} if
+\begin{enumerate}
+	\item $\varnothing \in \mathcal{A}$;
+	\item it is closed under pairwise intersections;
+	\item complements can be written as finite disjoint unions, i.e. for $A,B in \mathcal{A}$, there are pairwise disjoint sets $S_1,\dots,S_{n} \in \mathcal{A}$ such that $\bigcup_{i=1}^{n}S_{i} = A-B$.
+\end{enumerate}
+\end{defn}
+
+\begin{defn}[]
+Let $\mathcal{A}$ be a semiring of sets, then $\mu: \mathcal{A}\to [0,\infty]$ is a \textbf{premeasure} if
+\begin{enumerate}
+	\item $\mu(\varnothing)=0$;
+	\item $\mu\left( \bigcup_{i=1}^{\infty}A_{i} \right) = \sum_{i=1}^{\infty}\mu(A_{i})$ for all pairwise disjoint $A_{i} \in \mathcal{A}$ \textit{if} this union is in $\mathcal{A}$ (since $\mathcal{A}$ isn't necessarily a $\sigma$-algebra, this union might not actually be a member of $\mathcal{A}$).
+\end{enumerate}
+\end{defn}
+
+\begin{thrm}[Carath\'eodory's Extension Theorem]
+	Let $\mathcal{A} \subset P(\Omega)$ be a semiring of sets, and let $\mu$ be a premeasure on $\mathcal{A}$.
+	\begin{enumerate}
+		\item \textbf{Existence:} $\mu$ has an extension $ \tilde{\mu}: \sigma(\mathcal{A}) \to [0,\infty]$ that's a measure. Here, being an extension means $\mu$ and $\tilde{\mu}$ agree on all $A \in \mathcal{A}$.
+		\item \textbf{Uniqueness:} if $\Omega$ can be covered by a sequence of sets in $\mathcal{A}$, each of which has finite measure under $\mu$, then $\tilde{\mu}$ is unique (this condition says that $\mu$ must be $\sigma$\textbf{-finite}, so other equivalent characterizations of $\sigma$-finiteness would work here too).
+	\end{enumerate}
+\end{thrm}
+
+An important application of this theorem is proving the existence of the Lebesgue measure. Let $\mathcal{A} = \left\{ [a,b) \;|\; a,b \in \R, a\leq b \right\}$, which is a semiring of sets w/ $\sigma(\mathcal{A}) = \mathcal{B}(\R)$. Now define $\mu:\mathcal{A} \to [0,\infty]$ by $\mu([a,b)) = b-a$, which is a $\sigma$-finite premeasure on $\mathcal{A}$. Then by Carath\'eodory's Extension Theorem, there's a unique extension of $\mu$ that's a measure on $\mathcal{B}(\R)$. This is the Lebesgue measure.
+
+%-------------------
+% Lebesgue-Stieltjes Measures
+%-------------------
+\subsection{Lebesgue-Stieltjes Measures}
+
+Let $F:\R\to \R$ be monotonically non-decreasing (can be discontinuous), and define
+\[\mu([a,b)) := F(b^{-}) - F(a^{-}), \]
+where $x^{-} := \lim_{\varepsilon \searrow 0} F(x-\varepsilon)$. Then by Carath\'eodory's Extension Theorem, there is a unique measure $\mu_{F}: \mathcal{B}(\R)\to [0,\infty]$ such that $\mu_{F}([a,b)) = F(b^{-}) - F(a^{-})$. This is the \textbf{Lebesgue-Stieltjes measure} for $F$.
+\warn{Figure}
+
+\begin{itemize}
+	\item If $F = \id$, then $\mu_{F}$ is the Lebesgue measure.
+	\item If $F$ is a constant map, then $\mu_{F} = 0$.
+	\item Fix $\alpha$, and define $F$ by
+		\[
+		F(\alpha)=
+		\begin{cases}
+			0 & x < \alpha, \\
+			1 & x \geq \alpha.
+		\end{cases}
+		\] 
+		Then
+		\[
+		\mu_{F}([a,b))=
+		\begin{cases}
+			1 & \alpha \in [a,b), \\
+			0 & \text{else}.
+		\end{cases}
+		\] 
+		Note that for all $ \varepsilon>0$, $\mu_{F}([\alpha-\varepsilon, \alpha+\varepsilon))=1$. The Dirac measure at $\alpha$ also does this, so by uniqueness, $\mu_{F} = \delta_{\alpha}$.
+	\item Let $F:\R\to \R$ be monotonically non-decreasing but also continuously differentiable, i.e. $F':\R\to [0,\infty)$ is continuous (this means we don't have to worry about jumps or left limits anymore). Then
+		\[
+		\mu_{F}([a,b)) = F(b)-F(a) = \int_{a}^{b} F'(x)\;dx.
+		\] More generally, we can define a \textbf{density map} 
+		\begin{align*}
+			\mu_{F}: \mathcal{B}(\R) &\to [0,\infty] \\
+			A &\mapsto \int_{A} F'(x)\;dx.
+		\end{align*}
+\end{itemize}
+
+%--------------------------------------------------------------------------------
+% Decomposition Theorems
+%--------------------------------------------------------------------------------
+\section{Decomposition Theorems}
+
+Let $\lambda$ denote the Lebesgue measure on $\mathcal{B}(\R)$. In this section, we'll be interested in other measures on $\mathcal{B}(\R)$.
+
+\begin{defn}[]
+A measure $\mu$ is \textbf{absolutely continuous} wrt $\lambda$ if
+\[
+\lambda(A) = 0 \implies \mu(A) = 0;
+\] i.e. $\mu$ is not ``finer" than $\lambda$. Notation: $\mu \ll \lambda$.
+\end{defn}
+
+\begin{defn}[]
+A measure $\mu$ is \textbf{singular} wrt $\lambda$ if there is some $N \in \mathcal{B}(\R)$ such that
+\[
+\lambda(N) = 0 \quad\text{and}\quad \mu(N^{c}) = 0.
+\] Notation: $\mu \perp \lambda$.
+\end{defn}
+
+\begin{ex}[]
+Let $\delta_{\alpha}$ be the Dirac measure at $\alpha$, then $\delta_{\alpha} \perp \lambda$. To see this, let $N = \left\{ \alpha \right\}$, then $\lambda(N) = 0$ and $\delta^{\alpha}(N^{c}) = \delta_{\alpha}(\R-\left\{ \alpha \right\}) = 0$.
+\end{ex}
+
+\begin{thrm}
+	Let $\mu:\mathcal{B}(\R) \to [0,\infty]$ be a $\sigma$-finite measure.
+	\begin{enumerate}
+		\item \textbf{Radon-Nikodym Theorem:} There exist 2 uniquely determined measures $\mu_{ac},\mu_{s}$ on $\mathcal{B}(\R)$ such that
+			\begin{itemize}
+				\item $\mu = \mu_{ac} + \mu_{s}$;
+				\item $\mu_{ac} \ll \lambda$ (absolutely continuous);
+				\item $\mu_{s} \perp \lambda$ (singular).
+			\end{itemize}
+
+		\item \textbf{Lebesgue's Decomposition Theorem:} There exists a measurable map (a \textbf{density map}) $h:\R\to [0,\infty)$ such that
+			\[
+			\mu_{ac}(A) = \int_{A} h\;d\lambda
+			\] for all $A \in \mathcal{B}(\R)$. In other words, if a measure is absolutely continuous wrt $\lambda$ and is $\sigma$-finite, then we can rewrite it as an integral wrt $\lambda$.
+	\end{enumerate}
+\end{thrm}
+
+Lebesgue's decomposition theorem converts a very abstract concept (a measure) into something more concrete (a density, which is just a normal function). And by Radon-Nikodym, we can think about any general measure as having two orthogonal components: an ``easy-to-use" component $\mu_{ac}$ that we can transform into a density, and a residual component $\mu_{s}$ that we know is singular.
+
+\begin{note}[]
+Nothing in this section was a special property of $\mathcal{B}(\R)$. This all could've been written in terms of two arbitrary measure spaces $(\Omega_1, \mathcal{A}_1, \mu)$ and $(\Omega_2, \mathcal{A}_{2}, \lambda)$.
+\end{note}
+
 
 \end{document}
