@@ -26,6 +26,17 @@
 %\usepackage{showframe}
 
 %--------------------------------------------------------------------------------
+% Table of Contents
+%--------------------------------------------------------------------------------
+
+% adds table of contents, but makes this page #0 and removes the page number
+\newcommand{\toc}{
+	\setcounter{page}{0}
+	\tableofcontents
+	\thispagestyle{empty}
+}
+
+%--------------------------------------------------------------------------------
 % References
 %--------------------------------------------------------------------------------
 \crefname{lem}{lemma}{lemmas}

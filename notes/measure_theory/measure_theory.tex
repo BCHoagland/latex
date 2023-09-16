@@ -8,7 +8,9 @@
 %\renewcommand{\theenumi}{\alph{enumi}}
 
 \begin{document}
-\tableofcontents
+
+\toc
+\footer
 
 \warn{Go over extended reals}
 
@@ -260,7 +262,7 @@ A family of subsets $\mathcal{A}$ of a set $\Omega$ is a \textbf{semiring of set
 \begin{enumerate}
 	\item $\varnothing \in \mathcal{A}$;
 	\item it is closed under pairwise intersections;
-	\item complements can be written as finite disjoint unions, i.e. for $A,B in \mathcal{A}$, there are pairwise disjoint sets $S_1,\dots,S_{n} \in \mathcal{A}$ such that $\bigcup_{i=1}^{n}S_{i} = A-B$.
+	\item complements can be written as finite disjoint unions, i.e. for $A,B \in \mathcal{A}$, there are pairwise disjoint sets $S_1,\dots,S_{n} \in \mathcal{A}$ such that $\bigcup_{i=1}^{n}S_{i} = A-B$.
 \end{enumerate}
 \end{defn}
 
@@ -370,5 +372,56 @@ Lebesgue's decomposition theorem converts a very abstract concept (a measure) in
 Nothing in this section was a special property of $\mathcal{B}(\R)$. This all could've been written in terms of two arbitrary measure spaces $(\Omega_1, \mathcal{A}_1, \mu)$ and $(\Omega_2, \mathcal{A}_{2}, \lambda)$.
 \end{note}
 
+%--------------------------------------------------------------------------------
+% Change of Variables
+%--------------------------------------------------------------------------------
+\section{Change of Variables}
+
+Given a measurable map $f: (\Omega_1, \mathcal{A}_{1},\mu) \to (\Omega_2, \mathcal{A}_{2})$, we can define the \textbf{pushforward measure} $f_{*}\mu$ on $\Omega_2$ by
+\[
+f_{*}\mu := \mu \circ f^{-1}.
+\]
+
+\begin{thrm}[Change of variables]
+Suppose there are measurable maps
+\[
+	\begin{tikzcd}
+        {(\Omega_1, \mathcal{A}_{1}, \mu)} & {(\Omega_2, \mathcal{A}_{2})} & {\R}.
+        \arrow["f", from=1-1, to=1-2]
+        \arrow["g", from=1-2, to=1-3]
+	\end{tikzcd}
+\]
+Then
+\[
+\int_{\Omega_2} g\;d(f_{*}\mu) = \int_{\Omega_1} (g \circ f)\; d\mu.
+\] 
+\end{thrm}
+\begin{proof}
+	\warn{Put theorem about approximating measurable function w/ increasing sequence of simple functions.}
+	Consider the case when $g = \mathbb{I}_{A}$ for some $A \in \mathcal{A}_{2}$. Then this holds by defintion:
+	\[
+	\int_{\Omega_2} \mathbb{I}_{A}\;d(f_{*}\mu) = (f_{*}\mu)(A) = \mu(f^{-1}(A)) = \int_{\Omega_1} \mathbb{I}_{f^{-1}(A)}\;d\mu = \int_{\Omega_1} (\mathbb{I}_{A} \circ f) \; d\mu.
+	\] By linearity of the integral, we can extend this to the case where $g$ is any simple function. Now let $g$ be an arbitrary measurable map $\Omega_2\to \R$, and take a sequence of simple functions $h_1 \leq h_2 \leq \cdots$ approximating it from below. Then $(h_1 \circ f) \leq (h_2 \circ f) \leq \cdots$ is an increasing sequence of functions approximating $h \circ f$ from below. Since the change of variables formula works for simple functions, we apply the MCT twice to get
+	\[
+	\int_{\Omega_2} g \; d(f_{*}\mu) = \lim_{n \to \infty} \int_{\Omega_2} h_{n}\;d(f_{*}\mu) = \lim_{n \to \infty} \int_{\Omega_1} (h_{n} \circ f)\;d\mu = \int_{\Omega_1} (h\circ f)\;d\mu.
+	\] 
+\end{proof}
+This is a more general form of the usual change of variables for 1-dimensional riemann integrals
+\[
+\int_{\R} g(x)\;dx = \int_{\R} g(f(x) \cdot f'(x)\;dx.	
+\] 
+To see this, consider the case when we have a surjective, strictly monotonically increasing, and continuously differentiable map $F : (\R, \mathcal{B}(\R), \mu_{F}) \to (\R, \mathcal{B}(\R))$. By Carath\^eodory's extension theorem, we can determine the pushforward measure by where it sends intervals:
+\begin{align*}
+	(F_{*}\mu_{F})([a,b)) &= \mu\left( F^{-1}\big( [a,b) \big) \right) \\
+			      &= \mu_{F}\left( \big[ F^{-1}(a), F^{-1}(b) \big) \right) && \text{(since $F$ is strictly monotonically increasing)} \\
+			      &= \int_{F^{-1}(a)}^{F^{-1}(b)} F'(x)\;dx.
+\end{align*}
+Making a change of variables $y := F(x)$, this becomes
+\[
+	(F_{*}\mu)([a,b)) = \int_{a}^{b} dy = \lambda([a,b)).
+\] Thus $F_{*}\mu_{F}$ is actually just the Lebesgue measure $\lambda$. Then in this case, the change of variables formula simplifies to
+\[
+\int_{\R} g(x)\;dx = \int_{\R} g\;d(F_{*}\mu_{F}) = \int_{\R} (g\circ F)\;d\mu_{F} = \int_{\R} g(F(x)) \cdot F'(x)\;dx.
+\] 
 
 \end{document}

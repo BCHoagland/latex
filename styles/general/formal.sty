@@ -46,11 +46,18 @@
 %--------------------------------------------------------------------------------
 % Header and Footer
 %--------------------------------------------------------------------------------
+
+% header is page number & whatever text you want, dependent on even/odd page
 \newcommand{\header}[2]{
 	% even pages
 	\fancyhead[RE]{\color{gray}\small\so{\MakeUppercase{#2}} \quad $\vert$ \quad \thepage}
 	% odd pages
 	\fancyhead[LO]{\color{gray}\small\thepage \quad $\vert$ \quad \so{\MakeUppercase{#1}}}
+}
+
+% footer is always just page number, and always on the right side
+\newcommand{\footer}{
+	\fancyfoot[R]{\thepage}
 }
 
 \pagestyle{fancy}
