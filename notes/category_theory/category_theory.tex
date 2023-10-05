@@ -4,7 +4,7 @@
 %\toggletrue{sectionheaders}
 \newcommand{\docTitle}{Category Theory}
 \usepackage{/Users/bradenhoagland/latex/styles/common}
-\importStyles{modern}{rainbow}{boxy}
+\importStyles{formal}{rainbow}{lined}
 
 \DeclareMathOperator{\op}{op}
 \DeclareMathOperator{\ob}{ob}
@@ -29,7 +29,12 @@
 
 
 \begin{defn}
-	A \textbf{category} $\cat{C}$ is a collection of \textbf{objects} $\ob(\cat{C})$ and \textbf{morphisms} $\mor({\cat{C} })$, where $\hom(A,B)$ denotes the morphsisms from object $A$ to object $B$. There are several requirements:
+	A \textbf{category} $\cat{C}$ is a collection of
+	\begin{itemize}
+		\item \textbf{objects} $\ob(\cat{C})$; and
+		\item \textbf{morphisms} $ \mor(\cat{C})$.
+	\end{itemize}
+	Let $\hom(A,B)$ denote the morphsisms from object $A$ to object $B$. There are several requirements:
 	\begin{enumerate}
 		\item Morphisms must compose: $(f, g) \mapsto gf.$
 		\item Morphism composition is associative.
@@ -97,9 +102,7 @@ A \textbf{groupoid} is a category whose morphisms are all isomorphisms.
 Every category contains a subcategory called the \textbf{maximal groupoid}, which is all of the objects along with only the morphisms that are isomorphisms.
 
 \begin{ex}[]
-	We can define a \textbf{group} as a groupoid that has only one object. The group elements are the morphisms. The properties of a group follow from the properties of categories and the fact that our morphisms are all isomorphisms.
-
-	Given a group $G$, its representation as a single-object category is denoted $BG$.
+	We can define a \textbf{group} as a groupoid that has only one object. The group elements are the morphisms. The properties of a group follow from the properties of categories and the fact that our morphisms are all isomorphisms. Given a group $G$, its representation as a single-object category is denoted $BG$.
 \end{ex}
 
 

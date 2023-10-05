@@ -4,7 +4,7 @@
 %\toggletrue{sectionheaders}
 \newcommand{\docTitle}{Homological Algebra}
 \usepackage{/Users/bradenhoagland/latex/styles/common}
-\importStyles{modern}{rainbow}{boxy}
+\importStyles{formal}{rainbow}{lined}
 
 %\renewcommand{\theenumi}{\alph{enumi}}
 
@@ -415,7 +415,7 @@ and apply $\hom(-,M)$ to it. Removing $\hom(A,M)$ from the sequence gives
 \] 
 This is a cochain complex since for any map $f$, applying $d^{*}$ twice gives ${d^{*}}^2(f) = fd^2=0$. Then $\ext_{R}^{n}(A,M)$ is the $n$-th cohomology group of this complex.
 
-	\item \textbf{Using $\hom(M,-)$ (covariant):} Take an injective resolution, apply $\hom(M,-)$, remove $\hom(M,A)$, then take homology. \warn{Is this actually equivalent?}
+	\item \textbf{Using $\hom(M,-)$ (covariant):} Take an injective resolution, apply $\hom(M,-)$, then remove $\hom(M,A)$, then take homology. \warn{Is this actually equivalent?}
 \end{enumerate}
 
 \begin{prop}
