@@ -1,0 +1,340 @@
+\documentclass[twoside,10pt]{report}
+\usepackage{toggles}
+%\toggletrue{sectionbreaks}
+\newcommand{\docTitle}{Multi-Agent Reinforcement Learning}
+\usepackage{common}
+\importStyles{formal}{rainbow}{lined}
+
+%\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+\toc
+%\header{text}{text}
+\footer
+
+%+-------------------+
+%| +---------------+ |
+%| |    Chapter    | |
+%| +---------------+ |
+%+-------------------+
+% Reinforcement Learning
+
+\chapter{Reinforcement Learning}
+
+
+%--------------------------------------------------------------------------------
+% Definitions
+%--------------------------------------------------------------------------------
+\section{Definitions}
+
+A set of agents $\left\{ A_{i} \right\}_{i=1}^{n}$ receive observations and rewards from a shared environment, they all decide on actions, these actions are combined into one joint action and fed back into the environment, and the process repeats.
+
+An \textbf{episode} is a complete environment run from intitial to terminal state (can end via reaching a terminal state or hitting a max number of timesteps).
+
+\begin{defn}[MDP]
+A \textbf{finite MDP} consists of:
+\begin{itemize}
+	\item a finite set of states $\mathcal{S}$ with terminal states $\hat{\mathcal{S}} \subset \mathcal{S}$.
+	\item a finite set of actions $\mathcal{A}$ 
+	\item a reward function $\mathcal{R}: \mathcal{S} \times \mathcal{A} \times \mathcal{S}\to \R$ 
+	\item a state transition probability function $\mathcal{T} : \mathcal{S} \times \mathcal{A} \times \mathcal{S} \to [0, 1]$
+	\item an initial state distribution $\mu : \mathcal{S} \to [0,1]$
+\end{itemize}
+
+In a \textbf{partially observable MDP (POMDP)}, agents receive observations $o^{t}$ of the state $s^{t}$, where $s^{t}\mapsto o_{t}$ is some (potentially stochastic) map.
+\end{defn}
+
+Common adaptations:
+\begin{enumerate}
+	\item continuous states and/or actions (or mixtures of continuous and discrete)
+	\item $\mathcal{R}$ can be made probabilistic
+\end{enumerate}
+
+\begin{defn}[Markov property]
+The \textbf{Markov property} asserts that future states and rewards are only dependent on the latest state-action pair:
+\[
+\P{ s^{t+1}, r^{t} \;|\; s^{0},a^{0},\dots, s^{t},a^{t} } = \P{ s^{t+1},r^{t}\;|\; s^{t},a^{t} }.
+\] 
+\end{defn}
+
+Agents typically try to maximize the \textbf{discounted return}
+\[
+	\EE{ \pi }{ \sum_{t=0}^{\infty} \gamma^{t}r^{t} },
+\] where $\gamma < 1$ is a fixed \textbf{discount factor}. If $|r| < r_{max}$, then
+\[
+	\EE{ \pi }{ \sum_{t=0}^{\infty} \gamma^{t}r^{t} } \leq r_{max} \sum_{t=0}^{\infty} \gamma^{t} = \frac{r_{max}}{1-\gamma} < \infty.
+\] In words, bounded returns and $\gamma < 1$ means the discounted return is finite.
+
+The notation $u^{t}$ refers to the realized (not expected) discounted return starting at time $t$:
+\begin{align*}
+	u^{t} &:= r^{t} + \gamma r^{t+1} + \gamma^{2} r^{t+2} + \dots \\
+	      &= r^{t} + \gamma u^{t+1}.
+\end{align*}
+
+%--------------------------------------------------------------------------------
+% Bellman Equations
+%--------------------------------------------------------------------------------
+\section{Bellman Equations}
+
+\begin{defn}[Value function]
+A \textbf{value function} maps states to a policy's expected return from that point. A \textbf{state-value function} (Q function) does the same, but with state-action pairs.
+\begin{align*}
+	V^{\pi}(s) &:= \mathbb{E}_{\pi}\left( u^{t} \;|\; s^{t} = s \right) \\
+	Q^{\pi}(s, a) &:= \mathbb{E}_{\pi}\left( u^{t} \;|\; s^{t}=a, a^{t}=a \right)
+\end{align*}
+
+Note $V^{\pi}(s) = \mathbb{E}_{a \sim \pi}\left( Q^{\pi}(s,\cdot) \right) = \sum_{a} \pi(a|s) Q^{\pi}(s,a)$.
+
+\end{defn}
+
+A policy $\pi^{*}$ is optimal if its value functions are optimal:
+\begin{align*}
+	V^{*}(s) = \max_{\pi} V^{\pi}(s) \text{ for all } s \\
+	Q^{*}(s,a) = \max_{\pi} Q^{\pi}(s,a) \text{ for all }, s,a.
+\end{align*}
+
+
+Both $V^{\pi}$ and $Q^{\pi}$ can be rewritten recursively, and in that form are called the \textbf{Bellman equations}. Expanding $u^{t} = r^{t} + \gamma u^{t+1}$ and applying the law of total expectation over states $s^{t+1}$ yields the following.
+
+\begin{prop}
+	Value and state-value functions satisfy the following Bellman equations:
+\begin{align*}
+	V^{\pi}(s) &= \sum_{s',a} \pi(a|s) \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V^{\pi}(s') \right), \\
+	Q^{\pi}(s,a) &= \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V^{\pi}(s') \right) \\
+		   &= \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma \sum_{a'} \pi(a'|s') Q^{\pi}(s', a') \right).
+\end{align*}
+
+\end{prop}
+
+Consider the system of equations given by the Bellman equation for $V^{\pi}(s_i)$ for each $s_{i} \in \mathcal{S}$. This system of $|\mathcal{S}|$ equations can be solved by any usual linear system solver, e.g. Gaussian elimination.
+
+	We can make the Bellman equations express how optimal value functions behave by introducting a max term (which also makes them nonlinear).
+\begin{prop}[]
+	The optimal value functions satisfy the Bellman optimality equations:
+	\begin{align*}
+		V^{*}(s) &= \max_{a}\sum_{s'}\mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V^{*}(s') \right), \\
+		Q^{*}(s,a) &= \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma \max_{a'}Q^{*}(s',a') \right).
+	\end{align*}
+\end{prop}
+
+The Bellman equations are useful for bootstrapping value function estimators, and as such can be thought of as operators acting on value functions. This viewpoint also allows us to prove that the Bellman equations 1) converge under boostrapping, and 2) have unique solutions.
+
+\begin{defn}[Bellman operators]
+	For a policy $\pi$, the \textbf{Bellman operators} are
+	\begin{align*}
+		\mathcal{V}^{\pi}: V(s) &\mapsto \sum_{s',a} \pi(a|s) \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V(s') \right) \\
+		\mathcal{Q}^{\pi}: Q(s,a) &\mapsto \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma \sum_{a'} \pi(a'|s') Q(s',a') \right).
+	\end{align*}
+	The \textbf{Bellman optimality operators} are
+	\begin{align*}
+		\mathcal{V}^{*}: V(s) \mapsto \max_{a} \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V(s') \right) \\
+		\mathcal{Q}^{*}: Q(s,a) \mapsto \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma \max_{a'}Q^{*}(s',a') \right).
+	\end{align*}
+\end{defn}
+
+Both convergence and uniquness of solution follow from the fact that these operators are contraction maps in the max norm.
+
+\begin{defn}[]
+A ($\gamma$)-\textbf{contraction map} on a complete metric space $(X,d)$ is a map $\phi:X\to X$ such that
+\[
+d(\phi(x), \phi(y)) \leq \gamma \; d(x,y)
+\] for all $x,y \in X$, where $\gamma \in [0, 1)$ is constant.
+\end{defn}
+
+\begin{thrm}[Contraction Mapping Principle]
+	A contraction map $\phi$ has a unique fixed point $x^{*}$ that can be computed as the limit of successive applications of $\phi$ to an arbitrary starting point $x^{0}$:
+	\[
+	x^{0} \to \phi(x^{0}) \to \phi(\phi(x^{0})) \to \cdots \to x^{*}.
+	\] 
+\end{thrm}
+\begin{proof}
+	See Marsden \& Hoffman pg. 301.
+\end{proof}
+
+\begin{prop}
+The Bellman operators are $\gamma$-contraction maps in the max norm.
+\end{prop}
+\begin{proof}
+Fix a policy $\pi$ and consider $\mathcal{V}^{\pi}$. For any value functions $V, W$,
+        \begin{align*}
+                {\Vert{\mathcal{V}^{\pi} V - \mathcal{V}^{\pi} W}\Vert}_{\infty} &= \max_{s} \left| (\mathcal{V}^{\pi} V)(s) - (\mathcal{V}^{\pi} W)(s) \right| \\                                                       &= \gamma \max_{s} \left| \sum_{s',a} \mathcal{T}(s'|s,a) \pi(a|s) \left( V(s') - W(s') \right) \right| \\                                                       &\leq \gamma \max_{s} \sum_{s',a} \mathcal{T}(s'|s,a) \pi(a|s) \left| V(s') - W(s') \right| \\                                                       &\leq \gamma {\Vert{V-W}\Vert}_{\infty} \max_{s} \sum_{s',a} \mathcal{T}(s'|s,a) \pi(a|s) \\                                                       &= \gamma {\Vert{V-W}\Vert}_{\infty}.
+        \end{align*}
+        The last line is because, by the law of total expectation,
+	\[
+		\sum_{s',a} \mathcal{T}(s'|s,a) \pi(a|s) = \sum_{s'} \P{ s' | s } = 1
+	\]
+	for all $s$. Now consider $\mathcal{Q}^{\pi}$ and any state-value functions $P$ and $Q$.
+	\warn{Computation}
+	The last line is because
+	\[
+		\sum_{s',a'} \mathcal{T}(s'|s,a) \pi(a'|s') = \sum_{s',a'} \mathcal{T}(s'|s,a)\pi(a'|s',s,a) = \sum_{a'} \P{a'|s,a } = 1
+	\]
+	for all $s,a$.
+
+	The computations for $\mathcal{V}^{*}$ and $\mathcal{Q}^{*}$ are almost identical, except they require the additional property $\left| \max_{x} f(x) - \max_{x} g(x) \right| \leq \max_x \left| f(x) - g(x) \right|$. This is true because of the reverse triangle inequality:
+	\[
+	\left| \max_{x}f(x) - \max_{x}g(x) \right| = \Big| {\Vert{f}\Vert}_{\infty} - {\Vert{g}\Vert}_{\infty} \Big| \leq {\Vert{f-g}\Vert}_{\infty} = \max_{x} \left| f(x) - g(x) \right|.
+	\]
+\end{proof}
+
+\begin{cor}
+Successive application of the Bellman operators converges to a unique value function:
+\begin{align*}
+	\mathcal{V}^{\pi} \to V^{\pi} &\qquad \mathcal{Q}^{\pi} \to Q^{\pi}\\
+	\mathcal{V}^{*} \to V^{*} &\qquad \mathcal{Q}^{*} \to Q^{*}
+\end{align*}
+\end{cor}
+\begin{proof}
+	Each of the Bellman operators is a contraction map, so by the contraction mapping principle, successive application of each operator to an arbitrary starting function converges to a unique fixed point.
+
+	Since the provided functions $V^{\pi}$, $V^{*}$, $Q^{\pi}$, and $Q^{*}$ are clearly fixed points of their respective operators, they must be the aforementioned unique fixed points.
+\end{proof}
+
+
+%--------------------------------------------------------------------------------
+% Dynamic Programming
+%--------------------------------------------------------------------------------
+\section{Dynamic Programming}
+
+If we have full knowledge of the MDP (i.e. $\mathcal{T}$ and $\mathcal{R}$), then we can use a DP approach to compute an optimal policy.
+
+There are two main types of DP approaches to this:
+\begin{itemize}
+	\item \textbf{Policy iteration:} switch between policy evaluation \& policy improvement, producing a sequence
+		\[
+		\pi^{0} \to V^{0} \to \pi^{1}\to V^1 \to \cdots \to \pi^{*} \to V^{*}
+		\] 
+	\item \textbf{Value iteration:} directly measure a value function and back out an optimal policy at the end, producing a sequence
+		\[
+		V^{0} \to V^1 \to \cdots \to V^{*}
+		\] 
+\end{itemize}
+
+In policy iteration, given a policy $\pi$, we could use Gaussian elimination on the system of Bellman equations to calculate $V^{\pi}(s)$ for all $s \in \mathcal{S}$, but this is $\mathcal{O}(|\mathcal{S}|^{3})$. And in the case of value iteration, the system of Bellman optimality equations is nonlinear anyway.
+
+Instead, we use bootstrapping to recursively back out a value function. For policy iteration, fix $\pi$, then we can compute $V^{\pi}$ as the limit of the sequence $V^{0} \to V^1 \to \cdots$ defined by
+\[
+	V^{i+1(s)} \gets \sum_{s',a} \pi(a|s) \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V^{i}(s') \right).
+\] 
+
+\begin{prop}
+For a fixed policy $\pi$, the sequence $\left\{ V^{i} \right\}$ defined above converges to $V^{\pi}$.
+\label{bellmanoperator}
+\end{prop}
+\begin{proof}
+	\warn{remove}
+	Then by the contraction mapping principle, there is a unique fixed point $V$ gotten by starting with an arbitrary value function $V^{0}$ and repeatedly applying $\phi$. This fixed point satisfies the Bellman equation for $V^{\pi}$ by construction, so it's our desired $V^{\pi}$.
+\end{proof}
+
+This gives us a method for policy evaluation (the step $\pi^{i} \to V^{i}$), but we still need to produce a better policy $\pi^{i+1}$.
+
+\warn{policy improvement}
+
+Alternatively, we can do value iteration instead of policy iteration, where we directly find $V^{*}$ and then back out a policy $\pi^{*}$ at the end.
+
+\begin{prop}
+The sequence $\left\{ V^{i} \right\}$ defined by the Bellman optimality operator
+\[
+\phi^{*} : V(s) \mapsto \max_{a} \sum_{a'}\mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V(s') \right)
+\] converges to the optimal value function $V^{*}$.
+\label{bellmanoptimalityoperator}
+\end{prop}
+\begin{proof}
+\warn{remove}
+\end{proof}
+
+We then back out an optimal policy via
+\[
+	\pi^{*}(s) = \arg \max_{a} \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V^{*}(s') \right).
+\]
+Note that this is different than ``go to the state with the highest value", as it requires a one-step lookahead. Consider an environment with a target (absorbing) state, where an agent receives a reward from moving into the target state and never in any other scenario. In this case, the learned value function is maximized in the closest state to the target state, although clearly the desired agent behavior isn't to get one state away from the target and then stop.
+
+\warn{value iteration algo}
+
+\begin{note}[]
+	The proofs of \Cref{bellmanoperator} and \Cref{bellmanoptimalityoperator} show that in the finite MDP setting, the Bellman equation \& Bellman optimality equation for value functions have unique solutions.
+\end{note}
+
+%--------------------------------------------------------------------------------
+% TD Learning
+%--------------------------------------------------------------------------------
+\section{TD Learning}
+
+\warn{Intro}
+
+\begin{thrm}[Jaakkola et al.]
+Consider the stochastic process
+\[
+\Delta_{t+1}(x) := (1-\alpha_{t}(x)) \Delta_{t}(x) + \alpha_{t}(x) F_{t}(x)
+\] defined on $(\Omega,\mathcal{F},\mathbb{P})$, where $\Delta_{t}$ and $\alpha_{t}$ are $\mathcal{F}_{t}$-measurable and $F_{t}$ is $\mathcal{F}_{t+1}$-measurable. This process converges to 0 with probability 1 if for all $x$ and $t$:
+\begin{enumerate}
+	\item the coefficients $\alpha$ satisfy the \textbf{standard stochastic approximation conditions}
+		\begin{itemize}
+			\item $\sum_{t}\alpha_{t}(x) = 0$ 
+			\item $\sum_{t}\alpha_{t}^2(x) < \infty$ 
+			\item $0 \leq \alpha_{t}(x) \leq 1$
+		\end{itemize}
+	\item ${\Vert{\E{ F_{t}(x) \;|\; \mathcal{F}_{t} }}\Vert}_{\infty} \leq \gamma {\Vert{\Delta_{t}}\Vert}_{\infty}$ for fixed $\gamma \in [0, 1)$
+	\item $\mathbb{V}\left( F_{t}(x) \;|\; \mathcal{F}_{t} \right) \leq C \left( 1 + {\Vert{\Delta_{t}(x)}\Vert}_{\infty} \right)$ for fixed $C \geq 0$
+\end{enumerate}
+\end{thrm}
+
+At time $t$, the entry $\Delta_{t}$ can be thought of as an old model that is being updated via interpolation to become closer to a new model $F_{t}$ that draws from a new timestep of information (thus why $F_{t}$ is $\mathcal{F}_{t+1}$-measurable instead of $\mathcal{F}_{t}$). In the context of RL, this looks like having access to $s^{t+1}$ when bootstrapping.
+
+\warn{Write actual proposition about all 4 bellman operators being contraction maps}
+
+\begin{lem}
+For random variables $0 \leq X \leq x_{\text{max}}$ and $0 \leq Y \leq y_{\text{max}}$,
+\[
+\text{Cov}(X,Y) \leq x_{\text{max}} y_{\text{max}}.
+\]
+\end{lem}
+This lemma implies that for bounded non-negative random variables $0 \leq X \leq x_{\text{max}}$, variance is bounded as $\mathbb{V}(X) \leq x_{\text{max}}$; although Popociviu's variance bound already asserts this without the non-negativity requirement, namely $|X| \leq x_{\text{max}}$.
+\begin{proof}
+	$\text{Cov}(X,Y) \;=\; \E{ XY } - \E{ X }\E{ Y } \;\leq\; \E{ XY } \;\leq\; x_{\text{max}}y_{\text{max}}$.
+\end{proof}
+
+\begin{prop}
+	Suppose the learning rate $\alpha_{t}(s,a)$ satisfies the standard stochastic approximation conditions, $0 \leq \mathcal{R} \leq r_{\text{max}}$, and $Q^{0} \geq 0$. Then Q-learning converges to $Q^{*}$.
+\end{prop}
+\begin{proof}
+	This is just checking the conditions from the previous theorem. Define the process $\{\Delta_{t}\}$ by
+	\[
+	\Delta_{t}(s,a) := Q_{t}(s,a) - Q^{*}(s,a)
+	\] and
+	\[
+	F_{t}(s^{t},a^{t}) := r^{t} + \gamma \max_{a'} Q_{t}(s^{t+1},a') - Q^{*}(s^{t},a^{t}).
+	\] 
+
+	To show (2), a computation similar to \Cref{bellmanoperator} shows that the Bellman optimality operator
+	\[
+	\phi : Q(s,a) \mapsto \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma \max_{a'}Q(s',a') \right)
+	\] is a $\gamma$-contraction in the max norm, and thus $Q^{*}$ is its unique fixed point. Then
+	\begin{align*}
+		{\Vert{\E{ F_{t}(s^{t},a^{t}) \;|\; \mathcal{F}_{t}}}\Vert}_{\infty} &= {\Vert{\phi Q^{t} - Q^{*}}\Vert}_{\infty} \\
+										     &= {\Vert{\phi Q^{t} - \phi Q^{*}}\Vert} \\
+										     &\leq \gamma {\Vert{Q^{t} - Q^{*}}\Vert}_{\infty} \\
+										     &= \gamma {\Vert{\Delta_{t}}\Vert}_{\infty}.
+	\end{align*}
+	Showing (3) requires the preceding lemma; note that if $\mathcal{R} \geq 0$ and $Q^{0} \geq 0$, then the Q-learning update rule ensures that $Q^{t} \geq 0$ for all $t$. Noting that $Q^{*}(s^{t},a^{t})$ has no randomness when conditioning on $\mathcal{F}_{t}$,
+	\begin{align*}
+		\mathbb{V}(F_{t} \;|\; \mathcal{F}_{t}) &= \mathbb{V}(r^{t} + \gamma \max_{a'} Q^{t}(s^{t+1},a') - Q^{*}(s^{t},a^{t}) \;|\; \mathcal{F}_{t}) \\
+		&= \mathbb{V}(r^{t} + \gamma \max_{a'} Q^{t}(s^{t+1},a') \;|\; \mathcal{F}_{t}) \\
+		&= \mathbb{V}(r^{t} \;|\; \mathcal{F}_{t}) + \gamma^{2}\mathbb{V}(\max_{a'}Q^{t}(s^{t_1},a')) + 2\gamma \text{Cov}( r^{t}, \max_{a'}Q^{t}(s^{t+1},a')) \\
+		&\leq r_{\text{max}}^2 + \gamma^{2} {\Vert{Q^{t}}\Vert}_\infty^2 + 2\gamma r_{\text{max}} {\Vert{Q^{t}}\Vert}_{\infty} \\
+		&\leq r_{\text{max}}^2 + 4 \gamma^{2} {\Vert{Q^{t}}\Vert}_\infty^2 + 2\gamma r_{\text{max}} {\Vert{Q^{t}}\Vert}_{\infty} \\
+		&= ( r_{\text{max}} + 2 \gamma {\Vert{Q^{t}}\Vert}_{\infty})^2 \\
+		&= (r_{\text{max}} + 2 \gamma {\Vert{Q^{*} + \Delta_{t}}\Vert}_{\infty})^2 \\
+		&\leq \left( r_{\text{max}} + 2\gamma {\Vert{Q^{*}}\Vert}_{\infty} + 2\gamma {\Vert{\Delta_{t}}\Vert}_{\infty} \right)^2 \\
+		&\leq C (1 + {\Vert{\Delta_{t}}\Vert}_{\infty})^2
+	\end{align*}
+where $C = \max\left\{ r_{\text{max}} + 2 \gamma {\Vert{Q^{*}}\Vert}_{\infty}, 2 \gamma \right\}$. By the preceding theorem, the process $\Delta_{t} = Q^{t} - Q^{*}$ converges to 0 with probability 1, i.e. $Q^{t} \to Q^{*}$.
+\end{proof}
+
+\begin{note}[]
+If we assume $s^{t+1}$ and $r^{t}$ are independent (the covariance term vanishes), then we can use Popoviciu's variance bound to satisfy (3) under the relaxed assumption of $|\mathcal{R}| \leq r_{\text{max}}$.
+
+I don't mind the non-negativity assumption, though, since given a bounded reward function, you can always make it non-negative by shifting all rewards by a fixed amount. And initializing a Q function is arbitrary anyway, so might as well make it non-negative.
+\end{note}
+
+\end{document}
