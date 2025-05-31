@@ -122,14 +122,15 @@ The Bellman equations are useful for bootstrapping value function estimators, an
 \begin{defn}[Bellman operators]
 	For a policy $\pi$, the \textbf{Bellman operators} are
 	\begin{align*}
-		\mathcal{V}^{\pi}: V(s) &\mapsto \sum_{s',a} \pi(a|s) \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V(s') \right) \\
-		\mathcal{Q}^{\pi}: Q(s,a) &\mapsto \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma \sum_{a'} \pi(a'|s') Q(s',a') \right).
+		\mathcal{B}^{\pi}: V(s) &\mapsto \sum_{s',a} \pi(a|s) \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V(s') \right) \\
+		\mathcal{B}^{\pi}: Q(s,a) &\mapsto \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma \sum_{a'} \pi(a'|s') Q(s',a') \right).
 	\end{align*}
 	The \textbf{Bellman optimality operators} are
 	\begin{align*}
-		\mathcal{V}^{*}: V(s) \mapsto \max_{a} \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V(s') \right) \\
-		\mathcal{Q}^{*}: Q(s,a) \mapsto \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma \max_{a'}Q^{*}(s',a') \right).
+		\mathcal{B}^{*}: V(s) \mapsto \max_{a} \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V(s') \right) \\
+		\mathcal{B}^{*}: Q(s,a) \mapsto \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma \max_{a'}Q^{*}(s',a') \right).
 	\end{align*}
+	I've overloaded the notation to have $\mathcal{B}$ apply to both value functions and state-value functions, since the proper operator should be clear from context.
 \end{defn}
 
 Both convergence and uniquness of solution follow from the fact that these operators are contraction maps in the max norm.
@@ -155,35 +156,32 @@ d(\phi(x), \phi(y)) \leq \gamma \; d(x,y)
 The Bellman operators are $\gamma$-contraction maps in the max norm.
 \end{prop}
 \begin{proof}
-Fix a policy $\pi$ and consider $\mathcal{V}^{\pi}$. For any value functions $V, W$,
+Fix a policy $\pi$. For any value functions $V$ and $W$,
         \begin{align*}
-                {\Vert{\mathcal{V}^{\pi} V - \mathcal{V}^{\pi} W}\Vert}_{\infty} &= \max_{s} \left| (\mathcal{V}^{\pi} V)(s) - (\mathcal{V}^{\pi} W)(s) \right| \\                                                       &= \gamma \max_{s} \left| \sum_{s',a} \mathcal{T}(s'|s,a) \pi(a|s) \left( V(s') - W(s') \right) \right| \\                                                       &\leq \gamma \max_{s} \sum_{s',a} \mathcal{T}(s'|s,a) \pi(a|s) \left| V(s') - W(s') \right| \\                                                       &\leq \gamma {\Vert{V-W}\Vert}_{\infty} \max_{s} \sum_{s',a} \mathcal{T}(s'|s,a) \pi(a|s) \\                                                       &= \gamma {\Vert{V-W}\Vert}_{\infty}.
+                {\Vert{\mathcal{B}^{\pi} V - \mathcal{B}^{\pi} W}\Vert}_{\infty} &= \max_{s} \left| (\mathcal{B}^{\pi} V)(s) - (\mathcal{B}^{\pi} W)(s) \right| \\                                                       &= \gamma \max_{s} \left| \sum_{s',a} \mathcal{T}(s'|s,a) \pi(a|s) \left( V(s') - W(s') \right) \right| \\                                                       &\leq \gamma \max_{s} \sum_{s',a} \mathcal{T}(s'|s,a) \pi(a|s) \left| V(s') - W(s') \right| \\                                                       &\leq \gamma {\Vert{V-W}\Vert}_{\infty} \max_{s} \sum_{s',a} \mathcal{T}(s'|s,a) \pi(a|s) \\                                                       &= \gamma {\Vert{V-W}\Vert}_{\infty}.
         \end{align*}
         The last line is because, by the law of total expectation,
 	\[
 		\sum_{s',a} \mathcal{T}(s'|s,a) \pi(a|s) = \sum_{s'} \P{ s' | s } = 1
 	\]
-	for all $s$. Now consider $\mathcal{Q}^{\pi}$ and any state-value functions $P$ and $Q$.
+	for all $s$. For any state-value functions $P$ and $Q$,
 	\warn{Computation}
 	The last line is because
 	\[
 		\sum_{s',a'} \mathcal{T}(s'|s,a) \pi(a'|s') = \sum_{s',a'} \mathcal{T}(s'|s,a)\pi(a'|s',s,a) = \sum_{a'} \P{a'|s,a } = 1
 	\]
-	for all $s,a$.
-
-	The computations for $\mathcal{V}^{*}$ and $\mathcal{Q}^{*}$ are almost identical, except they require the additional property $\left| \max_{x} f(x) - \max_{x} g(x) \right| \leq \max_x \left| f(x) - g(x) \right|$. This is true because of the reverse triangle inequality:
+	for all $s,a$. The computations for $\mathcal{B}^{*}$ are almost identical, except they require the additional property \[\left| \max_{x} f(x) - \max_{x} g(x) \right| \leq \max_x \left| f(x) - g(x) \right|.\] This is true because of the reverse triangle inequality:
 	\[
 	\left| \max_{x}f(x) - \max_{x}g(x) \right| = \Big| {\Vert{f}\Vert}_{\infty} - {\Vert{g}\Vert}_{\infty} \Big| \leq {\Vert{f-g}\Vert}_{\infty} = \max_{x} \left| f(x) - g(x) \right|.
 	\]
 \end{proof}
 
-\warn{Think I want to change the notation to be $\mathcal{B}$ instead, to make later math easier to read}
 \begin{cor}
 	\label{bellmanoperators}
 	The Bellman equations have unique solutions. Furthermore, successive application of the Bellman operators converges to a unique value function:
 \begin{align*}
-	\mathcal{V}^{\pi} \to V^{\pi} &\qquad \mathcal{Q}^{\pi} \to Q^{\pi}\\
-	\mathcal{V}^{*} \to V^{*} &\qquad \mathcal{Q}^{*} \to Q^{*}
+	\mathcal{B}^{\pi} &\to V^{\pi} \text{ or } Q^{\pi} \\
+	\mathcal{B}^{*} &\to V^{*} \text{ or } Q^{*}
 \end{align*}
 \end{cor}
 \begin{proof}
@@ -218,7 +216,7 @@ In policy iteration, given a policy $\pi$, we could use Gaussian elimination on 
 
 Instead, we use bootstrapping to recursively back out a value function. For policy iteration, fix $\pi$, then we can compute $V^{\pi}$ as the limit of the sequence generated by
 \[
-V^{i+1} \gets \mathcal{V}^{\pi} V^{i}.
+V^{i+1} \gets \mathcal{B}^{\pi} V^{i}.
 \] 
 
 This gives us a method for policy evaluation (the step $\pi^{i} \to V^{i}$), but we still need to produce a better policy $\pi^{i+1}$.
@@ -227,7 +225,7 @@ This gives us a method for policy evaluation (the step $\pi^{i} \to V^{i}$), but
 
 Alternatively, we can do value iteration instead of policy iteration, where we directly find $V^{*}$ and then back out a policy $\pi^{*}$ at the end. We can do this by generating the sequence
 \[
-V^{i+1} \gets \mathcal{V}^{*} V^{i},
+V^{i+1} \gets \mathcal{B}^{*} V^{i},
 \] which converges to $V^{*}$. We then back out an optimal policy via
 \[
 	\pi^{*}(s) = \arg \max_{a} \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V^{*}(s') \right).
@@ -279,16 +277,16 @@ This lemma implies that for bounded non-negative random variables $0 \leq X \leq
 \begin{proof}
 	This is just checking the conditions from the previous theorem. Define the process $\{\Delta_{t}\}$ by
 	\[
-	\Delta_{t}(s,a) := Q_{t}(s,a) - Q^{*}(s,a)
+	\Delta_{t}(s,a) := Q^{t}(s,a) - Q^{*}(s,a)
 	\] and
 	\[
-	F_{t}(s^{t},a^{t}) := r^{t} + \gamma \max_{a'} Q_{t}(s^{t+1},a') - Q^{*}(s^{t},a^{t}).
+	F_{t}(s^{t},a^{t}) := r^{t} + \gamma \max_{a'} Q^{t}(s^{t+1},a') - Q^{*}(s^{t},a^{t}).
 	\] 
 
-	To show (2), we use \Cref{bellmanoperators}'s result that the Bellman operator $\mathcal{Q}^{*}$ is a $\gamma$-contraction in the max norm with unique fixed point $Q^{*}$:
+	To show (2), we use \Cref{bellmanoperators}'s result that the Bellman operator $\mathcal{B}^{*}$ is a $\gamma$-contraction in the max norm with unique fixed point $Q^{*}$:
 	\begin{align*}
-		{\Vert{\E{ F_{t}(s^{t},a^{t}) \;|\; \mathcal{F}_{t}}}\Vert}_{\infty} &= {\Vert{\mathcal{Q}^{*} Q^{t} - Q^{*}}\Vert}_{\infty} \\
-										     &= {\Vert{\mathcal{Q}^{*} Q^{t} - \mathcal{Q}^{*} Q^{*}}\Vert} \\
+		{\Vert{\E{ F_{t}(s^{t},a^{t}) \;|\; \mathcal{F}_{t}}}\Vert}_{\infty} &= {\Vert{\mathcal{B}^{*} Q^{t} - Q^{*}}\Vert}_{\infty} \\
+										     &= {\Vert{\mathcal{B}^{*} Q^{t} - \mathcal{B}^{*} Q^{*}}\Vert} \\
 										     &\leq \gamma {\Vert{Q^{t} - Q^{*}}\Vert}_{\infty} \\
 										     &= \gamma {\Vert{\Delta_{t}}\Vert}_{\infty}.
 	\end{align*}
@@ -308,9 +306,9 @@ where $C = \max\left\{ r_{\text{max}} + 2 \gamma {\Vert{Q^{*}}\Vert}_{\infty}, 2
 \end{proof}
 
 \begin{note}[]
-If we assume $s^{t+1}$ and $r^{t}$ are independent (the covariance term vanishes), then we can use Popoviciu's variance bound to satisfy (3) under the relaxed assumption of $|\mathcal{R}| \leq r_{\text{max}}$.
+If we assume $s^{t+1}$ and $r^{t}$ are independent (the covariance term vanishes), then we can use Popoviciu's variance bound to satisfy (3) under the relaxed assumption of $|\mathcal{R}| \leq r_{\text{max}}$, i.e. no need for $\mathcal{R}, Q^{0} \geq 0$.
 
-I don't mind the non-negativity assumption, though, since given a bounded reward function, you can always make it non-negative by shifting all rewards by a fixed amount. And initializing a Q function is arbitrary anyway, so might as well make it non-negative.
+I don't mind the non-negativity assumption, though, since given a bounded reward function, you can always make it non-negative by shifting all rewards by a fixed amount. And initializing a Q function is arbitrary anyway, so might as well make $Q^{0}$ non-negative.
 \end{note}
 
 \end{document}
