@@ -189,7 +189,7 @@ Fix a policy $\pi$. For any value functions $V$ and $W$,
 
 	Since the provided functions $V^{\pi}$, $V^{*}$, $Q^{\pi}$, and $Q^{*}$ are clearly fixed points of their respective operators, they must be the aforementioned unique fixed points.
 
-	Note that since we're working in the finite MDP setting, the vector spaces of value funtions and state-value functions are finite dimensional. All norms on finite dimensional vector spaces are equivalent, so convergence is independent of any norm.
+	Note that since we're working in the finite MDP setting, the vector spaces of value funtions and state-value functions are finite dimensional. All norms on finite dimensional vector spaces are equivalent, so convergence is independent of norm.
 \end{proof}
 
 
@@ -266,10 +266,13 @@ For random variables $0 \leq X \leq x_{\text{max}}$ and $0 \leq Y \leq y_{\text{
 \text{Cov}(X,Y) \leq x_{\text{max}} y_{\text{max}}.
 \]
 \end{lem}
-This lemma implies that for bounded non-negative random variables $0 \leq X \leq x_{\text{max}}$, variance is bounded as $\mathbb{V}(X) \leq x_{\text{max}}$; although Popociviu's variance bound already asserts this without the non-negativity requirement, namely $|X| \leq x_{\text{max}}$.
 \begin{proof}
 	$\text{Cov}(X,Y) \;=\; \E{ XY } - \E{ X }\E{ Y } \;\leq\; \E{ XY } \;\leq\; x_{\text{max}}y_{\text{max}}$.
 \end{proof}
+
+\begin{note}[]
+This lemma implies that for bounded non-negative random variables $0 \leq X \leq x_{\text{max}}$, variance is bounded as $\mathbb{V}(X) \leq x_{\text{max}}$; although Popoviciu's variance bound already asserts this without the non-negativity requirement, i.e. you just need $|X| \leq x_{\text{max}}$.
+\end{note}
 
 \begin{prop}
 	Suppose the learning rate $\alpha_{t}(s,a)$ satisfies the standard stochastic approximation conditions, $0 \leq \mathcal{R} \leq r_{\text{max}}$, and $Q^{0} \geq 0$. Then Q-learning converges to $Q^{*}$.
@@ -294,7 +297,7 @@ This lemma implies that for bounded non-negative random variables $0 \leq X \leq
 	\begin{align*}
 		\mathbb{V}(F_{t} \;|\; \mathcal{F}_{t}) &= \mathbb{V}(r^{t} + \gamma \max_{a'} Q^{t}(s^{t+1},a') - Q^{*}(s^{t},a^{t}) \;|\; \mathcal{F}_{t}) \\
 		&= \mathbb{V}(r^{t} + \gamma \max_{a'} Q^{t}(s^{t+1},a') \;|\; \mathcal{F}_{t}) \\
-		&= \mathbb{V}(r^{t} \;|\; \mathcal{F}_{t}) + \gamma^{2}\mathbb{V}(\max_{a'}Q^{t}(s^{t_1},a')) + 2\gamma \text{Cov}( r^{t}, \max_{a'}Q^{t}(s^{t+1},a')) \\
+		&= \mathbb{V}(r^{t} \;|\; \mathcal{F}_{t}) + \gamma^{2}\mathbb{V}(\max_{a'}Q^{t}(s^{t_1},a') \;|\; \mathcal{F}_{t}) + 2\gamma \text{Cov}( r^{t}, \max_{a'}Q^{t}(s^{t+1},a') \;|\; \mathcal{F}_{t}) \\
 		&\leq r_{\text{max}}^2 + \gamma^{2} {\Vert{Q^{t}}\Vert}_\infty^2 + 2\gamma r_{\text{max}} {\Vert{Q^{t}}\Vert}_{\infty} \\
 		&\leq r_{\text{max}}^2 + 4 \gamma^{2} {\Vert{Q^{t}}\Vert}_\infty^2 + 2\gamma r_{\text{max}} {\Vert{Q^{t}}\Vert}_{\infty} \\
 		&= ( r_{\text{max}} + 2 \gamma {\Vert{Q^{t}}\Vert}_{\infty})^2 \\
