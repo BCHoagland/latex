@@ -271,7 +271,7 @@ For random variables $0 \leq X \leq x_{\text{max}}$ and $0 \leq Y \leq y_{\text{
 \end{proof}
 
 \begin{note}[]
-This lemma implies that for bounded non-negative random variables $0 \leq X \leq x_{\text{max}}$, variance is bounded as $\mathbb{V}(X) \leq x_{\text{max}}$; although Popoviciu's variance bound already asserts this without the non-negativity requirement, i.e. you just need $|X| \leq x_{\text{max}}$.
+This lemma implies that for bounded non-negative random variables $0 \leq X \leq x_{\text{max}}$, variance is bounded as $\mathbb{V}(X) \leq x_{\text{max}}^2$; although Popoviciu's variance bound already asserts this without the non-negativity requirement, i.e. you just need $|X| \leq x_{\text{max}}$.
 \end{note}
 
 \begin{prop}
@@ -305,7 +305,7 @@ This lemma implies that for bounded non-negative random variables $0 \leq X \leq
 		&\leq \left( r_{\text{max}} + 2\gamma {\Vert{Q^{*}}\Vert}_{\infty} + 2\gamma {\Vert{\Delta_{t}}\Vert}_{\infty} \right)^2 \\
 		&\leq C (1 + {\Vert{\Delta_{t}}\Vert}_{\infty})^2
 	\end{align*}
-where $C = \max\left\{ r_{\text{max}} + 2 \gamma {\Vert{Q^{*}}\Vert}_{\infty}, 2 \gamma \right\}$. By the preceding theorem, the process $\Delta_{t} = Q^{t} - Q^{*}$ converges to 0 with probability 1, i.e. $Q^{t} \to Q^{*}$.
+where $C = \max\left\{ r_{\text{max}} + 2 \gamma {\Vert{Q^{*}}\Vert}_{\infty}, 2 \gamma \right\}^2$. By the preceding theorem, the process $\Delta_{t} = Q^{t} - Q^{*}$ converges to 0 with probability 1, i.e. $Q^{t} \to Q^{*}$.
 \end{proof}
 
 \begin{note}[]
