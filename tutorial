@@ -1,0 +1,25 @@
+Windows
+----------
+
+PDF viewer
+* Install sumatrapdf from website
+* Ensure that in Settings > Advanced Options, ReloadModifiedDocuments = true
+
+Getting vim set up:
+* Install neovim from website
+* Create neovim config file: ~\AppData\Local\nvim\init.vim
+
+Vim plugins
+* Will need the vim python3 provider for some plugins
+	* `python -m pip install pynvim` in terminal (this requires python3 installed on the machine already)
+	* :restart vim and the python 3 provider should automatically be working
+* Install vim-plug via the relevant command on https://github.com/junegunn/vim-plug#usage
+* Update neovim config file based on the same tutorial (https://github.com/junegunn/vim-plug#usage)
+* [[[[copy config file here once you've set it up fully]]]]
+* After running :PlugInstall, the relevant plugins should install
+
+Latex distribution
+* Install latex locally via MiKTex (https://miktex.org/)
+* Install latexmk since that's what vimtex uses to compile (https://mgeier.github.io/latexmk.html)
+	* You'll likely need to install perl as well, linked on the latexmk site. I went with strawberry perl, windows defender will freak out when you try to run it but that's okay
+* the first time you \ll inside a tex file, windows should prompt you which pdf viewer to open (I had to run it twice before it prompted me), choose SumatraPDF
