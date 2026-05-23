@@ -128,7 +128,7 @@ The Bellman equations are useful for bootstrapping value function estimators, an
 	The \textbf{Bellman optimality operators} are
 	\begin{align*}
 		\mathcal{B}^{*}: V(s) \mapsto \max_{a} \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma V(s') \right) \\
-		\mathcal{B}^{*}: Q(s,a) \mapsto \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma \max_{a'}Q^{*}(s',a') \right).
+		\mathcal{B}^{*}: Q(s,a) \mapsto \sum_{s'} \mathcal{T}(s'|s,a) \left( \mathcal{R}(s,a,s') + \gamma \max_{a'}Q(s',a') \right).
 	\end{align*}
 	I've overloaded the notation to have $\mathcal{B}$ apply to both value functions and state-value functions, since the proper operator should be clear from context.
 \end{defn}
