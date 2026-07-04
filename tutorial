@@ -1,3 +1,4 @@
+----------
 Windows
 ----------
 
@@ -23,3 +24,45 @@ Latex distribution
 * Install latexmk since that's what vimtex uses to compile (https://mgeier.github.io/latexmk.html)
 	* You'll likely need to install perl as well, linked on the latexmk site. I went with strawberry perl, windows defender will freak out when you try to run it but that's okay
 * the first time you \ll inside a tex file, windows should prompt you which pdf viewer to open (I had to run it twice before it prompted me), choose SumatraPDF
+
+UltiSnips setup
+* Add a directory ~\AppData\Local\nvim\UltiSnips\, since this is the default place where UltiSnips looks for custom snippets
+* Add a new file, e.g. tex.snippets
+
+
+
+----------
+Mac
+----------
+
+PDF viewer
+* skim
+* ensure that in preferences, "check for file changes" and "reload automatically" are checked
+
+Terminal
+* ensure you're running the zsh shell: `echo $0`
+* I gave up on neovim and am sticking with vim, so ensure `~/.vimrc` exists
+
+
+Vim plugins
+* Install vim-plug for unix: https://github.com/junegunn/vim-plug
+* Copy my default .vimrc file
+* use vim to open a dummy file, and run :PlugInstall
+
+Latex distribution
+* MacTex: https://www.tug.org/mactex/
+* After downloading MacTex, you can use the `TeX Live Utility` program to install latexmk (if it's not already installed), or you can use `sudo tlmgr install latexmk`
+
+UltiSnips setup
+* Add a folder `~/.vim/UltiSnips`. In that folder, add snippets files, e.g. `tex.snippets`
+
+Ledit
+Add the following to `~/.zshrc`
+```
+ledit() {
+    vim "./$1/$1.tex"
+}
+```
+
+Latex styling
+* do this
